@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo start!</title>
+    <url>/2019/07/07/hexo-start/</url>
+    <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
+<p>安装与使用：见git笔记</p>
+<p>安装后验证：git  –version</p>
+<p>安装好git后， 后续命令均采用 git bash 执行。</p>
+<h3 id="2-下载并安装node-js"><a href="#2-下载并安装node-js" class="headerlink" title="2. 下载并安装node.js"></a>2. 下载并安装node.js</h3><p>官网下载：<a href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+<p>安装与使用：见node笔记</p>
+<p>安装后验证：node -v </p>
+<h3 id="3-命令行安装cnpm"><a href="#3-命令行安装cnpm" class="headerlink" title="3. 命令行安装cnpm"></a>3. 命令行安装cnpm</h3><p>命令：npm install -g cnpm –registry&#x3D;&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<p>安装后验证：cnpm -v </p>
+<h3 id="4-命令行安装hexo"><a href="#4-命令行安装hexo" class="headerlink" title="4. 命令行安装hexo"></a>4. 命令行安装hexo</h3><p>命令：cnpm install -g hexo-cli</p>
+<p>安装后验证：hexo  -v</p>
+<h3 id="5-在github上创建仓库"><a href="#5-在github上创建仓库" class="headerlink" title="5. 在github上创建仓库"></a>5. 在github上创建仓库</h3><p>新建一个名为你的用户名.github.io的仓库</p>
+<p>比如说，如果你的github用户名是test，那么你就新建test.github.io的仓库（必须是你的用户名，其它名称无效），将来你的网站访问地址就是 <a href="http://test.github.io/">http://test.github.io</a> 了，每一个github账户最多只能创建一个这样可以直接使用域名访问的仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">### 配置SSH免密登录</span><br><span class="line">第一步：首先打开电脑文件夹，找到C:\Users\bona\.ssh文件夹并删除</span><br><span class="line"></span><br><span class="line">第二步：在C:\Users\bona 文件夹下右键打开Git Bash Here</span><br><span class="line">输入命令：ssh-keygen -t rsa -C github邮件地址   </span><br><span class="line">生成.ssh秘钥，输入后连敲三次回车</span><br><span class="line"></span><br><span class="line">第三步：最终生成了一个新的 C:\Users\bona\.ssh文件夹，打开这个文件夹，找到.ssh\id_rsa.pub文件，记事本打开并复制里面的内容</span><br><span class="line"></span><br><span class="line">第四步：打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key，把复制的内容粘贴进去，title随便填，保存即可，我们的公钥就添加成功了</span><br><span class="line"></span><br><span class="line">第五步：检测是否设置成功：</span><br><span class="line">输入命令：  $ ssh -T git@github.com # 注意邮箱地址不用改</span><br><span class="line">如果提示Are you sure you want to continue connecting (yes/no)?，输入yes，然后会看到：</span><br><span class="line">Hi fenghuayangyi! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">看到这个信息说明SSH已配置成功！</span><br><span class="line"></span><br><span class="line">第六步：此时你还需要配置：</span><br><span class="line">$ git config --global user.name &quot;bona&quot;// 你的github用户名，非昵称</span><br><span class="line">$ git config --global user.email  &quot;bona@126.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-hexo搭建博客"><a href="#使用-hexo搭建博客" class="headerlink" title="使用 hexo搭建博客"></a>使用 hexo搭建博客</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ul>
+<li><p>新建文件夹 note</p>
+</li>
+<li><p>git bash</p>
+<ul>
+<li><p>hexo init</p>
+</li>
+<li><p>hexo g # 生成</p>
+</li>
+<li><p>hexo s  #启动服务， 打开浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a> 即可看到内容</p>
+<p>如果端口冲突，参考这篇文章<a href="https://www.runoob.com/w3cnote/windows-finds-port-usage.html">https://www.runoob.com/w3cnote/windows-finds-port-usage.html</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><ul>
+<li><p>npm install hexo-deployer-git –save</p>
+<p>必须安装后，才能使用 : hexo d</p>
+</li>
+<li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#104;&#x75;&#x62;&#x2e;&#x63;&#x6f;&#109;">&#x67;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#104;&#x75;&#x62;&#x2e;&#x63;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+</li>
+<li><p>报错和 time有关时，需要安装该组件</p>
+</li>
+<li><p>npm install hexo-reading-time –save</p>
+</li>
+<li><p>安装后，才能使用搜索功能</p>
+</li>
+<li><p>npm install hexo-generator-searchdb –save</p>
+</li>
+<li><p>创建分类</p>
+<p>hexo new page categories</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>创建标签</p>
+<p>hexo new page  tags</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>创建搜索</p>
+<p>hexo new page  search</p>
+</li>
+<li><p>自定义排序</p>
+<p>在某一类别下，排序比较混乱，需要按照文章的date排序，或者按照中文的一、二、三等命名。</p>
+<p>npm install hexo-generator-topindex –save</p>
+</li>
+<li><p>创建新文章</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// [layout] 为布局，可选项为 `post`、`page`、`draft`，这将决定文章所在文件路径。</span><br><span class="line">// &lt;title&gt; 为文章标题</span><br><span class="line">hexo new [layout] &lt;title&gt;</span><br><span class="line"></span><br><span class="line">eg. hexo new post &quot;hello_word&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+<li><p>文章例子</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>hexo init</li>
+<li>hexo clean</li>
+<li>hexo g (generate)</li>
+<li>hexo s (start)</li>
+<li>hexo d (deploy)</li>
+</ul>
+<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3>]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
