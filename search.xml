@@ -348,7 +348,7 @@
   </entry>
   <entry>
     <title>hexo start!</title>
-    <url>/2019/07/07/hexo-start/</url>
+    <url>/2018/01/10/hexo-start/</url>
     <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
 <p>安装与使用：见git笔记</p>
 <p>安装后验证：git  –version</p>
@@ -384,7 +384,7 @@
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#111;&#109;">&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
