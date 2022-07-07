@@ -1,6 +1,352 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux 常用命令</title>
+    <url>/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
+<li><p>查看目录 : ls，ll</p>
+<p>.&#x2F; 当前目录 ..&#x2F; 父级目录 &#x2F; 根目录</p>
+</li>
+<li><p>切换目录 : cd</p>
+</li>
+<li><p>创建目录 : mkdir dirname</p>
+</li>
+<li><p>删除目录 : rm -rf dirname</p>
+</li>
+<li><p>拷贝目录 : cp -r dirsource dirtarget</p>
+</li>
+<li><p>移动目录 : mv -r dirsource dirtarget</p>
+</li>
+</ul>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><ul>
+<li><p>查看文件内容</p>
+<p>cat filename (查看文件内容、创建文件、文件合并、追加文件内容 等功能)</p>
+<p>more filename (分屏显示文件内容，每次只显示一页内容)</p>
+<ul>
+<li>空格键 显示手册页的下一屏<br>Enter 键 一次滚动手册页的一行<br>b 回滚一屏<br>f 前滚一屏<br>q 退出<br>&#x2F;word 搜索 word 字符串</li>
+</ul>
+</li>
+<li><p><strong>创建文件</strong> : touch filename</p>
+</li>
+<li><p>删除文件 : rm -f filename</p>
+</li>
+<li><p>拷贝目录 : cp filesource filetarget</p>
+</li>
+<li><p>移动目录 : mv filesource filetarget</p>
+</li>
+<li><p>文本搜索 : grep</p>
+<ul>
+<li>-n 显示匹配行及行号<br>-v 显示不包含匹配文本的所有行（相当于求反）<br>-i 忽略大小写</li>
+</ul>
+</li>
+<li><p>常用的两种模式查找\</p>
+<ul>
+<li>^a 行首，搜寻以 a 开头的行<br>ke$ 行尾，搜寻以 ke 结束的行</li>
+</ul>
+</li>
+<li><p>查看当前文件大小的命令</p>
+<ul>
+<li><p>ls -lht 列出每个文件的大小和当前目录所有文件大小总和</p>
+</li>
+<li><p>du -sh * 列出当前文件夹下的所有子文件的大小</p>
+<p>hdfs查看文件大小</p>
+<p>hadoop fs -du -h file&#x2F;dir</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="jar包常用操作"><a href="#jar包常用操作" class="headerlink" title="jar包常用操作"></a>jar包常用操作</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看 jar 包中的文件列表，并进行重定向</span><br><span class="line">jar -tvf a.jar &gt; a.txt </span><br><span class="line"></span><br><span class="line">-- 更新文件到 jar 中，目录需对应</span><br><span class="line">jar -uf a.jar com/a.class</span><br><span class="line">a.class 文件在 jar 包中的目录是 com/a.class。</span><br><span class="line">a.class 文件在本地路径，相对 a.jar 包，也是 com/a.class。</span><br><span class="line"></span><br><span class="line">-- 增加文件到 jar 中，目录需对应   </span><br><span class="line">与修改一致，jar 中原来没有的目录，会自动创建。</span><br><span class="line"></span><br><span class="line">jar -uf a.jar com/test/a.class</span><br><span class="line"></span><br><span class="line">用法：jar &#123;ctxu&#125;[vfm0Mi] [jar-文件] [manifest-文件] [-C 目录] 文件名 ... 　　</span><br><span class="line">	选项： 　　</span><br><span class="line">	-c 创建新的存档　　</span><br><span class="line">	-t 列出存档内容的列表　　</span><br><span class="line">	-x 展开存档中的命名的（或所有的〕文件　　</span><br><span class="line">	-u 更新已存在的存档　　</span><br><span class="line">	-v 生成详细输出到标准输出上　　</span><br><span class="line">	-f 指定存档文件名　　</span><br><span class="line">	-m 包含来自标明文件的标明信息　　</span><br><span class="line">	-0 只存储方式；未用zip压缩格式　　</span><br><span class="line">	-M 不产生所有项的清单（manifest〕文件　　</span><br><span class="line">	-i 为指定的jar文件产生索引信息　　</span><br><span class="line">	-C 改变到指定的目录，并且包含下列文件　　</span><br><span class="line">	</span><br><span class="line">jar包解压 jar -xvf xxx.jar</span><br><span class="line">重新打包  jar cf xxx.jar *</span><br><span class="line">查看jar包中的文件列表  jar -tvf xxx.jar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------提取zip或jar文件中的某个文件</span><br><span class="line">假如有个压缩包 abc.jar, 里面文件如下 （可以用unzip -l abc.jar 查看）：    </span><br><span class="line">data/1.txt    </span><br><span class="line">data/2.txt</span><br><span class="line">提取里面指定的文件到指定的位置，但上级目录将不会被创建。</span><br><span class="line"></span><br><span class="line">不加-d参数就解压到当前目录，-d参数可以指定不存在的目录，会自动创建。</span><br><span class="line">解压得到的文件名不变。</span><br><span class="line"></span><br><span class="line">unzip -j abc.jar data/2.txt -d /tmp/data_in_abc</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p>echo 会在终端中显示参数指定的文字</p>
+</li>
+<li><p><strong>重定向 &gt; 和 &gt;&gt;</strong></p>
+<ul>
+<li>&gt; 表示输出，会覆盖文件原有的内容</li>
+<li>&gt;&gt; 表示追加，会将内容追加到已有文件的末尾</li>
+</ul>
+</li>
+<li><p><strong>管道 |</strong></p>
+<p>一个命令的输出 可以通过管道 做为 另一个命令的输入</p>
+<p>常用的管道命令有：<br>more：分屏显示内容<br>grep：在命令执行结果的基础上查询指定的文本</p>
+</li>
+</ul>
+<h2 id="远程管理常用命令"><a href="#远程管理常用命令" class="headerlink" title="远程管理常用命令"></a>远程管理常用命令</h2><ul>
+<li><p>关机&#x2F;重启</p>
+<ul>
+<li><p>shutdown 选项 时间 : 关机</p>
+<p>选项 含义<br>-r 重新启动</p>
+</li>
+<li><p><strong>halt</strong> 关机</p>
+</li>
+</ul>
+</li>
+<li><p>查看或配置网卡信息</p>
+<ul>
+<li>ifconfig</li>
+<li>ping</li>
+</ul>
+</li>
+<li><p>远程登录</p>
+<ul>
+<li>ssh 用户名@ip</li>
+</ul>
+</li>
+<li><p>复制文件</p>
+<ul>
+<li>scp</li>
+</ul>
+</li>
+<li><p>su命令与su - 命令的区别：</p>
+<p>su只是切换了root身份，但Shell环境仍然是普通用户的Shell；</p>
+<p>su -连用户和Shell环境一起切换成root身份了。</p>
+<p>PS:只有切换了Shell环境才不会出现PATH环境变量错误，报command not found的错误。</p>
+</li>
+</ul>
+<h2 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h2><ul>
+<li><p>基本概念</p>
+<p>序号 权限 英文 缩写 数字代号<br>01 读 read r 4<br>02 写 write w 2<br>03 执行 excute x 1</p>
+</li>
+<li><p>组<br>为了方便用户管理，提出了 组 的概念<br>在实际应用中，可以预先针对 组 设置好权限，<br>然后 将不同的用户添加到对应的组中，从而不用依次为每一个用户设置权限</p>
+</li>
+<li><p><strong>切换用户 su username</strong></p>
+</li>
+<li><p>退出 exit</p>
+</li>
+<li><p><strong>修改文件权限</strong></p>
+<p> 序号 命令 作用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">01            chown             修改拥有者</span><br><span class="line">02            chgrp             修改组</span><br><span class="line">03            chmod             修改权限</span><br></pre></td></tr></table></figure>
+
+<p>ex. chmod 修改 用户／组 对 文件／目录 的权限</p>
+<p> chmod -rwx 文件名|目录名</p>
+<ul>
+<li><p>递归修改文件|目录的组</p>
+<p>chgrp -R 组名 文件名|目录名</p>
+</li>
+<li><p>递归修改文件权限</p>
+<p>chmod -R 755 文件名|目录名</p>
+<p><a href="20220707-1"><img src="/../../../../images/20220707-1.jpg" alt="img"></a></p>
+</li>
+</ul>
+</li>
+<li><p>sudo</p>
+<p>sudo 命令用来以其他身份来执行命令，预设的身份为 root.</p>
+<p>使用 sudo 时，必须先输入密码，之后有 5 分钟的有效期限.</p>
+</li>
+<li><p>组管理</p>
+<ul>
+<li>添加组 : groupadd 组名</li>
+<li>删除组 : groupdel 组名<br>确认组信息 : cat &#x2F;etc&#x2F;group</li>
+<li>递归修改文件&#x2F;目录的所属组 : chgrp -R 组名 文件&#x2F;目录名</li>
+</ul>
+</li>
+<li><p>用户管理</p>
+<ul>
+<li><p><strong>添加新用户</strong> : useradd -m -g 组 新建用户名</p>
+<p>-m 自动建立home目录</p>
+<p>-g 指定用户所在的组</p>
+</li>
+<li><p><strong>设置用户密码</strong> : passwd 用户名</p>
+</li>
+<li><p>删除用户 : userdel -r 用户名</p>
+<p>-r 选项会自动删除用户家目录</p>
+</li>
+<li><p>确认用户信息 cat &#x2F;etc&#x2F;passwd | grep 用户名</p>
+<p>新建用户后，用户信息会保存在 &#x2F;etc&#x2F;passwd 文件中</p>
+</li>
+<li><p><strong>查看用户信息</strong></p>
+<p>who 查看当前所有登录的用户列表<br>whoami 查看当前登录用户的账户名</p>
+</li>
+<li><p>which 命令 ：查看执行命令所在位置</p>
+<p>ex. which ls</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2><ul>
+<li><p>时间和日期</p>
+<ul>
+<li>date 查看系统时间</li>
+<li>cal &#x2F; calendar 查看日历，-y 选项可以查看一年的日历</li>
+</ul>
+</li>
+<li><p>磁盘和目录空间</p>
+<ul>
+<li><p>df ：disk free 显示磁盘剩余空间</p>
+<p>df -h</p>
+</li>
+<li><p>du：disk usage 显示目录下的文件大小</p>
+<p>du -h [目录名]</p>
+</li>
+</ul>
+</li>
+<li><p><strong>进程信息</strong>：</p>
+<ul>
+<li><p>找出占用端口进程的pid</p>
+<p>lsof -i:port</p>
+</li>
+</ul>
+</li>
+<li><p>ps : process status 查看进程的详细状况</p>
+<ul>
+<li><p><strong>ps aux</strong></p>
+<p>选项 含义<br>a 显示终端上的所有进程，包括其他用户的进程<br>u 显示进程的详细状态<br>x 显示没有控制终端的进程</p>
+</li>
+</ul>
+</li>
+<li><p><strong>top</strong> : 动态显示运行中的进程并且排序</p>
+</li>
+<li><p><strong>kill</strong></p>
+<ul>
+<li><p>kill [-9] 进程代号</p>
+<p>终止指定代号的进程，-9 表示强行终止</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><ul>
+<li><p>查找文件 ：find</p>
+<p>ex. find [路径] -name “*.py”</p>
+<p>查找指定路径下扩展名是 .py 的文件，包括子目录</p>
+<p>如果省略路径，表示在当前文件夹下查找</p>
+</li>
+<li><p>软链接 通俗的方式讲类似于 Windows 下的快捷方式</p>
+<p>ln -s 被链接的源文件 链接文件</p>
+<p>注意:</p>
+<ul>
+<li>没有 -s 选项建立的是一个 硬链接文件</li>
+<li>源文件要使用绝对路径，不能使用相对路径</li>
+</ul>
+<p>ln -snf 被链接的源文件 链接文件 –更改软连接</p>
+</li>
+<li><p>打包和压缩</p>
+<p>不同操作系统中，常用的打包压缩方式是不同的。</p>
+<ul>
+<li>Windows 常用 rar</li>
+<li>Mac 常用 zip</li>
+<li>Linux 常用 tar.gz</li>
+</ul>
+<p><strong>打包 ／ 解包</strong>（含压缩）</p>
+<ul>
+<li><p><strong>打包文件</strong></p>
+<p>tar czf 压缩文件名 要压缩的文件夹</p>
+<p>ex. tar czf test.tar.gz .&#x2F;opt&#x2F;</p>
+</li>
+<li><p><strong>解包文件</strong>（-C参数 表示更换目录的意思 ）</p>
+<p>tar -zxf 待解压文件 -C 解压到的文件夹</p>
+<p>ex. tar -zxf test.tar.gz -C &#x2F;opt&#x2F;module&#x2F;</p>
+</li>
+<li><p>tar 选项说明<br>选项 含义<br>c 生成档案文件，创建打包文件<br>x 解开档案文件<br>v 列出归档解档的详细过程，显示进度<br>f 指定文件名，f 后面一定是 .tar 文件，必须放选项最后</p>
+<p>z 调用 gzip, 实现压缩和解压缩的功能</p>
+</li>
+</ul>
+</li>
+<li><p>软件安装</p>
+<p>apt 是 Advanced Packaging Tool，是 Linux 下的一款安装包管理工具</p>
+<ul>
+<li>安装软件 apt-get install 软件包</li>
+<li>卸载软件 apt-get remove 软件名</li>
+<li>更新已安装的包 apt-get upgrade</li>
+</ul>
+<p>配置软件源</p>
+<ul>
+<li><p>在软件和更新中，选项ubuntu软件</p>
+<p>设置下载自：<a href="http://mirrors.aliyun.com/ubuntu">http://mirrors.aliyun.com/ubuntu</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="vi-编辑"><a href="#vi-编辑" class="headerlink" title="vi 编辑"></a>vi 编辑</h2><p>很多 Linux 发行版中，直接把 vi 做成 vim 的软连接</p>
+<ul>
+<li><p>查询软连接命令（知道）</p>
+<p>$ which vi</p>
+</li>
+<li><p>打开和新建文件</p>
+<p>vi filename</p>
+<ul>
+<li>如果文件已经存在，会直接打开该文件</li>
+<li>如果文件不存在，会新建一个文件</li>
+</ul>
+</li>
+<li><p>光标上下左右</p>
+<p>h j k l<br>左下右上</p>
+</li>
+<li><p>Vim编辑器三种模式</p>
+<ul>
+<li><p>命令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
+</li>
+<li><p>输入模式：正常的文本录入。</p>
+</li>
+<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
+<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
+</li>
+<li><p>命令模式中最常用的一些命令</p>
+<ul>
+<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
+<li>shirft+g 跳转到最后一行</li>
+</ul>
+</li>
+<li><p>末行模式常用的一些命令</p>
+<ul>
+<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring笔记</title>
+    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
+<li><p>Spring 是一个开源框架.</p>
+</li>
+<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
+</li>
+<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
+</li>
+<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
+</li>
+</ul>
+<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
+<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
+<li>依赖注入(DI — dependency injection、IOC)</li>
+<li>–面向切面编程(AOP— aspect oriented programming)</li>
+<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
+<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
+<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
+</ol>
+<p>在项目中引入Spring可以带来以下好处：</p>
+<ol>
+<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
+</li>
+<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
+</li>
+<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
+</li>
+<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
+</li>
+<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>JAVA框架</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>template</title>
+    <url>/2019/07/07/Template/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>doc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo start!</title>
     <url>/2019/07/07/hexo-start/</url>
     <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
@@ -38,7 +384,7 @@
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#105;&#116;&#64;&#x67;&#x69;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#109;">&#103;&#105;&#116;&#64;&#x67;&#x69;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#111;&#109;">&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
