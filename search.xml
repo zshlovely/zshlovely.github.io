@@ -1,6 +1,773 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hadoop入门</title>
+    <url>/2018/12/28/Hadoop%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
+<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
+<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
+<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
+</ul>
+<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
+<ul>
+<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
+<li>Cloudera在大型互联网企业中用的较多。</li>
+<li>Hortonworks文档较好。</li>
+</ul>
+<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
+<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
+<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
+<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
+<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
+<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
+<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
+<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
+<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
+<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
+<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
+<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
+<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
+<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
+<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
+<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
+<p>1）Map阶段并行处理输入数据。</p>
+<p>2）Reduce阶段对Map结果进行汇总。</p>
+<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
+<p>名词解释如下：</p>
+<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
+<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
+<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
+<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
+<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
+<p> 可以基于Hadoop上存储的大数据进行计算。</p>
+<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
+<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
+<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
+<ul>
+<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
+<li>可以将sql语句转换为MapReduce任务进行运行。</li>
+</ul>
+<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
+<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
+<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
+<ul>
+<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
+<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
+<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
+</ul>
+<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
+<ul>
+<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
+<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
+</ul>
+<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
+<li><p>官方网址：<a href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
+</li>
+<li><p>各个版本归档库地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
+</li>
+<li><p>hadoop2.7.2版本详情介绍：<a href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
+<p>Hadoop运行模式：</p>
+<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
+<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
+<p>（3）完全分布式模式：多个节点一起运行。</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>大数据</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux Shell编程</title>
+    <url>/2019/02/01/Linux%20Shell%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便运行程序的界面系统级程序。</p>
+<p>用户可以用Shell来启动、挂起、停止甚至是编写一些程序。</p>
+<p><a href="20220708-2.jpg"><img src="/../../../../images/20220708-2.jpg" alt="img"></a></p>
+<ul>
+<li>Shell还是一个<strong>功能相当强大的编程语言</strong>，易编写、易调试、灵活性强。</li>
+<li>Shell是解释执行的脚本语言，在Shell中可以调用Linux系统命令。</li>
+</ul>
+<h2 id="shell脚本的执行方式"><a href="#shell脚本的执行方式" class="headerlink" title="shell脚本的执行方式"></a>shell脚本的执行方式</h2><ul>
+<li><p>echo输出内容到控制台</p>
+<ul>
+<li><p>基本语法：</p>
+<p>echo [ 选项] [输出内容]</p>
+<p>选项：-e： 支持反斜线控制的字符转换</p>
+<p><a href="http://ww1.sinaimg.cn/large/a3a0cfd7ly1g6cu543o7aj20hp0dxmxk.jpg"><img src="http://ww1.sinaimg.cn/large/a3a0cfd7ly1g6cu543o7aj20hp0dxmxk.jpg" alt="img"></a></p>
+</li>
+<li><p>案例</p>
+<blockquote>
+<p>echo “helloworld”   –输出helloworld</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>脚本格式</p>
+<ol>
+<li>脚本以 #!&#x2F;bin&#x2F;bash 开头</li>
+<li>脚本必须有可执行权限</li>
+</ol>
+</li>
+<li><p>第一个shell脚本  helloworld.sh</p>
+<p>touch &#x2F;opt&#x2F;shellcode&#x2F;helloworld.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash   </span><br><span class="line">echo &quot;helloworld&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>脚本的常用执行方式</p>
+<ol>
+<li><p>输入脚本的绝对路径或相对路径</p>
+<ol>
+<li><p>赋予helloworld.sh 脚本的+x权限</p>
+<p>chmod 777 helloworld.sh</p>
+</li>
+<li><p>执行脚本</p>
+<ul>
+<li>&#x2F;opt&#x2F;shellcode&#x2F;helloWorld.sh</li>
+<li>.&#x2F;helloWorld.sh</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>bash或sh+脚本（不用赋予脚本+x权限）</p>
+<ul>
+<li>sh &#x2F;root&#x2F;helloWorld.sh</li>
+<li>sh helloWorld.sh</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="shell中的变量"><a href="#shell中的变量" class="headerlink" title="shell中的变量"></a>shell中的变量</h2><p> 1）Linux Shell中的变量分为，系统变量和用户自定义变量。</p>
+<p> 2）系统变量：$HOME、$PWD、$SHELL、$USER等等</p>
+<p> 3）显示当前shell中所有变量：set</p>
+<h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><ul>
+<li><p>基本语法：</p>
+<ol>
+<li>定义变量：变量&#x3D;值</li>
+<li>撤销变量：unset 变量</li>
+<li>声明静态变量：readonly变量，注意：不能unset</li>
+</ol>
+</li>
+<li><p>变量定义规则</p>
+<ol>
+<li>变量名称可以由字母、数字和下划线组成，但是不能以数字开头。</li>
+<li><strong>等号两侧不能有空格</strong></li>
+<li>变量名称一般习惯为大写</li>
+</ol>
+</li>
+<li><p>案例</p>
+<ul>
+<li><p>定义变量A</p>
+<blockquote>
+<p>A&#x3D;8</p>
+</blockquote>
+</li>
+<li><p>撤销变量A</p>
+<blockquote>
+<p>unsetA</p>
+</blockquote>
+</li>
+<li><p>声明静态的变量B&#x3D;2，不能unset</p>
+<blockquote>
+<p>readonlyB &#x3D; 2</p>
+</blockquote>
+</li>
+<li><p>可把变量提升为全局环境变量，可供其他shell程序使用</p>
+<blockquote>
+<p>export 变量名</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="将命令的返回值赋值给变量"><a href="#将命令的返回值赋值给变量" class="headerlink" title="将命令的返回值赋值给变量"></a>将命令的返回值赋值给变量</h3><ul>
+<li>A&#x3D;ls − la 反引号，运行里面的命令，并把结果返回给变量A</li>
+<li>A&#x3D;$(ls -la) 等价于反引号</li>
+</ul>
+<h3 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h3><ul>
+<li><p>基本语法</p>
+<ol>
+<li>export 变量名&#x3D;变量值 （功能描述：设置环境变量的值）</li>
+<li>source 配置文件 （功能描述：让修改后的配置信息立即生效）</li>
+<li>echo $变量名 （功能描述：查询环境变量的值）</li>
+</ol>
+</li>
+<li><p>案例</p>
+<ol>
+<li><p>在&#x2F;etc&#x2F;profile文件中定义JAVA_HOME环境变量</p>
+<ul>
+<li>export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;jdk1.8.0_144</li>
+<li>export PATH&#x3D;PATH:PATH:JAVA_HOME&#x2F;bin</li>
+</ul>
+</li>
+<li><p>查看环境变量JAVA_HOME的值</p>
+<blockquote>
+<p>echo $JAVA_HOME</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="设置位置变量"><a href="#设置位置变量" class="headerlink" title="设置位置变量"></a>设置位置变量</h3><ul>
+<li><p>基本语法</p>
+<ul>
+<li>$n （功能描述：n为数字，$0代表命令本身，$1-$9代表第一到第九个参数，十以上的参数需要用大括号包含，如${10}）</li>
+<li>$ *（功能描述：这个变量代表命令行中所有的参数，$*把所有的参数看成一个整体）</li>
+<li>$@ （功能描述：这个变量也代表命令行中所有的参数，不过$@把每个参数区分对待）</li>
+<li>$# （功能描述：这个变量代表命令行中所有参数的个数）</li>
+</ul>
+</li>
+<li><p>案例</p>
+<ol>
+<li><p>输出 输入的参数1，参数2，所有参数，参数个数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;$0  $1   $2&quot;</span><br><span class="line">echo &quot;$*&quot;</span><br><span class="line">echo &quot;$@&quot;</span><br><span class="line">echo &quot;$#&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>∗与∗与@的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash </span><br><span class="line"></span><br><span class="line">for i in &quot;$*&quot; </span><br><span class="line"># $*中的所有参数看成是一个整体，所以这个for循环只会循环一次         </span><br><span class="line">	do                 </span><br><span class="line">		echo &quot;The parameters is: $i&quot;         </span><br><span class="line">	done </span><br><span class="line"></span><br><span class="line">x=1 </span><br><span class="line"></span><br><span class="line">for y in &quot;$@&quot; </span><br><span class="line"># $@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次         </span><br><span class="line">	do                 </span><br><span class="line">		echo &quot;The parameter$x is: $y&quot;                 </span><br><span class="line">		x=$(( $x +1 ))         </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$*和$@都表示传递给函数或脚本的所有参数，不被双引号“ ”包含时，都以$1 $2 …$n的形式输出所有参数。</li>
+<li>当它们被双引号“ ”包含时，“$*”会将所有的参数作为一个整体，以“$1 $2<br>…$n” 的形式输出所有参数；“$@”会将各个参数分开，以“$1” “$2”…”$n”的形式输出所有参数。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><ul>
+<li><p>基本语法：</p>
+<ul>
+<li>$？ （功能描述：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确了。）</li>
+<li>$$ （功能描述：当前进程的进程号（PID））</li>
+<li>$! （功能描述：后台运行的最后一个进程的进程号（PID））</li>
+</ul>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;$$&quot;</span><br><span class="line"></span><br><span class="line">./helloworld.sh &amp;</span><br><span class="line"></span><br><span class="line">echo &quot;$!&quot;</span><br><span class="line">echo &quot;$?&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li><p>基本语法：</p>
+<ol>
+<li>“$((运算式))”或“$[运算式]”</li>
+<li>expr m + n –注意expr运算符间要有空格</li>
+<li>expr m - n</li>
+<li>expr *, &#x2F;, % 乘，除，取余</li>
+</ol>
+</li>
+<li><p>案例：计算（2+3）X4的值</p>
+<ul>
+<li><p>采用$[运算式]方式</p>
+<blockquote>
+<p>S&#x3D;$[(2+3)*4]</p>
+<p>echo $S</p>
+</blockquote>
+</li>
+<li><p>expr分布计算</p>
+<blockquote>
+<p>S&#x3D;expr2+3expr2+3</p>
+<p>expr $S * 4</p>
+</blockquote>
+</li>
+<li><p>expr一步完成计算</p>
+<blockquote>
+<p>expr expr2+3expr2+3 * 4</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><h4 id="判断语句"><a href="#判断语句" class="headerlink" title="判断语句"></a>判断语句</h4><ul>
+<li><p>基本语法：</p>
+<p>[ condition ]（注意condition前后要有空格）</p>
+<p>非空返回true，可使用$?验证（0为true，&gt;1为false）</p>
+</li>
+<li><p>案例：</p>
+<p>[ S ] 返回true</p>
+</li>
+</ul>
+<p>[] 返回false</p>
+<p>[ condition ] &amp;&amp; echo OK || echo notok 条件满足，执行后面的语句</p>
+<h4 id="常用判断条件"><a href="#常用判断条件" class="headerlink" title="常用判断条件"></a>常用判断条件</h4><ol>
+<li><p>两个整数之间比较</p>
+<blockquote>
+<p>&#x3D; 字符串比较</p>
+</blockquote>
+<blockquote>
+<p>-lt 小于</p>
+</blockquote>
+<blockquote>
+<p>-le 小于等于</p>
+</blockquote>
+<blockquote>
+<p>-eq 等于</p>
+</blockquote>
+<blockquote>
+<p>-gt 大于</p>
+</blockquote>
+<blockquote>
+<p>-ge 大于等于</p>
+</blockquote>
+<blockquote>
+<p>-ne 不等于</p>
+</blockquote>
+</li>
+<li><p>按照文件权限进行判断</p>
+<blockquote>
+<p>-r 有读的权限</p>
+</blockquote>
+<blockquote>
+<p>-w 有写的权限</p>
+</blockquote>
+<blockquote>
+<p>-x 有执行的权限</p>
+</blockquote>
+</li>
+<li><p>按照文件类型进行判断</p>
+<blockquote>
+<p>-f 文件存在并且是一个常规的文件</p>
+</blockquote>
+<blockquote>
+<p>-e 文件存在</p>
+</blockquote>
+<blockquote>
+<p>-d 文件存在并是一个目录</p>
+</blockquote>
+</li>
+<li><p>案例</p>
+<ol>
+<li><p>23是否大于等于22</p>
+<blockquote>
+<p>[ 23 -ge 22 ]</p>
+</blockquote>
+</li>
+<li><p>student.txt是否具有写权限</p>
+<blockquote>
+<p>[ -w student.txt ]</p>
+</blockquote>
+</li>
+<li><p>&#x2F;root&#x2F;install.log目录中的文件是否存在</p>
+<blockquote>
+<p>[ -e &#x2F;root&#x2F;install.log ]</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><h4 id="if判断"><a href="#if判断" class="headerlink" title="if判断"></a>if判断</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if [ 条件判断式 ]	then   </span><br><span class="line">	程序 </span><br><span class="line">fi </span><br><span class="line"></span><br><span class="line">或者 </span><br><span class="line"></span><br><span class="line">if [ 条件判断式 ]	then     </span><br><span class="line">		程序 </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：其中[ 条件判断式 ]，中括号和条件判断式之间必须有空格</p>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">if [ $1 -eq &quot;123&quot; ]	then        </span><br><span class="line">	echo &quot;123&quot;</span><br><span class="line">elif [ $1 -eq &quot;456&quot; ]	then        </span><br><span class="line">	echo &quot;456&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">case $变量名 in   </span><br><span class="line">	&quot;值1&quot;）     </span><br><span class="line">		如果变量的值等于值1，则执行程序1     </span><br><span class="line">	;;   </span><br><span class="line">	&quot;值2&quot;）     </span><br><span class="line">		如果变量的值等于值2，则执行程序2     </span><br><span class="line">	;;   </span><br><span class="line">	…省略其他分支…   </span><br><span class="line">	*）    </span><br><span class="line">    	如果变量的值都不是以上的值，则执行此程序     </span><br><span class="line">    ;; </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">!/bin/bash</span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">	&quot;1&quot;)        </span><br><span class="line">		echo &quot;1&quot;</span><br><span class="line">	;;</span><br><span class="line">	&quot;2&quot;)        </span><br><span class="line">		echo &quot;2&quot;</span><br><span class="line">	;;</span><br><span class="line">	*)        </span><br><span class="line">		echo &quot;other&quot;</span><br><span class="line">	;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for 变量 in 值1 值2 值3…   </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done </span><br><span class="line">	</span><br><span class="line">或者 </span><br><span class="line"></span><br><span class="line">for (( 初始值;循环控制条件;变量变化 ))  </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例 –打印输出参数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">#打印数字</span><br><span class="line">for i in &quot;$*&quot;    </span><br><span class="line">	do      </span><br><span class="line">		echo &quot;The num is $i &quot;    </span><br><span class="line">	done</span><br><span class="line"></span><br><span class="line">for j in &quot;$@&quot;        </span><br><span class="line">	do        </span><br><span class="line">		echo &quot;The num is $j&quot;        </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例 – 从1加到100</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line"></span><br><span class="line">for((i=0;i&lt;=100;i++))</span><br><span class="line">	do        </span><br><span class="line">		s=$[$s+$i]</span><br><span class="line">	done</span><br><span class="line">	</span><br><span class="line">echo &quot;$s&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">while [ 条件判断式 ]   </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例 – 从1加到100</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line">i=1</span><br><span class="line"></span><br><span class="line">while [ $i -le 100 ]</span><br><span class="line">	do        </span><br><span class="line">		s=$[$s+$i]        </span><br><span class="line">		i=$[$i+1]</span><br><span class="line">	done</span><br><span class="line">	</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="read-读取控制台输入"><a href="#read-读取控制台输入" class="headerlink" title="read 读取控制台输入"></a>read 读取控制台输入</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read(选项)(参数)</span><br><span class="line">选项：</span><br><span class="line">-p：指定读取值时的提示符；</span><br><span class="line">-t：指定读取值时等待的时间（秒）。</span><br><span class="line"></span><br><span class="line">参数       </span><br><span class="line">变量：指定读取值的变量名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">read -t 7 -p &quot;please 7 miao input your name &quot; NAME</span><br><span class="line"></span><br><span class="line">echo $NAME</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="系统函数"><a href="#系统函数" class="headerlink" title="系统函数"></a>系统函数</h4><ul>
+<li><p>basename基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">basename [pathname] [suffix]		</span><br><span class="line"></span><br><span class="line">功能描述：basename命令会删掉所有的前缀包括最后一个（‘/’）字符，然后将字符串显示出来。</span><br><span class="line"></span><br><span class="line">选项：suffix为后缀，如果suffix被指定了，basename会将pathname或string中的suffix去掉。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<blockquote>
+<p>basename &#x2F;opt&#x2F;test.txt</p>
+<p>basename &#x2F;opt&#x2F;test.txt .txt</p>
+</blockquote>
+</li>
+<li><p>dirname基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dirname 文件绝对路径		</span><br><span class="line"></span><br><span class="line">功能描述：从给定的包含绝对路径的文件名中去除文件名（非目录的部分），然后返回剩下的路径（目录的部分）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<blockquote>
+<p>dirname &#x2F;opt&#x2F;test.txt</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ function ] funname[()]&#123;	</span><br><span class="line">	Action;	</span><br><span class="line">	[return int;]</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">funname</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p> （1）必须在调用函数地方之前，先声明函数，shell脚本是逐行运行。不会像其它语言一样先编译。</p>
+<p> （2）函数返回值，只能通过$?系统变量获得，可以显示加：return返回，如果不加，将以最后一条命令运行结果，作为返回值。return后跟数值n(0-255)</p>
+</li>
+<li><p>案例 –计算输入参数的和</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">function sum()&#123;    </span><br><span class="line">	s=0    </span><br><span class="line">	s=$[ $1 + $2 ]    </span><br><span class="line">	echo &quot;$s&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">read -p &quot;Please input the number1: &quot; n1;</span><br><span class="line">read -p &quot;Please input the number2: &quot; n2;</span><br><span class="line"></span><br><span class="line">sum $n1 $n2;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java IO</title>
+    <url>/2019/02/12/Java%20IO/</url>
+    <content><![CDATA[<h1 id="1-IO-基础"><a href="#1-IO-基础" class="headerlink" title="1. IO 基础"></a>1. IO 基础</h1><p><a href="20220708-3.jpg"><img src="/../../../../images/20220708-3.jpg" alt="Java SE框架.jpg"></a></p>
+<h2 id="1-1-java-io-file的使用"><a href="#1-1-java-io-file的使用" class="headerlink" title="1.1 java.io.file的使用"></a>1.1 java.io.file的使用</h2><p>java.io.File类：文件和目录路径名的抽象表示形式。</p>
+<ul>
+<li>File 能<strong>新建、删除、重命名文件和目录</strong>，但File 不能访问文件内容本身。如果需要访问文件内容本身，则需要使用输入&#x2F;输出流。</li>
+<li>File对象可以作为参数传递给流的构造函数</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">File win = new File(&quot;C:\\Windows&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(win.isDirectory()); // true</span><br><span class="line"></span><br><span class="line">File notepad = new File(&quot;C:\\Windows\\notepad.exe&quot;);</span><br><span class="line">System.out.println(notepad.isFile()); // true</span><br><span class="line"></span><br><span class="line">File dir = new File(&quot;C:\\abc\\xyz&quot;);</span><br><span class="line">System.out.println(dir.mkdir()); // -&gt; mkdirs</span><br><span class="line"></span><br><span class="line">File readme = new File(&quot;./src/readme.txt&quot;);</span><br><span class="line">System.out.println(readme.isFile()); //true</span><br><span class="line"></span><br><span class="line">System.out.println(readme.getAbsolutePath());</span><br><span class="line">System.out.println(readme.getCanonicalPath());</span><br></pre></td></tr></table></figure>
+
+<p><a href="20220708-4.jpg"><img src="/../../../../images/20220708-4.jpg" alt="20220708-4.jpg"></a></p>
+<h2 id="1-2-IO原理以及流的分类"><a href="#1-2-IO原理以及流的分类" class="headerlink" title="1.2 IO原理以及流的分类"></a>1.2 IO原理以及流的分类</h2><ul>
+<li>IO流用来处理设备之间的数据传输。</li>
+<li>Java对于数据的输入&#x2F;输出操作以”流(stream)”的方式进行。</li>
+<li>java.io包下提供了各种“流”类和接口, 通过标准的方法输入或输出数据。<ul>
+<li>输入input：读取外部数据（磁盘、光盘等存储设备的数据）到程序（内存）中。</li>
+<li>输出output：将程序（内存）数据输出到磁盘、光盘等存储设备中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-1-流的分类"><a href="#1-2-1-流的分类" class="headerlink" title="1.2.1 流的分类"></a>1.2.1 流的分类</h3><ul>
+<li>按操作数据单位不同分为：字节流(8bit)，字符流(16bit)</li>
+<li>按数据流的流向不同分为：输入流，输出流</li>
+<li>按流的角色的不同分为：节点流，处理流</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">抽象基类</th>
+<th align="center">字节流</th>
+<th>字符流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">输入流</td>
+<td align="center">InputStream</td>
+<td>Reader</td>
+</tr>
+<tr>
+<td align="center">输出流</td>
+<td align="center">OutputStream</td>
+<td>Writer</td>
+</tr>
+</tbody></table>
+<p>字节流：以byte为单位传输</p>
+<p>字符流：以char为单位传输</p>
+<ul>
+<li>节点流可以从一个特定的数据源读写数据。</li>
+<li>处理流是“连接”在已存在的流（节点流或处理流）之上，通过对数据的处理为程序提供更为强大的读写功能。</li>
+</ul>
+<p>Java的IO流共涉及40多个类，实际上非常规则，都是从如下4个抽象基类派生的。</p>
+<ul>
+<li><p>IO流体系</p>
+<p><a href="20220708-5.jpg"><img src="/../../../../images/20220708-5.jpg" alt="20220708-5.jpg"></a></p>
+</li>
+</ul>
+<h3 id="1-2-2-InputStream-amp-Reader"><a href="#1-2-2-InputStream-amp-Reader" class="headerlink" title="1.2.2 InputStream&amp; Reader"></a>1.2.2 InputStream&amp; Reader</h3><p>InputStream 和 Reader是所有输入流的基类。</p>
+<p>InputStream（典型实现：FileInputStream）</p>
+<ul>
+<li>intread()</li>
+<li>int read(byte[] b)</li>
+<li>intread(byte[] b, int off,int len)</li>
+</ul>
+<p>Reader（典型实现：FileReader）</p>
+<ul>
+<li>intread()</li>
+<li>int read(char [] c)</li>
+<li>intread(char [] c, int off,int len)</li>
+</ul>
+<p>注意：程序中打开的文件 IO 资源不属于内存里的资源，垃圾回收机制无法回收该资源，所以应该显式关闭文件IO 资源。</p>
+<h3 id="1-2-3-OutputStream-amp-Writer"><a href="#1-2-3-OutputStream-amp-Writer" class="headerlink" title="1.2.3 OutputStream&amp; Writer"></a>1.2.3 OutputStream&amp; Writer</h3><p>OutputStream 和 Writer也非常相似：</p>
+<ul>
+<li>void write(int b&#x2F;int c);</li>
+<li>void write(byte[] b&#x2F;char[]cbuf);</li>
+<li>void write(byte[] b&#x2F;char[]buff, int off, int len);</li>
+<li>void flush();</li>
+<li>void close(); 需要先刷新，再关闭此流</li>
+</ul>
+<p>因为字符流直接以字符作为操作单位，所以 Writer可以用字符串来替换字符数组，即以String对象作为参数</p>
+<p>void write(String str);</p>
+<p>void write(String str, intoff, intlen);</p>
+<h1 id="2-文件流"><a href="#2-文件流" class="headerlink" title="2. 文件流"></a>2. 文件流</h1><ol>
+<li><p>读取文件</p>
+<p>1.建立一个流对象，将已存在的一个文件加载进流。</p>
+<p>FileReader fr &#x3D; new FileReader(“Test.txt”);</p>
+<p>2.创建一个临时存放数据的数组。</p>
+<p>char[] ch &#x3D; new char[1024];</p>
+<p>3.调用流对象的读取方法将流中的数据读入到数组中。</p>
+<p>fr.read(ch);</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileReader fr = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fr = new FileReader(&quot;c:\\test.txt&quot;);		</span><br><span class="line">	char[] buf = new char[1024];		</span><br><span class="line">	int len= 0;		</span><br><span class="line">	while((len=fr.read(buf))!=-1)&#123;			</span><br><span class="line">		System.out.println(new String(buf ,0,len));			</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(&quot;read-Exception :&quot;+e.toString());		</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fr!=null)&#123;			</span><br><span class="line">		try&#123;				</span><br><span class="line">			fr.close();			</span><br><span class="line">		&#125;catch (IOException e)&#123;				</span><br><span class="line">			System.out.println(&quot;close-Exception :&quot;+e.toString());			</span><br><span class="line">		&#125; 		</span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>写入文件</p>
+<p>1.创建流对象，建立数据存放文件</p>
+<p>FileWriter fw &#x3D; new FileWriter(“Test.txt”);</p>
+<p>2.调用流对象的写入方法，将数据写入流</p>
+<p>fw.write(“text”);</p>
+<p>3.关闭流资源，并将流中的数据清空到文件中。</p>
+<p>fw.close();</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileWriter fw = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fw = new FileWriter(&quot;Test.txt&quot;);		</span><br><span class="line">	fw.write(&quot;text&quot;);	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(e.toString());	</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fw!=null)&#123;		</span><br><span class="line">		try&#123;		 </span><br><span class="line">			fw.close();		</span><br><span class="line">		&#125;catch (IOException e)&#123;			</span><br><span class="line">			System.out.println(e.toString());		</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注 意:</p>
+<ul>
+<li>定义文件路径时，注意：可以用“&#x2F;”或者“\”。</li>
+<li>在写入一个文件时，如果目录下有同名文件将被覆盖。</li>
+<li>在读取文件时，必须保证该文件已存在，否则出异常。</li>
+</ul>
+</li>
+</ol>
+<h1 id="3-缓冲流-处理流"><a href="#3-缓冲流-处理流" class="headerlink" title="3. 缓冲流(处理流)"></a>3. 缓冲流(处理流)</h1><p>为了提高数据读写的速度，JavaAPI提供了带缓冲功能的流类，在使用这些流类时，会创建一个内部缓冲区数组。</p>
+<p>根据数据操作单位可以把缓冲流分为：</p>
+<ul>
+<li>BufferedInputStream 和 BufferedOutputStream</li>
+<li>BufferedReader 和 BufferedWriter</li>
+</ul>
+<p>缓冲流要“套接”在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写的效率，同时增加了一些新的方法。</p>
+<p><strong>对于输出的缓冲流，写出的数据会先在内存中缓存，使用flush()将会使内存中的数据立刻写出。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BufferedReader br = null;</span><br><span class="line">BufferedWriter bw = null;		</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">//step1:创建缓冲流对象：它是过滤流，是对节点流的包装	</span><br><span class="line">	br = new  BufferedReader(new FileReader(&quot;d:\\IOTest\\source.txt&quot;));	</span><br><span class="line">	bw = new BufferedWriter(new FileWriter(&quot;d:\\IOTest\\destBF.txt&quot;));	</span><br><span class="line">	String str = null;	</span><br><span class="line">	</span><br><span class="line">	while ((str = br.readLine()) != null) &#123; </span><br><span class="line">		//一次读取字符文本文件的一行字符				</span><br><span class="line">		bw.write(str); //一次写入一行字符串		</span><br><span class="line">		bw.newLine();  //写入行分隔符	</span><br><span class="line">	&#125; 	</span><br><span class="line">	bw.flush();  </span><br><span class="line">	</span><br><span class="line">	//step2:刷新缓冲区</span><br><span class="line">&#125; catch (IOException e) &#123;	</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">	// step3: 关闭IO流对象	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (bw != null) &#123;			</span><br><span class="line">			bw.close();  //关闭过滤流时,会自动关闭它所包装的底层节点流		</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125;	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (br != null) &#123;		</span><br><span class="line">			br.close();		</span><br><span class="line">		&#125;  	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>常见的编码表</p>
+<ul>
+<li>ASCII：美国标准信息交换码。用一个字节的7位可以表示。</li>
+<li>ISO8859-1：拉丁码表。欧洲码表。用一个字节的8位表示。</li>
+<li>GB2312：中国的中文编码表。</li>
+<li>GBK：中国的中文编码表升级，融合了更多的中文文字符号。</li>
+<li>Unicode：国际标准码，融合了多种文字。所有文字都用两个字节来表示,Java语言使用的就是unicode</li>
+<li>UTF-8：最多用三个字节来表示一个字符。</li>
+</ul>
+<p><strong>编码：字符串—&gt;字节数组</strong></p>
+<p><strong>解码：字节数组—&gt;字符串</strong></p>
+<h1 id="4-对象流"><a href="#4-对象流" class="headerlink" title="4. 对象流"></a>4. 对象流</h1><ul>
+<li>ObjectInputStream和OjbectOutputSteam</li>
+<li>用于存储和读取对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。</li>
+<li>序列化(Serialize)：用ObjectOutputStream类将一个Java对象写入IO流中</li>
+<li>反序列化(Deserialize)：用ObjectInputStream类从IO流中恢复该Java对象</li>
+</ul>
+<p>ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量。</p>
+]]></content>
+      <tags>
+        <tag>Java基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 初学习</title>
+    <url>/2018/12/31/Linux%20%E5%88%9D%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Linux入门"><a href="#Linux入门" class="headerlink" title="Linux入门"></a>Linux入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Linux是一套免费使用和自由传播的类Unix操作系统。</p>
+<p>目前知名的发行版有：Ubuntu、RedHat、CentOS、Debain、Fedora、SuSE、OpenSUSE</p>
+<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><p>centos下载地址：</p>
+<ul>
+<li>网易镜像：<a href="http://mirrors.163.com/centos/6/isos/">http://mirrors.163.com/centos/6/isos/</a></li>
+<li>搜狐镜像：<a href="http://mirrors.sohu.com/centos/6/isos/">http://mirrors.sohu.com/centos/6/isos/</a></li>
+</ul>
+<h3 id="Linux特点"><a href="#Linux特点" class="headerlink" title="Linux特点"></a>Linux特点</h3><ul>
+<li>Linux里面一切皆是文件</li>
+<li>Linux里面没有后缀名这一说</li>
+</ul>
+<h3 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a>Linux目录结构</h3><ul>
+<li><p>&#x2F;bin：是Binary的缩写，这个目录存放着系统必备执行命令</p>
+</li>
+<li><p>&#x2F;boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件，自己的安装别放这里</p>
+</li>
+<li><p>&#x2F;dev：Device(设备)的缩写，该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</p>
+</li>
+<li><p>&#x2F;etc：所有的系统管理所需要的配置文件和子目录。</p>
+</li>
+<li><p>&#x2F;home：存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</p>
+</li>
+<li><p>&#x2F;lib：系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。</p>
+</li>
+<li><p>&#x2F;opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</p>
+</li>
+<li><p>&#x2F;root：该目录为系统管理员，也称作超级权限者的用户主目录。</p>
+</li>
+<li><p>&#x2F;sbin：s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</p>
+</li>
+<li><p>&#x2F;tmp：这个目录是用来存放一些临时文件的。</p>
+</li>
+<li><p>&#x2F;usr： 这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</p>
+</li>
+<li><p>&#x2F;var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</p>
+</li>
+</ul>
+<h3 id="VI-x2F-VIM编辑器"><a href="#VI-x2F-VIM编辑器" class="headerlink" title="VI&#x2F;VIM编辑器"></a>VI&#x2F;VIM编辑器</h3><ul>
+<li><p>Vim编辑器三种模式</p>
+<ul>
+<li><p>指令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
+</li>
+<li><p>编辑模式：正常的文本录入。</p>
+</li>
+<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
+<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
+</li>
+<li><p>命令模式中最常用的一些命令</p>
+<ul>
+<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
+<li>shirft+g 跳转到最后一行</li>
+</ul>
+</li>
+<li><p>末行模式常用的一些命令</p>
+<ul>
+<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统管理操作"><a href="#系统管理操作" class="headerlink" title="系统管理操作"></a>系统管理操作</h3><ul>
+<li><p>查看ip ：ifconfig</p>
+</li>
+<li><p>查看主机名：hostname</p>
+</li>
+<li><p>修改此主机名： vim &#x2F;etc&#x2F;hosts</p>
+</li>
+<li><p>防火墙</p>
+<ul>
+<li>service iptables status （功能描述：查看防火墙状态）</li>
+<li>chkconfig iptables -list （功能描述：查看防火墙开机启动状态）</li>
+<li>service iptables stop （功能描述：临时关闭防火墙）</li>
+<li>chkconfig iptables off （功能描述：关闭防火墙开机启动）</li>
+<li>chkconfig iptables on （功能描述：开启防火墙开机启动）</li>
+</ul>
+</li>
+<li><p>关机重启</p>
+<p>linux大多用在服务器上，很少遇到关机的操作。</p>
+<ul>
+<li><p>shutdown[选项] 时间</p>
+<p>选项：</p>
+<p> -h：关机</p>
+<p> -r：重启</p>
+</li>
+<li><p>halt（功能描述：关闭系统）等同shutdown -h now 和 poweroff</p>
+</li>
+<li><p>reboot（功能描述：就是重启，等同于 shutdown -r now）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h2><h3 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h3><ul>
+<li><p>man[命令或配置文件] 获得帮助信息</p>
+</li>
+<li><p>help 命令 获得shell内置命令的帮助信息</p>
+</li>
+<li><p>常用快捷键</p>
+<p>1）ctrl+ c：停止进程</p>
+<p>2）ctrl+l：清屏</p>
+<p>3）ctrl+ q：退出</p>
+<p>4）善于用tab键</p>
+<p>5）上下键：查找执行过的命令</p>
+<p>6）ctrl+alt：linux和Windows之间切换</p>
+</li>
+</ul>
+<h3 id="文件目录类"><a href="#文件目录类" class="headerlink" title="文件目录类"></a>文件目录类</h3><ul>
+<li><p>pwd 显示当前工作目录的绝对路径</p>
+</li>
+<li><p>ll 列出目录的内容</p>
+</li>
+<li><p>mkdir [-p] 要创建的目录</p>
+<p> 选项：-p ：创建多层目录</p>
+</li>
+<li><p>rmdir 删除一个空的目录</p>
+</li>
+<li><p>touch 文件名称 –创建空文件</p>
+</li>
+<li><p>cd 切换目录</p>
+</li>
+</ul>
+<p> （1）cd ~或者cd （功能描述：回到自己的家目录）</p>
+<p> （2）cd - （功能描述：回到上一次所在目录）</p>
+<p> （3）cd .. （功能描述：回到当前目录的上一级目录）</p>
+<ul>
+<li><p>cp 复制文件或目录</p>
+<p>（1）cp source dest （功能描述：复制source文件到dest）</p>
+<p>（2）cp -r source target （功能描述：递归复制整个文件夹）</p>
+</li>
+<li><p>rm 移除文件或目录</p>
+<p>（1）rmdir deleteEmptyFolder （功能描述：删除空目录）</p>
+<p>（2）rm -rf deleteFile （功能描述：递归删除目录中所有内容）</p>
+</li>
+<li><p>mv 移动文件与目录或重命名</p>
+<p>（1）mv oldNameFile newNameFile （功能描述：重命名）</p>
+<p>（2）mv &#x2F;movefile &#x2F;targetFolder （功能描述：递归移动文件）</p>
+</li>
+<li><p>cat 查看文件内容</p>
+<p>cat [选项] 要查看的文件</p>
+<p>选项：</p>
+<p>-A：相当于 -vET 的整合选项，可列出一些特殊字符而不是空白而已；</p>
+<p>-b：列出行号，仅针对非空白行做行号显示，空白行不标行号！</p>
+<p>-E：将结尾的断行字节 $ 显示出来；</p>
+<p>-n ：列出行号，连同空白行也会有行号，与 -b 的选项不同；</p>
+<p>-T：将 [tab] 按键以 ^I 显示出来；</p>
+<p>-v ：列出一些看不出来的特殊字符</p>
+</li>
+<li><p>tac 查看文件内容</p>
+<p>查看文件内容，从最后一行开始显示，可以看出 tac 是 cat 的倒著写。</p>
+</li>
+<li><p>more 查看文件内容</p>
+<p>功能使用说明：</p>
+<p>空白键 (space)：代表向下翻一页；</p>
+<p>Enter:代表向下翻『一行』；</p>
+<p>q:代表立刻离开 more ，不再显示该文件内容。</p>
+<p>Ctrl+F 向下滚动一屏</p>
+<p>Ctrl+B 返回上一屏</p>
+<p>&#x3D; 输出当前行的行号</p>
+<p>:f 输出文件名和当前行的行号</p>
+</li>
+<li><p>less 查看文件内容</p>
+<p>less 的作用与 more 十分相似，都可以用来浏览文字档案的内容，不同的是 less 允许使用pageup，pagedown往回滚动。</p>
+</li>
+<li><p>head查看文件内容</p>
+<p>查看文件内容，只看头几行。</p>
+<p>基本语法 ：head -n 10 文件（功能描述：查看文件头10行内容，10可以是任意行数）</p>
+</li>
+<li><p>tail 查看文件内容</p>
+<p>查看文件内容，只看尾巴几行。</p>
+<p>基本语法</p>
+<p>（1）tail -n 10 文件 （功能描述：查看文件头10行内容，10可以是任意行数）</p>
+<p>（2）tail -f 文件 （功能描述：实时追踪该文档的所有更新）</p>
+</li>
+<li><p><strong>重定向命令</strong></p>
+<p>基本语法：</p>
+<p>（1）ls -l &gt;文件 （功能描述：列表的内容写入文件a.txt中（覆盖写））</p>
+<p>（2）ls -al &gt;&gt;文件 （功能描述：列表的内容追加到文件aa.txt的末尾）</p>
+</li>
+<li><p>echo</p>
+<p>基本语法：</p>
+<p>（1）echo 要显示的内容 &gt;&gt; 存储内容的的文件 （功能描述：将要显 示的内容，存储到文件中）</p>
+<p>（2）echo 变量（功能描述：显示变量的值）</p>
+</li>
+<li><p>ln软链接(相当于快捷方式)</p>
+<p>基本语法：ln -s 原文件 目标文件</p>
+<p>（功能描述：给原文件创建一个软链接，软链接存放在目标文件目录）</p>
+<p>删除软链接： rm -rf atguigu，而不是rm -rf atguigu&#x2F;</p>
+</li>
+<li><p>history 查看所敲命令历史</p>
+</li>
+</ul>
+<h3 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h3>]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux 常用命令</title>
     <url>/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
@@ -347,6 +1114,613 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis入门</title>
+    <url>/2019/01/10/Redis%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h2 id="初识Redis"><a href="#初识Redis" class="headerlink" title="初识Redis"></a>初识Redis</h2><h3 id="nosql介绍"><a href="#nosql介绍" class="headerlink" title="nosql介绍"></a>nosql介绍</h3><p>NoSQL：一类新出现的数据库(not only sql)，特点：</p>
+<ul>
+<li>不支持SQL语法</li>
+<li>存储结构跟传统关系型数据库中的那种关系表完全不同，nosql中存储的数据都是KV形式</li>
+<li>NoSQL的世界中没有一种通用的语言，每种nosql数据库都有自己的api和语法，以及擅长的业务场景</li>
+<li>NoSQL中的产品种类相当多：<ul>
+<li>Mongodb</li>
+<li>Redis</li>
+<li>Hbase hadoop</li>
+</ul>
+</li>
+<li>NoSQL和SQL数据库的比较：<ul>
+<li>适用场景不同：sql数据库适合用于关系特别复杂的数据查询场景，nosql反之</li>
+<li>“事务”特性的支持：sql对事务的支持非常完善，而nosql基本不支持事务</li>
+<li>两者在不断地取长补短，呈现融合趋势</li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h2><p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</p>
+<p>Redis是 NoSQL技术阵营中的一员，它通过多种键值数据类型来适应不同场景下的存储需求，可以胜任，如缓存、队列系统的不同角色。</p>
+<h3 id="Redis特性"><a href="#Redis特性" class="headerlink" title="Redis特性"></a>Redis特性</h3><p>Redis 与其他 key - value 缓存产品有以下三个特点：</p>
+<ul>
+<li>支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
+<li>不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
+<li>支持数据的备份（集群模式），即master-slave模式的数据备份。</li>
+</ul>
+<h3 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h3><ul>
+<li>性能极高，读写速度极快。</li>
+<li>丰富的数据类型。支持Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li>
+<li>原子操作 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li>
+<li>丰富的特性。通知, key 过期等。</li>
+</ul>
+<h3 id="Redis应用场景"><a href="#Redis应用场景" class="headerlink" title="Redis应用场景"></a>Redis应用场景</h3><ul>
+<li>用来做缓存(ehcache&#x2F;memcached)——redis的所有数据是放在内存中的（内存数据库）</li>
+<li>在某些特定应用场景下替代传统数据库——比如社交类的应用</li>
+<li>在一些大型系统中，巧妙地实现一些特定的功能：session共享、购物车</li>
+</ul>
+<h2 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h2><h3 id="方法1：源码编译"><a href="#方法1：源码编译" class="headerlink" title="方法1：源码编译"></a>方法1：源码编译</h3><ol>
+<li><p>下载</p>
+<p>wget <a href="http://download.redis.io/releases/redis-3.2.8.tar.gz">http://download.redis.io/releases/redis-3.2.8.tar.gz</a></p>
+</li>
+<li><p>解压</p>
+<p>tar -zxvf redis-3.2.8.tar.gz</p>
+</li>
+<li><p>复制，放到opt&#x2F;⽬录下</p>
+<p>sudo mv .&#x2F;redis-3.2.8 &#x2F;opt&#x2F;redis&#x2F;</p>
+</li>
+<li><p>进⼊redis⽬录</p>
+<p>cd &#x2F;opt&#x2F;redis&#x2F;</p>
+</li>
+<li><p>生成</p>
+<p>sudo make</p>
+</li>
+<li><p>测试—时间会较⻓</p>
+<p>sudo make test</p>
+</li>
+<li><p>安装, 将redis的命令安装到&#x2F;usr&#x2F;local&#x2F;redis&#x2F;⽬录</p>
+<p>sudo make install PREFIX&#x3D;&#x2F;usr&#x2F;local&#x2F;redis</p>
+</li>
+<li><p>安装完成, 进入目录&#x2F;usr&#x2F;local&#x2F;redis中查看</p>
+<blockquote>
+<p>cd &#x2F;usr&#x2F;local&#x2F;redis</p>
+</blockquote>
+<blockquote>
+<p>ll</p>
+</blockquote>
+<ul>
+<li>redis-server redis服务器</li>
+<li>redis-cli redis命令行客户端</li>
+<li>redis-benchmark redis性能测试工具</li>
+<li>redis-check-aof AOF文件修复工具</li>
+<li>redis-check-rdb RDB文件检索工具</li>
+</ul>
+</li>
+<li><p>配置⽂件，移动到&#x2F;etc&#x2F;⽬录下</p>
+<p>sudo cp &#x2F;opt&#x2F;redis&#x2F;redis.conf &#x2F;etc&#x2F;redis&#x2F;</p>
+</li>
+</ol>
+<h3 id="apt安装"><a href="#apt安装" class="headerlink" title="apt安装"></a>apt安装</h3><ol>
+<li>sudo apt-get update</li>
+<li>sudo apt-get install redis-server</li>
+<li>service redis status –查看redis服务的状态为running，说明安装完成系统自动启动了服务</li>
+</ol>
+<h3 id="配置redis"><a href="#配置redis" class="headerlink" title="配置redis"></a>配置redis</h3><ul>
+<li><p>cd &#x2F;etc&#x2F;redis&#x2F;redis.conf</p>
+<p>开启远程连接：注释掉 127.0.0.1 #bind 127.0.0.1</p>
+<p>设置密码 : 添加 requirepass 123456（密码设置为123456）</p>
+</li>
+<li><p>重启redis服务</p>
+<p>停止&#x2F;启动&#x2F;重启redis</p>
+<blockquote>
+<p>&#x2F;etc&#x2F;init.d&#x2F;redis-server stop</p>
+</blockquote>
+<blockquote>
+<p>&#x2F;etc&#x2F;init.d&#x2F;redis-server start</p>
+</blockquote>
+<blockquote>
+<p>&#x2F;etc&#x2F;init.d&#x2F;redis-server restart</p>
+</blockquote>
+</li>
+<li><p>核心配置选项</p>
+<ul>
+<li><p>绑定ip：如果需要远程访问，可将此⾏注释，或绑定⼀个真实ip</p>
+<blockquote>
+<p>bind 127.0.0.1</p>
+</blockquote>
+</li>
+<li><p>端⼝，默认为6379</p>
+<blockquote>
+<p>port 6379</p>
+</blockquote>
+</li>
+<li><p>是否以守护进程运⾏</p>
+<ul>
+<li>如果以守护进程运⾏，则不会在命令⾏阻塞，类似于服务</li>
+<li>如果以⾮守护进程运⾏，则当前终端被阻塞</li>
+<li>设置为yes表示守护进程，设置为no表示⾮守护进程</li>
+<li>推荐设置为yes</li>
+</ul>
+<blockquote>
+<p>daemonize yes</p>
+</blockquote>
+</li>
+<li><p>数据⽂件</p>
+<blockquote>
+<p>dbfilename dump.rdb</p>
+</blockquote>
+</li>
+<li><p>数据⽂件存储路径</p>
+<blockquote>
+<p>dir &#x2F;var&#x2F;lib&#x2F;redis</p>
+</blockquote>
+</li>
+<li><p>⽇志⽂件</p>
+<blockquote>
+<p>logfile &#x2F;var&#x2F;log&#x2F;redis&#x2F;redis-server.log</p>
+</blockquote>
+</li>
+<li><p>数据库，默认有16个</p>
+<blockquote>
+<p>database 16</p>
+</blockquote>
+</li>
+<li><p>主从复制，类似于双机备份。</p>
+<blockquote>
+<p>slaveof</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="测试redis服务"><a href="#测试redis服务" class="headerlink" title="测试redis服务"></a>测试redis服务</h3><ul>
+<li><p>服务端测试</p>
+<ol>
+<li>redis-cli 打开redis客户端</li>
+<li>auth 123456–先验证身份</li>
+<li>set a “sss”</li>
+<li>get a</li>
+</ol>
+</li>
+<li><p>测试远程登录</p>
+<p>本地window打开一个客户端 ,cd到redis安装的目录，主要是要有redis-cli.exe的目录</p>
+<ol>
+<li>redis-cli -h redis服务器IP -p redis服务端口号(默认6379)</li>
+<li>auth 123456–先验证身份</li>
+<li>set a “sss”</li>
+<li>get a</li>
+</ol>
+</li>
+</ul>
+<h2 id="服务器端和客户端"><a href="#服务器端和客户端" class="headerlink" title="服务器端和客户端"></a>服务器端和客户端</h2><h4 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h4><p>Redis服务器负责与多个客户端建立网络连接，处理客户端发送的命令 请求，在数据库中保存客户端执行命令所产生的数据，并通过资源管理来维持服务器自身的运转。<strong>服务器可以接受外来客户端的网络连接</strong>。</p>
+<ul>
+<li><p>服务器端的命令为redis-server</p>
+</li>
+<li><p>可以使⽤help查看帮助⽂档</p>
+<blockquote>
+<p>redis-server –help</p>
+</blockquote>
+</li>
+<li><p>推荐使⽤服务的⽅式管理redis服务</p>
+<ul>
+<li><p>启动</p>
+<blockquote>
+<p>sudo service redis start</p>
+</blockquote>
+</li>
+<li><p>停⽌</p>
+<blockquote>
+<p>sudo service redis stop</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>重启 sudo service redis restart</p>
+</li>
+<li><p>推荐</p>
+<blockquote>
+<p>ps -ef|grep redis 查看redis服务器进程<br>sudo kill -9 pid 杀死redis服务器<br>sudo redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf 指定加载的配置文件</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><ul>
+<li><p>客户端的命令</p>
+<blockquote>
+<p>redis-cli</p>
+</blockquote>
+</li>
+<li><p>可以使⽤help查看帮助⽂档</p>
+<blockquote>
+<p>redis-cli –help</p>
+</blockquote>
+</li>
+<li><p>连接redis</p>
+<blockquote>
+<p>redis-cli</p>
+</blockquote>
+</li>
+<li><p>切换到数据库n</p>
+<p>数据库没有名称，默认有16个，通过0-15来标识，连接redis默认选择第一个数据库</p>
+<blockquote>
+<p>select n</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><ul>
+<li>redis是key-value的数据结构，每条数据都是⼀个键值对</li>
+<li>键的类型是字符串</li>
+<li>注意：键不能重复</li>
+</ul>
+<p><a href="20220708-1.jpg"><img src="/../../../../images/20220708-1.jpg" alt="img"></a></p>
+<ul>
+<li><p>值的类型分为五种：</p>
+<ul>
+<li>字符串string</li>
+<li>哈希hash</li>
+<li>列表list</li>
+<li>集合set</li>
+<li>有序集合zset</li>
+</ul>
+</li>
+<li><h1 id="数据操作行为"><a href="#数据操作行为" class="headerlink" title="数据操作行为"></a>数据操作行为</h1><ul>
+<li>保存</li>
+<li>修改</li>
+<li>获取</li>
+<li>删除</li>
+</ul>
+</li>
+</ul>
+<h4 id="键命令"><a href="#键命令" class="headerlink" title="键命令"></a>键命令</h4><ul>
+<li><p>查找键</p>
+<blockquote>
+<p>keys pattern</p>
+<ul>
+<li>查看所有键: keys *</li>
+<li>查看名称中包含a的键: keys ‘a*’</li>
+</ul>
+</blockquote>
+</li>
+<li><p>判断键是否存在</p>
+<blockquote>
+<p>exists key</p>
+</blockquote>
+</li>
+<li><p>查看键对应的value的类型</p>
+<blockquote>
+<p>type key</p>
+</blockquote>
+</li>
+<li><p>删除键及对应的值</p>
+<blockquote>
+<p>del key1 key2 …</p>
+</blockquote>
+</li>
+<li><p>设置过期时间，以秒为单位</p>
+<blockquote>
+<p>expire key seconds</p>
+</blockquote>
+</li>
+<li><p>查看有效时间，以秒为单位</p>
+<blockquote>
+<p>ttl key</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="string类型"><a href="#string类型" class="headerlink" title="string类型"></a>string类型</h4><p> 字符串类型是Redis中最为基础的数据存储类型，在Redis中是二进制安全的。该类型可以接受任何格式的数据，如 JPEG图像数据或Json对象描述信息等。<strong>最多可以容纳的数据长度是512M</strong>。</p>
+<h5 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h5><ul>
+<li><p>设置键值</p>
+<blockquote>
+<p>set key value</p>
+</blockquote>
+</li>
+<li><p>设置键值及过期时间，以秒为单位</p>
+<blockquote>
+<p>setex key seconds value</p>
+</blockquote>
+<p>ex. set name 3 zhangsan</p>
+</li>
+<li><p>设置多个键值</p>
+<blockquote>
+<p>mset key1 value1 key2 value2 …</p>
+</blockquote>
+</li>
+<li><p>追加值—-向键中追加值</p>
+<blockquote>
+<p>append key value</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h5><ul>
+<li><p>获取：根据键获取值，如果不存在此键则返回nil</p>
+<blockquote>
+<p>get key</p>
+</blockquote>
+</li>
+<li><p>根据多个键获取多个值</p>
+<blockquote>
+<p>mget key1 key2 …</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h5><ul>
+<li>删除键时会将值删除</li>
+</ul>
+<h4 id="hash类型"><a href="#hash类型" class="headerlink" title="hash类型"></a>hash类型</h4><ul>
+<li>hash⽤于存储对象，对象的结构为<strong>属性、值</strong></li>
+<li>值的类型为string</li>
+</ul>
+<h5 id="增加、修改"><a href="#增加、修改" class="headerlink" title="增加、修改"></a>增加、修改</h5><ul>
+<li><p>设置单个属性</p>
+<blockquote>
+<p>hset key field value</p>
+</blockquote>
+<ul>
+<li><p>例1：设置键 user的属性name为itheima</p>
+</li>
+<li><p>hset user name itheima</p>
+</li>
+<li><p>报exxro:MISCONF Redis is configured to save RDB snapshots..</p>
+<p>Redis被配置为保存数据库快照，但它目前不能持久化到硬盘。用来修改集合数据的命令不能用。</p>
+<p>原因：强制关闭Redis快照导致不能持久化。 解决方案：</p>
+<ul>
+<li>redis中运行：config set stop-writes-on-bgsave-error no</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>设置多个属性</p>
+<blockquote>
+<p>hmset key field1 value1 field2 value2 …</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="获取-1"><a href="#获取-1" class="headerlink" title="获取"></a>获取</h5><ul>
+<li><p>获取指定键所有的属性</p>
+<blockquote>
+<p>hkeys key</p>
+</blockquote>
+</li>
+<li><p>获取⼀个属性的值</p>
+<blockquote>
+<p>hget key field</p>
+</blockquote>
+</li>
+<li><p>获取多个属性的值</p>
+<blockquote>
+<p>hmget key field1 field2 …</p>
+</blockquote>
+</li>
+<li><p>获取所有属性的值</p>
+<blockquote>
+<p>hvals key</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h5><ul>
+<li><p>删除整个hash键及值，使⽤del命令</p>
+<blockquote>
+<p>del key</p>
+</blockquote>
+</li>
+<li><p>删除属性，属性对应的值会被⼀起删除</p>
+<blockquote>
+<p>hdel key field1 field2 …</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="list类型"><a href="#list类型" class="headerlink" title="list类型"></a>list类型</h4><ul>
+<li>列表的元素类型为string</li>
+<li>按照插⼊顺序排序</li>
+</ul>
+<h5 id="获取-2"><a href="#获取-2" class="headerlink" title="获取"></a>获取</h5><ul>
+<li><p>返回列表⾥指定范围内的元素</p>
+<ul>
+<li>start、stop为元素的下标索引</li>
+<li>索引从左侧开始，第⼀个元素为0</li>
+<li>索引可以是负数，表示从尾部开始计数，如-1表示最后⼀个元素</li>
+</ul>
+<blockquote>
+<p>lrange key start stop</p>
+</blockquote>
+</li>
+<li><p>例4：获取键为’a1’的列表所有元素</p>
+<blockquote>
+<p>lrange a1 0 -1</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="增加"><a href="#增加" class="headerlink" title="增加"></a>增加</h5><ul>
+<li><p>在左侧插⼊数据</p>
+<blockquote>
+<p>lpush key value1 value2 …</p>
+</blockquote>
+<ul>
+<li><p>例1：从键为’a1’的列表左侧加⼊数据a 、 b 、c</p>
+<blockquote>
+<p>lpush a1 a b c</p>
+<p>lrange a1 0 3</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>在右侧插⼊数据</p>
+<blockquote>
+<p>rpush key value1 value2 …</p>
+</blockquote>
+<ul>
+<li><p>例2：从键为’a1’的列表右侧加⼊数据0 1</p>
+<blockquote>
+<p>rpush a1 0 1</p>
+<p>lrange a1 0 5</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>在指定元素的前或后插⼊新元素</p>
+<blockquote>
+<p>linsert key before或after 现有元素 新元素</p>
+</blockquote>
+<ul>
+<li><p>例3：在键为’a1’的列表中元素’b’前加⼊’3’</p>
+<blockquote>
+<p>linsert a1 before b 3</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h5><ul>
+<li><p>设置指定索引位置的值</p>
+<ul>
+<li>索引从左侧开始，第⼀个元素为0</li>
+<li>索引可以是负数，表示尾部开始计数，如-1表示最后⼀个元素</li>
+</ul>
+<blockquote>
+<p>lset key index value</p>
+</blockquote>
+<ul>
+<li><p>例5：修改键为’a1’的列表中下标为1的元素值为’z’</p>
+<blockquote>
+<p>lset a 1 z</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="删除-2"><a href="#删除-2" class="headerlink" title="删除"></a>删除</h5><ul>
+<li><p>删除指定元素</p>
+<ul>
+<li>将列表中<strong>前count次出现的值为value的元素移除</strong></li>
+<li>count &gt; 0: 从头往尾移除</li>
+<li>count &lt; 0: 从尾往头移除</li>
+<li>count &#x3D; 0: 移除所有</li>
+</ul>
+<blockquote>
+<p>lrem key count value</p>
+</blockquote>
+<ul>
+<li><p>例6.1：向列表’a2’中加⼊元素’a’、’b’、’a’、’b’、’a’、’b’</p>
+<blockquote>
+<p>lpush a2 a b a b a b</p>
+</blockquote>
+</li>
+<li><p>例6.2：从’a2’列表右侧开始删除2个’b’</p>
+<blockquote>
+<p>lrem a2 -2 b</p>
+</blockquote>
+</li>
+<li><p>例6.3：查看列表’py12’的所有元素</p>
+<blockquote>
+<p>lrange a2 0 -1</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="set类型"><a href="#set类型" class="headerlink" title="set类型"></a>set类型</h4><ul>
+<li>⽆序集合</li>
+<li>元素为string类型</li>
+<li>元素具有唯⼀性，不重复</li>
+<li><strong>说明：对于集合没有修改操作</strong></li>
+</ul>
+<p>#####　增加</p>
+<ul>
+<li><p>添加元素</p>
+<blockquote>
+<p>sadd key member1 member2 …</p>
+</blockquote>
+<ul>
+<li><p>例1：向键’a3’的集合中添加元素’zhangsan’、’lisi’、’wangwu’</p>
+<blockquote>
+<p>sadd a3 zhangsan sili wangwu</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="获取-3"><a href="#获取-3" class="headerlink" title="获取"></a>获取</h5><ul>
+<li><p>删除指定元素</p>
+<blockquote>
+<p>srem key</p>
+</blockquote>
+<ul>
+<li><p>例3：删除键’a3’的集合中元素’wangwu’</p>
+<blockquote>
+<p>srem a3 wangwu</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="zet类型"><a href="#zet类型" class="headerlink" title="zet类型"></a>zet类型</h4><ul>
+<li>sorted set，有序集合</li>
+<li>元素为string类型</li>
+<li>元素具有唯⼀性，不重复</li>
+<li><strong>每个元素都会关联⼀个double类型的score，表示权重，通过权重将元素从⼩到⼤排序</strong></li>
+<li><strong>说明：没有修改操作</strong></li>
+</ul>
+<h5 id="增加-1"><a href="#增加-1" class="headerlink" title="增加"></a>增加</h5><ul>
+<li><p>添加</p>
+<blockquote>
+<p>zadd key score1 member1 score2 member2 …</p>
+</blockquote>
+</li>
+<li><p>例1：向键’a4’的集合中添加元素’lisi’、’wangwu’、’zhaoliu’、’zhangsan’，权重分别为4、5、6、3</p>
+<blockquote>
+<p>zadd a4 4 lisi 5 wangwu 6 zhaoliu 3 zhangsan</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="获取-4"><a href="#获取-4" class="headerlink" title="获取"></a>获取</h5><ul>
+<li><p>返回指定范围内的元素</p>
+</li>
+<li><p>start、stop为元素的下标索引</p>
+</li>
+<li><p>索引从左侧开始，第⼀个元素为0</p>
+</li>
+<li><p>索引可以是负数，表示从尾部开始计数，如-1表示最后⼀个元素</p>
+<blockquote>
+<p>zrange key start stop</p>
+</blockquote>
+<ul>
+<li><p>例2：获取键’a4’的集合中所有元素</p>
+<blockquote>
+<p>zrange a4 0 -1</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>返回score值在min和max之间的成员</p>
+<blockquote>
+<p>zrangebyscore key min max</p>
+</blockquote>
+</li>
+<li><p>返回成员member的score值</p>
+<blockquote>
+<p>zscore key member</p>
+</blockquote>
+<ul>
+<li><p>例4：获取键’a4’的集合中元素’zhangsan’的权重</p>
+<blockquote>
+<p>zscore a4 zhangsan</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="删除-3"><a href="#删除-3" class="headerlink" title="删除"></a>删除</h5><ul>
+<li><p>删除指定元素</p>
+<blockquote>
+<p>zrem key member1 member2 …</p>
+</blockquote>
+</li>
+<li><p>删除权重在指定范围的元素</p>
+<blockquote>
+<p>zremrangebyscore key min max</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Redis</tag>
+        <tag>NoSQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo start!</title>
     <url>/2018/01/10/hexo-start/</url>
     <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
@@ -384,7 +1758,7 @@
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#105;&#x74;&#x40;&#x67;&#x69;&#x74;&#104;&#x75;&#98;&#46;&#99;&#111;&#109;">&#103;&#105;&#x74;&#x40;&#x67;&#x69;&#x74;&#104;&#x75;&#98;&#46;&#99;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
@@ -436,279 +1810,470 @@
       </tags>
   </entry>
   <entry>
-    <title>Hadoop入门</title>
-    <url>/2018/12/28/Hadoop%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
-<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
+    <title>数据结构基础</title>
+    <url>/2019/01/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="1-栈"><a href="#1-栈" class="headerlink" title="1. 栈"></a>1. 栈</h3><ul>
+<li>栈是元素的集合，其包含了两个基本操作：push 操作可以用于将元素压入栈，pop 操作可以将栈顶元素移除。</li>
+<li>遵循后入先出原则 (LIFO)。</li>
+<li>时间复杂度:<ul>
+<li>搜索: <code>O(n)</code></li>
+<li>插入: <code>O(1)</code></li>
+<li>移除: <code>O(1)</code></li>
 </ul>
-<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
-<ul>
-<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
-<li>Cloudera在大型互联网企业中用的较多。</li>
-<li>Hortonworks文档较好。</li>
-</ul>
-<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
-<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
-<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
-<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
-<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
-<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
-<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
-<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
-<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
-<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
-<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
-<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
-<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
-<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
-<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
-<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
-<p>1）Map阶段并行处理输入数据。</p>
-<p>2）Reduce阶段对Map结果进行汇总。</p>
-<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
-<p>名词解释如下：</p>
-<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
-<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
-<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
-<p> 可以基于Hadoop上存储的大数据进行计算。</p>
-<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
-<ul>
-<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
-<li>可以将sql语句转换为MapReduce任务进行运行。</li>
-</ul>
-<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
-<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
-<ul>
-<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
-<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
-<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
-</ul>
-<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
-<ul>
-<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
-<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
-</ul>
-<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
-<li><p>官方网址：<a href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
 </li>
-<li><p>各个版本归档库地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
+</ul>
+<h4 id="栈的实现"><a href="#栈的实现" class="headerlink" title="栈的实现"></a>栈的实现</h4><table>
+<thead>
+<tr>
+<th align="center">接口</th>
+<th align="center">说明</th>
+<th align="center">复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void push(E e)</td>
+<td align="center">向栈中加入元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">E pop()</td>
+<td align="center">弹出栈顶元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">E peek()</td>
+<td align="center">查看栈顶元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">int getSize()</td>
+<td align="center">获取栈中元素个数</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">boolean isEmpty()</td>
+<td align="center">判断栈是否为空</td>
+<td align="center">o(1)</td>
+</tr>
+</tbody></table>
+<p>栈的实现可以通过 <strong>数组</strong> 或者 <strong>链表</strong> 实现，在这里我们使用 数组来实现上述接口。</p>
+<p>在栈的设计中，用户只关注栈顶元素存取和栈长度。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//栈的实现</span><br><span class="line">public class ArrayStack&lt;E&gt; implements Stack&lt;E&gt;&#123;</span><br><span class="line">	Array&lt;E&gt; array;    </span><br><span class="line">	public ArrayStack(int capacity)&#123;        </span><br><span class="line">		array = new Array&lt;&gt;(capacity);    </span><br><span class="line">	&#125; </span><br><span class="line">    </span><br><span class="line">	public ArrayStack()&#123;        </span><br><span class="line">		array = new Array&lt;&gt;();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int getSize()&#123;        </span><br><span class="line">		return array.getSize();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int isEmpty()&#123;        </span><br><span class="line">		return array.isEmpty();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public void push(E e)&#123;        </span><br><span class="line">		array.addLast(e);    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E pop()&#123;        </span><br><span class="line">		return array.removeLast();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E peek()&#123;        </span><br><span class="line">		return array.getLast();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>\</p>
+<h3 id="2-链表"><a href="#2-链表" class="headerlink" title="2. 链表"></a>2. 链表</h3><ul>
+<li><p>链表即是由节点组成的线性集合，每个节点可以利用指针指向其他节点。它是一种包含了多个节点的、能够用于表示序列的数据结构。</p>
 </li>
-<li><p>hadoop2.7.2版本详情介绍：<a href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
-<p>Hadoop运行模式：</p>
-<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
-<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
-<p>（3）完全分布式模式：多个节点一起运行。</p>
+<li><p><strong>单向链表</strong>: 链表中的节点仅指向下一个节点，并且最后一个节点指向空。</p>
+</li>
+<li><p><strong>双向链表</strong>: 其中每个节点具有两个指针 p、n，使得 p 指向先前节点并且 n 指向下一个节点，最后一个节点的 n 指针指向 null。</p>
+</li>
+<li><p><strong>循环链表</strong>：每个节点指向下一个节点并且最后一个节点指向第一个节点的链表。</p>
+</li>
+<li><p>时间复杂度:</p>
+<ul>
+<li>搜索: <code>O(n)</code></li>
+<li>插入: <code>O(1)</code></li>
+<li>移除: <code>O(1)</code></li>
+</ul>
+</li>
+<li><p>定义数据结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Node&#123;     </span><br><span class="line">	int value;//数据域，以int为例     </span><br><span class="line">	Node next;//指针域，指向下一个节点 </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链表插入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//p节点后插入值为i的节点</span><br><span class="line">void insert_Node(Node p, int i)&#123;    </span><br><span class="line">	Node node = new Node();    </span><br><span class="line">	node.value = i;    </span><br><span class="line">	node.next = p.next;    </span><br><span class="line">	p.next = node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链表删除</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void delete_Node(Node pHead, int data)&#123;    </span><br><span class="line">	...            </span><br><span class="line">	</span><br><span class="line">	Node pCur;//指向当前节点    </span><br><span class="line">	Node pPre;//指向当前节点的上一个节点    </span><br><span class="line">	if(pCur-&gt;data==data)&#123;//元素比较        </span><br><span class="line">		//将当前节点的前驱节点的next指向当前节点的后继节点        </span><br><span class="line">		...        </span><br><span class="line">		pPre-&gt;next = pCur-&gt;next;        </span><br><span class="line">		...    </span><br><span class="line">	&#125;    </span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>### 3. 队列</p>
+<ul>
+<li>队列是元素的集合，其包含了两个基本操作：enqueue 操作可以用于将元素插入到队列中，而 dequeue 操作则是将元素从队列中移除。</li>
+<li>遵循先入先出原则 (FIFO)。</li>
+<li>时间复杂度:<ul>
+<li>搜索: <code>O(n)</code></li>
+<li>插入: <code>O(1)</code></li>
+<li>移除: <code>O(1)</code></li>
+</ul>
+</li>
+<li>队列的应用可以在播放器上的播放列表，数据流对象，异步的数据传输结构(文件IO，管道通讯，套接字等)上体现，当然最直观的的就是排队了。</li>
+</ul>
+<h3 id="3-队列的实现"><a href="#3-队列的实现" class="headerlink" title="3. 队列的实现"></a>3. 队列的实现</h3><table>
+<thead>
+<tr>
+<th align="center">接口</th>
+<th align="center">说明</th>
+<th align="center">复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void enqueue(E e)</td>
+<td align="center">入队</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">E dequeue()</td>
+<td align="center">出队</td>
+<td align="center">o(n)</td>
+</tr>
+<tr>
+<td align="center">E getFront()</td>
+<td align="center">获取队首元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">int getSize()</td>
+<td align="center">获取队列元素个数</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">boolean isEmpty()</td>
+<td align="center">判断队列是否为空</td>
+<td align="center">o(1)</td>
+</tr>
+</tbody></table>
+<ul>
+<li>入队是从队尾开始，有可能触发resize，因此均摊下来是O(1)。出队是在队首，数组实现每次都要挪动所有元素,O(n)。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//队列的实现</span><br><span class="line">public class ArrayQueue&lt;E&gt; implements Queue&lt;E&gt;&#123;    </span><br><span class="line">	Array&lt;E&gt; array;    </span><br><span class="line">	</span><br><span class="line">	public ArrayQueue(int capacity)&#123;        </span><br><span class="line">		array = new Array&lt;&gt;(capacity);    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	public ArrayQueue()&#123;        </span><br><span class="line">		array = new Array&lt;&gt;();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int getSize()&#123;        </span><br><span class="line">		return array.getSize();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int isEmpty()&#123;        </span><br><span class="line">		return array.isEmpty();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public void enqueue(E e)&#123;        </span><br><span class="line">		array.addLast(e);    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E dequeue()&#123;        </span><br><span class="line">		return array.removeLast();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E getFront()&#123;        </span><br><span class="line">		return array.getFirst();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-二叉查找树"><a href="#4-二叉查找树" class="headerlink" title="4. 二叉查找树"></a>4. 二叉查找树</h3><ul>
+<li>二叉搜索树（BST）是一种特殊的二叉树，其任何节点中的值都会大于或者等于其左子树中存储的值并且小于或者等于其右子树中存储的值。</li>
+<li>时间复杂度:<ul>
+<li>索引: <code>O(log(n))</code></li>
+<li>搜索: <code>O(log(n))</code></li>
+<li>插入: <code>O(log(n))</code></li>
+<li>删除: <code>O(log(n))</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>二分查找法定义</strong>:是一种在有序数组中查找某一特定元素的搜索算法。这种搜索算法每一次比较都使搜索范围缩小一半。</p>
+<p>注意：二分查找的前提是数列必须是有序的。</p>
+<ul>
+<li>二叉查找树也可叫做二分查找树。它不仅可以查找数据，还可以高效地插入、删除数据。</li>
+<li>特点：每个节点的key值大于左子节点，小于右子节点。<strong>它不一定是完全的二叉树</strong>。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class Node &#123;  E e;  Node left;  // 左孩子  Node right; // 右孩子&#125;</span><br></pre></td></tr></table></figure>
+
+<p>二叉查找树有两个属性：</p>
+<ul>
+<li><strong>所有节点都比左子树中的节点大</strong></li>
+<li><strong>所有节点都小于右子树中的节点</strong></li>
+</ul>
+<p>通过这两个属性，可以推断出以下结论：</p>
+<ul>
+<li>二叉查找树最小的节点位于最顶端节点的最左边子树行的末尾</li>
+<li>二叉查找树的最大节点位于最顶端节点的最右边的子树行的末尾</li>
+</ul>
+<h4 id="添加元素操作"><a href="#添加元素操作" class="headerlink" title="添加元素操作"></a>添加元素操作</h4><p>核心思想:从根节点开始找插入的位置，满足二叉搜索树的特性，比左子节点大，比右子节点小.</p>
+<h4 id="删除元素操作"><a href="#删除元素操作" class="headerlink" title="删除元素操作"></a>删除元素操作</h4><p>步骤：</p>
+<ul>
+<li>找到左子树中所有节点的最大的节点(左子树的最右节点)</li>
+<li>将这个节点赋值到删除节点的位置</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>使用二叉查找树可以实现高效搜索。但是如果树接近形成直线，那么搜索效率将极其差，变成了线性搜索。</li>
+<li>因此二叉查找树就需要进行改进为平衡二叉树，比较常见的 Balanced Binary Tree有：<ul>
+<li>AVL tree</li>
+<li>红黑树</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-哈希"><a href="#7-哈希" class="headerlink" title="7. 哈希"></a>7. 哈希</h3><ul>
+<li>哈希能够将任意长度的数据映射到固定长度的数据。哈希函数返回的即是哈希值，如果两个不同的键得到相同的哈希值，即将这种现象称为碰撞。</li>
+<li><strong>Hash Map</strong>: Hash Map 是一种能够建立起键与值之间关系的数据结构，Hash Map 能够使用哈希函数将键转化为桶或者槽中的下标，从而优化对于目标值的搜索速度。</li>
+<li>碰撞解决<ul>
+<li><strong>链地址法（Separate Chaining）</strong>: 链地址法中，每个桶是相互独立的，包含了一系列索引的列表。搜索操作的时间复杂度即是搜索桶的时间（固定时间）与遍历列表的时间之和。</li>
+<li><strong>开地址法（Open Addressing）</strong>: 在开地址法中，当插入新值时，会判断该值对应的哈希桶是否存在，如果存在则根据某种算法依次选择下一个可能的位置，直到找到一个尚未被占用的地址。所谓开地址法也是指某个元素的位置并不永远由其哈希值决定。</li>
+</ul>
 </li>
 </ul>
 ]]></content>
       <tags>
-        <tag>大数据</tag>
+        <tag>算法与数据结构</tag>
       </tags>
   </entry>
   <entry>
-    <title>Linux 初学习</title>
-    <url>/2018/12/31/Linux%20%E5%88%9D%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="Linux入门"><a href="#Linux入门" class="headerlink" title="Linux入门"></a>Linux入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Linux是一套免费使用和自由传播的类Unix操作系统。</p>
-<p>目前知名的发行版有：Ubuntu、RedHat、CentOS、Debain、Fedora、SuSE、OpenSUSE</p>
-<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><p>centos下载地址：</p>
+    <title>java面试84讲</title>
+    <url>/2019/01/10/java%E9%9D%A2%E8%AF%9584%E8%AE%B2/</url>
+    <content><![CDATA[<h1 id="1-java基础部分"><a href="#1-java基础部分" class="headerlink" title="1. java基础部分"></a>1. java基础部分</h1><h2 id="1-1-跨平台原理"><a href="#1-1-跨平台原理" class="headerlink" title="1.1 跨平台原理"></a>1.1 跨平台原理</h2><p>由于操作系统的指令集不完全一致，同一程序在不同的操作系统中需要执行不同的程序代码。</p>
+<p>java通过java虚拟机屏蔽各个系统之间的差异。java虚拟机将.java文件编译成.class文件，然后不同的操作系统对应的java虚拟机略有不同，有java虚拟机将.class文件翻译成机器码交由操作系统运行。</p>
+<p>java通过不同系统，不同位数的java虚拟机屏蔽操作系统之间的差异。因此对于外界来说，java是跨平台的。</p>
+<h2 id="1-2-java中int-数据占几个字节"><a href="#1-2-java中int-数据占几个字节" class="headerlink" title="1.2 java中int 数据占几个字节"></a>1.2 java中int 数据占几个字节</h2><p>Java中有8种基本数据类型</p>
+<p>数据类型 二进制位数(字节数) 范围</p>
+<p>byte 8（1） -128 - 127</p>
+<p>short 16（2） -32768 - 32768</p>
+<p>int 32（4）</p>
+<p>long 64（8）</p>
+<p>float 32（4）</p>
+<p>double 64（8）</p>
+<p>char 16（2）</p>
+<p>boolean 1</p>
+<h2 id="1-3-面向对象的特征有哪些方面"><a href="#1-3-面向对象的特征有哪些方面" class="headerlink" title="1.3 面向对象的特征有哪些方面"></a>1.3 面向对象的特征有哪些方面</h2><p>有三大基本特征：封装，继承，多态</p>
 <ul>
-<li>网易镜像：<a href="http://mirrors.163.com/centos/6/isos/">http://mirrors.163.com/centos/6/isos/</a></li>
-<li>搜狐镜像：<a href="http://mirrors.sohu.com/centos/6/isos/">http://mirrors.sohu.com/centos/6/isos/</a></li>
-</ul>
-<h3 id="Linux特点"><a href="#Linux特点" class="headerlink" title="Linux特点"></a>Linux特点</h3><ul>
-<li>Linux里面一切皆是文件</li>
-<li>Linux里面没有后缀名这一说</li>
-</ul>
-<h3 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a>Linux目录结构</h3><ul>
-<li><p>&#x2F;bin：是Binary的缩写，这个目录存放着系统必备执行命令</p>
+<li><p>封装：将描述一个对象的属性和行为封装成一个类，把具体的业务逻辑功能实现封装成一个方法。封装的意义：把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。</p>
+<p>—-&gt;减少了大量的冗余代码<br>—-&gt;封装将复杂的功能封装起来，对外开放一个接口，简单调用即可。</p>
 </li>
-<li><p>&#x2F;boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件，自己的安装别放这里</p>
+<li><p>继承：所有的子类所共有的行为和属性抽取为一个父类，实现代码的复用。所有的子类继承该类可具备父类的属性和行为，继承具有单一性和传递性。</p>
+<p>—-&gt;减少了类的冗余代码<br>—-&gt;让类与类之间产生关系，为多态打下基础</p>
 </li>
-<li><p>&#x2F;dev：Device(设备)的缩写，该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</p>
-</li>
-<li><p>&#x2F;etc：所有的系统管理所需要的配置文件和子目录。</p>
-</li>
-<li><p>&#x2F;home：存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</p>
-</li>
-<li><p>&#x2F;lib：系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。</p>
-</li>
-<li><p>&#x2F;opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</p>
-</li>
-<li><p>&#x2F;root：该目录为系统管理员，也称作超级权限者的用户主目录。</p>
-</li>
-<li><p>&#x2F;sbin：s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</p>
-</li>
-<li><p>&#x2F;tmp：这个目录是用来存放一些临时文件的。</p>
-</li>
-<li><p>&#x2F;usr： 这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</p>
-</li>
-<li><p>&#x2F;var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</p>
-</li>
-</ul>
-<h3 id="VI-x2F-VIM编辑器"><a href="#VI-x2F-VIM编辑器" class="headerlink" title="VI&#x2F;VIM编辑器"></a>VI&#x2F;VIM编辑器</h3><ul>
-<li><p>Vim编辑器三种模式</p>
+<li><p>多态：多态性体现在父类中定义的属性和方法被子类继承后，子类可以具有不同的属性或表现方式。</p>
+<p>—–&gt;虚方法 virtual override<br>—–&gt;抽象类 abstract override<br>—–&gt;接口 interface</p>
+<p>多态可分为行为多态和对象多态。</p>
 <ul>
-<li><p>指令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
+<li>行为多态：同一个run( ){ }方法，不同的对象调用时会有不同的实现。</li>
+<li>对象多态：同一个对象，可以被造型为不同的类型。定义一个引用变量，他所指向的具体类型和通过该引用变量调用的方法在编程时并不确定，只有<strong>在程序运行期间才确定</strong>，即一个引用变量具体指向哪个类的实例对象。</li>
+</ul>
 </li>
-<li><p>编辑模式：正常的文本录入。</p>
-</li>
-<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
-<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
-</li>
-<li><p>命令模式中最常用的一些命令</p>
+</ul>
+<h2 id="1-4-为什么需要包装类"><a href="#1-4-为什么需要包装类" class="headerlink" title="1.4 为什么需要包装类"></a>1.4 为什么需要包装类</h2><p>包装类是使得基本数据类型具有类的性质。jdk1.5以后自动装箱和拆箱。</p>
+<p>原因：java是面向对象的语言，而基本数据类型不具有对象的特征，为了让基本类型也具有对象的特征，就出现了包装类型。</p>
+<p>为什么存在这两种类型呢？</p>
+<p>在Java语言中，new一个对象存储在堆里，我们通过栈中的引用来使用这些对象；但是对于经常用到的一系列类型如int，如果我们用new将其存储在堆里就不是很有效——特别是简单的小的变量。所以就出现了基本类型，对于这些类型不是用new关键字来创建，而是直接将<strong>变量的值存储在栈中</strong>，因此更加高效。</p>
+<h2 id="1-5-x3D-x3D-和equals的区别？"><a href="#1-5-x3D-x3D-和equals的区别？" class="headerlink" title="1.5 &#x3D;&#x3D; 和equals的区别？"></a>1.5 &#x3D;&#x3D; 和equals的区别？</h2><p>基本数据类型的话，&#x3D;&#x3D; 比较的是两个变量的值是否相等。</p>
+<p>引用数据类型的话，&#x3D;&#x3D; 比较的是两个变量的内存地址是否相等。</p>
+<p>equals的话 用来比较两个对象是否长得一样，本质就是调用对象的equals方法。（需要重写object的equals方法，如果不重写的话，比较的也是内存地址）</p>
+<p>ps:基本数据类型没有equals方法，他是object的一个方法。</p>
+<h2 id="1-6-String-StringBuilder-StringBuffer的区别？"><a href="#1-6-String-StringBuilder-StringBuffer的区别？" class="headerlink" title="1.6 String,StringBuilder,StringBuffer的区别？"></a>1.6 String,StringBuilder,StringBuffer的区别？</h2><p>String类提供了数值不可改变的字符串。final类</p>
+<p>StringBuilder,StringBuffer是内容可以改变的字符串。底层使用的是可变字符数组。</p>
+<p>StringBuilder线程不安全，高效，StringBuffer线程安全，效率不高（synchronized修饰）</p>
+<h2 id="1-7-讲一下java中的集合"><a href="#1-7-讲一下java中的集合" class="headerlink" title="1.7 讲一下java中的集合"></a>1.7 讲一下java中的集合</h2><p>Java中集合分两种：value和key-value两种。</p>
+<p>存储值的又分为：<strong>List和Set</strong></p>
 <ul>
-<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
-<li>shirft+g 跳转到最后一行</li>
+<li>List是有序的，可以重复的</li>
+<li>Set是无序的，不可重复的，根据equals和hashcode判断。ps:如果一个对象要存在set中，必须重写equals和hashcode方法。</li>
 </ul>
-</li>
-<li><p>末行模式常用的一些命令</p>
+<p>存储key-value的有：<strong>map</strong></p>
+<h2 id="1-8-ArrayList-和-LinkList的区别？"><a href="#1-8-ArrayList-和-LinkList的区别？" class="headerlink" title="1.8 ArrayList 和 LinkList的区别？"></a>1.8 ArrayList 和 LinkList的区别？</h2><p>ArrayList 底层数组实现。LinkList底层链表实现。</p>
+<p>数组查询快，插入和删除比较慢。（数组在内存中是一块连续的内存，插入和删除需要移动数据）</p>
+<p>链表不要求内存连续，因此插入和删除快（只需要改变引用即可），查找慢。</p>
+<p>ArrayList 使用场景：查询多，修改和删除较少，反之LinkList。</p>
+<h2 id="1-9-HashMap和HashTable的区别？"><a href="#1-9-HashMap和HashTable的区别？" class="headerlink" title="1.9 HashMap和HashTable的区别？"></a>1.9 HashMap和HashTable的区别？</h2><p>相同点：HashMap和Hashtable都用来存储key-value数据。</p>
+<p>区别：</p>
+<p>HashMap最多只允许一条记录的键为Null;允许多条记录的值为 Null;而Hashtable不允许为空。</p>
+<p>HashMap不支持线程的同步（线程不安全），效率较高，Hashtable支持线程的同步（线程安全），效率较低。</p>
+<p>如果既想要线程安全有想要高效，使用ConcurrentHashMap（jdk1.5以后）。</p>
+<p>原理：将一个hashmap分为几块,每一小块都是线程安全的，一定程度上将锁的区域减小，在线程安全的基础上，提高效率。</p>
+<h2 id="1-10-实现一个文件拷贝的工具类，使用字节流还是字符流？"><a href="#1-10-实现一个文件拷贝的工具类，使用字节流还是字符流？" class="headerlink" title="1.10 实现一个文件拷贝的工具类，使用字节流还是字符流？"></a>1.10 实现一个文件拷贝的工具类，使用字节流还是字符流？</h2><p>因为文件拷贝不只包含字符流，比如图像，声音等，因此使用字节流。</p>
+<h2 id="1-11-线程的几种实现方式？怎么启动？怎么区分？线程池的作用？"><a href="#1-11-线程的几种实现方式？怎么启动？怎么区分？线程池的作用？" class="headerlink" title="1.11 线程的几种实现方式？怎么启动？怎么区分？线程池的作用？"></a>1.11 线程的几种实现方式？怎么启动？怎么区分？线程池的作用？</h2><p>线程的2种常用实现方式：</p>
 <ul>
-<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
-</ul>
+<li><p>继承Thread类，重写run方法，实现一个线程</p>
+</li>
+<li><p>实现Runnable接口，重写run方法，实现一个线程。</p>
+<p>使用new Thread(new Runnable实现类) 这种方式来生成线程对象，这个时候线程对象中的run方法才会去执行我们自己实现的Runnable接口中的run方法。</p>
 </li>
 </ul>
-</li>
-</ul>
-<h3 id="系统管理操作"><a href="#系统管理操作" class="headerlink" title="系统管理操作"></a>系统管理操作</h3><ul>
-<li><p>查看ip ：ifconfig</p>
-</li>
-<li><p>查看主机名：hostname</p>
-</li>
-<li><p>修改此主机名： vim &#x2F;etc&#x2F;hosts</p>
-</li>
-<li><p>防火墙</p>
+<p>怎么启动？</p>
 <ul>
-<li>service iptables status （功能描述：查看防火墙状态）</li>
-<li>chkconfig iptables -list （功能描述：查看防火墙开机启动状态）</li>
-<li>service iptables stop （功能描述：临时关闭防火墙）</li>
-<li>chkconfig iptables off （功能描述：关闭防火墙开机启动）</li>
-<li>chkconfig iptables on （功能描述：开启防火墙开机启动）</li>
-</ul>
+<li><p>继承Thread类。</p>
+<p>MyThread thread &#x3D; new MyThread();</p>
+<p>thread .start();</p>
 </li>
-<li><p>关机重启</p>
-<p>linux大多用在服务器上，很少遇到关机的操作。</p>
+<li><p>实现Runnable接口(MyThread)</p>
+<p>Thread thread &#x3D; new Thread(new MyThread);</p>
+<p>thread .start();</p>
+<p>启动线程使用start方法， 启动以后执行的是run方法。</p>
+</li>
+</ul>
+<p>怎么区分线程？thread .setName(“MyThread”);</p>
+<p>线程池的作用？</p>
+<p> 在程序启动的时候就创建若干线程来响应处理，它们被称为线程池，里面的线程叫工作线程。</p>
+<p> 线程的创建是耗时的，因此在应用启用后，预先启动一定数量的线程，当需要的时候，取一个分配给他，执行结束再还给线程池。</p>
+<p>作用：</p>
 <ul>
-<li><p>shutdown[选项] 时间</p>
-<p>选项：</p>
-<p> -h：关机</p>
-<p> -r：重启</p>
-</li>
-<li><p>halt（功能描述：关闭系统）等同shutdown -h now 和 poweroff</p>
-</li>
-<li><p>reboot（功能描述：就是重启，等同于 shutdown -r now）</p>
-</li>
+<li><strong>限定线程的个数</strong>，不由由于线程过多导致系统运行缓慢或者崩溃。</li>
+<li><strong>降低资源消耗</strong>。不需要频繁的创建和销毁，节约资源。</li>
+<li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要等到线程创建就能立即执行。</li>
+<li><strong>提高线程的可管理性</strong>。</li>
 </ul>
-</li>
-</ul>
-<h2 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h2><h3 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h3><ul>
-<li><p>man[命令或配置文件] 获得帮助信息</p>
-</li>
-<li><p>help 命令 获得shell内置命令的帮助信息</p>
-</li>
-<li><p>常用快捷键</p>
-<p>1）ctrl+ c：停止进程</p>
-<p>2）ctrl+l：清屏</p>
-<p>3）ctrl+ q：退出</p>
-<p>4）善于用tab键</p>
-<p>5）上下键：查找执行过的命令</p>
-<p>6）ctrl+alt：linux和Windows之间切换</p>
-</li>
-</ul>
-<h3 id="文件目录类"><a href="#文件目录类" class="headerlink" title="文件目录类"></a>文件目录类</h3><ul>
-<li><p>pwd 显示当前工作目录的绝对路径</p>
-</li>
-<li><p>ll 列出目录的内容</p>
-</li>
-<li><p>mkdir [-p] 要创建的目录</p>
-<p> 选项：-p ：创建多层目录</p>
-</li>
-<li><p>rmdir 删除一个空的目录</p>
-</li>
-<li><p>touch 文件名称 –创建空文件</p>
-</li>
-<li><p>cd 切换目录</p>
-</li>
-</ul>
-<p> （1）cd ~或者cd （功能描述：回到自己的家目录）</p>
-<p> （2）cd - （功能描述：回到上一次所在目录）</p>
-<p> （3）cd .. （功能描述：回到当前目录的上一级目录）</p>
+<h2 id="1-12-有没有使用过线程并发库？"><a href="#1-12-有没有使用过线程并发库？" class="headerlink" title="1.12 有没有使用过线程并发库？"></a>1.12 有没有使用过线程并发库？</h2><p>简单使用过。jdk1.5以后增加的。对Java线程的管理和使用提供了很大的便利性。</p>
+<p>java.util.current包，包含了对线程优化，管理的各项操作。</p>
+<p><strong>java中如何创建线程池</strong>？</p>
 <ul>
-<li><p>cp 复制文件或目录</p>
-<p>（1）cp source dest （功能描述：复制source文件到dest）</p>
-<p>（2）cp -r source target （功能描述：递归复制整个文件夹）</p>
+<li>newCachedThreadPool创建一个<strong>可缓存线程池</strong>，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
+<li>newFixedThreadPool 创建一个<strong>定长线程池</strong>，可控制线程最大并发数，超出的线程会在队列中等待。</li>
+<li>newScheduledThreadPool 创建一个<strong>定长线程池</strong>，支持定时及周期性任务执行。</li>
+<li>newSingleThreadExecutor 创建一个<strong>单线程化的线程池</strong>，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</li>
+</ul>
+<h1 id="2-java容器"><a href="#2-java容器" class="headerlink" title="2. java容器"></a>2. java容器</h1><p>Java容器可分为两大类：</p>
+<ul>
+<li><p>Collection</p>
 </li>
-<li><p>rm 移除文件或目录</p>
-<p>（1）rmdir deleteEmptyFolder （功能描述：删除空目录）</p>
-<p>（2）rm -rf deleteFile （功能描述：递归删除目录中所有内容）</p>
-</li>
-<li><p>mv 移动文件与目录或重命名</p>
-<p>（1）mv oldNameFile newNameFile （功能描述：重命名）</p>
-<p>（2）mv &#x2F;movefile &#x2F;targetFolder （功能描述：递归移动文件）</p>
-</li>
-<li><p>cat 查看文件内容</p>
-<p>cat [选项] 要查看的文件</p>
-<p>选项：</p>
-<p>-A：相当于 -vET 的整合选项，可列出一些特殊字符而不是空白而已；</p>
-<p>-b：列出行号，仅针对非空白行做行号显示，空白行不标行号！</p>
-<p>-E：将结尾的断行字节 $ 显示出来；</p>
-<p>-n ：列出行号，连同空白行也会有行号，与 -b 的选项不同；</p>
-<p>-T：将 [tab] 按键以 ^I 显示出来；</p>
-<p>-v ：列出一些看不出来的特殊字符</p>
-</li>
-<li><p>tac 查看文件内容</p>
-<p>查看文件内容，从最后一行开始显示，可以看出 tac 是 cat 的倒著写。</p>
-</li>
-<li><p>more 查看文件内容</p>
-<p>功能使用说明：</p>
-<p>空白键 (space)：代表向下翻一页；</p>
-<p>Enter:代表向下翻『一行』；</p>
-<p>q:代表立刻离开 more ，不再显示该文件内容。</p>
-<p>Ctrl+F 向下滚动一屏</p>
-<p>Ctrl+B 返回上一屏</p>
-<p>&#x3D; 输出当前行的行号</p>
-<p>:f 输出文件名和当前行的行号</p>
-</li>
-<li><p>less 查看文件内容</p>
-<p>less 的作用与 more 十分相似，都可以用来浏览文字档案的内容，不同的是 less 允许使用pageup，pagedown往回滚动。</p>
-</li>
-<li><p>head查看文件内容</p>
-<p>查看文件内容，只看头几行。</p>
-<p>基本语法 ：head -n 10 文件（功能描述：查看文件头10行内容，10可以是任意行数）</p>
-</li>
-<li><p>tail 查看文件内容</p>
-<p>查看文件内容，只看尾巴几行。</p>
-<p>基本语法</p>
-<p>（1）tail -n 10 文件 （功能描述：查看文件头10行内容，10可以是任意行数）</p>
-<p>（2）tail -f 文件 （功能描述：实时追踪该文档的所有更新）</p>
-</li>
-<li><p><strong>重定向命令</strong></p>
-<p>基本语法：</p>
-<p>（1）ls -l &gt;文件 （功能描述：列表的内容写入文件a.txt中（覆盖写））</p>
-<p>（2）ls -al &gt;&gt;文件 （功能描述：列表的内容追加到文件aa.txt的末尾）</p>
-</li>
-<li><p>echo</p>
-<p>基本语法：</p>
-<p>（1）echo 要显示的内容 &gt;&gt; 存储内容的的文件 （功能描述：将要显 示的内容，存储到文件中）</p>
-<p>（2）echo 变量（功能描述：显示变量的值）</p>
-</li>
-<li><p>ln软链接(相当于快捷方式)</p>
-<p>基本语法：ln -s 原文件 目标文件</p>
-<p>（功能描述：给原文件创建一个软链接，软链接存放在目标文件目录）</p>
-<p>删除软链接： rm -rf atguigu，而不是rm -rf atguigu&#x2F;</p>
-</li>
-<li><p>history 查看所敲命令历史</p>
+<li><ul>
+<li>List</li>
+<li><ul>
+<li><strong>ArrayList</strong></li>
+<li>LinkedList</li>
+<li>Vector(了解，已过时)</li>
+</ul>
 </li>
 </ul>
-<h3 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h3>]]></content>
+</li>
+<li></li>
+<li><p>Set</p>
+</li>
+<li><ul>
+<li>TreeSet</li>
+<li><strong>HashSet</strong></li>
+<li><ul>
+<li>LinkedHashSet</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Map</p>
+</li>
+<li><ul>
+<li><strong>HashMap</strong></li>
+<li><ul>
+<li>LinkedHashMap</li>
+</ul>
+</li>
+<li>TreeMap</li>
+<li>ConcurrentHashMap</li>
+<li>Hashtable(了解，，已过时)</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-1-Collection"><a href="#2-1-Collection" class="headerlink" title="2.1 Collection"></a>2.1 Collection</h2><h3 id="2-1-1-数组和集合的区别"><a href="#2-1-1-数组和集合的区别" class="headerlink" title="2.1.1 数组和集合的区别"></a>2.1.1 数组和集合的区别</h3><ul>
+<li>1.长度的区别</li>
+<li><ul>
+<li><strong>数组的长度固定</strong></li>
+<li><strong>集合的长度可变</strong></li>
+</ul>
+</li>
+<li>2.元素的数据类型</li>
+<li><ul>
+<li>数组可以存储基本数据类型,也可以存储引用类型</li>
+<li><strong>集合只能存储引用类型(你存储的是简单的int，它会自动装箱成Integer)</strong></li>
+</ul>
+</li>
+</ul>
+<p>###2.1.2 Collection</p>
+<p>Collection接口 继承 Iterator接口， 因此<strong>遍历集合(Collection)的元素都可以使用Iterator</strong>。</p>
+<p><strong>List（有序，可重复）:</strong></p>
+<ul>
+<li><strong>ArrayList</strong>：底层数据结构是数组。线程不安全</li>
+<li><strong>Vector</strong>：底层数据结构是数组。线程安全</li>
+<li><strong>LinkedList</strong>：底层数据结构是链表。线程不安全</li>
+</ul>
+<p><strong>Set（元素不可重复）: Set集合实际上就是HashMap来构建的!</strong></p>
+<ul>
+<li><strong>HashSet</strong>：底层数据结构是哈希表(是一个元素为链表的数组)，链地址法解决冲突。</li>
+<li><strong>TreeSet</strong>：底层数据结构是红黑树(是一个自平衡的二叉树)，保证元素的排序方式。</li>
+<li><strong>LinkedHashSet</strong>：底层数据结构由哈希表和链表组成。</li>
+</ul>
+<p>###</p>
+<ul>
+<li><p>Vector与ArrayList区别(<strong>底层都是数组实现</strong>)：</p>
+</li>
+<li><p>add(E e), add(int index, E element), get(int index),set(int index, E e),remove(int index)</p>
+<ul>
+<li><p>Vector底层也是数组，与ArrayList最大的区别就是：<strong>同步(线程安全)</strong></p>
+<p>Vector的方法使用synchronized的修饰。</p>
+</li>
+<li><p><strong>ArrayList在底层数组不够用时在原来的基础上扩展0.5倍，Vector是扩展1倍。</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果<strong>想要ArrayList实现同步</strong>，可以使用Collections（集合的工具类）的方法：</p>
+<p><code>List list =Collections.synchronizedList(new ArrayList(...));</code>，就可以实现同步了~</p>
+<ul>
+<li><p>LinkedList（底层是</p>
+<p>双向链表</p>
+<p>）</p>
+<ul>
+<li><strong>LinkedList实现了Deque接口</strong>，可以<strong>操作LinkedList像操作队列和栈一样</strong>。</li>
+<li>add(E e), remove(Object o), get(nt index),set(int index, E e)</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-2-Map"><a href="#2-2-Map" class="headerlink" title="2.2 Map"></a>2.2 Map</h2><p><strong>HashMap, HashTable, ConcurrentHashMap, LinkedHashMap, TreeMap</strong></p>
+<p>Map特点：</p>
+<p>将键映射到值的对象，一个映射不能包含重复的键，每个键至多只能一个值。</p>
+<p>Map与Collection的区别：</p>
+<ol>
+<li>Map存储元素是成对出现的，键是唯一的，值可以重复。</li>
+<li>Collection存储元素是单独出现的，Set的元素是唯一的，List是可重复的。</li>
+</ol>
+<p>HashMap: put(key,value), get(key), remove(key)</p>
+<ul>
+<li><p><strong>散列表介绍</strong></p>
+<p>无论是Set还是Map，我们会发现都会有对应的–&gt;<strong>Hash</strong>Set,<strong>Hash</strong>Map</p>
+<p>原理：散列表<strong>为每个对象计算出一个整数，称为散列码</strong>。<strong>根据</strong>这些计算出来的<strong>整数(散列码)保存在对应的位置上</strong>！</p>
+<p><strong>在Java中，散列表用的是链表数组实现的，每个列表称之为桶。</strong></p>
+<ul>
+<li>如果散列表太满，<strong>是需要对散列表再散列，创建一个桶数更多的散列表，并将原有的元素插入到新表中，丢弃原来的表</strong>~</li>
+<li>装填因子(load factor)<strong>决定了何时</strong>对散列表再散列~，装填因子默认为0.75，如果表中<strong>超过了75%的位置</strong>已经填入了元素，那么这个表就会用<strong>双倍的桶数</strong>自动进行再散列</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-3-1-HashMap和Hashtable的区别"><a href="#2-1-3-1-HashMap和Hashtable的区别" class="headerlink" title="2.1.3.1 HashMap和Hashtable的区别"></a>2.1.3.1 HashMap和Hashtable的区别</h4><p><strong>共同点：</strong></p>
+<ul>
+<li>从存储结构和实现来讲基本上都是相同的，都是实现Map接口~</li>
+</ul>
+<p><strong>区别：</strong></p>
+<ul>
+<li><p><strong>同步性：</strong></p>
+</li>
+<li><ul>
+<li>HashMap是非同步的</li>
+<li>Hashtable是同步的</li>
+</ul>
+</li>
+<li><p><strong>是否允许为null：</strong></p>
+</li>
+<li><ul>
+<li>HashMap允许为null</li>
+<li>Hashtable不允许为null</li>
+</ul>
+</li>
+<li><p><strong>继承不同：</strong></p>
+</li>
+<li><ul>
+<li><p>HashMap</p>
+<p>extends AbstractMap</p>
+</li>
+<li><p>public class Hashtable</p>
+<p>extends Dictionary</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3-Set集合"><a href="#2-3-Set集合" class="headerlink" title="2.3 Set集合"></a>2.3 Set集合</h2><p>Set集合实际上就是HashMap来构建的!</p>
+<p>Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用&#x3D;&#x3D;还是equals()?</p>
+<p> <strong>&#x3D;&#x3D; 和 equals()方法都有使用</strong>！</p>
+<ul>
+<li><p>Set集合实际<strong>大都使用的是Map集合的put方法来添加元素</strong>。</p>
+<p>以HashSet为例，添加元素的时候，如果key(也对应的Set集合的元素)相等，那么则修改value值。而在Set集合中，value值仅仅是一个Object对象罢了(<strong>该对象对Set本身而言是无用的</strong>)。</p>
+<p>因此，Set集合如果添加的元素相同时，**是根本没有插入的(仅修改了一个无用的value值)**！</p>
+</li>
+</ul>
+<h1 id="3-数据库部分"><a href="#3-数据库部分" class="headerlink" title="3. 数据库部分"></a>3. 数据库部分</h1><h2 id="3-1-介绍数据库的三范式？"><a href="#3-1-介绍数据库的三范式？" class="headerlink" title="3.1 介绍数据库的三范式？"></a>3.1 介绍数据库的三范式？</h2><p>一范式：列不可再分。</p>
+<p>二范式：满足一范式的条件下，非主属性完全依赖于码。（码：唯一确定一个元组的某个属性（或者属性组））</p>
+<p>三范式：满足二范式的条件下，不存在传递函数依赖。</p>
+<p>总结：</p>
+<ul>
+<li>第一范式：简单说 列不能再分</li>
+<li>第二范式：简单说 建立在第一范式基础上，消除部分依赖</li>
+<li>第三范式：简单说 建立在第二范式基础上，消除传递依赖。</li>
+</ul>
+<h2 id="3-2-事务的四个基本特征"><a href="#3-2-事务的四个基本特征" class="headerlink" title="3.2 事务的四个基本特征"></a>3.2 事务的四个基本特征</h2><p>事务是并发控制的单位，是一个操作序列，要么都做，要么都不做。</p>
+<p>原子性，一致性，隔离性，持久性。</p>
+<ul>
+<li>原子性：事务内操作不可分割。</li>
+<li>一致性：要么都做，要么都不做。</li>
+<li>隔离性：事务开始后，不受其他事务的影响。</li>
+<li>持久性：事务一旦提交，其更改是永久性的，即使数据库系统崩溃也能恢复。</li>
+</ul>
+<h2 id="3-3-mysql数据库的默认最大连接数"><a href="#3-3-mysql数据库的默认最大连接数" class="headerlink" title="3.3 mysql数据库的默认最大连接数"></a>3.3 mysql数据库的默认最大连接数</h2><p>默认：100</p>
+<p>为什么需要最大连接数？</p>
+<p> 连接过多导致性能下降，严重影响数据库的服务。</p>
+<h2 id="3-4-数据库分页"><a href="#3-4-数据库分页" class="headerlink" title="3.4 数据库分页"></a>3.4 数据库分页</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql:  -- limit offset,size</span><br><span class="line">select * from student order by id limit pagesize*(pagenum-1),pagesize;</span><br><span class="line"></span><br><span class="line">oracle:</span><br><span class="line">select * from	</span><br><span class="line">		(select *,rownum rid from</span><br><span class="line">					(select * from student order by id)     </span><br><span class="line">		where rid&lt;= pagesize*pagenum as t )</span><br><span class="line">where t &gt; pagesize*(pagenum-1)</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
-        <tag>Linux</tag>
+        <tag>Java基础</tag>
+        <tag>面试</tag>
       </tags>
   </entry>
 </search>
