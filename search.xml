@@ -78,6 +78,148 @@
       </tags>
   </entry>
   <entry>
+    <title>Java IO</title>
+    <url>/2019/02/12/Java%20IO/</url>
+    <content><![CDATA[<h1 id="1-IO-基础"><a href="#1-IO-基础" class="headerlink" title="1. IO 基础"></a>1. IO 基础</h1><p><a href="20220708-3.jpg"><img src="/../../../../images/20220708-3.jpg" alt="Java SE框架.jpg"></a></p>
+<h2 id="1-1-java-io-file的使用"><a href="#1-1-java-io-file的使用" class="headerlink" title="1.1 java.io.file的使用"></a>1.1 java.io.file的使用</h2><p>java.io.File类：文件和目录路径名的抽象表示形式。</p>
+<ul>
+<li>File 能<strong>新建、删除、重命名文件和目录</strong>，但File 不能访问文件内容本身。如果需要访问文件内容本身，则需要使用输入&#x2F;输出流。</li>
+<li>File对象可以作为参数传递给流的构造函数</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">File win = new File(&quot;C:\\Windows&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(win.isDirectory()); // true</span><br><span class="line"></span><br><span class="line">File notepad = new File(&quot;C:\\Windows\\notepad.exe&quot;);</span><br><span class="line">System.out.println(notepad.isFile()); // true</span><br><span class="line"></span><br><span class="line">File dir = new File(&quot;C:\\abc\\xyz&quot;);</span><br><span class="line">System.out.println(dir.mkdir()); // -&gt; mkdirs</span><br><span class="line"></span><br><span class="line">File readme = new File(&quot;./src/readme.txt&quot;);</span><br><span class="line">System.out.println(readme.isFile()); //true</span><br><span class="line"></span><br><span class="line">System.out.println(readme.getAbsolutePath());</span><br><span class="line">System.out.println(readme.getCanonicalPath());</span><br></pre></td></tr></table></figure>
+
+<p><a href="20220708-4.jpg"><img src="/../../../../images/20220708-4.jpg" alt="20220708-4.jpg"></a></p>
+<h2 id="1-2-IO原理以及流的分类"><a href="#1-2-IO原理以及流的分类" class="headerlink" title="1.2 IO原理以及流的分类"></a>1.2 IO原理以及流的分类</h2><ul>
+<li>IO流用来处理设备之间的数据传输。</li>
+<li>Java对于数据的输入&#x2F;输出操作以”流(stream)”的方式进行。</li>
+<li>java.io包下提供了各种“流”类和接口, 通过标准的方法输入或输出数据。<ul>
+<li>输入input：读取外部数据（磁盘、光盘等存储设备的数据）到程序（内存）中。</li>
+<li>输出output：将程序（内存）数据输出到磁盘、光盘等存储设备中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-1-流的分类"><a href="#1-2-1-流的分类" class="headerlink" title="1.2.1 流的分类"></a>1.2.1 流的分类</h3><ul>
+<li>按操作数据单位不同分为：字节流(8bit)，字符流(16bit)</li>
+<li>按数据流的流向不同分为：输入流，输出流</li>
+<li>按流的角色的不同分为：节点流，处理流</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">抽象基类</th>
+<th align="center">字节流</th>
+<th>字符流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">输入流</td>
+<td align="center">InputStream</td>
+<td>Reader</td>
+</tr>
+<tr>
+<td align="center">输出流</td>
+<td align="center">OutputStream</td>
+<td>Writer</td>
+</tr>
+</tbody></table>
+<p>字节流：以byte为单位传输</p>
+<p>字符流：以char为单位传输</p>
+<ul>
+<li>节点流可以从一个特定的数据源读写数据。</li>
+<li>处理流是“连接”在已存在的流（节点流或处理流）之上，通过对数据的处理为程序提供更为强大的读写功能。</li>
+</ul>
+<p>Java的IO流共涉及40多个类，实际上非常规则，都是从如下4个抽象基类派生的。</p>
+<ul>
+<li><p>IO流体系</p>
+<p><a href="20220708-5.jpg"><img src="/../../../../images/20220708-5.jpg" alt="20220708-5.jpg"></a></p>
+</li>
+</ul>
+<h3 id="1-2-2-InputStream-amp-Reader"><a href="#1-2-2-InputStream-amp-Reader" class="headerlink" title="1.2.2 InputStream&amp; Reader"></a>1.2.2 InputStream&amp; Reader</h3><p>InputStream 和 Reader是所有输入流的基类。</p>
+<p>InputStream（典型实现：FileInputStream）</p>
+<ul>
+<li>intread()</li>
+<li>int read(byte[] b)</li>
+<li>intread(byte[] b, int off,int len)</li>
+</ul>
+<p>Reader（典型实现：FileReader）</p>
+<ul>
+<li>intread()</li>
+<li>int read(char [] c)</li>
+<li>intread(char [] c, int off,int len)</li>
+</ul>
+<p>注意：程序中打开的文件 IO 资源不属于内存里的资源，垃圾回收机制无法回收该资源，所以应该显式关闭文件IO 资源。</p>
+<h3 id="1-2-3-OutputStream-amp-Writer"><a href="#1-2-3-OutputStream-amp-Writer" class="headerlink" title="1.2.3 OutputStream&amp; Writer"></a>1.2.3 OutputStream&amp; Writer</h3><p>OutputStream 和 Writer也非常相似：</p>
+<ul>
+<li>void write(int b&#x2F;int c);</li>
+<li>void write(byte[] b&#x2F;char[]cbuf);</li>
+<li>void write(byte[] b&#x2F;char[]buff, int off, int len);</li>
+<li>void flush();</li>
+<li>void close(); 需要先刷新，再关闭此流</li>
+</ul>
+<p>因为字符流直接以字符作为操作单位，所以 Writer可以用字符串来替换字符数组，即以String对象作为参数</p>
+<p>void write(String str);</p>
+<p>void write(String str, intoff, intlen);</p>
+<h1 id="2-文件流"><a href="#2-文件流" class="headerlink" title="2. 文件流"></a>2. 文件流</h1><ol>
+<li><p>读取文件</p>
+<p>1.建立一个流对象，将已存在的一个文件加载进流。</p>
+<p>FileReader fr &#x3D; new FileReader(“Test.txt”);</p>
+<p>2.创建一个临时存放数据的数组。</p>
+<p>char[] ch &#x3D; new char[1024];</p>
+<p>3.调用流对象的读取方法将流中的数据读入到数组中。</p>
+<p>fr.read(ch);</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileReader fr = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fr = new FileReader(&quot;c:\\test.txt&quot;);		</span><br><span class="line">	char[] buf = new char[1024];		</span><br><span class="line">	int len= 0;		</span><br><span class="line">	while((len=fr.read(buf))!=-1)&#123;			</span><br><span class="line">		System.out.println(new String(buf ,0,len));			</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(&quot;read-Exception :&quot;+e.toString());		</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fr!=null)&#123;			</span><br><span class="line">		try&#123;				</span><br><span class="line">			fr.close();			</span><br><span class="line">		&#125;catch (IOException e)&#123;				</span><br><span class="line">			System.out.println(&quot;close-Exception :&quot;+e.toString());			</span><br><span class="line">		&#125; 		</span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>写入文件</p>
+<p>1.创建流对象，建立数据存放文件</p>
+<p>FileWriter fw &#x3D; new FileWriter(“Test.txt”);</p>
+<p>2.调用流对象的写入方法，将数据写入流</p>
+<p>fw.write(“text”);</p>
+<p>3.关闭流资源，并将流中的数据清空到文件中。</p>
+<p>fw.close();</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileWriter fw = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fw = new FileWriter(&quot;Test.txt&quot;);		</span><br><span class="line">	fw.write(&quot;text&quot;);	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(e.toString());	</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fw!=null)&#123;		</span><br><span class="line">		try&#123;		 </span><br><span class="line">			fw.close();		</span><br><span class="line">		&#125;catch (IOException e)&#123;			</span><br><span class="line">			System.out.println(e.toString());		</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注 意:</p>
+<ul>
+<li>定义文件路径时，注意：可以用“&#x2F;”或者“\”。</li>
+<li>在写入一个文件时，如果目录下有同名文件将被覆盖。</li>
+<li>在读取文件时，必须保证该文件已存在，否则出异常。</li>
+</ul>
+</li>
+</ol>
+<h1 id="3-缓冲流-处理流"><a href="#3-缓冲流-处理流" class="headerlink" title="3. 缓冲流(处理流)"></a>3. 缓冲流(处理流)</h1><p>为了提高数据读写的速度，JavaAPI提供了带缓冲功能的流类，在使用这些流类时，会创建一个内部缓冲区数组。</p>
+<p>根据数据操作单位可以把缓冲流分为：</p>
+<ul>
+<li>BufferedInputStream 和 BufferedOutputStream</li>
+<li>BufferedReader 和 BufferedWriter</li>
+</ul>
+<p>缓冲流要“套接”在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写的效率，同时增加了一些新的方法。</p>
+<p><strong>对于输出的缓冲流，写出的数据会先在内存中缓存，使用flush()将会使内存中的数据立刻写出。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BufferedReader br = null;</span><br><span class="line">BufferedWriter bw = null;		</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">//step1:创建缓冲流对象：它是过滤流，是对节点流的包装	</span><br><span class="line">	br = new  BufferedReader(new FileReader(&quot;d:\\IOTest\\source.txt&quot;));	</span><br><span class="line">	bw = new BufferedWriter(new FileWriter(&quot;d:\\IOTest\\destBF.txt&quot;));	</span><br><span class="line">	String str = null;	</span><br><span class="line">	</span><br><span class="line">	while ((str = br.readLine()) != null) &#123; </span><br><span class="line">		//一次读取字符文本文件的一行字符				</span><br><span class="line">		bw.write(str); //一次写入一行字符串		</span><br><span class="line">		bw.newLine();  //写入行分隔符	</span><br><span class="line">	&#125; 	</span><br><span class="line">	bw.flush();  </span><br><span class="line">	</span><br><span class="line">	//step2:刷新缓冲区</span><br><span class="line">&#125; catch (IOException e) &#123;	</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">	// step3: 关闭IO流对象	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (bw != null) &#123;			</span><br><span class="line">			bw.close();  //关闭过滤流时,会自动关闭它所包装的底层节点流		</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125;	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (br != null) &#123;		</span><br><span class="line">			br.close();		</span><br><span class="line">		&#125;  	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>常见的编码表</p>
+<ul>
+<li>ASCII：美国标准信息交换码。用一个字节的7位可以表示。</li>
+<li>ISO8859-1：拉丁码表。欧洲码表。用一个字节的8位表示。</li>
+<li>GB2312：中国的中文编码表。</li>
+<li>GBK：中国的中文编码表升级，融合了更多的中文文字符号。</li>
+<li>Unicode：国际标准码，融合了多种文字。所有文字都用两个字节来表示,Java语言使用的就是unicode</li>
+<li>UTF-8：最多用三个字节来表示一个字符。</li>
+</ul>
+<p><strong>编码：字符串—&gt;字节数组</strong></p>
+<p><strong>解码：字节数组—&gt;字符串</strong></p>
+<h1 id="4-对象流"><a href="#4-对象流" class="headerlink" title="4. 对象流"></a>4. 对象流</h1><ul>
+<li>ObjectInputStream和OjbectOutputSteam</li>
+<li>用于存储和读取对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。</li>
+<li>序列化(Serialize)：用ObjectOutputStream类将一个Java对象写入IO流中</li>
+<li>反序列化(Deserialize)：用ObjectInputStream类从IO流中恢复该Java对象</li>
+</ul>
+<p>ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量。</p>
+]]></content>
+      <tags>
+        <tag>Java基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux 常用命令</title>
     <url>/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
@@ -377,42 +519,352 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring笔记</title>
-    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
-<li><p>Spring 是一个开源框架.</p>
+    <title>Linux Shell编程</title>
+    <url>/2019/02/01/Linux%20Shell%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便运行程序的界面系统级程序。</p>
+<p>用户可以用Shell来启动、挂起、停止甚至是编写一些程序。</p>
+<p><a href="20220708-2.jpg"><img src="/../../../../images/20220708-2.jpg" alt="img"></a></p>
+<ul>
+<li>Shell还是一个<strong>功能相当强大的编程语言</strong>，易编写、易调试、灵活性强。</li>
+<li>Shell是解释执行的脚本语言，在Shell中可以调用Linux系统命令。</li>
+</ul>
+<h2 id="shell脚本的执行方式"><a href="#shell脚本的执行方式" class="headerlink" title="shell脚本的执行方式"></a>shell脚本的执行方式</h2><ul>
+<li><p>echo输出内容到控制台</p>
+<ul>
+<li><p>基本语法：</p>
+<p>echo [ 选项] [输出内容]</p>
+<p>选项：-e： 支持反斜线控制的字符转换</p>
+<p><a href="http://ww1.sinaimg.cn/large/a3a0cfd7ly1g6cu543o7aj20hp0dxmxk.jpg"><img src="http://ww1.sinaimg.cn/large/a3a0cfd7ly1g6cu543o7aj20hp0dxmxk.jpg" alt="img"></a></p>
 </li>
-<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
-</li>
-<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
-</li>
-<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
+<li><p>案例</p>
+<blockquote>
+<p>echo “helloworld”   –输出helloworld</p>
+</blockquote>
 </li>
 </ul>
-<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
-<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
-<li>依赖注入(DI — dependency injection、IOC)</li>
-<li>–面向切面编程(AOP— aspect oriented programming)</li>
-<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
-<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
-<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
-</ol>
-<p>在项目中引入Spring可以带来以下好处：</p>
+</li>
+<li><p>脚本格式</p>
 <ol>
-<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
+<li>脚本以 #!&#x2F;bin&#x2F;bash 开头</li>
+<li>脚本必须有可执行权限</li>
+</ol>
 </li>
-<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
+<li><p>第一个shell脚本  helloworld.sh</p>
+<p>touch &#x2F;opt&#x2F;shellcode&#x2F;helloworld.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash   </span><br><span class="line">echo &quot;helloworld&quot;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
+<li><p>脚本的常用执行方式</p>
+<ol>
+<li><p>输入脚本的绝对路径或相对路径</p>
+<ol>
+<li><p>赋予helloworld.sh 脚本的+x权限</p>
+<p>chmod 777 helloworld.sh</p>
 </li>
-<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
-</li>
-<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
+<li><p>执行脚本</p>
+<ul>
+<li>&#x2F;opt&#x2F;shellcode&#x2F;helloWorld.sh</li>
+<li>.&#x2F;helloWorld.sh</li>
+</ul>
 </li>
 </ol>
+</li>
+<li><p>bash或sh+脚本（不用赋予脚本+x权限）</p>
+<ul>
+<li>sh &#x2F;root&#x2F;helloWorld.sh</li>
+<li>sh helloWorld.sh</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="shell中的变量"><a href="#shell中的变量" class="headerlink" title="shell中的变量"></a>shell中的变量</h2><p> 1）Linux Shell中的变量分为，系统变量和用户自定义变量。</p>
+<p> 2）系统变量：$HOME、$PWD、$SHELL、$USER等等</p>
+<p> 3）显示当前shell中所有变量：set</p>
+<h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><ul>
+<li><p>基本语法：</p>
+<ol>
+<li>定义变量：变量&#x3D;值</li>
+<li>撤销变量：unset 变量</li>
+<li>声明静态变量：readonly变量，注意：不能unset</li>
+</ol>
+</li>
+<li><p>变量定义规则</p>
+<ol>
+<li>变量名称可以由字母、数字和下划线组成，但是不能以数字开头。</li>
+<li><strong>等号两侧不能有空格</strong></li>
+<li>变量名称一般习惯为大写</li>
+</ol>
+</li>
+<li><p>案例</p>
+<ul>
+<li><p>定义变量A</p>
+<blockquote>
+<p>A&#x3D;8</p>
+</blockquote>
+</li>
+<li><p>撤销变量A</p>
+<blockquote>
+<p>unsetA</p>
+</blockquote>
+</li>
+<li><p>声明静态的变量B&#x3D;2，不能unset</p>
+<blockquote>
+<p>readonlyB &#x3D; 2</p>
+</blockquote>
+</li>
+<li><p>可把变量提升为全局环境变量，可供其他shell程序使用</p>
+<blockquote>
+<p>export 变量名</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="将命令的返回值赋值给变量"><a href="#将命令的返回值赋值给变量" class="headerlink" title="将命令的返回值赋值给变量"></a>将命令的返回值赋值给变量</h3><ul>
+<li>A&#x3D;ls − la 反引号，运行里面的命令，并把结果返回给变量A</li>
+<li>A&#x3D;$(ls -la) 等价于反引号</li>
+</ul>
+<h3 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h3><ul>
+<li><p>基本语法</p>
+<ol>
+<li>export 变量名&#x3D;变量值 （功能描述：设置环境变量的值）</li>
+<li>source 配置文件 （功能描述：让修改后的配置信息立即生效）</li>
+<li>echo $变量名 （功能描述：查询环境变量的值）</li>
+</ol>
+</li>
+<li><p>案例</p>
+<ol>
+<li><p>在&#x2F;etc&#x2F;profile文件中定义JAVA_HOME环境变量</p>
+<ul>
+<li>export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;jdk1.8.0_144</li>
+<li>export PATH&#x3D;PATH:PATH:JAVA_HOME&#x2F;bin</li>
+</ul>
+</li>
+<li><p>查看环境变量JAVA_HOME的值</p>
+<blockquote>
+<p>echo $JAVA_HOME</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="设置位置变量"><a href="#设置位置变量" class="headerlink" title="设置位置变量"></a>设置位置变量</h3><ul>
+<li><p>基本语法</p>
+<ul>
+<li>$n （功能描述：n为数字，$0代表命令本身，$1-$9代表第一到第九个参数，十以上的参数需要用大括号包含，如${10}）</li>
+<li>$ *（功能描述：这个变量代表命令行中所有的参数，$*把所有的参数看成一个整体）</li>
+<li>$@ （功能描述：这个变量也代表命令行中所有的参数，不过$@把每个参数区分对待）</li>
+<li>$# （功能描述：这个变量代表命令行中所有参数的个数）</li>
+</ul>
+</li>
+<li><p>案例</p>
+<ol>
+<li><p>输出 输入的参数1，参数2，所有参数，参数个数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;$0  $1   $2&quot;</span><br><span class="line">echo &quot;$*&quot;</span><br><span class="line">echo &quot;$@&quot;</span><br><span class="line">echo &quot;$#&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>∗与∗与@的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash </span><br><span class="line"></span><br><span class="line">for i in &quot;$*&quot; </span><br><span class="line"># $*中的所有参数看成是一个整体，所以这个for循环只会循环一次         </span><br><span class="line">	do                 </span><br><span class="line">		echo &quot;The parameters is: $i&quot;         </span><br><span class="line">	done </span><br><span class="line"></span><br><span class="line">x=1 </span><br><span class="line"></span><br><span class="line">for y in &quot;$@&quot; </span><br><span class="line"># $@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次         </span><br><span class="line">	do                 </span><br><span class="line">		echo &quot;The parameter$x is: $y&quot;                 </span><br><span class="line">		x=$(( $x +1 ))         </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$*和$@都表示传递给函数或脚本的所有参数，不被双引号“ ”包含时，都以$1 $2 …$n的形式输出所有参数。</li>
+<li>当它们被双引号“ ”包含时，“$*”会将所有的参数作为一个整体，以“$1 $2<br>…$n” 的形式输出所有参数；“$@”会将各个参数分开，以“$1” “$2”…”$n”的形式输出所有参数。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><ul>
+<li><p>基本语法：</p>
+<ul>
+<li>$？ （功能描述：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确了。）</li>
+<li>$$ （功能描述：当前进程的进程号（PID））</li>
+<li>$! （功能描述：后台运行的最后一个进程的进程号（PID））</li>
+</ul>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;$$&quot;</span><br><span class="line"></span><br><span class="line">./helloworld.sh &amp;</span><br><span class="line"></span><br><span class="line">echo &quot;$!&quot;</span><br><span class="line">echo &quot;$?&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li><p>基本语法：</p>
+<ol>
+<li>“$((运算式))”或“$[运算式]”</li>
+<li>expr m + n –注意expr运算符间要有空格</li>
+<li>expr m - n</li>
+<li>expr *, &#x2F;, % 乘，除，取余</li>
+</ol>
+</li>
+<li><p>案例：计算（2+3）X4的值</p>
+<ul>
+<li><p>采用$[运算式]方式</p>
+<blockquote>
+<p>S&#x3D;$[(2+3)*4]</p>
+<p>echo $S</p>
+</blockquote>
+</li>
+<li><p>expr分布计算</p>
+<blockquote>
+<p>S&#x3D;expr2+3expr2+3</p>
+<p>expr $S * 4</p>
+</blockquote>
+</li>
+<li><p>expr一步完成计算</p>
+<blockquote>
+<p>expr expr2+3expr2+3 * 4</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><h4 id="判断语句"><a href="#判断语句" class="headerlink" title="判断语句"></a>判断语句</h4><ul>
+<li><p>基本语法：</p>
+<p>[ condition ]（注意condition前后要有空格）</p>
+<p>非空返回true，可使用$?验证（0为true，&gt;1为false）</p>
+</li>
+<li><p>案例：</p>
+<p>[ S ] 返回true</p>
+</li>
+</ul>
+<p>[] 返回false</p>
+<p>[ condition ] &amp;&amp; echo OK || echo notok 条件满足，执行后面的语句</p>
+<h4 id="常用判断条件"><a href="#常用判断条件" class="headerlink" title="常用判断条件"></a>常用判断条件</h4><ol>
+<li><p>两个整数之间比较</p>
+<blockquote>
+<p>&#x3D; 字符串比较</p>
+</blockquote>
+<blockquote>
+<p>-lt 小于</p>
+</blockquote>
+<blockquote>
+<p>-le 小于等于</p>
+</blockquote>
+<blockquote>
+<p>-eq 等于</p>
+</blockquote>
+<blockquote>
+<p>-gt 大于</p>
+</blockquote>
+<blockquote>
+<p>-ge 大于等于</p>
+</blockquote>
+<blockquote>
+<p>-ne 不等于</p>
+</blockquote>
+</li>
+<li><p>按照文件权限进行判断</p>
+<blockquote>
+<p>-r 有读的权限</p>
+</blockquote>
+<blockquote>
+<p>-w 有写的权限</p>
+</blockquote>
+<blockquote>
+<p>-x 有执行的权限</p>
+</blockquote>
+</li>
+<li><p>按照文件类型进行判断</p>
+<blockquote>
+<p>-f 文件存在并且是一个常规的文件</p>
+</blockquote>
+<blockquote>
+<p>-e 文件存在</p>
+</blockquote>
+<blockquote>
+<p>-d 文件存在并是一个目录</p>
+</blockquote>
+</li>
+<li><p>案例</p>
+<ol>
+<li><p>23是否大于等于22</p>
+<blockquote>
+<p>[ 23 -ge 22 ]</p>
+</blockquote>
+</li>
+<li><p>student.txt是否具有写权限</p>
+<blockquote>
+<p>[ -w student.txt ]</p>
+</blockquote>
+</li>
+<li><p>&#x2F;root&#x2F;install.log目录中的文件是否存在</p>
+<blockquote>
+<p>[ -e &#x2F;root&#x2F;install.log ]</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><h4 id="if判断"><a href="#if判断" class="headerlink" title="if判断"></a>if判断</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if [ 条件判断式 ]	then   </span><br><span class="line">	程序 </span><br><span class="line">fi </span><br><span class="line"></span><br><span class="line">或者 </span><br><span class="line"></span><br><span class="line">if [ 条件判断式 ]	then     </span><br><span class="line">		程序 </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：其中[ 条件判断式 ]，中括号和条件判断式之间必须有空格</p>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">if [ $1 -eq &quot;123&quot; ]	then        </span><br><span class="line">	echo &quot;123&quot;</span><br><span class="line">elif [ $1 -eq &quot;456&quot; ]	then        </span><br><span class="line">	echo &quot;456&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">case $变量名 in   </span><br><span class="line">	&quot;值1&quot;）     </span><br><span class="line">		如果变量的值等于值1，则执行程序1     </span><br><span class="line">	;;   </span><br><span class="line">	&quot;值2&quot;）     </span><br><span class="line">		如果变量的值等于值2，则执行程序2     </span><br><span class="line">	;;   </span><br><span class="line">	…省略其他分支…   </span><br><span class="line">	*）    </span><br><span class="line">    	如果变量的值都不是以上的值，则执行此程序     </span><br><span class="line">    ;; </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">!/bin/bash</span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">	&quot;1&quot;)        </span><br><span class="line">		echo &quot;1&quot;</span><br><span class="line">	;;</span><br><span class="line">	&quot;2&quot;)        </span><br><span class="line">		echo &quot;2&quot;</span><br><span class="line">	;;</span><br><span class="line">	*)        </span><br><span class="line">		echo &quot;other&quot;</span><br><span class="line">	;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for 变量 in 值1 值2 值3…   </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done </span><br><span class="line">	</span><br><span class="line">或者 </span><br><span class="line"></span><br><span class="line">for (( 初始值;循环控制条件;变量变化 ))  </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例 –打印输出参数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">#打印数字</span><br><span class="line">for i in &quot;$*&quot;    </span><br><span class="line">	do      </span><br><span class="line">		echo &quot;The num is $i &quot;    </span><br><span class="line">	done</span><br><span class="line"></span><br><span class="line">for j in &quot;$@&quot;        </span><br><span class="line">	do        </span><br><span class="line">		echo &quot;The num is $j&quot;        </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例 – 从1加到100</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line"></span><br><span class="line">for((i=0;i&lt;=100;i++))</span><br><span class="line">	do        </span><br><span class="line">		s=$[$s+$i]</span><br><span class="line">	done</span><br><span class="line">	</span><br><span class="line">echo &quot;$s&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">while [ 条件判断式 ]   </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例 – 从1加到100</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line">i=1</span><br><span class="line"></span><br><span class="line">while [ $i -le 100 ]</span><br><span class="line">	do        </span><br><span class="line">		s=$[$s+$i]        </span><br><span class="line">		i=$[$i+1]</span><br><span class="line">	done</span><br><span class="line">	</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="read-读取控制台输入"><a href="#read-读取控制台输入" class="headerlink" title="read 读取控制台输入"></a>read 读取控制台输入</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read(选项)(参数)</span><br><span class="line">选项：</span><br><span class="line">-p：指定读取值时的提示符；</span><br><span class="line">-t：指定读取值时等待的时间（秒）。</span><br><span class="line"></span><br><span class="line">参数       </span><br><span class="line">变量：指定读取值的变量名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">read -t 7 -p &quot;please 7 miao input your name &quot; NAME</span><br><span class="line"></span><br><span class="line">echo $NAME</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="系统函数"><a href="#系统函数" class="headerlink" title="系统函数"></a>系统函数</h4><ul>
+<li><p>basename基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">basename [pathname] [suffix]		</span><br><span class="line"></span><br><span class="line">功能描述：basename命令会删掉所有的前缀包括最后一个（‘/’）字符，然后将字符串显示出来。</span><br><span class="line"></span><br><span class="line">选项：suffix为后缀，如果suffix被指定了，basename会将pathname或string中的suffix去掉。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<blockquote>
+<p>basename &#x2F;opt&#x2F;test.txt</p>
+<p>basename &#x2F;opt&#x2F;test.txt .txt</p>
+</blockquote>
+</li>
+<li><p>dirname基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dirname 文件绝对路径		</span><br><span class="line"></span><br><span class="line">功能描述：从给定的包含绝对路径的文件名中去除文件名（非目录的部分），然后返回剩下的路径（目录的部分）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<blockquote>
+<p>dirname &#x2F;opt&#x2F;test.txt</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><ul>
+<li><p>基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ function ] funname[()]&#123;	</span><br><span class="line">	Action;	</span><br><span class="line">	[return int;]</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">funname</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p> （1）必须在调用函数地方之前，先声明函数，shell脚本是逐行运行。不会像其它语言一样先编译。</p>
+<p> （2）函数返回值，只能通过$?系统变量获得，可以显示加：return返回，如果不加，将以最后一条命令运行结果，作为返回值。return后跟数值n(0-255)</p>
+</li>
+<li><p>案例 –计算输入参数的和</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">function sum()&#123;    </span><br><span class="line">	s=0    </span><br><span class="line">	s=$[ $1 + $2 ]    </span><br><span class="line">	echo &quot;$s&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">read -p &quot;Please input the number1: &quot; n1;</span><br><span class="line">read -p &quot;Please input the number2: &quot; n2;</span><br><span class="line"></span><br><span class="line">sum $n1 $n2;</span><br></pre></td></tr></table></figure></li>
+</ul>
 ]]></content>
       <tags>
-        <tag>JAVA框架</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1222,502 +1674,103 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo start!</title>
+    <url>/2018/01/10/hexo-start/</url>
+    <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
+<p>安装与使用：见git笔记</p>
+<p>安装后验证：git  –version</p>
+<p>安装好git后， 后续命令均采用 git bash 执行。</p>
+<h3 id="2-下载并安装node-js"><a href="#2-下载并安装node-js" class="headerlink" title="2. 下载并安装node.js"></a>2. 下载并安装node.js</h3><p>官网下载：<a href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+<p>安装与使用：见node笔记</p>
+<p>安装后验证：node -v </p>
+<h3 id="3-命令行安装cnpm"><a href="#3-命令行安装cnpm" class="headerlink" title="3. 命令行安装cnpm"></a>3. 命令行安装cnpm</h3><p>命令：npm install -g cnpm –registry&#x3D;&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<p>安装后验证：cnpm -v </p>
+<h3 id="4-命令行安装hexo"><a href="#4-命令行安装hexo" class="headerlink" title="4. 命令行安装hexo"></a>4. 命令行安装hexo</h3><p>命令：cnpm install -g hexo-cli</p>
+<p>安装后验证：hexo  -v</p>
+<h3 id="5-在github上创建仓库"><a href="#5-在github上创建仓库" class="headerlink" title="5. 在github上创建仓库"></a>5. 在github上创建仓库</h3><p>新建一个名为你的用户名.github.io的仓库</p>
+<p>比如说，如果你的github用户名是test，那么你就新建test.github.io的仓库（必须是你的用户名，其它名称无效），将来你的网站访问地址就是 <a href="http://test.github.io/">http://test.github.io</a> 了，每一个github账户最多只能创建一个这样可以直接使用域名访问的仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">### 配置SSH免密登录</span><br><span class="line">第一步：首先打开电脑文件夹，找到C:\Users\bona\.ssh文件夹并删除</span><br><span class="line"></span><br><span class="line">第二步：在C:\Users\bona 文件夹下右键打开Git Bash Here</span><br><span class="line">输入命令：ssh-keygen -t rsa -C github邮件地址   </span><br><span class="line">生成.ssh秘钥，输入后连敲三次回车</span><br><span class="line"></span><br><span class="line">第三步：最终生成了一个新的 C:\Users\bona\.ssh文件夹，打开这个文件夹，找到.ssh\id_rsa.pub文件，记事本打开并复制里面的内容</span><br><span class="line"></span><br><span class="line">第四步：打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key，把复制的内容粘贴进去，title随便填，保存即可，我们的公钥就添加成功了</span><br><span class="line"></span><br><span class="line">第五步：检测是否设置成功：</span><br><span class="line">输入命令：  $ ssh -T git@github.com # 注意邮箱地址不用改</span><br><span class="line">如果提示Are you sure you want to continue connecting (yes/no)?，输入yes，然后会看到：</span><br><span class="line">Hi fenghuayangyi! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">看到这个信息说明SSH已配置成功！</span><br><span class="line"></span><br><span class="line">第六步：此时你还需要配置：</span><br><span class="line">$ git config --global user.name &quot;bona&quot;// 你的github用户名，非昵称</span><br><span class="line">$ git config --global user.email  &quot;bona@126.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-hexo搭建博客"><a href="#使用-hexo搭建博客" class="headerlink" title="使用 hexo搭建博客"></a>使用 hexo搭建博客</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ul>
+<li><p>新建文件夹 note</p>
+</li>
+<li><p>git bash</p>
+<ul>
+<li><p>hexo init</p>
+</li>
+<li><p>hexo g # 生成</p>
+</li>
+<li><p>hexo s  #启动服务， 打开浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a> 即可看到内容</p>
+<p>如果端口冲突，参考这篇文章<a href="https://www.runoob.com/w3cnote/windows-finds-port-usage.html">https://www.runoob.com/w3cnote/windows-finds-port-usage.html</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><ul>
+<li><p>npm install hexo-deployer-git –save</p>
+<p>必须安装后，才能使用 : hexo d</p>
+</li>
+<li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+</li>
+<li><p>报错和 time有关时，需要安装该组件</p>
+</li>
+<li><p>npm install hexo-reading-time –save</p>
+</li>
+<li><p>安装后，才能使用搜索功能</p>
+</li>
+<li><p>npm install hexo-generator-searchdb –save</p>
+</li>
+<li><p>默认首页，分类，标签页显示文章数为10，想分页设置文章数操作如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-index --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-archive --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-tag --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在主题配置文件 _config.yml 中修改</span><br><span class="line">------------------------------————————————————</span><br><span class="line"># Algolia Search</span><br><span class="line"># For more information: https://www.algolia.com</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 5</span><br><span class="line"></span><br><span class="line">#主页每页显示文章数</span><br><span class="line">index_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#archive分页每页显示文章数</span><br><span class="line">archive_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#tag分页每页显示文章数</span><br><span class="line">tag_generator:</span><br><span class="line">    per_page: 10</span><br><span class="line">#category分页每页显示文章数</span><br><span class="line">category_generator: </span><br><span class="line">    per_page: 10</span><br><span class="line">————————————————————————————————————————————————</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>自定义排序</p>
+<p>在某一类别下，排序比较混乱，需要按照文章的date排序，或者按照中文的一、二、三等命名。</p>
+<p>npm install hexo-generator-topindex –save</p>
+</li>
+<li><p>创建分类</p>
+<p>hexo new page categories</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>创建标签</p>
+<p>hexo new page  tags</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>创建搜索</p>
+<p>hexo new page  search</p>
+</li>
+<li><p>创建新文章</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// [layout] 为布局，可选项为 `post`、`page`、`draft`，这将决定文章所在文件路径。</span><br><span class="line">// &lt;title&gt; 为文章标题</span><br><span class="line">hexo new [layout] &lt;title&gt;</span><br><span class="line"></span><br><span class="line">eg. hexo new post &quot;hello_word&quot;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>文章例子</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>hexo init</li>
+<li>hexo clean</li>
+<li>hexo g (generate)</li>
+<li>hexo s (start)</li>
+<li>hexo d (deploy)</li>
+</ul>
+<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3>]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>template</title>
     <url>/2018/01/01/Template/</url>
     <content><![CDATA[]]></content>
       <tags>
         <tag>doc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux Shell编程</title>
-    <url>/2019/02/01/Linux%20Shell%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便运行程序的界面系统级程序。</p>
-<p>用户可以用Shell来启动、挂起、停止甚至是编写一些程序。</p>
-<p><a href="20220708-2.jpg"><img src="/../../../../images/20220708-2.jpg" alt="img"></a></p>
-<ul>
-<li>Shell还是一个<strong>功能相当强大的编程语言</strong>，易编写、易调试、灵活性强。</li>
-<li>Shell是解释执行的脚本语言，在Shell中可以调用Linux系统命令。</li>
-</ul>
-<h2 id="shell脚本的执行方式"><a href="#shell脚本的执行方式" class="headerlink" title="shell脚本的执行方式"></a>shell脚本的执行方式</h2><ul>
-<li><p>echo输出内容到控制台</p>
-<ul>
-<li><p>基本语法：</p>
-<p>echo [ 选项] [输出内容]</p>
-<p>选项：-e： 支持反斜线控制的字符转换</p>
-<p><a href="http://ww1.sinaimg.cn/large/a3a0cfd7ly1g6cu543o7aj20hp0dxmxk.jpg"><img src="http://ww1.sinaimg.cn/large/a3a0cfd7ly1g6cu543o7aj20hp0dxmxk.jpg" alt="img"></a></p>
-</li>
-<li><p>案例</p>
-<blockquote>
-<p>echo “helloworld”   –输出helloworld</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>脚本格式</p>
-<ol>
-<li>脚本以 #!&#x2F;bin&#x2F;bash 开头</li>
-<li>脚本必须有可执行权限</li>
-</ol>
-</li>
-<li><p>第一个shell脚本  helloworld.sh</p>
-<p>touch &#x2F;opt&#x2F;shellcode&#x2F;helloworld.sh</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash   </span><br><span class="line">echo &quot;helloworld&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>脚本的常用执行方式</p>
-<ol>
-<li><p>输入脚本的绝对路径或相对路径</p>
-<ol>
-<li><p>赋予helloworld.sh 脚本的+x权限</p>
-<p>chmod 777 helloworld.sh</p>
-</li>
-<li><p>执行脚本</p>
-<ul>
-<li>&#x2F;opt&#x2F;shellcode&#x2F;helloWorld.sh</li>
-<li>.&#x2F;helloWorld.sh</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p>bash或sh+脚本（不用赋予脚本+x权限）</p>
-<ul>
-<li>sh &#x2F;root&#x2F;helloWorld.sh</li>
-<li>sh helloWorld.sh</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="shell中的变量"><a href="#shell中的变量" class="headerlink" title="shell中的变量"></a>shell中的变量</h2><p> 1）Linux Shell中的变量分为，系统变量和用户自定义变量。</p>
-<p> 2）系统变量：$HOME、$PWD、$SHELL、$USER等等</p>
-<p> 3）显示当前shell中所有变量：set</p>
-<h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><ul>
-<li><p>基本语法：</p>
-<ol>
-<li>定义变量：变量&#x3D;值</li>
-<li>撤销变量：unset 变量</li>
-<li>声明静态变量：readonly变量，注意：不能unset</li>
-</ol>
-</li>
-<li><p>变量定义规则</p>
-<ol>
-<li>变量名称可以由字母、数字和下划线组成，但是不能以数字开头。</li>
-<li><strong>等号两侧不能有空格</strong></li>
-<li>变量名称一般习惯为大写</li>
-</ol>
-</li>
-<li><p>案例</p>
-<ul>
-<li><p>定义变量A</p>
-<blockquote>
-<p>A&#x3D;8</p>
-</blockquote>
-</li>
-<li><p>撤销变量A</p>
-<blockquote>
-<p>unsetA</p>
-</blockquote>
-</li>
-<li><p>声明静态的变量B&#x3D;2，不能unset</p>
-<blockquote>
-<p>readonlyB &#x3D; 2</p>
-</blockquote>
-</li>
-<li><p>可把变量提升为全局环境变量，可供其他shell程序使用</p>
-<blockquote>
-<p>export 变量名</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="将命令的返回值赋值给变量"><a href="#将命令的返回值赋值给变量" class="headerlink" title="将命令的返回值赋值给变量"></a>将命令的返回值赋值给变量</h3><ul>
-<li>A&#x3D;ls − la 反引号，运行里面的命令，并把结果返回给变量A</li>
-<li>A&#x3D;$(ls -la) 等价于反引号</li>
-</ul>
-<h3 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h3><ul>
-<li><p>基本语法</p>
-<ol>
-<li>export 变量名&#x3D;变量值 （功能描述：设置环境变量的值）</li>
-<li>source 配置文件 （功能描述：让修改后的配置信息立即生效）</li>
-<li>echo $变量名 （功能描述：查询环境变量的值）</li>
-</ol>
-</li>
-<li><p>案例</p>
-<ol>
-<li><p>在&#x2F;etc&#x2F;profile文件中定义JAVA_HOME环境变量</p>
-<ul>
-<li>export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;jdk1.8.0_144</li>
-<li>export PATH&#x3D;PATH:PATH:JAVA_HOME&#x2F;bin</li>
-</ul>
-</li>
-<li><p>查看环境变量JAVA_HOME的值</p>
-<blockquote>
-<p>echo $JAVA_HOME</p>
-</blockquote>
-</li>
-</ol>
-</li>
-</ul>
-<h3 id="设置位置变量"><a href="#设置位置变量" class="headerlink" title="设置位置变量"></a>设置位置变量</h3><ul>
-<li><p>基本语法</p>
-<ul>
-<li>$n （功能描述：n为数字，$0代表命令本身，$1-$9代表第一到第九个参数，十以上的参数需要用大括号包含，如${10}）</li>
-<li>$ *（功能描述：这个变量代表命令行中所有的参数，$*把所有的参数看成一个整体）</li>
-<li>$@ （功能描述：这个变量也代表命令行中所有的参数，不过$@把每个参数区分对待）</li>
-<li>$# （功能描述：这个变量代表命令行中所有参数的个数）</li>
-</ul>
-</li>
-<li><p>案例</p>
-<ol>
-<li><p>输出 输入的参数1，参数2，所有参数，参数个数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;$0  $1   $2&quot;</span><br><span class="line">echo &quot;$*&quot;</span><br><span class="line">echo &quot;$@&quot;</span><br><span class="line">echo &quot;$#&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>∗与∗与@的区别</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash </span><br><span class="line"></span><br><span class="line">for i in &quot;$*&quot; </span><br><span class="line"># $*中的所有参数看成是一个整体，所以这个for循环只会循环一次         </span><br><span class="line">	do                 </span><br><span class="line">		echo &quot;The parameters is: $i&quot;         </span><br><span class="line">	done </span><br><span class="line"></span><br><span class="line">x=1 </span><br><span class="line"></span><br><span class="line">for y in &quot;$@&quot; </span><br><span class="line"># $@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次         </span><br><span class="line">	do                 </span><br><span class="line">		echo &quot;The parameter$x is: $y&quot;                 </span><br><span class="line">		x=$(( $x +1 ))         </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>$*和$@都表示传递给函数或脚本的所有参数，不被双引号“ ”包含时，都以$1 $2 …$n的形式输出所有参数。</li>
-<li>当它们被双引号“ ”包含时，“$*”会将所有的参数作为一个整体，以“$1 $2<br>…$n” 的形式输出所有参数；“$@”会将各个参数分开，以“$1” “$2”…”$n”的形式输出所有参数。</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><ul>
-<li><p>基本语法：</p>
-<ul>
-<li>$？ （功能描述：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确了。）</li>
-<li>$$ （功能描述：当前进程的进程号（PID））</li>
-<li>$! （功能描述：后台运行的最后一个进程的进程号（PID））</li>
-</ul>
-</li>
-<li><p>案例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;$$&quot;</span><br><span class="line"></span><br><span class="line">./helloworld.sh &amp;</span><br><span class="line"></span><br><span class="line">echo &quot;$!&quot;</span><br><span class="line">echo &quot;$?&quot;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
-<li><p>基本语法：</p>
-<ol>
-<li>“$((运算式))”或“$[运算式]”</li>
-<li>expr m + n –注意expr运算符间要有空格</li>
-<li>expr m - n</li>
-<li>expr *, &#x2F;, % 乘，除，取余</li>
-</ol>
-</li>
-<li><p>案例：计算（2+3）X4的值</p>
-<ul>
-<li><p>采用$[运算式]方式</p>
-<blockquote>
-<p>S&#x3D;$[(2+3)*4]</p>
-<p>echo $S</p>
-</blockquote>
-</li>
-<li><p>expr分布计算</p>
-<blockquote>
-<p>S&#x3D;expr2+3expr2+3</p>
-<p>expr $S * 4</p>
-</blockquote>
-</li>
-<li><p>expr一步完成计算</p>
-<blockquote>
-<p>expr expr2+3expr2+3 * 4</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><h4 id="判断语句"><a href="#判断语句" class="headerlink" title="判断语句"></a>判断语句</h4><ul>
-<li><p>基本语法：</p>
-<p>[ condition ]（注意condition前后要有空格）</p>
-<p>非空返回true，可使用$?验证（0为true，&gt;1为false）</p>
-</li>
-<li><p>案例：</p>
-<p>[ S ] 返回true</p>
-</li>
-</ul>
-<p>[] 返回false</p>
-<p>[ condition ] &amp;&amp; echo OK || echo notok 条件满足，执行后面的语句</p>
-<h4 id="常用判断条件"><a href="#常用判断条件" class="headerlink" title="常用判断条件"></a>常用判断条件</h4><ol>
-<li><p>两个整数之间比较</p>
-<blockquote>
-<p>&#x3D; 字符串比较</p>
-</blockquote>
-<blockquote>
-<p>-lt 小于</p>
-</blockquote>
-<blockquote>
-<p>-le 小于等于</p>
-</blockquote>
-<blockquote>
-<p>-eq 等于</p>
-</blockquote>
-<blockquote>
-<p>-gt 大于</p>
-</blockquote>
-<blockquote>
-<p>-ge 大于等于</p>
-</blockquote>
-<blockquote>
-<p>-ne 不等于</p>
-</blockquote>
-</li>
-<li><p>按照文件权限进行判断</p>
-<blockquote>
-<p>-r 有读的权限</p>
-</blockquote>
-<blockquote>
-<p>-w 有写的权限</p>
-</blockquote>
-<blockquote>
-<p>-x 有执行的权限</p>
-</blockquote>
-</li>
-<li><p>按照文件类型进行判断</p>
-<blockquote>
-<p>-f 文件存在并且是一个常规的文件</p>
-</blockquote>
-<blockquote>
-<p>-e 文件存在</p>
-</blockquote>
-<blockquote>
-<p>-d 文件存在并是一个目录</p>
-</blockquote>
-</li>
-<li><p>案例</p>
-<ol>
-<li><p>23是否大于等于22</p>
-<blockquote>
-<p>[ 23 -ge 22 ]</p>
-</blockquote>
-</li>
-<li><p>student.txt是否具有写权限</p>
-<blockquote>
-<p>[ -w student.txt ]</p>
-</blockquote>
-</li>
-<li><p>&#x2F;root&#x2F;install.log目录中的文件是否存在</p>
-<blockquote>
-<p>[ -e &#x2F;root&#x2F;install.log ]</p>
-</blockquote>
-</li>
-</ol>
-</li>
-</ol>
-<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><h4 id="if判断"><a href="#if判断" class="headerlink" title="if判断"></a>if判断</h4><ul>
-<li><p>基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if [ 条件判断式 ]	then   </span><br><span class="line">	程序 </span><br><span class="line">fi </span><br><span class="line"></span><br><span class="line">或者 </span><br><span class="line"></span><br><span class="line">if [ 条件判断式 ]	then     </span><br><span class="line">		程序 </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>注意事项：其中[ 条件判断式 ]，中括号和条件判断式之间必须有空格</p>
-</li>
-<li><p>案例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">if [ $1 -eq &quot;123&quot; ]	then        </span><br><span class="line">	echo &quot;123&quot;</span><br><span class="line">elif [ $1 -eq &quot;456&quot; ]	then        </span><br><span class="line">	echo &quot;456&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h4><ul>
-<li><p>基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">case $变量名 in   </span><br><span class="line">	&quot;值1&quot;）     </span><br><span class="line">		如果变量的值等于值1，则执行程序1     </span><br><span class="line">	;;   </span><br><span class="line">	&quot;值2&quot;）     </span><br><span class="line">		如果变量的值等于值2，则执行程序2     </span><br><span class="line">	;;   </span><br><span class="line">	…省略其他分支…   </span><br><span class="line">	*）    </span><br><span class="line">    	如果变量的值都不是以上的值，则执行此程序     </span><br><span class="line">    ;; </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">!/bin/bash</span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">	&quot;1&quot;)        </span><br><span class="line">		echo &quot;1&quot;</span><br><span class="line">	;;</span><br><span class="line">	&quot;2&quot;)        </span><br><span class="line">		echo &quot;2&quot;</span><br><span class="line">	;;</span><br><span class="line">	*)        </span><br><span class="line">		echo &quot;other&quot;</span><br><span class="line">	;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><ul>
-<li><p>基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for 变量 in 值1 值2 值3…   </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done </span><br><span class="line">	</span><br><span class="line">或者 </span><br><span class="line"></span><br><span class="line">for (( 初始值;循环控制条件;变量变化 ))  </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例 –打印输出参数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">#打印数字</span><br><span class="line">for i in &quot;$*&quot;    </span><br><span class="line">	do      </span><br><span class="line">		echo &quot;The num is $i &quot;    </span><br><span class="line">	done</span><br><span class="line"></span><br><span class="line">for j in &quot;$@&quot;        </span><br><span class="line">	do        </span><br><span class="line">		echo &quot;The num is $j&quot;        </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例 – 从1加到100</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line"></span><br><span class="line">for((i=0;i&lt;=100;i++))</span><br><span class="line">	do        </span><br><span class="line">		s=$[$s+$i]</span><br><span class="line">	done</span><br><span class="line">	</span><br><span class="line">echo &quot;$s&quot;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><ul>
-<li><p>基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">while [ 条件判断式 ]   </span><br><span class="line">	do     </span><br><span class="line">		程序   </span><br><span class="line">	done</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例 – 从1加到100</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line">i=1</span><br><span class="line"></span><br><span class="line">while [ $i -le 100 ]</span><br><span class="line">	do        </span><br><span class="line">		s=$[$s+$i]        </span><br><span class="line">		i=$[$i+1]</span><br><span class="line">	done</span><br><span class="line">	</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="read-读取控制台输入"><a href="#read-读取控制台输入" class="headerlink" title="read 读取控制台输入"></a>read 读取控制台输入</h4><ul>
-<li><p>基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">read(选项)(参数)</span><br><span class="line">选项：</span><br><span class="line">-p：指定读取值时的提示符；</span><br><span class="line">-t：指定读取值时等待的时间（秒）。</span><br><span class="line"></span><br><span class="line">参数       </span><br><span class="line">变量：指定读取值的变量名</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">read -t 7 -p &quot;please 7 miao input your name &quot; NAME</span><br><span class="line"></span><br><span class="line">echo $NAME</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="系统函数"><a href="#系统函数" class="headerlink" title="系统函数"></a>系统函数</h4><ul>
-<li><p>basename基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">basename [pathname] [suffix]		</span><br><span class="line"></span><br><span class="line">功能描述：basename命令会删掉所有的前缀包括最后一个（‘/’）字符，然后将字符串显示出来。</span><br><span class="line"></span><br><span class="line">选项：suffix为后缀，如果suffix被指定了，basename会将pathname或string中的suffix去掉。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例</p>
-<blockquote>
-<p>basename &#x2F;opt&#x2F;test.txt</p>
-<p>basename &#x2F;opt&#x2F;test.txt .txt</p>
-</blockquote>
-</li>
-<li><p>dirname基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dirname 文件绝对路径		</span><br><span class="line"></span><br><span class="line">功能描述：从给定的包含绝对路径的文件名中去除文件名（非目录的部分），然后返回剩下的路径（目录的部分）</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例</p>
-<blockquote>
-<p>dirname &#x2F;opt&#x2F;test.txt</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><ul>
-<li><p>基本语法</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ function ] funname[()]&#123;	</span><br><span class="line">	Action;	</span><br><span class="line">	[return int;]</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line">funname</span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<p> （1）必须在调用函数地方之前，先声明函数，shell脚本是逐行运行。不会像其它语言一样先编译。</p>
-<p> （2）函数返回值，只能通过$?系统变量获得，可以显示加：return返回，如果不加，将以最后一条命令运行结果，作为返回值。return后跟数值n(0-255)</p>
-</li>
-<li><p>案例 –计算输入参数的和</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">function sum()&#123;    </span><br><span class="line">	s=0    </span><br><span class="line">	s=$[ $1 + $2 ]    </span><br><span class="line">	echo &quot;$s&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">read -p &quot;Please input the number1: &quot; n1;</span><br><span class="line">read -p &quot;Please input the number2: &quot; n2;</span><br><span class="line"></span><br><span class="line">sum $n1 $n2;</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java IO</title>
-    <url>/2019/02/12/Java%20IO/</url>
-    <content><![CDATA[<h1 id="1-IO-基础"><a href="#1-IO-基础" class="headerlink" title="1. IO 基础"></a>1. IO 基础</h1><p><a href="20220708-3.jpg"><img src="/../../../../images/20220708-3.jpg" alt="Java SE框架.jpg"></a></p>
-<h2 id="1-1-java-io-file的使用"><a href="#1-1-java-io-file的使用" class="headerlink" title="1.1 java.io.file的使用"></a>1.1 java.io.file的使用</h2><p>java.io.File类：文件和目录路径名的抽象表示形式。</p>
-<ul>
-<li>File 能<strong>新建、删除、重命名文件和目录</strong>，但File 不能访问文件内容本身。如果需要访问文件内容本身，则需要使用输入&#x2F;输出流。</li>
-<li>File对象可以作为参数传递给流的构造函数</li>
-</ul>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">File win = new File(&quot;C:\\Windows&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(win.isDirectory()); // true</span><br><span class="line"></span><br><span class="line">File notepad = new File(&quot;C:\\Windows\\notepad.exe&quot;);</span><br><span class="line">System.out.println(notepad.isFile()); // true</span><br><span class="line"></span><br><span class="line">File dir = new File(&quot;C:\\abc\\xyz&quot;);</span><br><span class="line">System.out.println(dir.mkdir()); // -&gt; mkdirs</span><br><span class="line"></span><br><span class="line">File readme = new File(&quot;./src/readme.txt&quot;);</span><br><span class="line">System.out.println(readme.isFile()); //true</span><br><span class="line"></span><br><span class="line">System.out.println(readme.getAbsolutePath());</span><br><span class="line">System.out.println(readme.getCanonicalPath());</span><br></pre></td></tr></table></figure>
-
-<p><a href="20220708-4.jpg"><img src="/../../../../images/20220708-4.jpg" alt="20220708-4.jpg"></a></p>
-<h2 id="1-2-IO原理以及流的分类"><a href="#1-2-IO原理以及流的分类" class="headerlink" title="1.2 IO原理以及流的分类"></a>1.2 IO原理以及流的分类</h2><ul>
-<li>IO流用来处理设备之间的数据传输。</li>
-<li>Java对于数据的输入&#x2F;输出操作以”流(stream)”的方式进行。</li>
-<li>java.io包下提供了各种“流”类和接口, 通过标准的方法输入或输出数据。<ul>
-<li>输入input：读取外部数据（磁盘、光盘等存储设备的数据）到程序（内存）中。</li>
-<li>输出output：将程序（内存）数据输出到磁盘、光盘等存储设备中。</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-2-1-流的分类"><a href="#1-2-1-流的分类" class="headerlink" title="1.2.1 流的分类"></a>1.2.1 流的分类</h3><ul>
-<li>按操作数据单位不同分为：字节流(8bit)，字符流(16bit)</li>
-<li>按数据流的流向不同分为：输入流，输出流</li>
-<li>按流的角色的不同分为：节点流，处理流</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">抽象基类</th>
-<th align="center">字节流</th>
-<th>字符流</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">输入流</td>
-<td align="center">InputStream</td>
-<td>Reader</td>
-</tr>
-<tr>
-<td align="center">输出流</td>
-<td align="center">OutputStream</td>
-<td>Writer</td>
-</tr>
-</tbody></table>
-<p>字节流：以byte为单位传输</p>
-<p>字符流：以char为单位传输</p>
-<ul>
-<li>节点流可以从一个特定的数据源读写数据。</li>
-<li>处理流是“连接”在已存在的流（节点流或处理流）之上，通过对数据的处理为程序提供更为强大的读写功能。</li>
-</ul>
-<p>Java的IO流共涉及40多个类，实际上非常规则，都是从如下4个抽象基类派生的。</p>
-<ul>
-<li><p>IO流体系</p>
-<p><a href="20220708-5.jpg"><img src="/../../../../images/20220708-5.jpg" alt="20220708-5.jpg"></a></p>
-</li>
-</ul>
-<h3 id="1-2-2-InputStream-amp-Reader"><a href="#1-2-2-InputStream-amp-Reader" class="headerlink" title="1.2.2 InputStream&amp; Reader"></a>1.2.2 InputStream&amp; Reader</h3><p>InputStream 和 Reader是所有输入流的基类。</p>
-<p>InputStream（典型实现：FileInputStream）</p>
-<ul>
-<li>intread()</li>
-<li>int read(byte[] b)</li>
-<li>intread(byte[] b, int off,int len)</li>
-</ul>
-<p>Reader（典型实现：FileReader）</p>
-<ul>
-<li>intread()</li>
-<li>int read(char [] c)</li>
-<li>intread(char [] c, int off,int len)</li>
-</ul>
-<p>注意：程序中打开的文件 IO 资源不属于内存里的资源，垃圾回收机制无法回收该资源，所以应该显式关闭文件IO 资源。</p>
-<h3 id="1-2-3-OutputStream-amp-Writer"><a href="#1-2-3-OutputStream-amp-Writer" class="headerlink" title="1.2.3 OutputStream&amp; Writer"></a>1.2.3 OutputStream&amp; Writer</h3><p>OutputStream 和 Writer也非常相似：</p>
-<ul>
-<li>void write(int b&#x2F;int c);</li>
-<li>void write(byte[] b&#x2F;char[]cbuf);</li>
-<li>void write(byte[] b&#x2F;char[]buff, int off, int len);</li>
-<li>void flush();</li>
-<li>void close(); 需要先刷新，再关闭此流</li>
-</ul>
-<p>因为字符流直接以字符作为操作单位，所以 Writer可以用字符串来替换字符数组，即以String对象作为参数</p>
-<p>void write(String str);</p>
-<p>void write(String str, intoff, intlen);</p>
-<h1 id="2-文件流"><a href="#2-文件流" class="headerlink" title="2. 文件流"></a>2. 文件流</h1><ol>
-<li><p>读取文件</p>
-<p>1.建立一个流对象，将已存在的一个文件加载进流。</p>
-<p>FileReader fr &#x3D; new FileReader(“Test.txt”);</p>
-<p>2.创建一个临时存放数据的数组。</p>
-<p>char[] ch &#x3D; new char[1024];</p>
-<p>3.调用流对象的读取方法将流中的数据读入到数组中。</p>
-<p>fr.read(ch);</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileReader fr = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fr = new FileReader(&quot;c:\\test.txt&quot;);		</span><br><span class="line">	char[] buf = new char[1024];		</span><br><span class="line">	int len= 0;		</span><br><span class="line">	while((len=fr.read(buf))!=-1)&#123;			</span><br><span class="line">		System.out.println(new String(buf ,0,len));			</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(&quot;read-Exception :&quot;+e.toString());		</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fr!=null)&#123;			</span><br><span class="line">		try&#123;				</span><br><span class="line">			fr.close();			</span><br><span class="line">		&#125;catch (IOException e)&#123;				</span><br><span class="line">			System.out.println(&quot;close-Exception :&quot;+e.toString());			</span><br><span class="line">		&#125; 		</span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>写入文件</p>
-<p>1.创建流对象，建立数据存放文件</p>
-<p>FileWriter fw &#x3D; new FileWriter(“Test.txt”);</p>
-<p>2.调用流对象的写入方法，将数据写入流</p>
-<p>fw.write(“text”);</p>
-<p>3.关闭流资源，并将流中的数据清空到文件中。</p>
-<p>fw.close();</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileWriter fw = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fw = new FileWriter(&quot;Test.txt&quot;);		</span><br><span class="line">	fw.write(&quot;text&quot;);	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(e.toString());	</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fw!=null)&#123;		</span><br><span class="line">		try&#123;		 </span><br><span class="line">			fw.close();		</span><br><span class="line">		&#125;catch (IOException e)&#123;			</span><br><span class="line">			System.out.println(e.toString());		</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注 意:</p>
-<ul>
-<li>定义文件路径时，注意：可以用“&#x2F;”或者“\”。</li>
-<li>在写入一个文件时，如果目录下有同名文件将被覆盖。</li>
-<li>在读取文件时，必须保证该文件已存在，否则出异常。</li>
-</ul>
-</li>
-</ol>
-<h1 id="3-缓冲流-处理流"><a href="#3-缓冲流-处理流" class="headerlink" title="3. 缓冲流(处理流)"></a>3. 缓冲流(处理流)</h1><p>为了提高数据读写的速度，JavaAPI提供了带缓冲功能的流类，在使用这些流类时，会创建一个内部缓冲区数组。</p>
-<p>根据数据操作单位可以把缓冲流分为：</p>
-<ul>
-<li>BufferedInputStream 和 BufferedOutputStream</li>
-<li>BufferedReader 和 BufferedWriter</li>
-</ul>
-<p>缓冲流要“套接”在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写的效率，同时增加了一些新的方法。</p>
-<p><strong>对于输出的缓冲流，写出的数据会先在内存中缓存，使用flush()将会使内存中的数据立刻写出。</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BufferedReader br = null;</span><br><span class="line">BufferedWriter bw = null;		</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">//step1:创建缓冲流对象：它是过滤流，是对节点流的包装	</span><br><span class="line">	br = new  BufferedReader(new FileReader(&quot;d:\\IOTest\\source.txt&quot;));	</span><br><span class="line">	bw = new BufferedWriter(new FileWriter(&quot;d:\\IOTest\\destBF.txt&quot;));	</span><br><span class="line">	String str = null;	</span><br><span class="line">	</span><br><span class="line">	while ((str = br.readLine()) != null) &#123; </span><br><span class="line">		//一次读取字符文本文件的一行字符				</span><br><span class="line">		bw.write(str); //一次写入一行字符串		</span><br><span class="line">		bw.newLine();  //写入行分隔符	</span><br><span class="line">	&#125; 	</span><br><span class="line">	bw.flush();  </span><br><span class="line">	</span><br><span class="line">	//step2:刷新缓冲区</span><br><span class="line">&#125; catch (IOException e) &#123;	</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">	// step3: 关闭IO流对象	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (bw != null) &#123;			</span><br><span class="line">			bw.close();  //关闭过滤流时,会自动关闭它所包装的底层节点流		</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125;	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (br != null) &#123;		</span><br><span class="line">			br.close();		</span><br><span class="line">		&#125;  	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>常见的编码表</p>
-<ul>
-<li>ASCII：美国标准信息交换码。用一个字节的7位可以表示。</li>
-<li>ISO8859-1：拉丁码表。欧洲码表。用一个字节的8位表示。</li>
-<li>GB2312：中国的中文编码表。</li>
-<li>GBK：中国的中文编码表升级，融合了更多的中文文字符号。</li>
-<li>Unicode：国际标准码，融合了多种文字。所有文字都用两个字节来表示,Java语言使用的就是unicode</li>
-<li>UTF-8：最多用三个字节来表示一个字符。</li>
-</ul>
-<p><strong>编码：字符串—&gt;字节数组</strong></p>
-<p><strong>解码：字节数组—&gt;字符串</strong></p>
-<h1 id="4-对象流"><a href="#4-对象流" class="headerlink" title="4. 对象流"></a>4. 对象流</h1><ul>
-<li>ObjectInputStream和OjbectOutputSteam</li>
-<li>用于存储和读取对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。</li>
-<li>序列化(Serialize)：用ObjectOutputStream类将一个Java对象写入IO流中</li>
-<li>反序列化(Deserialize)：用ObjectInputStream类从IO流中恢复该Java对象</li>
-</ul>
-<p>ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量。</p>
-]]></content>
-      <tags>
-        <tag>Java基础</tag>
       </tags>
   </entry>
   <entry>
@@ -2188,92 +2241,42 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo start!</title>
-    <url>/2018/01/10/hexo-start/</url>
-    <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
-<p>安装与使用：见git笔记</p>
-<p>安装后验证：git  –version</p>
-<p>安装好git后， 后续命令均采用 git bash 执行。</p>
-<h3 id="2-下载并安装node-js"><a href="#2-下载并安装node-js" class="headerlink" title="2. 下载并安装node.js"></a>2. 下载并安装node.js</h3><p>官网下载：<a href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-<p>安装与使用：见node笔记</p>
-<p>安装后验证：node -v </p>
-<h3 id="3-命令行安装cnpm"><a href="#3-命令行安装cnpm" class="headerlink" title="3. 命令行安装cnpm"></a>3. 命令行安装cnpm</h3><p>命令：npm install -g cnpm –registry&#x3D;&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
-<p>安装后验证：cnpm -v </p>
-<h3 id="4-命令行安装hexo"><a href="#4-命令行安装hexo" class="headerlink" title="4. 命令行安装hexo"></a>4. 命令行安装hexo</h3><p>命令：cnpm install -g hexo-cli</p>
-<p>安装后验证：hexo  -v</p>
-<h3 id="5-在github上创建仓库"><a href="#5-在github上创建仓库" class="headerlink" title="5. 在github上创建仓库"></a>5. 在github上创建仓库</h3><p>新建一个名为你的用户名.github.io的仓库</p>
-<p>比如说，如果你的github用户名是test，那么你就新建test.github.io的仓库（必须是你的用户名，其它名称无效），将来你的网站访问地址就是 <a href="http://test.github.io/">http://test.github.io</a> 了，每一个github账户最多只能创建一个这样可以直接使用域名访问的仓库。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">### 配置SSH免密登录</span><br><span class="line">第一步：首先打开电脑文件夹，找到C:\Users\bona\.ssh文件夹并删除</span><br><span class="line"></span><br><span class="line">第二步：在C:\Users\bona 文件夹下右键打开Git Bash Here</span><br><span class="line">输入命令：ssh-keygen -t rsa -C github邮件地址   </span><br><span class="line">生成.ssh秘钥，输入后连敲三次回车</span><br><span class="line"></span><br><span class="line">第三步：最终生成了一个新的 C:\Users\bona\.ssh文件夹，打开这个文件夹，找到.ssh\id_rsa.pub文件，记事本打开并复制里面的内容</span><br><span class="line"></span><br><span class="line">第四步：打开你的github主页，进入个人设置 -&gt; SSH and GPG keys -&gt; New SSH key，把复制的内容粘贴进去，title随便填，保存即可，我们的公钥就添加成功了</span><br><span class="line"></span><br><span class="line">第五步：检测是否设置成功：</span><br><span class="line">输入命令：  $ ssh -T git@github.com # 注意邮箱地址不用改</span><br><span class="line">如果提示Are you sure you want to continue connecting (yes/no)?，输入yes，然后会看到：</span><br><span class="line">Hi fenghuayangyi! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">看到这个信息说明SSH已配置成功！</span><br><span class="line"></span><br><span class="line">第六步：此时你还需要配置：</span><br><span class="line">$ git config --global user.name &quot;bona&quot;// 你的github用户名，非昵称</span><br><span class="line">$ git config --global user.email  &quot;bona@126.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-hexo搭建博客"><a href="#使用-hexo搭建博客" class="headerlink" title="使用 hexo搭建博客"></a>使用 hexo搭建博客</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ul>
-<li><p>新建文件夹 note</p>
+    <title>Spring笔记</title>
+    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
+<li><p>Spring 是一个开源框架.</p>
 </li>
-<li><p>git bash</p>
-<ul>
-<li><p>hexo init</p>
+<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
 </li>
-<li><p>hexo g # 生成</p>
+<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
 </li>
-<li><p>hexo s  #启动服务， 打开浏览器访问 <a href="http://localhost:4000/">http://localhost:4000</a> 即可看到内容</p>
-<p>如果端口冲突，参考这篇文章<a href="https://www.runoob.com/w3cnote/windows-finds-port-usage.html">https://www.runoob.com/w3cnote/windows-finds-port-usage.html</a></p>
+<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
 </li>
 </ul>
+<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
+<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
+<li>依赖注入(DI — dependency injection、IOC)</li>
+<li>–面向切面编程(AOP— aspect oriented programming)</li>
+<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
+<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
+<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
+</ol>
+<p>在项目中引入Spring可以带来以下好处：</p>
+<ol>
+<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
 </li>
-</ul>
-<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><ul>
-<li><p>npm install hexo-deployer-git –save</p>
-<p>必须安装后，才能使用 : hexo d</p>
+<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
 </li>
-<li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#105;&#116;&#64;&#x67;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;">&#x67;&#105;&#116;&#64;&#x67;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
 </li>
-<li><p>报错和 time有关时，需要安装该组件</p>
+<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
 </li>
-<li><p>npm install hexo-reading-time –save</p>
+<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
 </li>
-<li><p>安装后，才能使用搜索功能</p>
-</li>
-<li><p>npm install hexo-generator-searchdb –save</p>
-</li>
-<li><p>创建分类</p>
-<p>hexo new page categories</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>创建标签</p>
-<p>hexo new page  tags</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>创建搜索</p>
-<p>hexo new page  search</p>
-</li>
-<li><p>自定义排序</p>
-<p>在某一类别下，排序比较混乱，需要按照文章的date排序，或者按照中文的一、二、三等命名。</p>
-<p>npm install hexo-generator-topindex –save</p>
-</li>
-<li><p>创建新文章</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// [layout] 为布局，可选项为 `post`、`page`、`draft`，这将决定文章所在文件路径。</span><br><span class="line">// &lt;title&gt; 为文章标题</span><br><span class="line">hexo new [layout] &lt;title&gt;</span><br><span class="line"></span><br><span class="line">eg. hexo new post &quot;hello_word&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-
-</li>
-<li><p>文章例子</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
-<li>hexo init</li>
-<li>hexo clean</li>
-<li>hexo g (generate)</li>
-<li>hexo s (start)</li>
-<li>hexo d (deploy)</li>
-</ul>
-<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3>]]></content>
+</ol>
+]]></content>
       <tags>
-        <tag>hexo</tag>
+        <tag>JAVA框架</tag>
       </tags>
   </entry>
 </search>

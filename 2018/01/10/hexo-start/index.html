@@ -92,7 +92,7 @@
       <span id="busuanzi_value_page_pv"></span> 点击
     </span>
       <span class="slash">/</span>
-      <span class="read">阅读耗时 6 分钟</span>
+      <span class="read">阅读耗时 7 分钟</span>
     </header>
 
     <div class="post-content">
@@ -131,7 +131,7 @@
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#105;&#116;&#64;&#x67;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;">&#x67;&#105;&#116;&#64;&#x67;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
@@ -140,6 +140,15 @@
 <li><p>安装后，才能使用搜索功能</p>
 </li>
 <li><p>npm install hexo-generator-searchdb –save</p>
+</li>
+<li><p>默认首页，分类，标签页显示文章数为10，想分页设置文章数操作如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-index --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-archive --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-tag --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在主题配置文件 _config.yml 中修改</span><br><span class="line">------------------------------————————————————</span><br><span class="line"># Algolia Search</span><br><span class="line"># For more information: https://www.algolia.com</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 5</span><br><span class="line"></span><br><span class="line">#主页每页显示文章数</span><br><span class="line">index_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#archive分页每页显示文章数</span><br><span class="line">archive_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#tag分页每页显示文章数</span><br><span class="line">tag_generator:</span><br><span class="line">    per_page: 10</span><br><span class="line">#category分页每页显示文章数</span><br><span class="line">category_generator: </span><br><span class="line">    per_page: 10</span><br><span class="line">————————————————————————————————————————————————</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>自定义排序</p>
+<p>在某一类别下，排序比较混乱，需要按照文章的date排序，或者按照中文的一、二、三等命名。</p>
+<p>npm install hexo-generator-topindex –save</p>
 </li>
 <li><p>创建分类</p>
 <p>hexo new page categories</p>
@@ -156,14 +165,8 @@
 <li><p>创建搜索</p>
 <p>hexo new page  search</p>
 </li>
-<li><p>自定义排序</p>
-<p>在某一类别下，排序比较混乱，需要按照文章的date排序，或者按照中文的一、二、三等命名。</p>
-<p>npm install hexo-generator-topindex –save</p>
-</li>
 <li><p>创建新文章</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// [layout] 为布局，可选项为 `post`、`page`、`draft`，这将决定文章所在文件路径。</span><br><span class="line">// &lt;title&gt; 为文章标题</span><br><span class="line">hexo new [layout] &lt;title&gt;</span><br><span class="line"></span><br><span class="line">eg. hexo new post &quot;hello_word&quot;</span><br></pre></td></tr></table></figure>
-
-
 
 
 </li>
@@ -209,16 +212,16 @@
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2018/01/01/Template/" rel="next" title="template">
-          template
+          <a href="/2018/01/10/Spring%E7%AC%94%E8%AE%B0/" rel="next" title="Spring笔记">
+          Spring笔记
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2018/01/10/Spring%E7%AC%94%E8%AE%B0/" rel="prev" title="Spring笔记">
-            Spring笔记
+          <a href="/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="prev" title="Linux 常用命令">
+            Linux 常用命令
           </a>
           <span>〉</span>
         
