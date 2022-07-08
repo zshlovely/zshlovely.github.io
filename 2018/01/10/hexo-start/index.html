@@ -15,7 +15,7 @@
   
 
   
-    <meta name="description" content="hexo start!" />
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
   
   
   <link rel="icon" type="image/x-icon" href="/logo.png">
@@ -54,11 +54,15 @@
           
       
           
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
             <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
           
       
           
-            <li class="pure-menu-item"><a target="_blank" rel="noopener" href="https://zshlovely.github.io/" class="pure-menu-link">关于</a></li>
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
           
       
   </ul>
@@ -92,7 +96,7 @@
       <span id="busuanzi_value_page_pv"></span> 点击
     </span>
       <span class="slash">/</span>
-      <span class="read">阅读耗时 7 分钟</span>
+      <span class="read">阅读耗时 9 分钟</span>
     </header>
 
     <div class="post-content">
@@ -126,12 +130,16 @@
 </ul>
 </li>
 </ul>
-<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><ul>
+<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Hexo 会默认安装：</span><br><span class="line"></span><br><span class="line">hexo：主程序</span><br><span class="line"></span><br><span class="line">hexo-deployer-git：实现 git 部署方式</span><br><span class="line"></span><br><span class="line">hexo-generator-archive：存档页面生成器</span><br><span class="line"></span><br><span class="line">hexo-generator-category：分类页面生成器</span><br><span class="line"></span><br><span class="line">hexo-generator-index：index 生成器</span><br><span class="line"></span><br><span class="line">hexo-generator-tag：标签页面生成器</span><br><span class="line"></span><br><span class="line">hexo-renderer-ejs：支持 EJS 渲染</span><br><span class="line"></span><br><span class="line">hexo-renderer-marked：Markdown 引擎</span><br><span class="line"></span><br><span class="line">hexo-renderer-stylus：支持 stylus 渲染</span><br><span class="line"></span><br><span class="line">hexo-server：支持本地预览，默认地址 localhost:4000</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
 <li><p>npm install hexo-deployer-git –save</p>
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
@@ -142,7 +150,7 @@
 <li><p>npm install hexo-generator-searchdb –save</p>
 </li>
 <li><p>默认首页，分类，标签页显示文章数为10，想分页设置文章数操作如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-index --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-archive --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-tag --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在主题配置文件 _config.yml 中修改</span><br><span class="line">------------------------------————————————————</span><br><span class="line"># Algolia Search</span><br><span class="line"># For more information: https://www.algolia.com</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 5</span><br><span class="line"></span><br><span class="line">#主页每页显示文章数</span><br><span class="line">index_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#archive分页每页显示文章数</span><br><span class="line">archive_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#tag分页每页显示文章数</span><br><span class="line">tag_generator:</span><br><span class="line">    per_page: 10</span><br><span class="line">#category分页每页显示文章数</span><br><span class="line">category_generator: </span><br><span class="line">    per_page: 10</span><br><span class="line">————————————————————————————————————————————————</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">在主题配置文件 _config.yml 中修改</span><br><span class="line">------------------------------————————————————</span><br><span class="line"># Algolia Search</span><br><span class="line"># For more information: https://www.algolia.com</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 5</span><br><span class="line"></span><br><span class="line">#主页每页显示文章数</span><br><span class="line">index_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#archive分页每页显示文章数</span><br><span class="line">archive_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#tag分页每页显示文章数</span><br><span class="line">tag_generator:</span><br><span class="line">    per_page: 10</span><br><span class="line">#category分页每页显示文章数</span><br><span class="line">category_generator: </span><br><span class="line">    per_page: 10</span><br><span class="line">————————————————————————————————————————————————</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">其他插件</span><br><span class="line">npm install hexo-server --save             	#本地服务器</span><br><span class="line">npm install hexo-deployer-git --save       	#git部署</span><br><span class="line">npm install hexo-generator-feed@1 --save   	#生成rss</span><br><span class="line">npm install hexo-generator-sitemap@1 --save	#生成站点地图</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -152,13 +160,19 @@
 </li>
 <li><p>创建分类</p>
 <p>hexo new page categories</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">layout: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>创建标签</p>
 <p>hexo new page  tags</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">layout: &quot;tags&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>创建 about</p>
+<p>hexo new page  about</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: about</span><br><span class="line">layout: &quot;about&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -171,7 +185,7 @@
 
 </li>
 <li><p>文章例子</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">author: shaohua</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
 <li>hexo init</li>
@@ -180,7 +194,15 @@
 <li>hexo s (start)</li>
 <li>hexo d (deploy)</li>
 </ul>
-<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm ls 与 npm fund 的区别，ls 只列出包名，而 fund 还列出了捐赠平台及其 url。</span><br><span class="line"></span><br><span class="line">node -v		// node版本</span><br><span class="line">npm -v		// npm版本</span><br><span class="line">cnpm -v		// cnpm是否正常</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3><h3 id="一些问题解决"><a href="#一些问题解决" class="headerlink" title="一些问题解决"></a>一些问题解决</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. warning: LF will be replaced by CRLF in js/utils.js.</span><br><span class="line">解决方法:</span><br><span class="line">git config --global core.autocrlf false</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     <div></div>
@@ -189,7 +211,7 @@
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E9%87%87%E7%94%A8hexo%E6%A1%86%E6%9E%B6-%E9%83%A8%E7%BD%B2%E5%88%B0github%EF%BC%89"><span class="toc-text">搭建博客（采用hexo框架+部署到github）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toc-text">操作步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BDgit"><span class="toc-text">1. 下载git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85node-js"><span class="toc-text">2. 下载并安装node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%89%E8%A3%85cnpm"><span class="toc-text">3. 命令行安装cnpm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%89%E8%A3%85hexo"><span class="toc-text">4. 命令行安装hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%9C%A8github%E4%B8%8A%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-text">5. 在github上创建仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2"><span class="toc-text">使用 hexo搭建博客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#npm%E7%BB%84%E4%BB%B6-amp-hexo%E9%85%8D%E7%BD%AE"><span class="toc-text">npm组件 &amp; hexo配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96"><span class="toc-text">部署优化</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E9%87%87%E7%94%A8hexo%E6%A1%86%E6%9E%B6-%E9%83%A8%E7%BD%B2%E5%88%B0github%EF%BC%89"><span class="toc-text">搭建博客（采用hexo框架+部署到github）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toc-text">操作步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BDgit"><span class="toc-text">1. 下载git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85node-js"><span class="toc-text">2. 下载并安装node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%89%E8%A3%85cnpm"><span class="toc-text">3. 命令行安装cnpm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%89%E8%A3%85hexo"><span class="toc-text">4. 命令行安装hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%9C%A8github%E4%B8%8A%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-text">5. 在github上创建仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2"><span class="toc-text">使用 hexo搭建博客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#npm%E7%BB%84%E4%BB%B6-amp-hexo%E9%85%8D%E7%BD%AE"><span class="toc-text">npm组件 &amp; hexo配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96"><span class="toc-text">部署优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-text">一些问题解决</span></a></li></ol></li></ol></li></ol>
   </div>
 
 
@@ -212,16 +234,16 @@
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2018/01/10/Spring%E7%AC%94%E8%AE%B0/" rel="next" title="Spring笔记">
-          Spring笔记
+          <a href="/2018/01/01/Template/" rel="next" title="template">
+          template
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="prev" title="Linux 常用命令">
-            Linux 常用命令
+          <a href="/2018/01/10/Spring%E7%AC%94%E8%AE%B0/" rel="prev" title="Spring笔记">
+            Spring笔记
           </a>
           <span>〉</span>
         

@@ -73,449 +73,11 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
       <tags>
-        <tag>大数据</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java IO</title>
-    <url>/2019/02/12/Java%20IO/</url>
-    <content><![CDATA[<h1 id="1-IO-基础"><a href="#1-IO-基础" class="headerlink" title="1. IO 基础"></a>1. IO 基础</h1><p><a href="20220708-3.jpg"><img src="/../../../../images/20220708-3.jpg" alt="Java SE框架.jpg"></a></p>
-<h2 id="1-1-java-io-file的使用"><a href="#1-1-java-io-file的使用" class="headerlink" title="1.1 java.io.file的使用"></a>1.1 java.io.file的使用</h2><p>java.io.File类：文件和目录路径名的抽象表示形式。</p>
-<ul>
-<li>File 能<strong>新建、删除、重命名文件和目录</strong>，但File 不能访问文件内容本身。如果需要访问文件内容本身，则需要使用输入&#x2F;输出流。</li>
-<li>File对象可以作为参数传递给流的构造函数</li>
-</ul>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">File win = new File(&quot;C:\\Windows&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(win.isDirectory()); // true</span><br><span class="line"></span><br><span class="line">File notepad = new File(&quot;C:\\Windows\\notepad.exe&quot;);</span><br><span class="line">System.out.println(notepad.isFile()); // true</span><br><span class="line"></span><br><span class="line">File dir = new File(&quot;C:\\abc\\xyz&quot;);</span><br><span class="line">System.out.println(dir.mkdir()); // -&gt; mkdirs</span><br><span class="line"></span><br><span class="line">File readme = new File(&quot;./src/readme.txt&quot;);</span><br><span class="line">System.out.println(readme.isFile()); //true</span><br><span class="line"></span><br><span class="line">System.out.println(readme.getAbsolutePath());</span><br><span class="line">System.out.println(readme.getCanonicalPath());</span><br></pre></td></tr></table></figure>
-
-<p><a href="20220708-4.jpg"><img src="/../../../../images/20220708-4.jpg" alt="20220708-4.jpg"></a></p>
-<h2 id="1-2-IO原理以及流的分类"><a href="#1-2-IO原理以及流的分类" class="headerlink" title="1.2 IO原理以及流的分类"></a>1.2 IO原理以及流的分类</h2><ul>
-<li>IO流用来处理设备之间的数据传输。</li>
-<li>Java对于数据的输入&#x2F;输出操作以”流(stream)”的方式进行。</li>
-<li>java.io包下提供了各种“流”类和接口, 通过标准的方法输入或输出数据。<ul>
-<li>输入input：读取外部数据（磁盘、光盘等存储设备的数据）到程序（内存）中。</li>
-<li>输出output：将程序（内存）数据输出到磁盘、光盘等存储设备中。</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-2-1-流的分类"><a href="#1-2-1-流的分类" class="headerlink" title="1.2.1 流的分类"></a>1.2.1 流的分类</h3><ul>
-<li>按操作数据单位不同分为：字节流(8bit)，字符流(16bit)</li>
-<li>按数据流的流向不同分为：输入流，输出流</li>
-<li>按流的角色的不同分为：节点流，处理流</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">抽象基类</th>
-<th align="center">字节流</th>
-<th>字符流</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">输入流</td>
-<td align="center">InputStream</td>
-<td>Reader</td>
-</tr>
-<tr>
-<td align="center">输出流</td>
-<td align="center">OutputStream</td>
-<td>Writer</td>
-</tr>
-</tbody></table>
-<p>字节流：以byte为单位传输</p>
-<p>字符流：以char为单位传输</p>
-<ul>
-<li>节点流可以从一个特定的数据源读写数据。</li>
-<li>处理流是“连接”在已存在的流（节点流或处理流）之上，通过对数据的处理为程序提供更为强大的读写功能。</li>
-</ul>
-<p>Java的IO流共涉及40多个类，实际上非常规则，都是从如下4个抽象基类派生的。</p>
-<ul>
-<li><p>IO流体系</p>
-<p><a href="20220708-5.jpg"><img src="/../../../../images/20220708-5.jpg" alt="20220708-5.jpg"></a></p>
-</li>
-</ul>
-<h3 id="1-2-2-InputStream-amp-Reader"><a href="#1-2-2-InputStream-amp-Reader" class="headerlink" title="1.2.2 InputStream&amp; Reader"></a>1.2.2 InputStream&amp; Reader</h3><p>InputStream 和 Reader是所有输入流的基类。</p>
-<p>InputStream（典型实现：FileInputStream）</p>
-<ul>
-<li>intread()</li>
-<li>int read(byte[] b)</li>
-<li>intread(byte[] b, int off,int len)</li>
-</ul>
-<p>Reader（典型实现：FileReader）</p>
-<ul>
-<li>intread()</li>
-<li>int read(char [] c)</li>
-<li>intread(char [] c, int off,int len)</li>
-</ul>
-<p>注意：程序中打开的文件 IO 资源不属于内存里的资源，垃圾回收机制无法回收该资源，所以应该显式关闭文件IO 资源。</p>
-<h3 id="1-2-3-OutputStream-amp-Writer"><a href="#1-2-3-OutputStream-amp-Writer" class="headerlink" title="1.2.3 OutputStream&amp; Writer"></a>1.2.3 OutputStream&amp; Writer</h3><p>OutputStream 和 Writer也非常相似：</p>
-<ul>
-<li>void write(int b&#x2F;int c);</li>
-<li>void write(byte[] b&#x2F;char[]cbuf);</li>
-<li>void write(byte[] b&#x2F;char[]buff, int off, int len);</li>
-<li>void flush();</li>
-<li>void close(); 需要先刷新，再关闭此流</li>
-</ul>
-<p>因为字符流直接以字符作为操作单位，所以 Writer可以用字符串来替换字符数组，即以String对象作为参数</p>
-<p>void write(String str);</p>
-<p>void write(String str, intoff, intlen);</p>
-<h1 id="2-文件流"><a href="#2-文件流" class="headerlink" title="2. 文件流"></a>2. 文件流</h1><ol>
-<li><p>读取文件</p>
-<p>1.建立一个流对象，将已存在的一个文件加载进流。</p>
-<p>FileReader fr &#x3D; new FileReader(“Test.txt”);</p>
-<p>2.创建一个临时存放数据的数组。</p>
-<p>char[] ch &#x3D; new char[1024];</p>
-<p>3.调用流对象的读取方法将流中的数据读入到数组中。</p>
-<p>fr.read(ch);</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileReader fr = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fr = new FileReader(&quot;c:\\test.txt&quot;);		</span><br><span class="line">	char[] buf = new char[1024];		</span><br><span class="line">	int len= 0;		</span><br><span class="line">	while((len=fr.read(buf))!=-1)&#123;			</span><br><span class="line">		System.out.println(new String(buf ,0,len));			</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(&quot;read-Exception :&quot;+e.toString());		</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fr!=null)&#123;			</span><br><span class="line">		try&#123;				</span><br><span class="line">			fr.close();			</span><br><span class="line">		&#125;catch (IOException e)&#123;				</span><br><span class="line">			System.out.println(&quot;close-Exception :&quot;+e.toString());			</span><br><span class="line">		&#125; 		</span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>写入文件</p>
-<p>1.创建流对象，建立数据存放文件</p>
-<p>FileWriter fw &#x3D; new FileWriter(“Test.txt”);</p>
-<p>2.调用流对象的写入方法，将数据写入流</p>
-<p>fw.write(“text”);</p>
-<p>3.关闭流资源，并将流中的数据清空到文件中。</p>
-<p>fw.close();</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileWriter fw = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fw = new FileWriter(&quot;Test.txt&quot;);		</span><br><span class="line">	fw.write(&quot;text&quot;);	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(e.toString());	</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fw!=null)&#123;		</span><br><span class="line">		try&#123;		 </span><br><span class="line">			fw.close();		</span><br><span class="line">		&#125;catch (IOException e)&#123;			</span><br><span class="line">			System.out.println(e.toString());		</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注 意:</p>
-<ul>
-<li>定义文件路径时，注意：可以用“&#x2F;”或者“\”。</li>
-<li>在写入一个文件时，如果目录下有同名文件将被覆盖。</li>
-<li>在读取文件时，必须保证该文件已存在，否则出异常。</li>
-</ul>
-</li>
-</ol>
-<h1 id="3-缓冲流-处理流"><a href="#3-缓冲流-处理流" class="headerlink" title="3. 缓冲流(处理流)"></a>3. 缓冲流(处理流)</h1><p>为了提高数据读写的速度，JavaAPI提供了带缓冲功能的流类，在使用这些流类时，会创建一个内部缓冲区数组。</p>
-<p>根据数据操作单位可以把缓冲流分为：</p>
-<ul>
-<li>BufferedInputStream 和 BufferedOutputStream</li>
-<li>BufferedReader 和 BufferedWriter</li>
-</ul>
-<p>缓冲流要“套接”在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写的效率，同时增加了一些新的方法。</p>
-<p><strong>对于输出的缓冲流，写出的数据会先在内存中缓存，使用flush()将会使内存中的数据立刻写出。</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BufferedReader br = null;</span><br><span class="line">BufferedWriter bw = null;		</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">//step1:创建缓冲流对象：它是过滤流，是对节点流的包装	</span><br><span class="line">	br = new  BufferedReader(new FileReader(&quot;d:\\IOTest\\source.txt&quot;));	</span><br><span class="line">	bw = new BufferedWriter(new FileWriter(&quot;d:\\IOTest\\destBF.txt&quot;));	</span><br><span class="line">	String str = null;	</span><br><span class="line">	</span><br><span class="line">	while ((str = br.readLine()) != null) &#123; </span><br><span class="line">		//一次读取字符文本文件的一行字符				</span><br><span class="line">		bw.write(str); //一次写入一行字符串		</span><br><span class="line">		bw.newLine();  //写入行分隔符	</span><br><span class="line">	&#125; 	</span><br><span class="line">	bw.flush();  </span><br><span class="line">	</span><br><span class="line">	//step2:刷新缓冲区</span><br><span class="line">&#125; catch (IOException e) &#123;	</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">	// step3: 关闭IO流对象	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (bw != null) &#123;			</span><br><span class="line">			bw.close();  //关闭过滤流时,会自动关闭它所包装的底层节点流		</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125;	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (br != null) &#123;		</span><br><span class="line">			br.close();		</span><br><span class="line">		&#125;  	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>常见的编码表</p>
-<ul>
-<li>ASCII：美国标准信息交换码。用一个字节的7位可以表示。</li>
-<li>ISO8859-1：拉丁码表。欧洲码表。用一个字节的8位表示。</li>
-<li>GB2312：中国的中文编码表。</li>
-<li>GBK：中国的中文编码表升级，融合了更多的中文文字符号。</li>
-<li>Unicode：国际标准码，融合了多种文字。所有文字都用两个字节来表示,Java语言使用的就是unicode</li>
-<li>UTF-8：最多用三个字节来表示一个字符。</li>
-</ul>
-<p><strong>编码：字符串—&gt;字节数组</strong></p>
-<p><strong>解码：字节数组—&gt;字符串</strong></p>
-<h1 id="4-对象流"><a href="#4-对象流" class="headerlink" title="4. 对象流"></a>4. 对象流</h1><ul>
-<li>ObjectInputStream和OjbectOutputSteam</li>
-<li>用于存储和读取对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。</li>
-<li>序列化(Serialize)：用ObjectOutputStream类将一个Java对象写入IO流中</li>
-<li>反序列化(Deserialize)：用ObjectInputStream类从IO流中恢复该Java对象</li>
-</ul>
-<p>ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量。</p>
-]]></content>
-      <tags>
-        <tag>Java基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux 常用命令</title>
-    <url>/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
-<li><p>查看目录 : ls，ll</p>
-<p>.&#x2F; 当前目录 ..&#x2F; 父级目录 &#x2F; 根目录</p>
-</li>
-<li><p>切换目录 : cd</p>
-</li>
-<li><p>创建目录 : mkdir dirname</p>
-</li>
-<li><p>删除目录 : rm -rf dirname</p>
-</li>
-<li><p>拷贝目录 : cp -r dirsource dirtarget</p>
-</li>
-<li><p>移动目录 : mv -r dirsource dirtarget</p>
-</li>
-</ul>
-<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><ul>
-<li><p>查看文件内容</p>
-<p>cat filename (查看文件内容、创建文件、文件合并、追加文件内容 等功能)</p>
-<p>more filename (分屏显示文件内容，每次只显示一页内容)</p>
-<ul>
-<li>空格键 显示手册页的下一屏<br>Enter 键 一次滚动手册页的一行<br>b 回滚一屏<br>f 前滚一屏<br>q 退出<br>&#x2F;word 搜索 word 字符串</li>
-</ul>
-</li>
-<li><p><strong>创建文件</strong> : touch filename</p>
-</li>
-<li><p>删除文件 : rm -f filename</p>
-</li>
-<li><p>拷贝目录 : cp filesource filetarget</p>
-</li>
-<li><p>移动目录 : mv filesource filetarget</p>
-</li>
-<li><p>文本搜索 : grep</p>
-<ul>
-<li>-n 显示匹配行及行号<br>-v 显示不包含匹配文本的所有行（相当于求反）<br>-i 忽略大小写</li>
-</ul>
-</li>
-<li><p>常用的两种模式查找\</p>
-<ul>
-<li>^a 行首，搜寻以 a 开头的行<br>ke$ 行尾，搜寻以 ke 结束的行</li>
-</ul>
-</li>
-<li><p>查看当前文件大小的命令</p>
-<ul>
-<li><p>ls -lht 列出每个文件的大小和当前目录所有文件大小总和</p>
-</li>
-<li><p>du -sh * 列出当前文件夹下的所有子文件的大小</p>
-<p>hdfs查看文件大小</p>
-<p>hadoop fs -du -h file&#x2F;dir</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="jar包常用操作"><a href="#jar包常用操作" class="headerlink" title="jar包常用操作"></a>jar包常用操作</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看 jar 包中的文件列表，并进行重定向</span><br><span class="line">jar -tvf a.jar &gt; a.txt </span><br><span class="line"></span><br><span class="line">-- 更新文件到 jar 中，目录需对应</span><br><span class="line">jar -uf a.jar com/a.class</span><br><span class="line">a.class 文件在 jar 包中的目录是 com/a.class。</span><br><span class="line">a.class 文件在本地路径，相对 a.jar 包，也是 com/a.class。</span><br><span class="line"></span><br><span class="line">-- 增加文件到 jar 中，目录需对应   </span><br><span class="line">与修改一致，jar 中原来没有的目录，会自动创建。</span><br><span class="line"></span><br><span class="line">jar -uf a.jar com/test/a.class</span><br><span class="line"></span><br><span class="line">用法：jar &#123;ctxu&#125;[vfm0Mi] [jar-文件] [manifest-文件] [-C 目录] 文件名 ... 　　</span><br><span class="line">	选项： 　　</span><br><span class="line">	-c 创建新的存档　　</span><br><span class="line">	-t 列出存档内容的列表　　</span><br><span class="line">	-x 展开存档中的命名的（或所有的〕文件　　</span><br><span class="line">	-u 更新已存在的存档　　</span><br><span class="line">	-v 生成详细输出到标准输出上　　</span><br><span class="line">	-f 指定存档文件名　　</span><br><span class="line">	-m 包含来自标明文件的标明信息　　</span><br><span class="line">	-0 只存储方式；未用zip压缩格式　　</span><br><span class="line">	-M 不产生所有项的清单（manifest〕文件　　</span><br><span class="line">	-i 为指定的jar文件产生索引信息　　</span><br><span class="line">	-C 改变到指定的目录，并且包含下列文件　　</span><br><span class="line">	</span><br><span class="line">jar包解压 jar -xvf xxx.jar</span><br><span class="line">重新打包  jar cf xxx.jar *</span><br><span class="line">查看jar包中的文件列表  jar -tvf xxx.jar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------提取zip或jar文件中的某个文件</span><br><span class="line">假如有个压缩包 abc.jar, 里面文件如下 （可以用unzip -l abc.jar 查看）：    </span><br><span class="line">data/1.txt    </span><br><span class="line">data/2.txt</span><br><span class="line">提取里面指定的文件到指定的位置，但上级目录将不会被创建。</span><br><span class="line"></span><br><span class="line">不加-d参数就解压到当前目录，-d参数可以指定不存在的目录，会自动创建。</span><br><span class="line">解压得到的文件名不变。</span><br><span class="line"></span><br><span class="line">unzip -j abc.jar data/2.txt -d /tmp/data_in_abc</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><p>echo 会在终端中显示参数指定的文字</p>
-</li>
-<li><p><strong>重定向 &gt; 和 &gt;&gt;</strong></p>
-<ul>
-<li>&gt; 表示输出，会覆盖文件原有的内容</li>
-<li>&gt;&gt; 表示追加，会将内容追加到已有文件的末尾</li>
-</ul>
-</li>
-<li><p><strong>管道 |</strong></p>
-<p>一个命令的输出 可以通过管道 做为 另一个命令的输入</p>
-<p>常用的管道命令有：<br>more：分屏显示内容<br>grep：在命令执行结果的基础上查询指定的文本</p>
-</li>
-</ul>
-<h2 id="远程管理常用命令"><a href="#远程管理常用命令" class="headerlink" title="远程管理常用命令"></a>远程管理常用命令</h2><ul>
-<li><p>关机&#x2F;重启</p>
-<ul>
-<li><p>shutdown 选项 时间 : 关机</p>
-<p>选项 含义<br>-r 重新启动</p>
-</li>
-<li><p><strong>halt</strong> 关机</p>
-</li>
-</ul>
-</li>
-<li><p>查看或配置网卡信息</p>
-<ul>
-<li>ifconfig</li>
-<li>ping</li>
-</ul>
-</li>
-<li><p>远程登录</p>
-<ul>
-<li>ssh 用户名@ip</li>
-</ul>
-</li>
-<li><p>复制文件</p>
-<ul>
-<li>scp</li>
-</ul>
-</li>
-<li><p>su命令与su - 命令的区别：</p>
-<p>su只是切换了root身份，但Shell环境仍然是普通用户的Shell；</p>
-<p>su -连用户和Shell环境一起切换成root身份了。</p>
-<p>PS:只有切换了Shell环境才不会出现PATH环境变量错误，报command not found的错误。</p>
-</li>
-</ul>
-<h2 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h2><ul>
-<li><p>基本概念</p>
-<p>序号 权限 英文 缩写 数字代号<br>01 读 read r 4<br>02 写 write w 2<br>03 执行 excute x 1</p>
-</li>
-<li><p>组<br>为了方便用户管理，提出了 组 的概念<br>在实际应用中，可以预先针对 组 设置好权限，<br>然后 将不同的用户添加到对应的组中，从而不用依次为每一个用户设置权限</p>
-</li>
-<li><p><strong>切换用户 su username</strong></p>
-</li>
-<li><p>退出 exit</p>
-</li>
-<li><p><strong>修改文件权限</strong></p>
-<p> 序号 命令 作用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">01            chown             修改拥有者</span><br><span class="line">02            chgrp             修改组</span><br><span class="line">03            chmod             修改权限</span><br></pre></td></tr></table></figure>
-
-<p>ex. chmod 修改 用户／组 对 文件／目录 的权限</p>
-<p> chmod -rwx 文件名|目录名</p>
-<ul>
-<li><p>递归修改文件|目录的组</p>
-<p>chgrp -R 组名 文件名|目录名</p>
-</li>
-<li><p>递归修改文件权限</p>
-<p>chmod -R 755 文件名|目录名</p>
-<p><a href="20220707-1"><img src="/../../../../images/20220707-1.jpg" alt="img"></a></p>
-</li>
-</ul>
-</li>
-<li><p>sudo</p>
-<p>sudo 命令用来以其他身份来执行命令，预设的身份为 root.</p>
-<p>使用 sudo 时，必须先输入密码，之后有 5 分钟的有效期限.</p>
-</li>
-<li><p>组管理</p>
-<ul>
-<li>添加组 : groupadd 组名</li>
-<li>删除组 : groupdel 组名<br>确认组信息 : cat &#x2F;etc&#x2F;group</li>
-<li>递归修改文件&#x2F;目录的所属组 : chgrp -R 组名 文件&#x2F;目录名</li>
-</ul>
-</li>
-<li><p>用户管理</p>
-<ul>
-<li><p><strong>添加新用户</strong> : useradd -m -g 组 新建用户名</p>
-<p>-m 自动建立home目录</p>
-<p>-g 指定用户所在的组</p>
-</li>
-<li><p><strong>设置用户密码</strong> : passwd 用户名</p>
-</li>
-<li><p>删除用户 : userdel -r 用户名</p>
-<p>-r 选项会自动删除用户家目录</p>
-</li>
-<li><p>确认用户信息 cat &#x2F;etc&#x2F;passwd | grep 用户名</p>
-<p>新建用户后，用户信息会保存在 &#x2F;etc&#x2F;passwd 文件中</p>
-</li>
-<li><p><strong>查看用户信息</strong></p>
-<p>who 查看当前所有登录的用户列表<br>whoami 查看当前登录用户的账户名</p>
-</li>
-<li><p>which 命令 ：查看执行命令所在位置</p>
-<p>ex. which ls</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2><ul>
-<li><p>时间和日期</p>
-<ul>
-<li>date 查看系统时间</li>
-<li>cal &#x2F; calendar 查看日历，-y 选项可以查看一年的日历</li>
-</ul>
-</li>
-<li><p>磁盘和目录空间</p>
-<ul>
-<li><p>df ：disk free 显示磁盘剩余空间</p>
-<p>df -h</p>
-</li>
-<li><p>du：disk usage 显示目录下的文件大小</p>
-<p>du -h [目录名]</p>
-</li>
-</ul>
-</li>
-<li><p><strong>进程信息</strong>：</p>
-<ul>
-<li><p>找出占用端口进程的pid</p>
-<p>lsof -i:port</p>
-</li>
-</ul>
-</li>
-<li><p>ps : process status 查看进程的详细状况</p>
-<ul>
-<li><p><strong>ps aux</strong></p>
-<p>选项 含义<br>a 显示终端上的所有进程，包括其他用户的进程<br>u 显示进程的详细状态<br>x 显示没有控制终端的进程</p>
-</li>
-</ul>
-</li>
-<li><p><strong>top</strong> : 动态显示运行中的进程并且排序</p>
-</li>
-<li><p><strong>kill</strong></p>
-<ul>
-<li><p>kill [-9] 进程代号</p>
-<p>终止指定代号的进程，-9 表示强行终止</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><ul>
-<li><p>查找文件 ：find</p>
-<p>ex. find [路径] -name “*.py”</p>
-<p>查找指定路径下扩展名是 .py 的文件，包括子目录</p>
-<p>如果省略路径，表示在当前文件夹下查找</p>
-</li>
-<li><p>软链接 通俗的方式讲类似于 Windows 下的快捷方式</p>
-<p>ln -s 被链接的源文件 链接文件</p>
-<p>注意:</p>
-<ul>
-<li>没有 -s 选项建立的是一个 硬链接文件</li>
-<li>源文件要使用绝对路径，不能使用相对路径</li>
-</ul>
-<p>ln -snf 被链接的源文件 链接文件 –更改软连接</p>
-</li>
-<li><p>打包和压缩</p>
-<p>不同操作系统中，常用的打包压缩方式是不同的。</p>
-<ul>
-<li>Windows 常用 rar</li>
-<li>Mac 常用 zip</li>
-<li>Linux 常用 tar.gz</li>
-</ul>
-<p><strong>打包 ／ 解包</strong>（含压缩）</p>
-<ul>
-<li><p><strong>打包文件</strong></p>
-<p>tar czf 压缩文件名 要压缩的文件夹</p>
-<p>ex. tar czf test.tar.gz .&#x2F;opt&#x2F;</p>
-</li>
-<li><p><strong>解包文件</strong>（-C参数 表示更换目录的意思 ）</p>
-<p>tar -zxf 待解压文件 -C 解压到的文件夹</p>
-<p>ex. tar -zxf test.tar.gz -C &#x2F;opt&#x2F;module&#x2F;</p>
-</li>
-<li><p>tar 选项说明<br>选项 含义<br>c 生成档案文件，创建打包文件<br>x 解开档案文件<br>v 列出归档解档的详细过程，显示进度<br>f 指定文件名，f 后面一定是 .tar 文件，必须放选项最后</p>
-<p>z 调用 gzip, 实现压缩和解压缩的功能</p>
-</li>
-</ul>
-</li>
-<li><p>软件安装</p>
-<p>apt 是 Advanced Packaging Tool，是 Linux 下的一款安装包管理工具</p>
-<ul>
-<li>安装软件 apt-get install 软件包</li>
-<li>卸载软件 apt-get remove 软件名</li>
-<li>更新已安装的包 apt-get upgrade</li>
-</ul>
-<p>配置软件源</p>
-<ul>
-<li><p>在软件和更新中，选项ubuntu软件</p>
-<p>设置下载自：<a href="http://mirrors.aliyun.com/ubuntu">http://mirrors.aliyun.com/ubuntu</a></p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="vi-编辑"><a href="#vi-编辑" class="headerlink" title="vi 编辑"></a>vi 编辑</h2><p>很多 Linux 发行版中，直接把 vi 做成 vim 的软连接</p>
-<ul>
-<li><p>查询软连接命令（知道）</p>
-<p>$ which vi</p>
-</li>
-<li><p>打开和新建文件</p>
-<p>vi filename</p>
-<ul>
-<li>如果文件已经存在，会直接打开该文件</li>
-<li>如果文件不存在，会新建一个文件</li>
-</ul>
-</li>
-<li><p>光标上下左右</p>
-<p>h j k l<br>左下右上</p>
-</li>
-<li><p>Vim编辑器三种模式</p>
-<ul>
-<li><p>命令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
-</li>
-<li><p>输入模式：正常的文本录入。</p>
-</li>
-<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
-<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
-</li>
-<li><p>命令模式中最常用的一些命令</p>
-<ul>
-<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
-<li>shirft+g 跳转到最后一行</li>
-</ul>
-</li>
-<li><p>末行模式常用的一些命令</p>
-<ul>
-<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
+        <tag>Hadoop</tag>
       </tags>
   </entry>
   <entry>
@@ -863,207 +425,153 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">function sum()&#123;    </span><br><span class="line">	s=0    </span><br><span class="line">	s=$[ $1 + $2 ]    </span><br><span class="line">	echo &quot;$s&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">read -p &quot;Please input the number1: &quot; n1;</span><br><span class="line">read -p &quot;Please input the number2: &quot; n2;</span><br><span class="line"></span><br><span class="line">sum $n1 $n2;</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
+      <categories>
+        <category>Linux</category>
+      </categories>
   </entry>
   <entry>
-    <title>Linux 初学习</title>
-    <url>/2018/12/31/Linux%20%E5%88%9D%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h2 id="Linux入门"><a href="#Linux入门" class="headerlink" title="Linux入门"></a>Linux入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Linux是一套免费使用和自由传播的类Unix操作系统。</p>
-<p>目前知名的发行版有：Ubuntu、RedHat、CentOS、Debain、Fedora、SuSE、OpenSUSE</p>
-<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><p>centos下载地址：</p>
+    <title>Java IO</title>
+    <url>/2019/02/12/Java%20IO/</url>
+    <content><![CDATA[<h1 id="1-IO-基础"><a href="#1-IO-基础" class="headerlink" title="1. IO 基础"></a>1. IO 基础</h1><p><a href="20220708-3.jpg"><img src="/../../../../images/20220708-3.jpg" alt="Java SE框架.jpg"></a></p>
+<h2 id="1-1-java-io-file的使用"><a href="#1-1-java-io-file的使用" class="headerlink" title="1.1 java.io.file的使用"></a>1.1 java.io.file的使用</h2><p>java.io.File类：文件和目录路径名的抽象表示形式。</p>
 <ul>
-<li>网易镜像：<a href="http://mirrors.163.com/centos/6/isos/">http://mirrors.163.com/centos/6/isos/</a></li>
-<li>搜狐镜像：<a href="http://mirrors.sohu.com/centos/6/isos/">http://mirrors.sohu.com/centos/6/isos/</a></li>
+<li>File 能<strong>新建、删除、重命名文件和目录</strong>，但File 不能访问文件内容本身。如果需要访问文件内容本身，则需要使用输入&#x2F;输出流。</li>
+<li>File对象可以作为参数传递给流的构造函数</li>
 </ul>
-<h3 id="Linux特点"><a href="#Linux特点" class="headerlink" title="Linux特点"></a>Linux特点</h3><ul>
-<li>Linux里面一切皆是文件</li>
-<li>Linux里面没有后缀名这一说</li>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">File win = new File(&quot;C:\\Windows&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(win.isDirectory()); // true</span><br><span class="line"></span><br><span class="line">File notepad = new File(&quot;C:\\Windows\\notepad.exe&quot;);</span><br><span class="line">System.out.println(notepad.isFile()); // true</span><br><span class="line"></span><br><span class="line">File dir = new File(&quot;C:\\abc\\xyz&quot;);</span><br><span class="line">System.out.println(dir.mkdir()); // -&gt; mkdirs</span><br><span class="line"></span><br><span class="line">File readme = new File(&quot;./src/readme.txt&quot;);</span><br><span class="line">System.out.println(readme.isFile()); //true</span><br><span class="line"></span><br><span class="line">System.out.println(readme.getAbsolutePath());</span><br><span class="line">System.out.println(readme.getCanonicalPath());</span><br></pre></td></tr></table></figure>
+
+<p><a href="20220708-4.jpg"><img src="/../../../../images/20220708-4.jpg" alt="20220708-4.jpg"></a></p>
+<h2 id="1-2-IO原理以及流的分类"><a href="#1-2-IO原理以及流的分类" class="headerlink" title="1.2 IO原理以及流的分类"></a>1.2 IO原理以及流的分类</h2><ul>
+<li>IO流用来处理设备之间的数据传输。</li>
+<li>Java对于数据的输入&#x2F;输出操作以”流(stream)”的方式进行。</li>
+<li>java.io包下提供了各种“流”类和接口, 通过标准的方法输入或输出数据。<ul>
+<li>输入input：读取外部数据（磁盘、光盘等存储设备的数据）到程序（内存）中。</li>
+<li>输出output：将程序（内存）数据输出到磁盘、光盘等存储设备中。</li>
 </ul>
-<h3 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a>Linux目录结构</h3><ul>
-<li><p>&#x2F;bin：是Binary的缩写，这个目录存放着系统必备执行命令</p>
-</li>
-<li><p>&#x2F;boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件，自己的安装别放这里</p>
-</li>
-<li><p>&#x2F;dev：Device(设备)的缩写，该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</p>
-</li>
-<li><p>&#x2F;etc：所有的系统管理所需要的配置文件和子目录。</p>
-</li>
-<li><p>&#x2F;home：存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</p>
-</li>
-<li><p>&#x2F;lib：系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。</p>
-</li>
-<li><p>&#x2F;opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</p>
-</li>
-<li><p>&#x2F;root：该目录为系统管理员，也称作超级权限者的用户主目录。</p>
-</li>
-<li><p>&#x2F;sbin：s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</p>
-</li>
-<li><p>&#x2F;tmp：这个目录是用来存放一些临时文件的。</p>
-</li>
-<li><p>&#x2F;usr： 这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</p>
-</li>
-<li><p>&#x2F;var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</p>
 </li>
 </ul>
-<h3 id="VI-x2F-VIM编辑器"><a href="#VI-x2F-VIM编辑器" class="headerlink" title="VI&#x2F;VIM编辑器"></a>VI&#x2F;VIM编辑器</h3><ul>
-<li><p>Vim编辑器三种模式</p>
+<h3 id="1-2-1-流的分类"><a href="#1-2-1-流的分类" class="headerlink" title="1.2.1 流的分类"></a>1.2.1 流的分类</h3><ul>
+<li>按操作数据单位不同分为：字节流(8bit)，字符流(16bit)</li>
+<li>按数据流的流向不同分为：输入流，输出流</li>
+<li>按流的角色的不同分为：节点流，处理流</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">抽象基类</th>
+<th align="center">字节流</th>
+<th>字符流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">输入流</td>
+<td align="center">InputStream</td>
+<td>Reader</td>
+</tr>
+<tr>
+<td align="center">输出流</td>
+<td align="center">OutputStream</td>
+<td>Writer</td>
+</tr>
+</tbody></table>
+<p>字节流：以byte为单位传输</p>
+<p>字符流：以char为单位传输</p>
 <ul>
-<li><p>指令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
-</li>
-<li><p>编辑模式：正常的文本录入。</p>
-</li>
-<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
-<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
-</li>
-<li><p>命令模式中最常用的一些命令</p>
+<li>节点流可以从一个特定的数据源读写数据。</li>
+<li>处理流是“连接”在已存在的流（节点流或处理流）之上，通过对数据的处理为程序提供更为强大的读写功能。</li>
+</ul>
+<p>Java的IO流共涉及40多个类，实际上非常规则，都是从如下4个抽象基类派生的。</p>
 <ul>
-<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
-<li>shirft+g 跳转到最后一行</li>
-</ul>
+<li><p>IO流体系</p>
+<p><a href="20220708-5.jpg"><img src="/../../../../images/20220708-5.jpg" alt="20220708-5.jpg"></a></p>
 </li>
-<li><p>末行模式常用的一些命令</p>
+</ul>
+<h3 id="1-2-2-InputStream-amp-Reader"><a href="#1-2-2-InputStream-amp-Reader" class="headerlink" title="1.2.2 InputStream&amp; Reader"></a>1.2.2 InputStream&amp; Reader</h3><p>InputStream 和 Reader是所有输入流的基类。</p>
+<p>InputStream（典型实现：FileInputStream）</p>
 <ul>
-<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
+<li>intread()</li>
+<li>int read(byte[] b)</li>
+<li>intread(byte[] b, int off,int len)</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="系统管理操作"><a href="#系统管理操作" class="headerlink" title="系统管理操作"></a>系统管理操作</h3><ul>
-<li><p>查看ip ：ifconfig</p>
-</li>
-<li><p>查看主机名：hostname</p>
-</li>
-<li><p>修改此主机名： vim &#x2F;etc&#x2F;hosts</p>
-</li>
-<li><p>防火墙</p>
+<p>Reader（典型实现：FileReader）</p>
 <ul>
-<li>service iptables status （功能描述：查看防火墙状态）</li>
-<li>chkconfig iptables -list （功能描述：查看防火墙开机启动状态）</li>
-<li>service iptables stop （功能描述：临时关闭防火墙）</li>
-<li>chkconfig iptables off （功能描述：关闭防火墙开机启动）</li>
-<li>chkconfig iptables on （功能描述：开启防火墙开机启动）</li>
+<li>intread()</li>
+<li>int read(char [] c)</li>
+<li>intread(char [] c, int off,int len)</li>
 </ul>
-</li>
-<li><p>关机重启</p>
-<p>linux大多用在服务器上，很少遇到关机的操作。</p>
+<p>注意：程序中打开的文件 IO 资源不属于内存里的资源，垃圾回收机制无法回收该资源，所以应该显式关闭文件IO 资源。</p>
+<h3 id="1-2-3-OutputStream-amp-Writer"><a href="#1-2-3-OutputStream-amp-Writer" class="headerlink" title="1.2.3 OutputStream&amp; Writer"></a>1.2.3 OutputStream&amp; Writer</h3><p>OutputStream 和 Writer也非常相似：</p>
 <ul>
-<li><p>shutdown[选项] 时间</p>
-<p>选项：</p>
-<p> -h：关机</p>
-<p> -r：重启</p>
-</li>
-<li><p>halt（功能描述：关闭系统）等同shutdown -h now 和 poweroff</p>
-</li>
-<li><p>reboot（功能描述：就是重启，等同于 shutdown -r now）</p>
-</li>
+<li>void write(int b&#x2F;int c);</li>
+<li>void write(byte[] b&#x2F;char[]cbuf);</li>
+<li>void write(byte[] b&#x2F;char[]buff, int off, int len);</li>
+<li>void flush();</li>
+<li>void close(); 需要先刷新，再关闭此流</li>
 </ul>
+<p>因为字符流直接以字符作为操作单位，所以 Writer可以用字符串来替换字符数组，即以String对象作为参数</p>
+<p>void write(String str);</p>
+<p>void write(String str, intoff, intlen);</p>
+<h1 id="2-文件流"><a href="#2-文件流" class="headerlink" title="2. 文件流"></a>2. 文件流</h1><ol>
+<li><p>读取文件</p>
+<p>1.建立一个流对象，将已存在的一个文件加载进流。</p>
+<p>FileReader fr &#x3D; new FileReader(“Test.txt”);</p>
+<p>2.创建一个临时存放数据的数组。</p>
+<p>char[] ch &#x3D; new char[1024];</p>
+<p>3.调用流对象的读取方法将流中的数据读入到数组中。</p>
+<p>fr.read(ch);</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileReader fr = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fr = new FileReader(&quot;c:\\test.txt&quot;);		</span><br><span class="line">	char[] buf = new char[1024];		</span><br><span class="line">	int len= 0;		</span><br><span class="line">	while((len=fr.read(buf))!=-1)&#123;			</span><br><span class="line">		System.out.println(new String(buf ,0,len));			</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(&quot;read-Exception :&quot;+e.toString());		</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fr!=null)&#123;			</span><br><span class="line">		try&#123;				</span><br><span class="line">			fr.close();			</span><br><span class="line">		&#125;catch (IOException e)&#123;				</span><br><span class="line">			System.out.println(&quot;close-Exception :&quot;+e.toString());			</span><br><span class="line">		&#125; 		</span><br><span class="line">	&#125; 	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-<h2 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h2><h3 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h3><ul>
-<li><p>man[命令或配置文件] 获得帮助信息</p>
-</li>
-<li><p>help 命令 获得shell内置命令的帮助信息</p>
-</li>
-<li><p>常用快捷键</p>
-<p>1）ctrl+ c：停止进程</p>
-<p>2）ctrl+l：清屏</p>
-<p>3）ctrl+ q：退出</p>
-<p>4）善于用tab键</p>
-<p>5）上下键：查找执行过的命令</p>
-<p>6）ctrl+alt：linux和Windows之间切换</p>
-</li>
-</ul>
-<h3 id="文件目录类"><a href="#文件目录类" class="headerlink" title="文件目录类"></a>文件目录类</h3><ul>
-<li><p>pwd 显示当前工作目录的绝对路径</p>
-</li>
-<li><p>ll 列出目录的内容</p>
-</li>
-<li><p>mkdir [-p] 要创建的目录</p>
-<p> 选项：-p ：创建多层目录</p>
-</li>
-<li><p>rmdir 删除一个空的目录</p>
-</li>
-<li><p>touch 文件名称 –创建空文件</p>
-</li>
-<li><p>cd 切换目录</p>
-</li>
-</ul>
-<p> （1）cd ~或者cd （功能描述：回到自己的家目录）</p>
-<p> （2）cd - （功能描述：回到上一次所在目录）</p>
-<p> （3）cd .. （功能描述：回到当前目录的上一级目录）</p>
+<li><p>写入文件</p>
+<p>1.创建流对象，建立数据存放文件</p>
+<p>FileWriter fw &#x3D; new FileWriter(“Test.txt”);</p>
+<p>2.调用流对象的写入方法，将数据写入流</p>
+<p>fw.write(“text”);</p>
+<p>3.关闭流资源，并将流中的数据清空到文件中。</p>
+<p>fw.close();</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FileWriter fw = null;	</span><br><span class="line"></span><br><span class="line">try&#123;		</span><br><span class="line">	fw = new FileWriter(&quot;Test.txt&quot;);		</span><br><span class="line">	fw.write(&quot;text&quot;);	</span><br><span class="line">&#125;catch (IOException e)&#123;		</span><br><span class="line">	System.out.println(e.toString());	</span><br><span class="line">&#125;finally&#123;		</span><br><span class="line">	if(fw!=null)&#123;		</span><br><span class="line">		try&#123;		 </span><br><span class="line">			fw.close();		</span><br><span class="line">		&#125;catch (IOException e)&#123;			</span><br><span class="line">			System.out.println(e.toString());		</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注 意:</p>
 <ul>
-<li><p>cp 复制文件或目录</p>
-<p>（1）cp source dest （功能描述：复制source文件到dest）</p>
-<p>（2）cp -r source target （功能描述：递归复制整个文件夹）</p>
-</li>
-<li><p>rm 移除文件或目录</p>
-<p>（1）rmdir deleteEmptyFolder （功能描述：删除空目录）</p>
-<p>（2）rm -rf deleteFile （功能描述：递归删除目录中所有内容）</p>
-</li>
-<li><p>mv 移动文件与目录或重命名</p>
-<p>（1）mv oldNameFile newNameFile （功能描述：重命名）</p>
-<p>（2）mv &#x2F;movefile &#x2F;targetFolder （功能描述：递归移动文件）</p>
-</li>
-<li><p>cat 查看文件内容</p>
-<p>cat [选项] 要查看的文件</p>
-<p>选项：</p>
-<p>-A：相当于 -vET 的整合选项，可列出一些特殊字符而不是空白而已；</p>
-<p>-b：列出行号，仅针对非空白行做行号显示，空白行不标行号！</p>
-<p>-E：将结尾的断行字节 $ 显示出来；</p>
-<p>-n ：列出行号，连同空白行也会有行号，与 -b 的选项不同；</p>
-<p>-T：将 [tab] 按键以 ^I 显示出来；</p>
-<p>-v ：列出一些看不出来的特殊字符</p>
-</li>
-<li><p>tac 查看文件内容</p>
-<p>查看文件内容，从最后一行开始显示，可以看出 tac 是 cat 的倒著写。</p>
-</li>
-<li><p>more 查看文件内容</p>
-<p>功能使用说明：</p>
-<p>空白键 (space)：代表向下翻一页；</p>
-<p>Enter:代表向下翻『一行』；</p>
-<p>q:代表立刻离开 more ，不再显示该文件内容。</p>
-<p>Ctrl+F 向下滚动一屏</p>
-<p>Ctrl+B 返回上一屏</p>
-<p>&#x3D; 输出当前行的行号</p>
-<p>:f 输出文件名和当前行的行号</p>
-</li>
-<li><p>less 查看文件内容</p>
-<p>less 的作用与 more 十分相似，都可以用来浏览文字档案的内容，不同的是 less 允许使用pageup，pagedown往回滚动。</p>
-</li>
-<li><p>head查看文件内容</p>
-<p>查看文件内容，只看头几行。</p>
-<p>基本语法 ：head -n 10 文件（功能描述：查看文件头10行内容，10可以是任意行数）</p>
-</li>
-<li><p>tail 查看文件内容</p>
-<p>查看文件内容，只看尾巴几行。</p>
-<p>基本语法</p>
-<p>（1）tail -n 10 文件 （功能描述：查看文件头10行内容，10可以是任意行数）</p>
-<p>（2）tail -f 文件 （功能描述：实时追踪该文档的所有更新）</p>
-</li>
-<li><p><strong>重定向命令</strong></p>
-<p>基本语法：</p>
-<p>（1）ls -l &gt;文件 （功能描述：列表的内容写入文件a.txt中（覆盖写））</p>
-<p>（2）ls -al &gt;&gt;文件 （功能描述：列表的内容追加到文件aa.txt的末尾）</p>
-</li>
-<li><p>echo</p>
-<p>基本语法：</p>
-<p>（1）echo 要显示的内容 &gt;&gt; 存储内容的的文件 （功能描述：将要显 示的内容，存储到文件中）</p>
-<p>（2）echo 变量（功能描述：显示变量的值）</p>
-</li>
-<li><p>ln软链接(相当于快捷方式)</p>
-<p>基本语法：ln -s 原文件 目标文件</p>
-<p>（功能描述：给原文件创建一个软链接，软链接存放在目标文件目录）</p>
-<p>删除软链接： rm -rf atguigu，而不是rm -rf atguigu&#x2F;</p>
-</li>
-<li><p>history 查看所敲命令历史</p>
-</li>
+<li>定义文件路径时，注意：可以用“&#x2F;”或者“\”。</li>
+<li>在写入一个文件时，如果目录下有同名文件将被覆盖。</li>
+<li>在读取文件时，必须保证该文件已存在，否则出异常。</li>
 </ul>
-<h3 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h3>]]></content>
+</li>
+</ol>
+<h1 id="3-缓冲流-处理流"><a href="#3-缓冲流-处理流" class="headerlink" title="3. 缓冲流(处理流)"></a>3. 缓冲流(处理流)</h1><p>为了提高数据读写的速度，JavaAPI提供了带缓冲功能的流类，在使用这些流类时，会创建一个内部缓冲区数组。</p>
+<p>根据数据操作单位可以把缓冲流分为：</p>
+<ul>
+<li>BufferedInputStream 和 BufferedOutputStream</li>
+<li>BufferedReader 和 BufferedWriter</li>
+</ul>
+<p>缓冲流要“套接”在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写的效率，同时增加了一些新的方法。</p>
+<p><strong>对于输出的缓冲流，写出的数据会先在内存中缓存，使用flush()将会使内存中的数据立刻写出。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BufferedReader br = null;</span><br><span class="line">BufferedWriter bw = null;		</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">//step1:创建缓冲流对象：它是过滤流，是对节点流的包装	</span><br><span class="line">	br = new  BufferedReader(new FileReader(&quot;d:\\IOTest\\source.txt&quot;));	</span><br><span class="line">	bw = new BufferedWriter(new FileWriter(&quot;d:\\IOTest\\destBF.txt&quot;));	</span><br><span class="line">	String str = null;	</span><br><span class="line">	</span><br><span class="line">	while ((str = br.readLine()) != null) &#123; </span><br><span class="line">		//一次读取字符文本文件的一行字符				</span><br><span class="line">		bw.write(str); //一次写入一行字符串		</span><br><span class="line">		bw.newLine();  //写入行分隔符	</span><br><span class="line">	&#125; 	</span><br><span class="line">	bw.flush();  </span><br><span class="line">	</span><br><span class="line">	//step2:刷新缓冲区</span><br><span class="line">&#125; catch (IOException e) &#123;	</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">	// step3: 关闭IO流对象	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (bw != null) &#123;			</span><br><span class="line">			bw.close();  //关闭过滤流时,会自动关闭它所包装的底层节点流		</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125;	</span><br><span class="line">	try &#123;		</span><br><span class="line">		if (br != null) &#123;		</span><br><span class="line">			br.close();		</span><br><span class="line">		&#125;  	</span><br><span class="line">	&#125; catch (IOException e) &#123;		</span><br><span class="line">		e.printStackTrace();	</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>常见的编码表</p>
+<ul>
+<li>ASCII：美国标准信息交换码。用一个字节的7位可以表示。</li>
+<li>ISO8859-1：拉丁码表。欧洲码表。用一个字节的8位表示。</li>
+<li>GB2312：中国的中文编码表。</li>
+<li>GBK：中国的中文编码表升级，融合了更多的中文文字符号。</li>
+<li>Unicode：国际标准码，融合了多种文字。所有文字都用两个字节来表示,Java语言使用的就是unicode</li>
+<li>UTF-8：最多用三个字节来表示一个字符。</li>
+</ul>
+<p><strong>编码：字符串—&gt;字节数组</strong></p>
+<p><strong>解码：字节数组—&gt;字符串</strong></p>
+<h1 id="4-对象流"><a href="#4-对象流" class="headerlink" title="4. 对象流"></a>4. 对象流</h1><ul>
+<li>ObjectInputStream和OjbectOutputSteam</li>
+<li>用于存储和读取对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。</li>
+<li>序列化(Serialize)：用ObjectOutputStream类将一个Java对象写入IO流中</li>
+<li>反序列化(Deserialize)：用ObjectInputStream类从IO流中恢复该Java对象</li>
+</ul>
+<p>ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>Java基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1668,9 +1176,560 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
       <tags>
         <tag>Redis</tag>
         <tag>NoSQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 初学习</title>
+    <url>/2018/12/31/Linux%20%E5%88%9D%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="Linux入门"><a href="#Linux入门" class="headerlink" title="Linux入门"></a>Linux入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Linux是一套免费使用和自由传播的类Unix操作系统。</p>
+<p>目前知名的发行版有：Ubuntu、RedHat、CentOS、Debain、Fedora、SuSE、OpenSUSE</p>
+<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><p>centos下载地址：</p>
+<ul>
+<li>网易镜像：<a href="http://mirrors.163.com/centos/6/isos/">http://mirrors.163.com/centos/6/isos/</a></li>
+<li>搜狐镜像：<a href="http://mirrors.sohu.com/centos/6/isos/">http://mirrors.sohu.com/centos/6/isos/</a></li>
+</ul>
+<h3 id="Linux特点"><a href="#Linux特点" class="headerlink" title="Linux特点"></a>Linux特点</h3><ul>
+<li>Linux里面一切皆是文件</li>
+<li>Linux里面没有后缀名这一说</li>
+</ul>
+<h3 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a>Linux目录结构</h3><ul>
+<li><p>&#x2F;bin：是Binary的缩写，这个目录存放着系统必备执行命令</p>
+</li>
+<li><p>&#x2F;boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件，自己的安装别放这里</p>
+</li>
+<li><p>&#x2F;dev：Device(设备)的缩写，该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</p>
+</li>
+<li><p>&#x2F;etc：所有的系统管理所需要的配置文件和子目录。</p>
+</li>
+<li><p>&#x2F;home：存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</p>
+</li>
+<li><p>&#x2F;lib：系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。</p>
+</li>
+<li><p>&#x2F;opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</p>
+</li>
+<li><p>&#x2F;root：该目录为系统管理员，也称作超级权限者的用户主目录。</p>
+</li>
+<li><p>&#x2F;sbin：s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</p>
+</li>
+<li><p>&#x2F;tmp：这个目录是用来存放一些临时文件的。</p>
+</li>
+<li><p>&#x2F;usr： 这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</p>
+</li>
+<li><p>&#x2F;var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</p>
+</li>
+</ul>
+<h3 id="VI-x2F-VIM编辑器"><a href="#VI-x2F-VIM编辑器" class="headerlink" title="VI&#x2F;VIM编辑器"></a>VI&#x2F;VIM编辑器</h3><ul>
+<li><p>Vim编辑器三种模式</p>
+<ul>
+<li><p>指令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
+</li>
+<li><p>编辑模式：正常的文本录入。</p>
+</li>
+<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
+<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
+</li>
+<li><p>命令模式中最常用的一些命令</p>
+<ul>
+<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
+<li>shirft+g 跳转到最后一行</li>
+</ul>
+</li>
+<li><p>末行模式常用的一些命令</p>
+<ul>
+<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统管理操作"><a href="#系统管理操作" class="headerlink" title="系统管理操作"></a>系统管理操作</h3><ul>
+<li><p>查看ip ：ifconfig</p>
+</li>
+<li><p>查看主机名：hostname</p>
+</li>
+<li><p>修改此主机名： vim &#x2F;etc&#x2F;hosts</p>
+</li>
+<li><p>防火墙</p>
+<ul>
+<li>service iptables status （功能描述：查看防火墙状态）</li>
+<li>chkconfig iptables -list （功能描述：查看防火墙开机启动状态）</li>
+<li>service iptables stop （功能描述：临时关闭防火墙）</li>
+<li>chkconfig iptables off （功能描述：关闭防火墙开机启动）</li>
+<li>chkconfig iptables on （功能描述：开启防火墙开机启动）</li>
+</ul>
+</li>
+<li><p>关机重启</p>
+<p>linux大多用在服务器上，很少遇到关机的操作。</p>
+<ul>
+<li><p>shutdown[选项] 时间</p>
+<p>选项：</p>
+<p> -h：关机</p>
+<p> -r：重启</p>
+</li>
+<li><p>halt（功能描述：关闭系统）等同shutdown -h now 和 poweroff</p>
+</li>
+<li><p>reboot（功能描述：就是重启，等同于 shutdown -r now）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h2><h3 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h3><ul>
+<li><p>man[命令或配置文件] 获得帮助信息</p>
+</li>
+<li><p>help 命令 获得shell内置命令的帮助信息</p>
+</li>
+<li><p>常用快捷键</p>
+<p>1）ctrl+ c：停止进程</p>
+<p>2）ctrl+l：清屏</p>
+<p>3）ctrl+ q：退出</p>
+<p>4）善于用tab键</p>
+<p>5）上下键：查找执行过的命令</p>
+<p>6）ctrl+alt：linux和Windows之间切换</p>
+</li>
+</ul>
+<h3 id="文件目录类"><a href="#文件目录类" class="headerlink" title="文件目录类"></a>文件目录类</h3><ul>
+<li><p>pwd 显示当前工作目录的绝对路径</p>
+</li>
+<li><p>ll 列出目录的内容</p>
+</li>
+<li><p>mkdir [-p] 要创建的目录</p>
+<p> 选项：-p ：创建多层目录</p>
+</li>
+<li><p>rmdir 删除一个空的目录</p>
+</li>
+<li><p>touch 文件名称 –创建空文件</p>
+</li>
+<li><p>cd 切换目录</p>
+</li>
+</ul>
+<p> （1）cd ~或者cd （功能描述：回到自己的家目录）</p>
+<p> （2）cd - （功能描述：回到上一次所在目录）</p>
+<p> （3）cd .. （功能描述：回到当前目录的上一级目录）</p>
+<ul>
+<li><p>cp 复制文件或目录</p>
+<p>（1）cp source dest （功能描述：复制source文件到dest）</p>
+<p>（2）cp -r source target （功能描述：递归复制整个文件夹）</p>
+</li>
+<li><p>rm 移除文件或目录</p>
+<p>（1）rmdir deleteEmptyFolder （功能描述：删除空目录）</p>
+<p>（2）rm -rf deleteFile （功能描述：递归删除目录中所有内容）</p>
+</li>
+<li><p>mv 移动文件与目录或重命名</p>
+<p>（1）mv oldNameFile newNameFile （功能描述：重命名）</p>
+<p>（2）mv &#x2F;movefile &#x2F;targetFolder （功能描述：递归移动文件）</p>
+</li>
+<li><p>cat 查看文件内容</p>
+<p>cat [选项] 要查看的文件</p>
+<p>选项：</p>
+<p>-A：相当于 -vET 的整合选项，可列出一些特殊字符而不是空白而已；</p>
+<p>-b：列出行号，仅针对非空白行做行号显示，空白行不标行号！</p>
+<p>-E：将结尾的断行字节 $ 显示出来；</p>
+<p>-n ：列出行号，连同空白行也会有行号，与 -b 的选项不同；</p>
+<p>-T：将 [tab] 按键以 ^I 显示出来；</p>
+<p>-v ：列出一些看不出来的特殊字符</p>
+</li>
+<li><p>tac 查看文件内容</p>
+<p>查看文件内容，从最后一行开始显示，可以看出 tac 是 cat 的倒著写。</p>
+</li>
+<li><p>more 查看文件内容</p>
+<p>功能使用说明：</p>
+<p>空白键 (space)：代表向下翻一页；</p>
+<p>Enter:代表向下翻『一行』；</p>
+<p>q:代表立刻离开 more ，不再显示该文件内容。</p>
+<p>Ctrl+F 向下滚动一屏</p>
+<p>Ctrl+B 返回上一屏</p>
+<p>&#x3D; 输出当前行的行号</p>
+<p>:f 输出文件名和当前行的行号</p>
+</li>
+<li><p>less 查看文件内容</p>
+<p>less 的作用与 more 十分相似，都可以用来浏览文字档案的内容，不同的是 less 允许使用pageup，pagedown往回滚动。</p>
+</li>
+<li><p>head查看文件内容</p>
+<p>查看文件内容，只看头几行。</p>
+<p>基本语法 ：head -n 10 文件（功能描述：查看文件头10行内容，10可以是任意行数）</p>
+</li>
+<li><p>tail 查看文件内容</p>
+<p>查看文件内容，只看尾巴几行。</p>
+<p>基本语法</p>
+<p>（1）tail -n 10 文件 （功能描述：查看文件头10行内容，10可以是任意行数）</p>
+<p>（2）tail -f 文件 （功能描述：实时追踪该文档的所有更新）</p>
+</li>
+<li><p><strong>重定向命令</strong></p>
+<p>基本语法：</p>
+<p>（1）ls -l &gt;文件 （功能描述：列表的内容写入文件a.txt中（覆盖写））</p>
+<p>（2）ls -al &gt;&gt;文件 （功能描述：列表的内容追加到文件aa.txt的末尾）</p>
+</li>
+<li><p>echo</p>
+<p>基本语法：</p>
+<p>（1）echo 要显示的内容 &gt;&gt; 存储内容的的文件 （功能描述：将要显 示的内容，存储到文件中）</p>
+<p>（2）echo 变量（功能描述：显示变量的值）</p>
+</li>
+<li><p>ln软链接(相当于快捷方式)</p>
+<p>基本语法：ln -s 原文件 目标文件</p>
+<p>（功能描述：给原文件创建一个软链接，软链接存放在目标文件目录）</p>
+<p>删除软链接： rm -rf atguigu，而不是rm -rf atguigu&#x2F;</p>
+</li>
+<li><p>history 查看所敲命令历史</p>
+</li>
+</ul>
+<h3 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h3>]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Linux 常用命令</title>
+    <url>/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
+<li><p>查看目录 : ls，ll</p>
+<p>.&#x2F; 当前目录 ..&#x2F; 父级目录 &#x2F; 根目录</p>
+</li>
+<li><p>切换目录 : cd</p>
+</li>
+<li><p>创建目录 : mkdir dirname</p>
+</li>
+<li><p>删除目录 : rm -rf dirname</p>
+</li>
+<li><p>拷贝目录 : cp -r dirsource dirtarget</p>
+</li>
+<li><p>移动目录 : mv -r dirsource dirtarget</p>
+</li>
+</ul>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><ul>
+<li><p>查看文件内容</p>
+<p>cat filename (查看文件内容、创建文件、文件合并、追加文件内容 等功能)</p>
+<p>more filename (分屏显示文件内容，每次只显示一页内容)</p>
+<ul>
+<li>空格键 显示手册页的下一屏<br>Enter 键 一次滚动手册页的一行<br>b 回滚一屏<br>f 前滚一屏<br>q 退出<br>&#x2F;word 搜索 word 字符串</li>
+</ul>
+</li>
+<li><p><strong>创建文件</strong> : touch filename</p>
+</li>
+<li><p>删除文件 : rm -f filename</p>
+</li>
+<li><p>拷贝目录 : cp filesource filetarget</p>
+</li>
+<li><p>移动目录 : mv filesource filetarget</p>
+</li>
+<li><p>文本搜索 : grep</p>
+<ul>
+<li>-n 显示匹配行及行号<br>-v 显示不包含匹配文本的所有行（相当于求反）<br>-i 忽略大小写</li>
+</ul>
+</li>
+<li><p>常用的两种模式查找\</p>
+<ul>
+<li>^a 行首，搜寻以 a 开头的行<br>ke$ 行尾，搜寻以 ke 结束的行</li>
+</ul>
+</li>
+<li><p>查看当前文件大小的命令</p>
+<ul>
+<li><p>ls -lht 列出每个文件的大小和当前目录所有文件大小总和</p>
+</li>
+<li><p>du -sh * 列出当前文件夹下的所有子文件的大小</p>
+<p>hdfs查看文件大小</p>
+<p>hadoop fs -du -h file&#x2F;dir</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="jar包常用操作"><a href="#jar包常用操作" class="headerlink" title="jar包常用操作"></a>jar包常用操作</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看 jar 包中的文件列表，并进行重定向</span><br><span class="line">jar -tvf a.jar &gt; a.txt </span><br><span class="line"></span><br><span class="line">-- 更新文件到 jar 中，目录需对应</span><br><span class="line">jar -uf a.jar com/a.class</span><br><span class="line">a.class 文件在 jar 包中的目录是 com/a.class。</span><br><span class="line">a.class 文件在本地路径，相对 a.jar 包，也是 com/a.class。</span><br><span class="line"></span><br><span class="line">-- 增加文件到 jar 中，目录需对应   </span><br><span class="line">与修改一致，jar 中原来没有的目录，会自动创建。</span><br><span class="line"></span><br><span class="line">jar -uf a.jar com/test/a.class</span><br><span class="line"></span><br><span class="line">用法：jar &#123;ctxu&#125;[vfm0Mi] [jar-文件] [manifest-文件] [-C 目录] 文件名 ... 　　</span><br><span class="line">	选项： 　　</span><br><span class="line">	-c 创建新的存档　　</span><br><span class="line">	-t 列出存档内容的列表　　</span><br><span class="line">	-x 展开存档中的命名的（或所有的〕文件　　</span><br><span class="line">	-u 更新已存在的存档　　</span><br><span class="line">	-v 生成详细输出到标准输出上　　</span><br><span class="line">	-f 指定存档文件名　　</span><br><span class="line">	-m 包含来自标明文件的标明信息　　</span><br><span class="line">	-0 只存储方式；未用zip压缩格式　　</span><br><span class="line">	-M 不产生所有项的清单（manifest〕文件　　</span><br><span class="line">	-i 为指定的jar文件产生索引信息　　</span><br><span class="line">	-C 改变到指定的目录，并且包含下列文件　　</span><br><span class="line">	</span><br><span class="line">jar包解压 jar -xvf xxx.jar</span><br><span class="line">重新打包  jar cf xxx.jar *</span><br><span class="line">查看jar包中的文件列表  jar -tvf xxx.jar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------提取zip或jar文件中的某个文件</span><br><span class="line">假如有个压缩包 abc.jar, 里面文件如下 （可以用unzip -l abc.jar 查看）：    </span><br><span class="line">data/1.txt    </span><br><span class="line">data/2.txt</span><br><span class="line">提取里面指定的文件到指定的位置，但上级目录将不会被创建。</span><br><span class="line"></span><br><span class="line">不加-d参数就解压到当前目录，-d参数可以指定不存在的目录，会自动创建。</span><br><span class="line">解压得到的文件名不变。</span><br><span class="line"></span><br><span class="line">unzip -j abc.jar data/2.txt -d /tmp/data_in_abc</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p>echo 会在终端中显示参数指定的文字</p>
+</li>
+<li><p><strong>重定向 &gt; 和 &gt;&gt;</strong></p>
+<ul>
+<li>&gt; 表示输出，会覆盖文件原有的内容</li>
+<li>&gt;&gt; 表示追加，会将内容追加到已有文件的末尾</li>
+</ul>
+</li>
+<li><p><strong>管道 |</strong></p>
+<p>一个命令的输出 可以通过管道 做为 另一个命令的输入</p>
+<p>常用的管道命令有：<br>more：分屏显示内容<br>grep：在命令执行结果的基础上查询指定的文本</p>
+</li>
+</ul>
+<h2 id="远程管理常用命令"><a href="#远程管理常用命令" class="headerlink" title="远程管理常用命令"></a>远程管理常用命令</h2><ul>
+<li><p>关机&#x2F;重启</p>
+<ul>
+<li><p>shutdown 选项 时间 : 关机</p>
+<p>选项 含义<br>-r 重新启动</p>
+</li>
+<li><p><strong>halt</strong> 关机</p>
+</li>
+</ul>
+</li>
+<li><p>查看或配置网卡信息</p>
+<ul>
+<li>ifconfig</li>
+<li>ping</li>
+</ul>
+</li>
+<li><p>远程登录</p>
+<ul>
+<li>ssh 用户名@ip</li>
+</ul>
+</li>
+<li><p>复制文件</p>
+<ul>
+<li>scp</li>
+</ul>
+</li>
+<li><p>su命令与su - 命令的区别：</p>
+<p>su只是切换了root身份，但Shell环境仍然是普通用户的Shell；</p>
+<p>su -连用户和Shell环境一起切换成root身份了。</p>
+<p>PS:只有切换了Shell环境才不会出现PATH环境变量错误，报command not found的错误。</p>
+</li>
+</ul>
+<h2 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h2><ul>
+<li><p>基本概念</p>
+<p>序号 权限 英文 缩写 数字代号<br>01 读 read r 4<br>02 写 write w 2<br>03 执行 excute x 1</p>
+</li>
+<li><p>组<br>为了方便用户管理，提出了 组 的概念<br>在实际应用中，可以预先针对 组 设置好权限，<br>然后 将不同的用户添加到对应的组中，从而不用依次为每一个用户设置权限</p>
+</li>
+<li><p><strong>切换用户 su username</strong></p>
+</li>
+<li><p>退出 exit</p>
+</li>
+<li><p><strong>修改文件权限</strong></p>
+<p> 序号 命令 作用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">01            chown             修改拥有者</span><br><span class="line">02            chgrp             修改组</span><br><span class="line">03            chmod             修改权限</span><br></pre></td></tr></table></figure>
+
+<p>ex. chmod 修改 用户／组 对 文件／目录 的权限</p>
+<p> chmod -rwx 文件名|目录名</p>
+<ul>
+<li><p>递归修改文件|目录的组</p>
+<p>chgrp -R 组名 文件名|目录名</p>
+</li>
+<li><p>递归修改文件权限</p>
+<p>chmod -R 755 文件名|目录名</p>
+<p><a href="20220707-1"><img src="/../../../../images/20220707-1.jpg" alt="img"></a></p>
+</li>
+</ul>
+</li>
+<li><p>sudo</p>
+<p>sudo 命令用来以其他身份来执行命令，预设的身份为 root.</p>
+<p>使用 sudo 时，必须先输入密码，之后有 5 分钟的有效期限.</p>
+</li>
+<li><p>组管理</p>
+<ul>
+<li>添加组 : groupadd 组名</li>
+<li>删除组 : groupdel 组名<br>确认组信息 : cat &#x2F;etc&#x2F;group</li>
+<li>递归修改文件&#x2F;目录的所属组 : chgrp -R 组名 文件&#x2F;目录名</li>
+</ul>
+</li>
+<li><p>用户管理</p>
+<ul>
+<li><p><strong>添加新用户</strong> : useradd -m -g 组 新建用户名</p>
+<p>-m 自动建立home目录</p>
+<p>-g 指定用户所在的组</p>
+</li>
+<li><p><strong>设置用户密码</strong> : passwd 用户名</p>
+</li>
+<li><p>删除用户 : userdel -r 用户名</p>
+<p>-r 选项会自动删除用户家目录</p>
+</li>
+<li><p>确认用户信息 cat &#x2F;etc&#x2F;passwd | grep 用户名</p>
+<p>新建用户后，用户信息会保存在 &#x2F;etc&#x2F;passwd 文件中</p>
+</li>
+<li><p><strong>查看用户信息</strong></p>
+<p>who 查看当前所有登录的用户列表<br>whoami 查看当前登录用户的账户名</p>
+</li>
+<li><p>which 命令 ：查看执行命令所在位置</p>
+<p>ex. which ls</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2><ul>
+<li><p>时间和日期</p>
+<ul>
+<li>date 查看系统时间</li>
+<li>cal &#x2F; calendar 查看日历，-y 选项可以查看一年的日历</li>
+</ul>
+</li>
+<li><p>磁盘和目录空间</p>
+<ul>
+<li><p>df ：disk free 显示磁盘剩余空间</p>
+<p>df -h</p>
+</li>
+<li><p>du：disk usage 显示目录下的文件大小</p>
+<p>du -h [目录名]</p>
+</li>
+</ul>
+</li>
+<li><p><strong>进程信息</strong>：</p>
+<ul>
+<li><p>找出占用端口进程的pid</p>
+<p>lsof -i:port</p>
+</li>
+</ul>
+</li>
+<li><p>ps : process status 查看进程的详细状况</p>
+<ul>
+<li><p><strong>ps aux</strong></p>
+<p>选项 含义<br>a 显示终端上的所有进程，包括其他用户的进程<br>u 显示进程的详细状态<br>x 显示没有控制终端的进程</p>
+</li>
+</ul>
+</li>
+<li><p><strong>top</strong> : 动态显示运行中的进程并且排序</p>
+</li>
+<li><p><strong>kill</strong></p>
+<ul>
+<li><p>kill [-9] 进程代号</p>
+<p>终止指定代号的进程，-9 表示强行终止</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><ul>
+<li><p>查找文件 ：find</p>
+<p>ex. find [路径] -name “*.py”</p>
+<p>查找指定路径下扩展名是 .py 的文件，包括子目录</p>
+<p>如果省略路径，表示在当前文件夹下查找</p>
+</li>
+<li><p>软链接 通俗的方式讲类似于 Windows 下的快捷方式</p>
+<p>ln -s 被链接的源文件 链接文件</p>
+<p>注意:</p>
+<ul>
+<li>没有 -s 选项建立的是一个 硬链接文件</li>
+<li>源文件要使用绝对路径，不能使用相对路径</li>
+</ul>
+<p>ln -snf 被链接的源文件 链接文件 –更改软连接</p>
+</li>
+<li><p>打包和压缩</p>
+<p>不同操作系统中，常用的打包压缩方式是不同的。</p>
+<ul>
+<li>Windows 常用 rar</li>
+<li>Mac 常用 zip</li>
+<li>Linux 常用 tar.gz</li>
+</ul>
+<p><strong>打包 ／ 解包</strong>（含压缩）</p>
+<ul>
+<li><p><strong>打包文件</strong></p>
+<p>tar czf 压缩文件名 要压缩的文件夹</p>
+<p>ex. tar czf test.tar.gz .&#x2F;opt&#x2F;</p>
+</li>
+<li><p><strong>解包文件</strong>（-C参数 表示更换目录的意思 ）</p>
+<p>tar -zxf 待解压文件 -C 解压到的文件夹</p>
+<p>ex. tar -zxf test.tar.gz -C &#x2F;opt&#x2F;module&#x2F;</p>
+</li>
+<li><p>tar 选项说明<br>选项 含义<br>c 生成档案文件，创建打包文件<br>x 解开档案文件<br>v 列出归档解档的详细过程，显示进度<br>f 指定文件名，f 后面一定是 .tar 文件，必须放选项最后</p>
+<p>z 调用 gzip, 实现压缩和解压缩的功能</p>
+</li>
+</ul>
+</li>
+<li><p>软件安装</p>
+<p>apt 是 Advanced Packaging Tool，是 Linux 下的一款安装包管理工具</p>
+<ul>
+<li>安装软件 apt-get install 软件包</li>
+<li>卸载软件 apt-get remove 软件名</li>
+<li>更新已安装的包 apt-get upgrade</li>
+</ul>
+<p>配置软件源</p>
+<ul>
+<li><p>在软件和更新中，选项ubuntu软件</p>
+<p>设置下载自：<a href="http://mirrors.aliyun.com/ubuntu">http://mirrors.aliyun.com/ubuntu</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="vi-编辑"><a href="#vi-编辑" class="headerlink" title="vi 编辑"></a>vi 编辑</h2><p>很多 Linux 发行版中，直接把 vi 做成 vim 的软连接</p>
+<ul>
+<li><p>查询软连接命令（知道）</p>
+<p>$ which vi</p>
+</li>
+<li><p>打开和新建文件</p>
+<p>vi filename</p>
+<ul>
+<li>如果文件已经存在，会直接打开该文件</li>
+<li>如果文件不存在，会新建一个文件</li>
+</ul>
+</li>
+<li><p>光标上下左右</p>
+<p>h j k l<br>左下右上</p>
+</li>
+<li><p>Vim编辑器三种模式</p>
+<ul>
+<li><p>命令模式：控制光标移动，可对文本进行复制、粘贴、删除和查找等工作。</p>
+</li>
+<li><p>输入模式：正常的文本录入。</p>
+</li>
+<li><p>末行模式：保存或退出文档，以及设置编辑环境。</p>
+<p><a href="20220707-2"><img src="/../../../../images/20220707-2.jpg" alt="img"></a></p>
+</li>
+<li><p>命令模式中最常用的一些命令</p>
+<ul>
+<li>dd 删除（剪切）光标所在整行<br>5dd 删除（剪切）从光标处开始的5行<br>yy 复制光标所在整行<br>5yy 复制从光标处开始的5行<br>u 撤销上一步的操作<br><strong>p</strong> 将之前删除（dd）或复制（yy）过的数据粘贴到光标后面</li>
+<li>shirft+g 跳转到最后一行</li>
+</ul>
+</li>
+<li><p>末行模式常用的一些命令</p>
+<ul>
+<li>:q! 强制退出（放弃对文档的修改内容）<br>:wq! 强制保存退出<br>:set nu 显示行号<br>:set nonu 不显示行号<br>:s&#x2F;one&#x2F;two 将当前光标所在行的第一个one替换成two<br>:s&#x2F;one&#x2F;two&#x2F;g 将当前光标所在行的所有one替换成two<br>:%s&#x2F;one&#x2F;two&#x2F;g 将全文中的所有one替换成two<br>?字符串 在文本中从下至上搜索该字符串<br>&#x2F;字符串 在文本中从上至下搜索该字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Spring笔记</title>
+    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
+<li><p>Spring 是一个开源框架.</p>
+</li>
+<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
+</li>
+<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
+</li>
+<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
+</li>
+</ul>
+<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
+<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
+<li>依赖注入(DI — dependency injection、IOC)</li>
+<li>–面向切面编程(AOP— aspect oriented programming)</li>
+<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
+<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
+<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
+</ol>
+<p>在项目中引入Spring可以带来以下好处：</p>
+<ol>
+<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
+</li>
+<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
+</li>
+<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
+</li>
+<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
+</li>
+<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java框架</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>template</title>
+    <url>/2018/01/01/Template/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>doc</tag>
       </tags>
   </entry>
   <entry>
@@ -1706,12 +1765,16 @@
 </ul>
 </li>
 </ul>
-<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><ul>
+<h3 id="npm组件-amp-hexo配置"><a href="#npm组件-amp-hexo配置" class="headerlink" title="npm组件 &amp; hexo配置"></a>npm组件 &amp; hexo配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hexo 会默认安装：</span><br><span class="line"></span><br><span class="line">hexo：主程序</span><br><span class="line"></span><br><span class="line">hexo-deployer-git：实现 git 部署方式</span><br><span class="line"></span><br><span class="line">hexo-generator-archive：存档页面生成器</span><br><span class="line"></span><br><span class="line">hexo-generator-category：分类页面生成器</span><br><span class="line"></span><br><span class="line">hexo-generator-index：index 生成器</span><br><span class="line"></span><br><span class="line">hexo-generator-tag：标签页面生成器</span><br><span class="line"></span><br><span class="line">hexo-renderer-ejs：支持 EJS 渲染</span><br><span class="line"></span><br><span class="line">hexo-renderer-marked：Markdown 引擎</span><br><span class="line"></span><br><span class="line">hexo-renderer-stylus：支持 stylus 渲染</span><br><span class="line"></span><br><span class="line">hexo-server：支持本地预览，默认地址 localhost:4000</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
 <li><p>npm install hexo-deployer-git –save</p>
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#99;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
@@ -1722,7 +1785,7 @@
 <li><p>npm install hexo-generator-searchdb –save</p>
 </li>
 <li><p>默认首页，分类，标签页显示文章数为10，想分页设置文章数操作如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-index --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-archive --save</span><br><span class="line"></span><br><span class="line">npm install hexo-generator-tag --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在主题配置文件 _config.yml 中修改</span><br><span class="line">------------------------------————————————————</span><br><span class="line"># Algolia Search</span><br><span class="line"># For more information: https://www.algolia.com</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 5</span><br><span class="line"></span><br><span class="line">#主页每页显示文章数</span><br><span class="line">index_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#archive分页每页显示文章数</span><br><span class="line">archive_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#tag分页每页显示文章数</span><br><span class="line">tag_generator:</span><br><span class="line">    per_page: 10</span><br><span class="line">#category分页每页显示文章数</span><br><span class="line">category_generator: </span><br><span class="line">    per_page: 10</span><br><span class="line">————————————————————————————————————————————————</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">在主题配置文件 _config.yml 中修改</span><br><span class="line">------------------------------————————————————</span><br><span class="line"># Algolia Search</span><br><span class="line"># For more information: https://www.algolia.com</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 5</span><br><span class="line"></span><br><span class="line">#主页每页显示文章数</span><br><span class="line">index_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#archive分页每页显示文章数</span><br><span class="line">archive_generator:</span><br><span class="line">    per_page: 5</span><br><span class="line">#tag分页每页显示文章数</span><br><span class="line">tag_generator:</span><br><span class="line">    per_page: 10</span><br><span class="line">#category分页每页显示文章数</span><br><span class="line">category_generator: </span><br><span class="line">    per_page: 10</span><br><span class="line">————————————————————————————————————————————————</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">其他插件</span><br><span class="line">npm install hexo-server --save             	#本地服务器</span><br><span class="line">npm install hexo-deployer-git --save       	#git部署</span><br><span class="line">npm install hexo-generator-feed@1 --save   	#生成rss</span><br><span class="line">npm install hexo-generator-sitemap@1 --save	#生成站点地图</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -1732,13 +1795,19 @@
 </li>
 <li><p>创建分类</p>
 <p>hexo new page categories</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: categories</span><br><span class="line">layout: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>创建标签</p>
 <p>hexo new page  tags</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: tags</span><br><span class="line">layout: &quot;tags&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>创建 about</p>
+<p>hexo new page  about</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-04-03 16:19:59</span><br><span class="line">type: about</span><br><span class="line">layout: &quot;about&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -1751,7 +1820,7 @@
 
 </li>
 <li><p>文章例子</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 每天一个linux命令</span><br><span class="line">date: 2017-01-23 11:41:48</span><br><span class="line">author: shaohua</span><br><span class="line">top: 1</span><br><span class="line">categories:</span><br><span class="line">- linux</span><br><span class="line">tags:</span><br><span class="line">- linux命令</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
 <li>hexo init</li>
@@ -1760,23 +1829,23 @@
 <li>hexo s (start)</li>
 <li>hexo d (deploy)</li>
 </ul>
-<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3>]]></content>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm ls 与 npm fund 的区别，ls 只列出包名，而 fund 还列出了捐赠平台及其 url。</span><br><span class="line"></span><br><span class="line">node -v		// node版本</span><br><span class="line">npm -v		// npm版本</span><br><span class="line">cnpm -v		// cnpm是否正常</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="部署优化"><a href="#部署优化" class="headerlink" title="部署优化"></a>部署优化</h3><h3 id="一些问题解决"><a href="#一些问题解决" class="headerlink" title="一些问题解决"></a>一些问题解决</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. warning: LF will be replaced by CRLF in js/utils.js.</span><br><span class="line">解决方法:</span><br><span class="line">git config --global core.autocrlf false</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
       <tags>
         <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
-    <title>template</title>
-    <url>/2018/01/01/Template/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>doc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java面试84讲</title>
     <url>/2019/01/10/java%E9%9D%A2%E8%AF%9584%E8%AE%B2/</url>
-    <content><![CDATA[<h1 id="1-java基础部分"><a href="#1-java基础部分" class="headerlink" title="1. java基础部分"></a>1. java基础部分</h1><h2 id="1-1-跨平台原理"><a href="#1-1-跨平台原理" class="headerlink" title="1.1 跨平台原理"></a>1.1 跨平台原理</h2><p>由于操作系统的指令集不完全一致，同一程序在不同的操作系统中需要执行不同的程序代码。</p>
+    <content><![CDATA[<h1 id="1-Java基础部分"><a href="#1-Java基础部分" class="headerlink" title="1. Java基础部分"></a>1. Java基础部分</h1><h2 id="1-1-跨平台原理"><a href="#1-1-跨平台原理" class="headerlink" title="1.1 跨平台原理"></a>1.1 跨平台原理</h2><p>由于操作系统的指令集不完全一致，同一程序在不同的操作系统中需要执行不同的程序代码。</p>
 <p>java通过java虚拟机屏蔽各个系统之间的差异。java虚拟机将.java文件编译成.class文件，然后不同的操作系统对应的java虚拟机略有不同，有java虚拟机将.class文件翻译成机器码交由操作系统运行。</p>
 <p>java通过不同系统，不同位数的java虚拟机屏蔽操作系统之间的差异。因此对于外界来说，java是跨平台的。</p>
 <h2 id="1-2-java中int-数据占几个字节"><a href="#1-2-java中int-数据占几个字节" class="headerlink" title="1.2 java中int 数据占几个字节"></a>1.2 java中int 数据占几个字节</h2><p>Java中有8种基本数据类型</p>
@@ -2051,6 +2120,9 @@
 <p>为什么需要最大连接数？</p>
 <p> 连接过多导致性能下降，严重影响数据库的服务。</p>
 <h2 id="3-4-数据库分页"><a href="#3-4-数据库分页" class="headerlink" title="3.4 数据库分页"></a>3.4 数据库分页</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql:  -- limit offset,size</span><br><span class="line">select * from student order by id limit pagesize*(pagenum-1),pagesize;</span><br><span class="line"></span><br><span class="line">oracle:</span><br><span class="line">select * from	</span><br><span class="line">		(select *,rownum rid from</span><br><span class="line">					(select * from student order by id)     </span><br><span class="line">		where rid&lt;= pagesize*pagenum as t )</span><br><span class="line">where t &gt; pagesize*(pagenum-1)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
       <tags>
         <tag>Java基础</tag>
         <tag>面试</tag>
@@ -2236,47 +2308,11 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
       <tags>
         <tag>算法与数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring笔记</title>
-    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
-<li><p>Spring 是一个开源框架.</p>
-</li>
-<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
-</li>
-<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
-</li>
-<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
-</li>
-</ul>
-<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
-<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
-<li>依赖注入(DI — dependency injection、IOC)</li>
-<li>–面向切面编程(AOP— aspect oriented programming)</li>
-<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
-<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
-<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
-</ol>
-<p>在项目中引入Spring可以带来以下好处：</p>
-<ol>
-<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
-</li>
-<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
-</li>
-<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
-</li>
-<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
-</li>
-<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>JAVA框架</tag>
       </tags>
   </entry>
 </search>
