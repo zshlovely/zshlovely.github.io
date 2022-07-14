@@ -422,132 +422,83 @@
       </tags>
   </entry>
   <entry>
-    <title>HiveSQL</title>
-    <url>/2019/04/22/Hive-SQL/</url>
-    <content><![CDATA[<h1 id="Hive-SQL总结"><a href="#Hive-SQL总结" class="headerlink" title="Hive SQL总结"></a>Hive SQL总结</h1><h2 id="1-自带-function-的使用"><a href="#1-自带-function-的使用" class="headerlink" title="1. 自带 function 的使用"></a>1. 自带 function 的使用</h2><p>使用<code>show functions;</code> 命令进行查看目前可以使用的function;</p>
-<p>使用如下命令查看使用方法 split为例：</p>
+    <title>Hadoop入门</title>
+    <url>/2018/12/28/Hadoop%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
+<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
+<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
+<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
+</ul>
+<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
 <ul>
-<li>desc function extended split;</li>
+<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
+<li>Cloudera在大型互联网企业中用的较多。</li>
+<li>Hortonworks文档较好。</li>
 </ul>
-<h2 id="2-常用func"><a href="#2-常用func" class="headerlink" title="2. 常用func"></a>2. 常用func</h2><ul>
-<li><p>LIKE</p>
-<p>A LIKE B</p>
-<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合表达式B的正则语法，则为TRUE；否则为FALSE。B中字符”_”表示任意单个字符，而字符”%”表示任意数量的字符。</p>
+<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
+<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
+<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
+<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
+<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
+<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
+<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
+<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
+<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
+<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
+<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
+<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
+<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
+<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
+<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
+<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
+<p>1）Map阶段并行处理输入数据。</p>
+<p>2）Reduce阶段对Map结果进行汇总。</p>
+<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
+<p>名词解释如下：</p>
+<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
+<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
+<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
+<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
+<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
+<p> 可以基于Hadoop上存储的大数据进行计算。</p>
+<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
+<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
+<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
+<ul>
+<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
+<li>可以将sql语句转换为MapReduce任务进行运行。</li>
+</ul>
+<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
+<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
+<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
+<ul>
+<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
+<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
+<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
+</ul>
+<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
+<ul>
+<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
+<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
+</ul>
+<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
+<li><p>官方网址：<a href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
 </li>
-<li><p>RLIKE &#x2F; REGEXP 二者等价</p>
-<p>A RLIKE B</p>
-<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合JAVA正则表达式B的正则语法，则为TRUE；否则为FALSE。</p>
-<p>例：select 1 from dual where ‘footbar’ rlike ‘^f.*r$’</p>
+<li><p>各个版本归档库地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
 </li>
-<li><p>+、-、*、&#x2F; 、% 加 减 乘 除 取余 操作</p>
-</li>
-<li><p>&amp;、|、~、^ 与或非，异或操作</p>
-</li>
-<li><p>复合类型</p>
-<p>map, struct, array</p>
-</li>
-<li><p>round(double a) 取整函数 四舍五入</p>
-</li>
-<li><p>round(double a, int d) 返回指定精度d的double类型</p>
-</li>
-<li><p>floor(double a) 向下取整函数</p>
-</li>
-<li><p>ceiling &#x2F; ceil(double a) 向上取整函数</p>
-</li>
-<li><p>power &#x2F; pow(double a, double p) 返回a的p次幂</p>
-</li>
-<li><p>from_unixtime(1323308943,’yyyyMMdd’) 时间戳转日期函数</p>
-</li>
-<li><p>unix_timestamp() 当前UNIX时间戳</p>
-</li>
-<li><p>unix_timestamp(’2011-12-07 13:01:03′) 日期转UNIX时间戳</p>
-</li>
-<li><p>unix_timestamp(’20111207 13:01:03′,’yyyyMMdd HH:mm:ss’) 指定格式日期转UNIX时间戳</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【hive 日期转换】Hive中yyyymmdd和yyyy-mm-dd日期之间的切换</span><br><span class="line">方法1: from_unixtime+ unix_timestamp</span><br><span class="line"></span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;20171205&#x27;,&#x27;yyyymmdd&#x27;),&#x27;yyyy-mm-dd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;2017-12-05&#x27;,&#x27;yyyy-mm-dd&#x27;),&#x27;yyyymmdd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">方法2: substr + concat</span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select concat(substr(&#x27;20171205&#x27;,1,4),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,5,2),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,7,2)) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select concat(substr(&#x27;2017-12-05&#x27;,1,4),substr(&#x27;2017-12-05&#x27;,6,2),substr(&#x27;2017-12-05&#x27;,9,2)) from dual;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>to_date(’2011-12-08 10:03:01′)日期时间转 日期 out:2011-12-08</p>
-</li>
-<li><p>year(’2011-12-08 10:03:01′) 日期转年 可以直接做加减</p>
-</li>
-<li><p>month(’2011-08-08′)</p>
-</li>
-<li><p>day(’2011-12-24′)</p>
-</li>
-<li><p>hour(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>minute(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>second(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>weekofyear(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>datediff(’2012-12-08′,’2012-05-09′) 日期差</p>
-</li>
-<li><p>date_add(’2012-12-08′,10) 日期增加</p>
-</li>
-<li><p>date_sub(’2012-12-08′,10) 日期减少</p>
-</li>
-<li><p>if(1&#x3D;2,100,200) 条件函数 out:200</p>
-</li>
-<li><p>COALESCE(null,’100′,’50′) 非空查找 out:100</p>
-</li>
-<li><p><strong>条件判断函数1：CASE</strong></p>
-<p>语法: CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END</p>
-<p>如果a等于b，那么返回c；如果a等于d，那么返回e；否则返回f</p>
-<p>例：Select case 100 when 50 then ‘tom’ when 100 then ‘mary’ else ‘tim’ end from dual;</p>
-</li>
-<li><p><strong>条件判断函数2：CASE</strong></p>
-<p>语法: CASE WHEN a THEN b [WHEN c THEN d]* [ELSE e] END</p>
-<p>如果a为TRUE,则返回b；如果c为TRUE，则返回d；否则返回e</p>
-<p>例如：select case when 1&#x3D;2 then ‘tom’ when 2&#x3D;2 then ‘mary’ else ‘tim’ end from dual;</p>
-</li>
-<li><p>length(string A) 字符串长度</p>
-</li>
-<li><p>reverse(string A) 字符串反转</p>
-</li>
-<li><p><strong>字符串连接函数：concat</strong></p>
-<p>concat(string A, string B…)</p>
-</li>
-<li><p><strong>带分隔符字符串连接函数：concat_ws</strong></p>
-<p>concat_ws(string SEP, string A, string B…)</p>
-<p>例如：concat_ws(‘,’,’abc’,’def’,’gh’)</p>
-</li>
-<li><p><strong>字符串截取函数：substr,substring</strong></p>
-<p>substr(‘abcde’,3) out:abc</p>
-<p>substr(‘abcde’,-1) out:e</p>
-<p>substr(string A, int start, int len),substring(string A, int start, int len)</p>
-</li>
-<li><p>字符串转小写函数：lower,lcase</p>
-<p>lower(string A) lcase(string A)</p>
-</li>
-<li><p>去空格函数：trim</p>
-<p>trim(string A)</p>
-<p>左边去空格函数：ltrim</p>
-<p>右边去空格函数：rtrim</p>
-</li>
-<li><p>正则表达式替换函数：regexp_replace</p>
-<p>regexp_replace(string A, string B, string C)</p>
-<p>将字符串A中的符合java正则表达式B的部分替换为C。注意，在有些情况下要使用转义字符</p>
-<p>regexp_replace(‘foobar’, ‘oo|ar’, ”) out:fb</p>
-</li>
-<li><p>保留两位小数</p>
-<p>cast(column_name as decimal(10,2)) cast函数截取（推荐使用）</p>
-</li>
-<li><p><strong>列转行</strong> （collect_all() &#x2F; collect_list() 不去重）、（collect_set去重） 一般与concat_ws连用，带分隔符</p>
-<p>select col1, concat_ws(‘,’, collect_set(col2))<br>from tb_name<br>group by col1;</p>
+<li><p>hadoop2.7.2版本详情介绍：<a href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
+<p>Hadoop运行模式：</p>
+<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
+<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
+<p>（3）完全分布式模式：多个节点一起运行。</p>
 </li>
 </ul>
-<h2 id="3-hive使用细节记录"><a href="#3-hive使用细节记录" class="headerlink" title="3.hive使用细节记录"></a>3.hive使用细节记录</h2><ul>
-<li>union <strong>Hive在1.2.0之前的版本只支持union all，在1.2.0之后的版本才支持union.</strong></li>
-</ul>
-<h1 id="sql记录"><a href="#sql记录" class="headerlink" title="sql记录"></a>sql记录</h1><h2 id="1-mysql分组高阶"><a href="#1-mysql分组高阶" class="headerlink" title="1. mysql分组高阶"></a>1. mysql分组高阶</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">purchase表</span><br><span class="line"></span><br><span class="line">字段有id,pkg,time,item,currency,usd,dt</span><br><span class="line">玩家id,游戏包名，交易完成时间,购买礼包id,交易币种,成交金额,交易日期</span><br><span class="line"></span><br><span class="line">求5月每个玩家最早的三次付费item和金额</span><br><span class="line"></span><br><span class="line">SET @num=1;</span><br><span class="line">SET @last_id=0;</span><br><span class="line">SELECT id, 1_item,1_usd,IFNULL(2_item,null) 2_item,IFNULL(2_usd,0) 2_usd,IFNULL(3_item,null) 3_item,IFNULL(3_usd,0) 3_usd </span><br><span class="line">FROM (	</span><br><span class="line">	select 	</span><br><span class="line">	id,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,item,NULL)) AS 1_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,usd,NULL)) AS 1_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,item,NULL)) AS 2_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,usd,NULL)) AS 2_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,item,NULL)) AS 3_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,usd,NULL)) AS 3_usd	</span><br><span class="line">	from(		</span><br><span class="line">		SELECT t1.*,IF(@last_id=id,@num:=@num+1,@num:=1) AS seq,		</span><br><span class="line">		(@last_id:=id) AS tmp </span><br><span class="line">		FROM (		</span><br><span class="line">		SELECT id,time,item,usd 		</span><br><span class="line">		FROM purchase 		</span><br><span class="line">		where month(time)=5 		</span><br><span class="line">		GROUP BY id ASC,time ASC		</span><br><span class="line">		) t1	</span><br><span class="line">	)t2 </span><br><span class="line">	GROUP BY id </span><br><span class="line">) t3</span><br></pre></td></tr></table></figure>]]></content>
+]]></content>
       <categories>
         <category>大数据</category>
       </categories>
       <tags>
-        <tag>Hive</tag>
+        <tag>Hadoop</tag>
       </tags>
   </entry>
   <entry>
@@ -742,6 +693,135 @@
       </categories>
       <tags>
         <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HiveSQL</title>
+    <url>/2019/04/22/Hive-SQL/</url>
+    <content><![CDATA[<h1 id="Hive-SQL总结"><a href="#Hive-SQL总结" class="headerlink" title="Hive SQL总结"></a>Hive SQL总结</h1><h2 id="1-自带-function-的使用"><a href="#1-自带-function-的使用" class="headerlink" title="1. 自带 function 的使用"></a>1. 自带 function 的使用</h2><p>使用<code>show functions;</code> 命令进行查看目前可以使用的function;</p>
+<p>使用如下命令查看使用方法 split为例：</p>
+<ul>
+<li>desc function extended split;</li>
+</ul>
+<h2 id="2-常用func"><a href="#2-常用func" class="headerlink" title="2. 常用func"></a>2. 常用func</h2><ul>
+<li><p>LIKE</p>
+<p>A LIKE B</p>
+<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合表达式B的正则语法，则为TRUE；否则为FALSE。B中字符”_”表示任意单个字符，而字符”%”表示任意数量的字符。</p>
+</li>
+<li><p>RLIKE &#x2F; REGEXP 二者等价</p>
+<p>A RLIKE B</p>
+<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合JAVA正则表达式B的正则语法，则为TRUE；否则为FALSE。</p>
+<p>例：select 1 from dual where ‘footbar’ rlike ‘^f.*r$’</p>
+</li>
+<li><p>+、-、*、&#x2F; 、% 加 减 乘 除 取余 操作</p>
+</li>
+<li><p>&amp;、|、~、^ 与或非，异或操作</p>
+</li>
+<li><p>复合类型</p>
+<p>map, struct, array</p>
+</li>
+<li><p>round(double a) 取整函数 四舍五入</p>
+</li>
+<li><p>round(double a, int d) 返回指定精度d的double类型</p>
+</li>
+<li><p>floor(double a) 向下取整函数</p>
+</li>
+<li><p>ceiling &#x2F; ceil(double a) 向上取整函数</p>
+</li>
+<li><p>power &#x2F; pow(double a, double p) 返回a的p次幂</p>
+</li>
+<li><p>from_unixtime(1323308943,’yyyyMMdd’) 时间戳转日期函数</p>
+</li>
+<li><p>unix_timestamp() 当前UNIX时间戳</p>
+</li>
+<li><p>unix_timestamp(’2011-12-07 13:01:03′) 日期转UNIX时间戳</p>
+</li>
+<li><p>unix_timestamp(’20111207 13:01:03′,’yyyyMMdd HH:mm:ss’) 指定格式日期转UNIX时间戳</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【hive 日期转换】Hive中yyyymmdd和yyyy-mm-dd日期之间的切换</span><br><span class="line">方法1: from_unixtime+ unix_timestamp</span><br><span class="line"></span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;20171205&#x27;,&#x27;yyyymmdd&#x27;),&#x27;yyyy-mm-dd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;2017-12-05&#x27;,&#x27;yyyy-mm-dd&#x27;),&#x27;yyyymmdd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">方法2: substr + concat</span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select concat(substr(&#x27;20171205&#x27;,1,4),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,5,2),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,7,2)) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select concat(substr(&#x27;2017-12-05&#x27;,1,4),substr(&#x27;2017-12-05&#x27;,6,2),substr(&#x27;2017-12-05&#x27;,9,2)) from dual;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>to_date(’2011-12-08 10:03:01′)日期时间转 日期 out:2011-12-08</p>
+</li>
+<li><p>year(’2011-12-08 10:03:01′) 日期转年 可以直接做加减</p>
+</li>
+<li><p>month(’2011-08-08′)</p>
+</li>
+<li><p>day(’2011-12-24′)</p>
+</li>
+<li><p>hour(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>minute(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>second(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>weekofyear(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>datediff(’2012-12-08′,’2012-05-09′) 日期差</p>
+</li>
+<li><p>date_add(’2012-12-08′,10) 日期增加</p>
+</li>
+<li><p>date_sub(’2012-12-08′,10) 日期减少</p>
+</li>
+<li><p>if(1&#x3D;2,100,200) 条件函数 out:200</p>
+</li>
+<li><p>COALESCE(null,’100′,’50′) 非空查找 out:100</p>
+</li>
+<li><p><strong>条件判断函数1：CASE</strong></p>
+<p>语法: CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END</p>
+<p>如果a等于b，那么返回c；如果a等于d，那么返回e；否则返回f</p>
+<p>例：Select case 100 when 50 then ‘tom’ when 100 then ‘mary’ else ‘tim’ end from dual;</p>
+</li>
+<li><p><strong>条件判断函数2：CASE</strong></p>
+<p>语法: CASE WHEN a THEN b [WHEN c THEN d]* [ELSE e] END</p>
+<p>如果a为TRUE,则返回b；如果c为TRUE，则返回d；否则返回e</p>
+<p>例如：select case when 1&#x3D;2 then ‘tom’ when 2&#x3D;2 then ‘mary’ else ‘tim’ end from dual;</p>
+</li>
+<li><p>length(string A) 字符串长度</p>
+</li>
+<li><p>reverse(string A) 字符串反转</p>
+</li>
+<li><p><strong>字符串连接函数：concat</strong></p>
+<p>concat(string A, string B…)</p>
+</li>
+<li><p><strong>带分隔符字符串连接函数：concat_ws</strong></p>
+<p>concat_ws(string SEP, string A, string B…)</p>
+<p>例如：concat_ws(‘,’,’abc’,’def’,’gh’)</p>
+</li>
+<li><p><strong>字符串截取函数：substr,substring</strong></p>
+<p>substr(‘abcde’,3) out:abc</p>
+<p>substr(‘abcde’,-1) out:e</p>
+<p>substr(string A, int start, int len),substring(string A, int start, int len)</p>
+</li>
+<li><p>字符串转小写函数：lower,lcase</p>
+<p>lower(string A) lcase(string A)</p>
+</li>
+<li><p>去空格函数：trim</p>
+<p>trim(string A)</p>
+<p>左边去空格函数：ltrim</p>
+<p>右边去空格函数：rtrim</p>
+</li>
+<li><p>正则表达式替换函数：regexp_replace</p>
+<p>regexp_replace(string A, string B, string C)</p>
+<p>将字符串A中的符合java正则表达式B的部分替换为C。注意，在有些情况下要使用转义字符</p>
+<p>regexp_replace(‘foobar’, ‘oo|ar’, ”) out:fb</p>
+</li>
+<li><p>保留两位小数</p>
+<p>cast(column_name as decimal(10,2)) cast函数截取（推荐使用）</p>
+</li>
+<li><p><strong>列转行</strong> （collect_all() &#x2F; collect_list() 不去重）、（collect_set去重） 一般与concat_ws连用，带分隔符</p>
+<p>select col1, concat_ws(‘,’, collect_set(col2))<br>from tb_name<br>group by col1;</p>
+</li>
+</ul>
+<h2 id="3-hive使用细节记录"><a href="#3-hive使用细节记录" class="headerlink" title="3.hive使用细节记录"></a>3.hive使用细节记录</h2><ul>
+<li>union <strong>Hive在1.2.0之前的版本只支持union all，在1.2.0之后的版本才支持union.</strong></li>
+</ul>
+<h1 id="sql记录"><a href="#sql记录" class="headerlink" title="sql记录"></a>sql记录</h1><h2 id="1-mysql分组高阶"><a href="#1-mysql分组高阶" class="headerlink" title="1. mysql分组高阶"></a>1. mysql分组高阶</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">purchase表</span><br><span class="line"></span><br><span class="line">字段有id,pkg,time,item,currency,usd,dt</span><br><span class="line">玩家id,游戏包名，交易完成时间,购买礼包id,交易币种,成交金额,交易日期</span><br><span class="line"></span><br><span class="line">求5月每个玩家最早的三次付费item和金额</span><br><span class="line"></span><br><span class="line">SET @num=1;</span><br><span class="line">SET @last_id=0;</span><br><span class="line">SELECT id, 1_item,1_usd,IFNULL(2_item,null) 2_item,IFNULL(2_usd,0) 2_usd,IFNULL(3_item,null) 3_item,IFNULL(3_usd,0) 3_usd </span><br><span class="line">FROM (	</span><br><span class="line">	select 	</span><br><span class="line">	id,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,item,NULL)) AS 1_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,usd,NULL)) AS 1_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,item,NULL)) AS 2_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,usd,NULL)) AS 2_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,item,NULL)) AS 3_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,usd,NULL)) AS 3_usd	</span><br><span class="line">	from(		</span><br><span class="line">		SELECT t1.*,IF(@last_id=id,@num:=@num+1,@num:=1) AS seq,		</span><br><span class="line">		(@last_id:=id) AS tmp </span><br><span class="line">		FROM (		</span><br><span class="line">		SELECT id,time,item,usd 		</span><br><span class="line">		FROM purchase 		</span><br><span class="line">		where month(time)=5 		</span><br><span class="line">		GROUP BY id ASC,time ASC		</span><br><span class="line">		) t1	</span><br><span class="line">	)t2 </span><br><span class="line">	GROUP BY id </span><br><span class="line">) t3</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+      <tags>
+        <tag>Hive</tag>
       </tags>
   </entry>
   <entry>
@@ -1438,86 +1518,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Hadoop入门</title>
-    <url>/2018/12/28/Hadoop%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
-<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
-</ul>
-<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
-<ul>
-<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
-<li>Cloudera在大型互联网企业中用的较多。</li>
-<li>Hortonworks文档较好。</li>
-</ul>
-<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
-<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
-<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
-<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
-<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
-<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
-<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
-<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
-<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
-<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
-<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
-<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
-<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
-<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
-<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
-<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
-<p>1）Map阶段并行处理输入数据。</p>
-<p>2）Reduce阶段对Map结果进行汇总。</p>
-<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
-<p>名词解释如下：</p>
-<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
-<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
-<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
-<p> 可以基于Hadoop上存储的大数据进行计算。</p>
-<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
-<ul>
-<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
-<li>可以将sql语句转换为MapReduce任务进行运行。</li>
-</ul>
-<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
-<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
-<ul>
-<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
-<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
-<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
-</ul>
-<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
-<ul>
-<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
-<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
-</ul>
-<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
-<li><p>官方网址：<a href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
-</li>
-<li><p>各个版本归档库地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
-</li>
-<li><p>hadoop2.7.2版本详情介绍：<a href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
-<p>Hadoop运行模式：</p>
-<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
-<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
-<p>（3）完全分布式模式：多个节点一起运行。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux 常用命令</title>
     <url>/2018/12/10/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
@@ -1845,73 +1845,6 @@
       </categories>
       <tags>
         <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RabbitMQ</title>
-    <url>/2019/12/12/RabbitMQ/</url>
-    <content><![CDATA[<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h2 id="1-什么是MQ"><a href="#1-什么是MQ" class="headerlink" title="1. 什么是MQ?"></a>1. 什么是MQ?</h2><ul>
-<li>消息队列（Message Queue，简称MQ），本质是个队列，FIFO先入先出，只不过队列中存放的内容是message而已。</li>
-<li>其主要用途：不同进程(Process)&#x2F;线程(Thread)之间通信。</li>
-</ul>
-<p>为什么会产生消息队列？</p>
-<ul>
-<li>不同进程（process）之间传递消息时，两个进程之间耦合程度过高，改动一个进程，引发必须修改另一个进程。为了隔离这两个进程，在两进程间抽离出一层（一个模块）即消息队列，来传递消息。单独修改某一个进程，不会影响另一个。</li>
-<li>不同进程（process）之间传递消息时，为了实现标准化，将消息的格式规范化了。</li>
-<li>某一个进程接受的消息太多，一下子无法处理完，并且也有先后顺序，必须对收到的消息进行排队。</li>
-</ul>
-<h2 id="2-五种队列"><a href="#2-五种队列" class="headerlink" title="2. 五种队列"></a>2. 五种队列</h2><p>分类：</p>
-<ul>
-<li>简单队列（一对一）。耦合性高。生产者消费者一一对应，需要同时修改。</li>
-<li>Work queues。一个生产者，多个消费者共同处理所有的消息。</li>
-<li>交换机<ul>
-<li>Publish&#x2F;Subscribe。一个生产者，多个消费者分别消费所有的信息。</li>
-<li>Routing。相对订阅，多了一个key。分别选择性消费信息。</li>
-<li>Topic。消费者，改进key。允许模糊匹配。</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-简单队列"><a href="#1-简单队列" class="headerlink" title="1.简单队列"></a>1.简单队列</h3><p>P - 》 queue - 》 C</p>
-<p>P：消息的生产者, C：消息的消费者, queue :队列</p>
-<p>生产者将消息发送到队列，消费者从队列中获取消息。</p>
-<p>简单队列的生产者和消费者关系一对一。<br>但有时我们的需求，需要一个生产者，对应多个消费者，</p>
-<p>那就可以采用第二种模式<strong>Work模式</strong>。</p>
-<h3 id="2-Work模式（轮训和公平）"><a href="#2-Work模式（轮训和公平）" class="headerlink" title="2. Work模式（轮训和公平）"></a>2. Work模式（轮训和公平）</h3><p>P - 》 queue - 》 C1，C2</p>
-<p>一个生产者、2个消费者。</p>
-<p>但MQ中一个消息只能被一个消费者获取。即消息要么被C1获取，要么被C2获取。这种模式适用于类似集群，能者多劳。性能好的可以安排多消费，性能低的可以安排低消费。</p>
-<p>有两个概念：<strong>轮询分发</strong>（消费者获取到的消息的数量是相同的） ，<strong>公平分发</strong>（按消费者的能力分配消息）</p>
-<p>但<strong>如果面对我需要多个消费者都对这一消息进行消费的需求</strong>，这种模式显然就不适用了。</p>
-<p>那就可以采用第三种模式，订阅模式。</p>
-<h3 id="3-订阅模式"><a href="#3-订阅模式" class="headerlink" title="3. 订阅模式"></a>3. 订阅模式</h3><p>P - 》 X - 》 queue1,queue2 - 》 C1，C2</p>
-<ul>
-<li>1个生产者，多个消费者</li>
-<li>每一个消费者都有自己的一个队列</li>
-<li>生产者没有将消息直接发送到队列，而是发送到了交换机X</li>
-<li>每个队列都要绑定到交换机</li>
-<li>生产者发送的消息，经过交换机，到达队列，实现，一个消息被多个消费者获取的目的</li>
-</ul>
-<p>注意：一个消费者队列可以有多个消费者实例，只有其中一个消费者实例会消费。</p>
-<p>流程：</p>
-<ul>
-<li><strong>消息的生产者向交换机中发送消息</strong>。注意：消息发送到没有队列绑定的交换机时，消息将丢失，因为，交换机没有存储消息的能力，消息只能存在在队列中。</li>
-<li>各个消费者消费信息。</li>
-</ul>
-<p>同一个消息被多个消费者获取。</p>
-<p><strong>这种模式可以满足消费者发布一个消息，多个消费者消费同一信息的需求</strong>。</p>
-<p>但C1、C2消费的都是相同的数据，有时我们需要C1和C2消费的信息只有部分差异，比如我们需求：C1消费增加的数据，C2消费编辑、增加和删除的数据。</p>
-<p>引入第四种模式，<strong>路由模式</strong>。</p>
-<h3 id="4-路由模式"><a href="#4-路由模式" class="headerlink" title="4. 路由模式"></a>4. 路由模式</h3><p>路由模式是在订阅模式基础上的完善，可以<strong>在生产消息的时候，加入Key值</strong>，与key值匹配的消费者消费信息。</p>
-<p>但路由模式中，就如三中提到的C1、C2、如果C2对应的类型更多，就需要写很多key值。但其实它只与C1有一点差别。</p>
-<p>那就可以考虑第五种模式：通配符模式</p>
-<h3 id="5-通配符模式"><a href="#5-通配符模式" class="headerlink" title="5.通配符模式"></a>5.通配符模式</h3><p>通配符模式是在路由模式的升级，他允许key模糊匹配。</p>
-<p>其中*代表一个词，#代表一个或多个词。</p>
-<p>通过通配符模式我们就可以将C1对应的一个key准确定为item.add。而C2我们就不需要一一写出key值，而是用item.#代替即可。</p>
-]]></content>
-      <categories>
-        <category>中间件</category>
-      </categories>
-      <tags>
-        <tag>消息队列</tag>
       </tags>
   </entry>
   <entry>
@@ -2525,6 +2458,73 @@
       </tags>
   </entry>
   <entry>
+    <title>RabbitMQ</title>
+    <url>/2019/12/12/RabbitMQ/</url>
+    <content><![CDATA[<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h2 id="1-什么是MQ"><a href="#1-什么是MQ" class="headerlink" title="1. 什么是MQ?"></a>1. 什么是MQ?</h2><ul>
+<li>消息队列（Message Queue，简称MQ），本质是个队列，FIFO先入先出，只不过队列中存放的内容是message而已。</li>
+<li>其主要用途：不同进程(Process)&#x2F;线程(Thread)之间通信。</li>
+</ul>
+<p>为什么会产生消息队列？</p>
+<ul>
+<li>不同进程（process）之间传递消息时，两个进程之间耦合程度过高，改动一个进程，引发必须修改另一个进程。为了隔离这两个进程，在两进程间抽离出一层（一个模块）即消息队列，来传递消息。单独修改某一个进程，不会影响另一个。</li>
+<li>不同进程（process）之间传递消息时，为了实现标准化，将消息的格式规范化了。</li>
+<li>某一个进程接受的消息太多，一下子无法处理完，并且也有先后顺序，必须对收到的消息进行排队。</li>
+</ul>
+<h2 id="2-五种队列"><a href="#2-五种队列" class="headerlink" title="2. 五种队列"></a>2. 五种队列</h2><p>分类：</p>
+<ul>
+<li>简单队列（一对一）。耦合性高。生产者消费者一一对应，需要同时修改。</li>
+<li>Work queues。一个生产者，多个消费者共同处理所有的消息。</li>
+<li>交换机<ul>
+<li>Publish&#x2F;Subscribe。一个生产者，多个消费者分别消费所有的信息。</li>
+<li>Routing。相对订阅，多了一个key。分别选择性消费信息。</li>
+<li>Topic。消费者，改进key。允许模糊匹配。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-简单队列"><a href="#1-简单队列" class="headerlink" title="1.简单队列"></a>1.简单队列</h3><p>P - 》 queue - 》 C</p>
+<p>P：消息的生产者, C：消息的消费者, queue :队列</p>
+<p>生产者将消息发送到队列，消费者从队列中获取消息。</p>
+<p>简单队列的生产者和消费者关系一对一。<br>但有时我们的需求，需要一个生产者，对应多个消费者，</p>
+<p>那就可以采用第二种模式<strong>Work模式</strong>。</p>
+<h3 id="2-Work模式（轮训和公平）"><a href="#2-Work模式（轮训和公平）" class="headerlink" title="2. Work模式（轮训和公平）"></a>2. Work模式（轮训和公平）</h3><p>P - 》 queue - 》 C1，C2</p>
+<p>一个生产者、2个消费者。</p>
+<p>但MQ中一个消息只能被一个消费者获取。即消息要么被C1获取，要么被C2获取。这种模式适用于类似集群，能者多劳。性能好的可以安排多消费，性能低的可以安排低消费。</p>
+<p>有两个概念：<strong>轮询分发</strong>（消费者获取到的消息的数量是相同的） ，<strong>公平分发</strong>（按消费者的能力分配消息）</p>
+<p>但<strong>如果面对我需要多个消费者都对这一消息进行消费的需求</strong>，这种模式显然就不适用了。</p>
+<p>那就可以采用第三种模式，订阅模式。</p>
+<h3 id="3-订阅模式"><a href="#3-订阅模式" class="headerlink" title="3. 订阅模式"></a>3. 订阅模式</h3><p>P - 》 X - 》 queue1,queue2 - 》 C1，C2</p>
+<ul>
+<li>1个生产者，多个消费者</li>
+<li>每一个消费者都有自己的一个队列</li>
+<li>生产者没有将消息直接发送到队列，而是发送到了交换机X</li>
+<li>每个队列都要绑定到交换机</li>
+<li>生产者发送的消息，经过交换机，到达队列，实现，一个消息被多个消费者获取的目的</li>
+</ul>
+<p>注意：一个消费者队列可以有多个消费者实例，只有其中一个消费者实例会消费。</p>
+<p>流程：</p>
+<ul>
+<li><strong>消息的生产者向交换机中发送消息</strong>。注意：消息发送到没有队列绑定的交换机时，消息将丢失，因为，交换机没有存储消息的能力，消息只能存在在队列中。</li>
+<li>各个消费者消费信息。</li>
+</ul>
+<p>同一个消息被多个消费者获取。</p>
+<p><strong>这种模式可以满足消费者发布一个消息，多个消费者消费同一信息的需求</strong>。</p>
+<p>但C1、C2消费的都是相同的数据，有时我们需要C1和C2消费的信息只有部分差异，比如我们需求：C1消费增加的数据，C2消费编辑、增加和删除的数据。</p>
+<p>引入第四种模式，<strong>路由模式</strong>。</p>
+<h3 id="4-路由模式"><a href="#4-路由模式" class="headerlink" title="4. 路由模式"></a>4. 路由模式</h3><p>路由模式是在订阅模式基础上的完善，可以<strong>在生产消息的时候，加入Key值</strong>，与key值匹配的消费者消费信息。</p>
+<p>但路由模式中，就如三中提到的C1、C2、如果C2对应的类型更多，就需要写很多key值。但其实它只与C1有一点差别。</p>
+<p>那就可以考虑第五种模式：通配符模式</p>
+<h3 id="5-通配符模式"><a href="#5-通配符模式" class="headerlink" title="5.通配符模式"></a>5.通配符模式</h3><p>通配符模式是在路由模式的升级，他允许key模糊匹配。</p>
+<p>其中*代表一个词，#代表一个或多个词。</p>
+<p>通过通配符模式我们就可以将C1对应的一个key准确定为item.add。而C2我们就不需要一一写出key值，而是用item.#代替即可。</p>
+]]></content>
+      <categories>
+        <category>中间件</category>
+      </categories>
+      <tags>
+        <tag>消息队列</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scala 编码练习</title>
     <url>/2019/05/19/Scala%20%E7%BC%96%E7%A0%81%E7%BB%83%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="快捷键记录"><a href="#快捷键记录" class="headerlink" title="快捷键记录"></a>快捷键记录</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(ctrl+alt+l)    格式化的代码快捷键</span><br></pre></td></tr></table></figure>
@@ -2555,6 +2555,90 @@
       </categories>
       <tags>
         <tag>Scala</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SparkSQL</title>
+    <url>/2018/01/01/SparkSQL/</url>
+    <content><![CDATA[<h1 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>Spark SQL是Spark用来<strong>处理结构化数据</strong>的一个模块，</p>
+<p>它提供了2个编程抽象：<strong>DataFrame</strong>和<strong>DataSet</strong>，并且作为<strong>分布式SQL查询引擎</strong>的作用。</p>
+<h3 id="1-1-特点"><a href="#1-1-特点" class="headerlink" title="1.1 特点"></a>1.1 特点</h3><ul>
+<li>易整合</li>
+<li>统一的数据访问方式</li>
+<li>兼容Hive</li>
+<li>标准的数据连接</li>
+</ul>
+<h3 id="1-2-DataFrame"><a href="#1-2-DataFrame" class="headerlink" title="1.2 DataFrame"></a>1.2 DataFrame</h3><p>DataFrame也是一个分布式数据容器。</p>
+<p>但DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。</p>
+<p>同时，与Hive类似，<strong>DataFrame也支持嵌套数据类型</strong>（struct、array和map）。</p>
+<p>DataFrame是为数据提供了Schema的视图。可以把它当做数据库中的一张表来对待，DataFrame也是懒执行的。</p>
+<p> 性能上比RDD要高，主要原因：</p>
+<p> 优化的执行计划：查询计划通过Spark catalyst optimiser进行优化。</p>
+<h3 id="1-3-DataSet"><a href="#1-3-DataSet" class="headerlink" title="1.3 DataSet"></a>1.3 DataSet</h3><p>DataSet是</p>
+<p> 1)Dataframe API的一个扩展，是Spark最新的数据抽象。</p>
+<p> 2)用户友好的API风格，既具有类型安全检查也具有Dataframe的查询优化特性。</p>
+<p> 3)Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。</p>
+<p> 4)样例类被用来在Dataset中定义数据的结构信息，<strong>样例类中每个属性的名称直接映射到DataSet中的字段名称</strong>。</p>
+<p> 5)Dataframe是Dataset的特列，DataFrame&#x3D;Dataset[Row] ，所以可以通过as方法将Dataframe转换为Dataset。Row是一个类型，跟Car、Person这些的类型一样，所有的表结构信息我都用Row来表示。</p>
+<p> 6)DataSet是强类型的。比如可以有Dataset[Car]，Dataset[Person].</p>
+<p> 7)DataFrame只是知道字段，但是不知道字段的类型，所以在执行这些操作的时候是没办法在编译的时候检查是否类型失败的，比如你可以对一个String进行减法操作，在执行的时候才报错，而DataSet不仅仅知道字段，而且知道字段类型，所以有更严格的错误检查。就跟JSON对象和类对象之间的类比。</p>
+<h2 id="2-SparkSQL编程"><a href="#2-SparkSQL编程" class="headerlink" title="2. SparkSQL编程"></a>2. SparkSQL编程</h2><h3 id="2-1-SparkSession"><a href="#2-1-SparkSession" class="headerlink" title="2.1 SparkSession"></a>2.1 SparkSession</h3><p>在<strong>老spark的版本</strong>中，SparkSQL提供两种SQL查询起始点：一个叫<strong>SQLContext</strong>，用于Spark自己提供的SQL查询；一个叫<strong>HiveContext</strong>，用于连接Hive的查询。</p>
+<p><strong>SparkSession</strong>是Spark最新的SQL查询起始点，实质上<strong>是SQLContext和HiveContext的组合</strong>，所以在SQLContext和HiveContext上可用的API在SparkSession上同样是可以使用的。<strong>SparkSession内部封装了sparkContext</strong>，所以计算实际上是由sparkContext完成的。</p>
+<h3 id="2-2-DataFrame（DataSet基本一致）"><a href="#2-2-DataFrame（DataSet基本一致）" class="headerlink" title="2.2 DataFrame（DataSet基本一致）"></a>2.2 DataFrame（DataSet基本一致）</h3><h4 id="2-2-1-创建"><a href="#2-2-1-创建" class="headerlink" title="2.2.1 创建"></a>2.2.1 创建</h4><p>在Spark SQL中SparkSession是创建DataFrame和执行SQL的入口，</p>
+<p>创建DataFrame有三种方式：</p>
+<ul>
+<li>通过Spark的数据源进行创建</li>
+<li>从一个存在的RDD进行转换</li>
+<li>从Hive Table进行查询返回</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 从Spark数据源进行创建</span><br><span class="line">1)查看Spark数据源进行创建的文件格式	</span><br><span class="line">	spark.read.	</span><br><span class="line">	csv   format   jdbc   json   load   option   options   orc	parquet   </span><br><span class="line">	schema   table   text   textFile</span><br><span class="line">	</span><br><span class="line">2)读取json文件创建DataFrame	</span><br><span class="line">	val df=spark.read.json(&quot;/opt/module/spark/.../people.json&quot;)</span><br><span class="line">	</span><br><span class="line">3）展示结果	df.show</span><br><span class="line"></span><br><span class="line">2. 从RDD进行转换</span><br><span class="line">注意：如果需要RDD与DF或者DS之间操作，那么都需要引入 import spark.implicits._  </span><br><span class="line">【spark不是包名，而是sparkSession对象的名称】</span><br><span class="line"></span><br><span class="line">import spark.implicits._</span><br><span class="line">val peopleRDD = sc.textFile(&quot;examples/src/main/resources/people.txt&quot;)</span><br><span class="line"></span><br><span class="line">1)手动转换</span><br><span class="line">peopleRDD.map&#123;x=&gt;    </span><br><span class="line">	val para = x.split(&quot;,&quot;);			  				 		、、、、、</span><br><span class="line">	(para(0),para(1).trim.toInt)	</span><br><span class="line">	&#125;.toDF(&quot;name&quot;,&quot;age&quot;)</span><br><span class="line">	</span><br><span class="line">2）通过反射确定（需要用到样例类）	</span><br><span class="line">	（1）创建一个样例类	</span><br><span class="line">		case class People(name:String, age:Int)	</span><br><span class="line">	（2）根据样例类将RDD转换为DataFrame	</span><br><span class="line">		peopleRDD.map&#123; x =&gt; 	</span><br><span class="line">			val para = x.split(&quot;,&quot;);	</span><br><span class="line">			People(para(0),para(1).trim.toInt)	</span><br><span class="line">		&#125;.toDF</span><br><span class="line">		</span><br><span class="line">3）通过编程的方式（--了解--）	</span><br><span class="line">	（1）导入所需的类型	</span><br><span class="line">		import org.apache.spark.sql.types._	</span><br><span class="line">	（2）创建Schema	</span><br><span class="line">		val structType: StructType = </span><br><span class="line">		StructType(StructField(&quot;name&quot;, StringType) </span><br><span class="line">			:: StructField(&quot;age&quot;, IntegerType) :: Nil)	</span><br><span class="line">			</span><br><span class="line">	（3）导入所需的类型	</span><br><span class="line">		import org.apache.spark.sql.Row	</span><br><span class="line">		</span><br><span class="line">	（4）根据给定的类型创建二元组RDD	</span><br><span class="line">		val data = peopleRDD.map&#123; x =&gt; 	</span><br><span class="line">			val para = x.split(&quot;,&quot;);	</span><br><span class="line">			Row(para(0),para(1).trim.toInt)</span><br><span class="line">		&#125;	</span><br><span class="line">		</span><br><span class="line">	（5）根据数据及给定的schema创建DataFrame	</span><br><span class="line">		val dataFrame = spark.createDataFrame(data, structType)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3. 从Hive Table进行查询返回</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-2-SQL风格语法"><a href="#2-2-2-SQL风格语法" class="headerlink" title="2.2.2 SQL风格语法"></a>2.2.2 SQL风格语法</h4><ol>
+<li><p>创建DF</p>
+<p>spark.read.json(“”)</p>
+</li>
+<li><p>对DataFrame创建一个临时表</p>
+<p>df.createOrReplaceTempView(“people”)</p>
+</li>
+<li><p>通过SQL语句实现查询全表</p>
+<p>val sqlDF &#x3D; spark.sql(“SELECT * FROM people”)</p>
+</li>
+<li><p>结果展示</p>
+<p>sqlDF.show</p>
+</li>
+</ol>
+<p>注意：临时表是Session范围内的，Session退出后，表就失效了。</p>
+<p>如果想应用范围内有效，可以使用全局表。注意使用全局表时需要全路径访问，</p>
+<p>如：global_temp.people</p>
+<ol>
+<li><p>对于DataFrame创建一个全局表</p>
+<p>df.createGlobalTempView(“people”)</p>
+</li>
+<li><p>通过SQL语句实现查询全表</p>
+<p>spark.sql(“SELECT * FROM global_temp.people”).show()</p>
+<p>spark.newSession().sql(“SELECT * FROM global_temp.people”).show()</p>
+</li>
+</ol>
+<h3 id="2-3-DataFrame与DataSet的互操作"><a href="#2-3-DataFrame与DataSet的互操作" class="headerlink" title="2.3 DataFrame与DataSet的互操作"></a>2.3 DataFrame与DataSet的互操作</h3><p>在使用一些特殊的操作时，一定要加上 import spark.implicits._</p>
+<p>不然toDF、toDS无法使用。</p>
+<ol>
+<li><p>DataFrame转换为DataSe</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1）创建一个DateFrame</span><br><span class="line">val df = spark.read.json(&quot;examples/src/main/resources/people.json&quot;)</span><br><span class="line"></span><br><span class="line">2）创建一个样例类</span><br><span class="line">case class Person(name: String, age: Long)</span><br><span class="line"></span><br><span class="line">3）将DateFrame转化为DataSet</span><br><span class="line">df.as[Person]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataSet转换为DataFrame</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1）创建一个样例类</span><br><span class="line">case class Person(name: String, age: Long)</span><br><span class="line"></span><br><span class="line">2）创建DataSet</span><br><span class="line">val ds = Seq(Person(&quot;Andy&quot;, 32)).toDS()</span><br><span class="line"></span><br><span class="line">3）将DataSet转化为DataFrame</span><br><span class="line">val df = ds.toDF4)展示df.show</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-4-RDD、DataFrame、DataSet"><a href="#2-4-RDD、DataFrame、DataSet" class="headerlink" title="2.4 RDD、DataFrame、DataSet"></a>2.4 RDD、DataFrame、DataSet</h3><p>在SparkSQL中Spark为我们提供了两个新的抽象，分别是DataFrame和DataSet。</p>
+<p>他们和RDD有什么区别呢？首先从版本的产生上来看：</p>
+<p> RDD (Spark1.0) —&gt; Dataframe(Spark1.3) —&gt;Dataset(Spark1.6)</p>
+<p>如果同样的数据都给到这三个数据结构，他们分别计算之后，都会给出相同的结果。不同是的他们的执行效率和执行方式。</p>
+<p>在后期的Spark版本中，DataSet会逐步取代RDD和DataFrame成为唯一的API接口。</p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+      <tags>
+        <tag>Spark</tag>
       </tags>
   </entry>
   <entry>
@@ -2927,82 +3011,34 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </tags>
   </entry>
   <entry>
-    <title>SparkSQL</title>
-    <url>/2018/01/01/SparkSQL/</url>
-    <content><![CDATA[<h1 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>Spark SQL是Spark用来<strong>处理结构化数据</strong>的一个模块，</p>
-<p>它提供了2个编程抽象：<strong>DataFrame</strong>和<strong>DataSet</strong>，并且作为<strong>分布式SQL查询引擎</strong>的作用。</p>
-<h3 id="1-1-特点"><a href="#1-1-特点" class="headerlink" title="1.1 特点"></a>1.1 特点</h3><ul>
-<li>易整合</li>
-<li>统一的数据访问方式</li>
-<li>兼容Hive</li>
-<li>标准的数据连接</li>
-</ul>
-<h3 id="1-2-DataFrame"><a href="#1-2-DataFrame" class="headerlink" title="1.2 DataFrame"></a>1.2 DataFrame</h3><p>DataFrame也是一个分布式数据容器。</p>
-<p>但DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。</p>
-<p>同时，与Hive类似，<strong>DataFrame也支持嵌套数据类型</strong>（struct、array和map）。</p>
-<p>DataFrame是为数据提供了Schema的视图。可以把它当做数据库中的一张表来对待，DataFrame也是懒执行的。</p>
-<p> 性能上比RDD要高，主要原因：</p>
-<p> 优化的执行计划：查询计划通过Spark catalyst optimiser进行优化。</p>
-<h3 id="1-3-DataSet"><a href="#1-3-DataSet" class="headerlink" title="1.3 DataSet"></a>1.3 DataSet</h3><p>DataSet是</p>
-<p> 1)Dataframe API的一个扩展，是Spark最新的数据抽象。</p>
-<p> 2)用户友好的API风格，既具有类型安全检查也具有Dataframe的查询优化特性。</p>
-<p> 3)Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。</p>
-<p> 4)样例类被用来在Dataset中定义数据的结构信息，<strong>样例类中每个属性的名称直接映射到DataSet中的字段名称</strong>。</p>
-<p> 5)Dataframe是Dataset的特列，DataFrame&#x3D;Dataset[Row] ，所以可以通过as方法将Dataframe转换为Dataset。Row是一个类型，跟Car、Person这些的类型一样，所有的表结构信息我都用Row来表示。</p>
-<p> 6)DataSet是强类型的。比如可以有Dataset[Car]，Dataset[Person].</p>
-<p> 7)DataFrame只是知道字段，但是不知道字段的类型，所以在执行这些操作的时候是没办法在编译的时候检查是否类型失败的，比如你可以对一个String进行减法操作，在执行的时候才报错，而DataSet不仅仅知道字段，而且知道字段类型，所以有更严格的错误检查。就跟JSON对象和类对象之间的类比。</p>
-<h2 id="2-SparkSQL编程"><a href="#2-SparkSQL编程" class="headerlink" title="2. SparkSQL编程"></a>2. SparkSQL编程</h2><h3 id="2-1-SparkSession"><a href="#2-1-SparkSession" class="headerlink" title="2.1 SparkSession"></a>2.1 SparkSession</h3><p>在<strong>老spark的版本</strong>中，SparkSQL提供两种SQL查询起始点：一个叫<strong>SQLContext</strong>，用于Spark自己提供的SQL查询；一个叫<strong>HiveContext</strong>，用于连接Hive的查询。</p>
-<p><strong>SparkSession</strong>是Spark最新的SQL查询起始点，实质上<strong>是SQLContext和HiveContext的组合</strong>，所以在SQLContext和HiveContext上可用的API在SparkSession上同样是可以使用的。<strong>SparkSession内部封装了sparkContext</strong>，所以计算实际上是由sparkContext完成的。</p>
-<h3 id="2-2-DataFrame（DataSet基本一致）"><a href="#2-2-DataFrame（DataSet基本一致）" class="headerlink" title="2.2 DataFrame（DataSet基本一致）"></a>2.2 DataFrame（DataSet基本一致）</h3><h4 id="2-2-1-创建"><a href="#2-2-1-创建" class="headerlink" title="2.2.1 创建"></a>2.2.1 创建</h4><p>在Spark SQL中SparkSession是创建DataFrame和执行SQL的入口，</p>
-<p>创建DataFrame有三种方式：</p>
-<ul>
-<li>通过Spark的数据源进行创建</li>
-<li>从一个存在的RDD进行转换</li>
-<li>从Hive Table进行查询返回</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 从Spark数据源进行创建</span><br><span class="line">1)查看Spark数据源进行创建的文件格式	</span><br><span class="line">	spark.read.	</span><br><span class="line">	csv   format   jdbc   json   load   option   options   orc	parquet   </span><br><span class="line">	schema   table   text   textFile</span><br><span class="line">	</span><br><span class="line">2)读取json文件创建DataFrame	</span><br><span class="line">	val df=spark.read.json(&quot;/opt/module/spark/.../people.json&quot;)</span><br><span class="line">	</span><br><span class="line">3）展示结果	df.show</span><br><span class="line"></span><br><span class="line">2. 从RDD进行转换</span><br><span class="line">注意：如果需要RDD与DF或者DS之间操作，那么都需要引入 import spark.implicits._  </span><br><span class="line">【spark不是包名，而是sparkSession对象的名称】</span><br><span class="line"></span><br><span class="line">import spark.implicits._</span><br><span class="line">val peopleRDD = sc.textFile(&quot;examples/src/main/resources/people.txt&quot;)</span><br><span class="line"></span><br><span class="line">1)手动转换</span><br><span class="line">peopleRDD.map&#123;x=&gt;    </span><br><span class="line">	val para = x.split(&quot;,&quot;);			  				 		、、、、、</span><br><span class="line">	(para(0),para(1).trim.toInt)	</span><br><span class="line">	&#125;.toDF(&quot;name&quot;,&quot;age&quot;)</span><br><span class="line">	</span><br><span class="line">2）通过反射确定（需要用到样例类）	</span><br><span class="line">	（1）创建一个样例类	</span><br><span class="line">		case class People(name:String, age:Int)	</span><br><span class="line">	（2）根据样例类将RDD转换为DataFrame	</span><br><span class="line">		peopleRDD.map&#123; x =&gt; 	</span><br><span class="line">			val para = x.split(&quot;,&quot;);	</span><br><span class="line">			People(para(0),para(1).trim.toInt)	</span><br><span class="line">		&#125;.toDF</span><br><span class="line">		</span><br><span class="line">3）通过编程的方式（--了解--）	</span><br><span class="line">	（1）导入所需的类型	</span><br><span class="line">		import org.apache.spark.sql.types._	</span><br><span class="line">	（2）创建Schema	</span><br><span class="line">		val structType: StructType = </span><br><span class="line">		StructType(StructField(&quot;name&quot;, StringType) </span><br><span class="line">			:: StructField(&quot;age&quot;, IntegerType) :: Nil)	</span><br><span class="line">			</span><br><span class="line">	（3）导入所需的类型	</span><br><span class="line">		import org.apache.spark.sql.Row	</span><br><span class="line">		</span><br><span class="line">	（4）根据给定的类型创建二元组RDD	</span><br><span class="line">		val data = peopleRDD.map&#123; x =&gt; 	</span><br><span class="line">			val para = x.split(&quot;,&quot;);	</span><br><span class="line">			Row(para(0),para(1).trim.toInt)</span><br><span class="line">		&#125;	</span><br><span class="line">		</span><br><span class="line">	（5）根据数据及给定的schema创建DataFrame	</span><br><span class="line">		val dataFrame = spark.createDataFrame(data, structType)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3. 从Hive Table进行查询返回</span><br></pre></td></tr></table></figure>
+    <title>Spark参数调优</title>
+    <url>/2019/10/15/Spark%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/</url>
+    <content><![CDATA[<h1 id="Spark参数调优"><a href="#Spark参数调优" class="headerlink" title="Spark参数调优"></a>Spark参数调优</h1><p>参考文献：<a href="https://blog.csdn.net/zyzzxycj/article/details/81011540">https://blog.csdn.net/zyzzxycj/article/details/81011540</a></p>
+<p>因为每个集群规模都不一样，只有理解了参数的用途，调试出符合自己业务场景集群环境，并且能在扩大集群、业务的情况下，能够跟着修改参数才算是正确的参数调优。我的目标就是能够熟练的进行参数调优。</p>
+<h2 id="1-Application-Properties-应用基本属性"><a href="#1-Application-Properties-应用基本属性" class="headerlink" title="1*. Application Properties 应用基本属性"></a>1*. Application Properties 应用基本属性</h2><p>这些参数比较重要，执行spark的shell 一般都需要配置一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.driver.cores  	</span><br><span class="line">	driver端分配的核数，默认为1,资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.driver.memory	</span><br><span class="line">	driver端分配的内存数，默认为1g，资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.executor.memory	</span><br><span class="line">	每个executor分配的内存数，默认1g，会受到yarn CDH的限制，</span><br><span class="line">	和memoryOverhead相加 不能超过总内存限制。</span><br><span class="line"></span><br><span class="line">spark.driver.maxResultSize	</span><br><span class="line">	driver端接收的最大结果大小，默认1GB，最小1MB，设置0为无限。	</span><br><span class="line">	这个参数不建议设置的太大,如果要做数据可视化,更应该控制在20-30MB以内,</span><br><span class="line">	过大会导致OOM(out of memory)。</span><br><span class="line">	</span><br><span class="line">spark.extraListeners.(不常用)	</span><br><span class="line">	默认none，随着SparkContext被创建而创建，用于监听单参数、无参数构造函数的创建，并抛出异常。</span><br><span class="line">	可用于自定义监听，实现监控spark的任务进度。</span><br></pre></td></tr></table></figure>
 
-<h4 id="2-2-2-SQL风格语法"><a href="#2-2-2-SQL风格语法" class="headerlink" title="2.2.2 SQL风格语法"></a>2.2.2 SQL风格语法</h4><ol>
-<li><p>创建DF</p>
-<p>spark.read.json(“”)</p>
-</li>
-<li><p>对DataFrame创建一个临时表</p>
-<p>df.createOrReplaceTempView(“people”)</p>
-</li>
-<li><p>通过SQL语句实现查询全表</p>
-<p>val sqlDF &#x3D; spark.sql(“SELECT * FROM people”)</p>
-</li>
-<li><p>结果展示</p>
-<p>sqlDF.show</p>
-</li>
-</ol>
-<p>注意：临时表是Session范围内的，Session退出后，表就失效了。</p>
-<p>如果想应用范围内有效，可以使用全局表。注意使用全局表时需要全路径访问，</p>
-<p>如：global_temp.people</p>
-<ol>
-<li><p>对于DataFrame创建一个全局表</p>
-<p>df.createGlobalTempView(“people”)</p>
-</li>
-<li><p>通过SQL语句实现查询全表</p>
-<p>spark.sql(“SELECT * FROM global_temp.people”).show()</p>
-<p>spark.newSession().sql(“SELECT * FROM global_temp.people”).show()</p>
-</li>
-</ol>
-<h3 id="2-3-DataFrame与DataSet的互操作"><a href="#2-3-DataFrame与DataSet的互操作" class="headerlink" title="2.3 DataFrame与DataSet的互操作"></a>2.3 DataFrame与DataSet的互操作</h3><p>在使用一些特殊的操作时，一定要加上 import spark.implicits._</p>
-<p>不然toDF、toDS无法使用。</p>
-<ol>
-<li><p>DataFrame转换为DataSe</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1）创建一个DateFrame</span><br><span class="line">val df = spark.read.json(&quot;examples/src/main/resources/people.json&quot;)</span><br><span class="line"></span><br><span class="line">2）创建一个样例类</span><br><span class="line">case class Person(name: String, age: Long)</span><br><span class="line"></span><br><span class="line">3）将DateFrame转化为DataSet</span><br><span class="line">df.as[Person]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>DataSet转换为DataFrame</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1）创建一个样例类</span><br><span class="line">case class Person(name: String, age: Long)</span><br><span class="line"></span><br><span class="line">2）创建DataSet</span><br><span class="line">val ds = Seq(Person(&quot;Andy&quot;, 32)).toDS()</span><br><span class="line"></span><br><span class="line">3）将DataSet转化为DataFrame</span><br><span class="line">val df = ds.toDF4)展示df.show</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="2-4-RDD、DataFrame、DataSet"><a href="#2-4-RDD、DataFrame、DataSet" class="headerlink" title="2.4 RDD、DataFrame、DataSet"></a>2.4 RDD、DataFrame、DataSet</h3><p>在SparkSQL中Spark为我们提供了两个新的抽象，分别是DataFrame和DataSet。</p>
-<p>他们和RDD有什么区别呢？首先从版本的产生上来看：</p>
-<p> RDD (Spark1.0) —&gt; Dataframe(Spark1.3) —&gt;Dataset(Spark1.6)</p>
-<p>如果同样的数据都给到这三个数据结构，他们分别计算之后，都会给出相同的结果。不同是的他们的执行效率和执行方式。</p>
-<p>在后期的Spark版本中，DataSet会逐步取代RDD和DataFrame成为唯一的API接口。</p>
-]]></content>
+<h2 id="2-Runtime-Environment-运行环境"><a href="#2-Runtime-Environment-运行环境" class="headerlink" title="2. Runtime Environment 运行环境"></a>2. <strong>Runtime Environment 运行环境</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">主要是一些日志，jvm参数的额外配置，jars等一些自定义的配置(待补充)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Shuffle-Behavior"><a href="#3-Shuffle-Behavior" class="headerlink" title="3. Shuffle Behavior"></a>3. Shuffle Behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.reducer.maxSizeInFlight	</span><br><span class="line">	默认48m。从每个reduce任务同时拉取的最大map数，</span><br><span class="line">	每个reduce都会在完成任务后，需要一个堆外内存的缓冲区来存放结果，</span><br><span class="line">	如果没有充裕的内存就尽可能把这个调小一点。</span><br><span class="line">	相反，堆外内存充裕，调大些就能节省gc时间。</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">spark.reducer.maxBlocksInFlightPerAddress(一般不会改)	</span><br><span class="line">	限制了每个主机每次reduce可以被多少台远程主机拉取文件块，</span><br><span class="line">	调低这个参数可以有效减轻node manager的负载。（默认值Int.MaxValue）</span><br><span class="line"></span><br><span class="line">spark.reducer.maxReqsInFlight	</span><br><span class="line">	限制远程机器拉取本机器文件块的请求数，随着集群增大，需要对此做出限制。</span><br><span class="line">	否则可能会使本机负载过大而挂掉。（默认值为Int.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.reducer.maxReqSizeShuffleToMem	</span><br><span class="line">	shuffle请求的文件块大小 超过这个参数值，就会被强行落盘，</span><br><span class="line">	防止一大堆并发请求把内存占满。（默认Long.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.shuffle.compress	</span><br><span class="line">	是否压缩map输出文件，默认压缩 true</span><br><span class="line">	</span><br><span class="line">spark.shuffle.spill.compress	</span><br><span class="line">	shuffle过程中溢出的文件是否压缩，默认true，使用spark.io.compression.codec压缩。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.file.buffer	</span><br><span class="line">	在内存输出流中 每个shuffle文件占用内存大小，适当提高 可以减少磁盘读写 io次数，初始值为32k。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.memoryFraction	</span><br><span class="line">	该参数代表了Executor内存中，分配给shuffle read task进行聚合操作的内存比例，默认是20%。	</span><br><span class="line">	cache少且内存充足时，可以调大该参数，给shuffle read的聚合操作更多内存，</span><br><span class="line">	以避免由于内存不足导致聚合过程中频繁读写磁盘。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.manager	</span><br><span class="line">	当ShuffleManager为SortShuffleManager时，</span><br><span class="line">	如果shuffle read task的数量小于这个阈值（默认是200），	 </span><br><span class="line">	则shuffle write过程中不会进行排序操作，</span><br><span class="line">	而是直接按照未经优化的HashShuffleManager的方式去写数据，</span><br><span class="line">	但是最后会将每个task产生的所有临时磁盘文件都合并成一个文件，并会创建单独的索引文件。	</span><br><span class="line">	当使用SortShuffleManager时，如果的确不需要排序操作，那么建议将这个参数调大一些，</span><br><span class="line">	大于shuffle read 	task的数量。那么此时就会自动启用bypass机制，</span><br><span class="line">	map-side就不会进行排序了，减少了排序的性能开销。</span><br><span class="line">	但是这种方式下，依然会产生大量的磁盘文件，因此shuffle write性能有待提高。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.consolidateFiles	</span><br><span class="line">	如果使用HashShuffleManager，该参数有效。</span><br><span class="line">	如果设置为true，那么就会开启consolidate机制，会大幅度合并	 </span><br><span class="line">	shuffle write的输出文件，对于shuffle read task数量特别多的情况下，</span><br><span class="line">	这种方法可以极大地减少磁盘IO开销，提升性能。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.maxRetries（重试次数）	</span><br><span class="line">	shuffle read task从shuffle write task所在节点拉取属于自己的数据时，</span><br><span class="line">	如果因为网络异常导致拉取失败，是会自动进行重试的。</span><br><span class="line">	该参数就代表了可以重试的最大次数。如果在指定次数之内拉取还是没有成功，</span><br><span class="line">	就可能会导致作业执行失败。	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.retryWait	</span><br><span class="line">	同上，默认5s，建议加大间隔时长（比如60s），以增加shuffle操作的稳定性。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spark.io.encryption.enabled</span><br><span class="line">spark.io.encryption.keySizeBits</span><br><span class="line"></span><br><span class="line">spark.io.encryption.keygen.algorithm	</span><br><span class="line">	io加密，默认关闭</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Spark-UI"><a href="#4-Spark-UI" class="headerlink" title="4. Spark UI"></a>4. Spark UI</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这一块配置，是有关于spark日志的。日志开关，日志输出路径，是否压缩。(待补充)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Compression-and-Serialization压缩与序列化"><a href="#5-Compression-and-Serialization压缩与序列化" class="headerlink" title="5. Compression and Serialization压缩与序列化"></a>5. Compression and Serialization压缩与序列化</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.compress	</span><br><span class="line">	广播变量前是否会先进行压缩。默认true （spark.io.compression.codec）</span><br><span class="line">	</span><br><span class="line">spark.io.compression.codec	</span><br><span class="line">	压缩RDD数据、日志、shuffle输出等的压缩格式 默认lz4</span><br><span class="line">	</span><br><span class="line">spark.io.compression.lz4.blockSize	</span><br><span class="line">	使用lz4压缩时，每个数据块大小 默认32k</span><br><span class="line">	</span><br><span class="line">spark.rdd.compress	</span><br><span class="line">	rdd是否压缩 默认false，节省memory_cache大量内存 消耗更多的cpu资源（时间）。</span><br><span class="line">	</span><br><span class="line">spark.serializer.objectStreamReset	</span><br><span class="line">	当使用JavaSerializer序列化时，会缓存对象防止写多余的数据，但这些对象就不会被gc，</span><br><span class="line">	可以输入reset 清空缓存。默认缓存100个对象，修改成-1则不缓存任何对象。</span><br></pre></td></tr></table></figure>
+
+<p>压缩以后节省内存资源，消耗cpu资源。</p>
+<h2 id="6-Memory-Management-内存管理"><a href="#6-Memory-Management-内存管理" class="headerlink" title="6. Memory Management 内存管理"></a>6. <strong>Memory Management 内存管理</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.memory.fraction	</span><br><span class="line">	执行内存和缓存内存（堆）占jvm总内存的比例，</span><br><span class="line">	剩余的部分是spark留给用户存储内部源数据、数据结构、异常大的结果数据。</span><br><span class="line">	默认值0.6，调小会导致频繁gc，调大容易造成oom。</span><br><span class="line">	</span><br><span class="line">spark.memory.storageFraction	</span><br><span class="line">	用于存储的内存在堆中的占比，默认0.5。</span><br><span class="line">	调大会导致执行内存过小，执行数据落盘，影响效率；调小会导致缓存内存不够，缓存到磁盘上去，影响效率。</span><br><span class="line">	另外，执行内存和缓存内存公用java堆，当执行内存没有使用时，会动态分配给缓存内存使用，</span><br><span class="line">	反之也是这样。</span><br><span class="line">	如果执行内存不够用，可以将存储内存释放移动到磁盘上（最多释放不能超过本参数划分的比例），</span><br><span class="line">	但存储内存不能把执行内存抢走。</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.enabled	</span><br><span class="line">	是否允许使用堆外内存来进行某些操作。默认false</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.size	</span><br><span class="line">	允许使用进行操作的堆外内存的大小，单位bytes 默认0</span><br><span class="line">	</span><br><span class="line">spark.storage.replication.proactive	</span><br><span class="line">	针对失败的executor，主动去cache 有关的RDD中的数据。默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.periodicGC.interval	</span><br><span class="line">	控制触发gc的频率，默认30min</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking	</span><br><span class="line">	是否进行context cleaning，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking	</span><br><span class="line">	清理线程是否应该阻止清理任务，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking.shuffle	</span><br><span class="line">	清理线程是否应该阻止shuffle的清理任务，默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.cleanCheckpoints	</span><br><span class="line">	清理线程是否应该清理依赖超出范围的检查点文件，默认false</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Executor-behavior"><a href="#7-Executor-behavior" class="headerlink" title="7. Executor behavior"></a>7. Executor behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.blockSize	</span><br><span class="line">	TorrentBroadcastFactory中的每一个block大小，默认4m	</span><br><span class="line">	过大会减少广播时的并行度，过小会导致BlockManager 产生 performance hit.</span><br><span class="line">	（暂时没懂这是干啥用的）</span><br><span class="line">	</span><br><span class="line">spark.executor.cores	</span><br><span class="line">	每个executor的核数，默认yarn下1核，standalone下为所有可用的核。</span><br><span class="line">	</span><br><span class="line">spark.default.parallelism	</span><br><span class="line">	默认RDD的分区数、并行数。	</span><br><span class="line">	像reduceByKey和join等这种需要分布式shuffle的操作中，最大父RDD的分区数；	</span><br><span class="line">	像parallelize之类没有父RDD的操作，则取决于运行环境下得cluster manager：		</span><br><span class="line">	如果为单机模式，本机核数；		</span><br><span class="line">	集群模式为所有executor总核数与2 中最大的一个。</span><br><span class="line">	</span><br><span class="line">spark.executor.heartbeatInterval	</span><br><span class="line">	executor和driver心跳发送间隔，默认10s，</span><br><span class="line">	必须远远小于spark.network.timeoutspark.files.fetchTimeout	</span><br><span class="line">	从driver端执行SparkContext.addFile() 抓取添加的文件的超时时间，</span><br><span class="line">	默认60s</span><br><span class="line">	</span><br><span class="line">spark.files.useFetchCache	</span><br><span class="line">	默认true，如果设为true，拉取文件时会在同一个application中本地持久化，</span><br><span class="line">	被若干个executors共享。这使得当同一个主机下有多个executors时，执行任务效率提高。</span><br><span class="line">	</span><br><span class="line">spark.files.overwrite	</span><br><span class="line">	默认false，是否在执行SparkContext.addFile() 添加文件时，覆盖已有的内容有差异的文件。</span><br><span class="line">	</span><br><span class="line">spark.files.maxPartitionBytes	</span><br><span class="line">	单partition中最多能容纳的文件大小，单位Bytes </span><br><span class="line">	默认134217728 (128 MB)</span><br><span class="line">	</span><br><span class="line">spark.files.openCostInBytes	</span><br><span class="line">	小文件合并阈值，小于该参数就会被合并到一个partition内。	</span><br><span class="line">	默认4194304 (4 MB) 。</span><br><span class="line">	这个参数在将多个文件放入一个partition时被用到，宁可设置的小一些，</span><br><span class="line">	因为在partition操作中，小文件肯定会比大文件快。</span><br><span class="line">	</span><br><span class="line">spark.storage.memoryMapThreshold	</span><br><span class="line">	从磁盘上读文件时，最小单位不能少于该设定值，默认2m，小于或者接近操作系统的每个page的大小。</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-Networking网络"><a href="#8-Networking网络" class="headerlink" title="8. Networking网络"></a>8. Networking网络</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">网络超时或者ip端口的一些配置</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-Scheduling调度"><a href="#9-Scheduling调度" class="headerlink" title="9. Scheduling调度"></a>9. Scheduling调度</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.scheduler.maxRegisteredResourcesWaitingTime	</span><br><span class="line">	在执行前最大等待申请资源的时间，默认30s。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.minRegisteredResourcesRatio	</span><br><span class="line">	实际注册的资源数占预期需要的资源数的比例，默认0.8</span><br><span class="line">	</span><br><span class="line">spark.scheduler.mode</span><br><span class="line">	其他进阶的配置如下：		</span><br><span class="line">	调度模式，默认FIFO 先进队列先调度，可以选择FAIR。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.revive.interval	</span><br><span class="line">	work回复重启的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">spark.scheduler.listenerbus.eventqueue.capacity	</span><br><span class="line">	spark事件监听队列容量，默认10000，必须为正值，增加可能会消耗更多内存</span><br><span class="line">	spark.blacklist.enabled***************************************************************	</span><br><span class="line">	是否列入黑名单，默认false。如果设成true，当一个executor失败好几次时，会被列入黑名单，防止后续task		派发到这个executor。可以进一步调节spark.blacklist以下相关的参数：	</span><br><span class="line">	（均为测试参数 Experimental）	</span><br><span class="line">	spark.blacklist.timeout    </span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerExecutor    	</span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerNode    </span><br><span class="line">	spark.blacklist.stage.maxFailedTasksPerExecutor    </span><br><span class="line">	spark.blacklist.application.maxFailedExecutorsPerNode    </span><br><span class="line">	spark.blacklist.killBlacklistedExecutors</span><br><span class="line">	spark.blacklist.application.fetchFailure.enabled</span><br><span class="line"></span><br><span class="line">spark.speculation************************************************************************	推测，如果有task执行的慢了，就会重新执行它。默认false.	</span><br><span class="line"></span><br><span class="line">	详细相关配置如下：	</span><br><span class="line">	spark.speculation.interval		检查task快慢的频率，推测间隔，默认100ms。	</span><br><span class="line">	spark.speculation.multiplier		推测比均值慢几次算是task执行过慢，默认1.5.	</span><br><span class="line">	spark.speculation.quantile		在某个stage，完成度必须达到该参数的比例，才能被推测，默认0.75</span><br><span class="line">	spark.task.cpus	每个task分配的cpu数，默认1</span><br><span class="line">	spark.task.maxFailures	在放弃这个job前允许的最大失败次数，默认4</span><br><span class="line">	spark.task.reaper.enabled</span><br><span class="line">		(原先有 job失败了但一直显示有task在running，总算找到这个参数了)********	</span><br><span class="line">	赋予spark监控有权限去kill那些失效的task，默认false</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">其他进阶的配置如下：	</span><br><span class="line">	spark.task.reaper.pollingInterval		</span><br><span class="line">	轮询被kill掉的task的时间间隔，如果还在running，就会打warn日志，默认10s。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.threadDump		</span><br><span class="line">	线程回收是是否产生日志，默认true。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.killTimeout		</span><br><span class="line">	当一个被kill的task过了多久还在running，就会把那个executor给kill掉，默认-1。	</span><br><span class="line">	</span><br><span class="line">	spark.stage.maxConsecutiveAttempts		</span><br><span class="line">	在终止前，一个stage连续尝试次数，默认4。</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-Dynamic-Allocation动态分配"><a href="#10-Dynamic-Allocation动态分配" class="headerlink" title="10. Dynamic Allocation动态分配"></a>10. Dynamic Allocation动态分配</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.dynamicAllocation.enabled(这个配置只能动态调整executor的数量)	</span><br><span class="line">	是否开启动态资源配置，根据工作负载来衡量是否应该增加或减少executor，默认false</span><br><span class="line">	</span><br><span class="line">	以下相关参数：	</span><br><span class="line">	spark.dynamicAllocation.minExecutors		</span><br><span class="line">	动态分配最小executor个数，在启动时就申请好的，默认0	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.maxExecutors		</span><br><span class="line">	动态分配最大executor个数，默认infinity	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.initialExecutors</span><br><span class="line">	</span><br><span class="line">	动态分配初始executor个数默认值为</span><br><span class="line">	spark.dynamicAllocation.minExecutors</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.executorIdleTimeout	</span><br><span class="line">	当某个executor空闲超过这个设定值，就会被kill，默认60s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.cachedExecutorIdleTimeout	</span><br><span class="line">	当某个缓存数据的executor空闲时间超过这个设定值，就会被kill，默认infinity</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.schedulerBacklogTimeout	</span><br><span class="line">	任务队列非空，资源不够，申请executor的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.sustainedSchedulerBacklogTimeout	</span><br><span class="line">	同schedulerBacklogTimeout，是申请了新executor之后继续申请的间隔，</span><br><span class="line">	默认=schedulerBacklogTimeout</span><br></pre></td></tr></table></figure>
+
+<h2 id="11-Spark-Streaming"><a href="#11-Spark-Streaming" class="headerlink" title="11. Spark Streaming"></a>11. <strong>Spark Streaming</strong></h2><p><a href="https://blog.csdn.net/zyzzxycj/article/details/82428031">https://blog.csdn.net/zyzzxycj/article/details/82428031</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Spark Streaming</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>大数据</category>
       </categories>
@@ -3330,39 +3366,45 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </tags>
   </entry>
   <entry>
-    <title>Spark参数调优</title>
-    <url>/2019/10/15/Spark%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/</url>
-    <content><![CDATA[<h1 id="Spark参数调优"><a href="#Spark参数调优" class="headerlink" title="Spark参数调优"></a>Spark参数调优</h1><p>参考文献：<a href="https://blog.csdn.net/zyzzxycj/article/details/81011540">https://blog.csdn.net/zyzzxycj/article/details/81011540</a></p>
-<p>因为每个集群规模都不一样，只有理解了参数的用途，调试出符合自己业务场景集群环境，并且能在扩大集群、业务的情况下，能够跟着修改参数才算是正确的参数调优。我的目标就是能够熟练的进行参数调优。</p>
-<h2 id="1-Application-Properties-应用基本属性"><a href="#1-Application-Properties-应用基本属性" class="headerlink" title="1*. Application Properties 应用基本属性"></a>1*. Application Properties 应用基本属性</h2><p>这些参数比较重要，执行spark的shell 一般都需要配置一下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.driver.cores  	</span><br><span class="line">	driver端分配的核数，默认为1,资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.driver.memory	</span><br><span class="line">	driver端分配的内存数，默认为1g，资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.executor.memory	</span><br><span class="line">	每个executor分配的内存数，默认1g，会受到yarn CDH的限制，</span><br><span class="line">	和memoryOverhead相加 不能超过总内存限制。</span><br><span class="line"></span><br><span class="line">spark.driver.maxResultSize	</span><br><span class="line">	driver端接收的最大结果大小，默认1GB，最小1MB，设置0为无限。	</span><br><span class="line">	这个参数不建议设置的太大,如果要做数据可视化,更应该控制在20-30MB以内,</span><br><span class="line">	过大会导致OOM(out of memory)。</span><br><span class="line">	</span><br><span class="line">spark.extraListeners.(不常用)	</span><br><span class="line">	默认none，随着SparkContext被创建而创建，用于监听单参数、无参数构造函数的创建，并抛出异常。</span><br><span class="line">	可用于自定义监听，实现监控spark的任务进度。</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-Runtime-Environment-运行环境"><a href="#2-Runtime-Environment-运行环境" class="headerlink" title="2. Runtime Environment 运行环境"></a>2. <strong>Runtime Environment 运行环境</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">主要是一些日志，jvm参数的额外配置，jars等一些自定义的配置(待补充)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-Shuffle-Behavior"><a href="#3-Shuffle-Behavior" class="headerlink" title="3. Shuffle Behavior"></a>3. Shuffle Behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.reducer.maxSizeInFlight	</span><br><span class="line">	默认48m。从每个reduce任务同时拉取的最大map数，</span><br><span class="line">	每个reduce都会在完成任务后，需要一个堆外内存的缓冲区来存放结果，</span><br><span class="line">	如果没有充裕的内存就尽可能把这个调小一点。</span><br><span class="line">	相反，堆外内存充裕，调大些就能节省gc时间。</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">spark.reducer.maxBlocksInFlightPerAddress(一般不会改)	</span><br><span class="line">	限制了每个主机每次reduce可以被多少台远程主机拉取文件块，</span><br><span class="line">	调低这个参数可以有效减轻node manager的负载。（默认值Int.MaxValue）</span><br><span class="line"></span><br><span class="line">spark.reducer.maxReqsInFlight	</span><br><span class="line">	限制远程机器拉取本机器文件块的请求数，随着集群增大，需要对此做出限制。</span><br><span class="line">	否则可能会使本机负载过大而挂掉。（默认值为Int.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.reducer.maxReqSizeShuffleToMem	</span><br><span class="line">	shuffle请求的文件块大小 超过这个参数值，就会被强行落盘，</span><br><span class="line">	防止一大堆并发请求把内存占满。（默认Long.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.shuffle.compress	</span><br><span class="line">	是否压缩map输出文件，默认压缩 true</span><br><span class="line">	</span><br><span class="line">spark.shuffle.spill.compress	</span><br><span class="line">	shuffle过程中溢出的文件是否压缩，默认true，使用spark.io.compression.codec压缩。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.file.buffer	</span><br><span class="line">	在内存输出流中 每个shuffle文件占用内存大小，适当提高 可以减少磁盘读写 io次数，初始值为32k。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.memoryFraction	</span><br><span class="line">	该参数代表了Executor内存中，分配给shuffle read task进行聚合操作的内存比例，默认是20%。	</span><br><span class="line">	cache少且内存充足时，可以调大该参数，给shuffle read的聚合操作更多内存，</span><br><span class="line">	以避免由于内存不足导致聚合过程中频繁读写磁盘。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.manager	</span><br><span class="line">	当ShuffleManager为SortShuffleManager时，</span><br><span class="line">	如果shuffle read task的数量小于这个阈值（默认是200），	 </span><br><span class="line">	则shuffle write过程中不会进行排序操作，</span><br><span class="line">	而是直接按照未经优化的HashShuffleManager的方式去写数据，</span><br><span class="line">	但是最后会将每个task产生的所有临时磁盘文件都合并成一个文件，并会创建单独的索引文件。	</span><br><span class="line">	当使用SortShuffleManager时，如果的确不需要排序操作，那么建议将这个参数调大一些，</span><br><span class="line">	大于shuffle read 	task的数量。那么此时就会自动启用bypass机制，</span><br><span class="line">	map-side就不会进行排序了，减少了排序的性能开销。</span><br><span class="line">	但是这种方式下，依然会产生大量的磁盘文件，因此shuffle write性能有待提高。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.consolidateFiles	</span><br><span class="line">	如果使用HashShuffleManager，该参数有效。</span><br><span class="line">	如果设置为true，那么就会开启consolidate机制，会大幅度合并	 </span><br><span class="line">	shuffle write的输出文件，对于shuffle read task数量特别多的情况下，</span><br><span class="line">	这种方法可以极大地减少磁盘IO开销，提升性能。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.maxRetries（重试次数）	</span><br><span class="line">	shuffle read task从shuffle write task所在节点拉取属于自己的数据时，</span><br><span class="line">	如果因为网络异常导致拉取失败，是会自动进行重试的。</span><br><span class="line">	该参数就代表了可以重试的最大次数。如果在指定次数之内拉取还是没有成功，</span><br><span class="line">	就可能会导致作业执行失败。	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.retryWait	</span><br><span class="line">	同上，默认5s，建议加大间隔时长（比如60s），以增加shuffle操作的稳定性。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spark.io.encryption.enabled</span><br><span class="line">spark.io.encryption.keySizeBits</span><br><span class="line"></span><br><span class="line">spark.io.encryption.keygen.algorithm	</span><br><span class="line">	io加密，默认关闭</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-Spark-UI"><a href="#4-Spark-UI" class="headerlink" title="4. Spark UI"></a>4. Spark UI</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这一块配置，是有关于spark日志的。日志开关，日志输出路径，是否压缩。(待补充)</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-Compression-and-Serialization压缩与序列化"><a href="#5-Compression-and-Serialization压缩与序列化" class="headerlink" title="5. Compression and Serialization压缩与序列化"></a>5. Compression and Serialization压缩与序列化</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.compress	</span><br><span class="line">	广播变量前是否会先进行压缩。默认true （spark.io.compression.codec）</span><br><span class="line">	</span><br><span class="line">spark.io.compression.codec	</span><br><span class="line">	压缩RDD数据、日志、shuffle输出等的压缩格式 默认lz4</span><br><span class="line">	</span><br><span class="line">spark.io.compression.lz4.blockSize	</span><br><span class="line">	使用lz4压缩时，每个数据块大小 默认32k</span><br><span class="line">	</span><br><span class="line">spark.rdd.compress	</span><br><span class="line">	rdd是否压缩 默认false，节省memory_cache大量内存 消耗更多的cpu资源（时间）。</span><br><span class="line">	</span><br><span class="line">spark.serializer.objectStreamReset	</span><br><span class="line">	当使用JavaSerializer序列化时，会缓存对象防止写多余的数据，但这些对象就不会被gc，</span><br><span class="line">	可以输入reset 清空缓存。默认缓存100个对象，修改成-1则不缓存任何对象。</span><br></pre></td></tr></table></figure>
-
-<p>压缩以后节省内存资源，消耗cpu资源。</p>
-<h2 id="6-Memory-Management-内存管理"><a href="#6-Memory-Management-内存管理" class="headerlink" title="6. Memory Management 内存管理"></a>6. <strong>Memory Management 内存管理</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.memory.fraction	</span><br><span class="line">	执行内存和缓存内存（堆）占jvm总内存的比例，</span><br><span class="line">	剩余的部分是spark留给用户存储内部源数据、数据结构、异常大的结果数据。</span><br><span class="line">	默认值0.6，调小会导致频繁gc，调大容易造成oom。</span><br><span class="line">	</span><br><span class="line">spark.memory.storageFraction	</span><br><span class="line">	用于存储的内存在堆中的占比，默认0.5。</span><br><span class="line">	调大会导致执行内存过小，执行数据落盘，影响效率；调小会导致缓存内存不够，缓存到磁盘上去，影响效率。</span><br><span class="line">	另外，执行内存和缓存内存公用java堆，当执行内存没有使用时，会动态分配给缓存内存使用，</span><br><span class="line">	反之也是这样。</span><br><span class="line">	如果执行内存不够用，可以将存储内存释放移动到磁盘上（最多释放不能超过本参数划分的比例），</span><br><span class="line">	但存储内存不能把执行内存抢走。</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.enabled	</span><br><span class="line">	是否允许使用堆外内存来进行某些操作。默认false</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.size	</span><br><span class="line">	允许使用进行操作的堆外内存的大小，单位bytes 默认0</span><br><span class="line">	</span><br><span class="line">spark.storage.replication.proactive	</span><br><span class="line">	针对失败的executor，主动去cache 有关的RDD中的数据。默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.periodicGC.interval	</span><br><span class="line">	控制触发gc的频率，默认30min</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking	</span><br><span class="line">	是否进行context cleaning，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking	</span><br><span class="line">	清理线程是否应该阻止清理任务，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking.shuffle	</span><br><span class="line">	清理线程是否应该阻止shuffle的清理任务，默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.cleanCheckpoints	</span><br><span class="line">	清理线程是否应该清理依赖超出范围的检查点文件，默认false</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-Executor-behavior"><a href="#7-Executor-behavior" class="headerlink" title="7. Executor behavior"></a>7. Executor behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.blockSize	</span><br><span class="line">	TorrentBroadcastFactory中的每一个block大小，默认4m	</span><br><span class="line">	过大会减少广播时的并行度，过小会导致BlockManager 产生 performance hit.</span><br><span class="line">	（暂时没懂这是干啥用的）</span><br><span class="line">	</span><br><span class="line">spark.executor.cores	</span><br><span class="line">	每个executor的核数，默认yarn下1核，standalone下为所有可用的核。</span><br><span class="line">	</span><br><span class="line">spark.default.parallelism	</span><br><span class="line">	默认RDD的分区数、并行数。	</span><br><span class="line">	像reduceByKey和join等这种需要分布式shuffle的操作中，最大父RDD的分区数；	</span><br><span class="line">	像parallelize之类没有父RDD的操作，则取决于运行环境下得cluster manager：		</span><br><span class="line">	如果为单机模式，本机核数；		</span><br><span class="line">	集群模式为所有executor总核数与2 中最大的一个。</span><br><span class="line">	</span><br><span class="line">spark.executor.heartbeatInterval	</span><br><span class="line">	executor和driver心跳发送间隔，默认10s，</span><br><span class="line">	必须远远小于spark.network.timeoutspark.files.fetchTimeout	</span><br><span class="line">	从driver端执行SparkContext.addFile() 抓取添加的文件的超时时间，</span><br><span class="line">	默认60s</span><br><span class="line">	</span><br><span class="line">spark.files.useFetchCache	</span><br><span class="line">	默认true，如果设为true，拉取文件时会在同一个application中本地持久化，</span><br><span class="line">	被若干个executors共享。这使得当同一个主机下有多个executors时，执行任务效率提高。</span><br><span class="line">	</span><br><span class="line">spark.files.overwrite	</span><br><span class="line">	默认false，是否在执行SparkContext.addFile() 添加文件时，覆盖已有的内容有差异的文件。</span><br><span class="line">	</span><br><span class="line">spark.files.maxPartitionBytes	</span><br><span class="line">	单partition中最多能容纳的文件大小，单位Bytes </span><br><span class="line">	默认134217728 (128 MB)</span><br><span class="line">	</span><br><span class="line">spark.files.openCostInBytes	</span><br><span class="line">	小文件合并阈值，小于该参数就会被合并到一个partition内。	</span><br><span class="line">	默认4194304 (4 MB) 。</span><br><span class="line">	这个参数在将多个文件放入一个partition时被用到，宁可设置的小一些，</span><br><span class="line">	因为在partition操作中，小文件肯定会比大文件快。</span><br><span class="line">	</span><br><span class="line">spark.storage.memoryMapThreshold	</span><br><span class="line">	从磁盘上读文件时，最小单位不能少于该设定值，默认2m，小于或者接近操作系统的每个page的大小。</span><br></pre></td></tr></table></figure>
-
-<h2 id="8-Networking网络"><a href="#8-Networking网络" class="headerlink" title="8. Networking网络"></a>8. Networking网络</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">网络超时或者ip端口的一些配置</span><br></pre></td></tr></table></figure>
-
-<h2 id="9-Scheduling调度"><a href="#9-Scheduling调度" class="headerlink" title="9. Scheduling调度"></a>9. Scheduling调度</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.scheduler.maxRegisteredResourcesWaitingTime	</span><br><span class="line">	在执行前最大等待申请资源的时间，默认30s。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.minRegisteredResourcesRatio	</span><br><span class="line">	实际注册的资源数占预期需要的资源数的比例，默认0.8</span><br><span class="line">	</span><br><span class="line">spark.scheduler.mode</span><br><span class="line">	其他进阶的配置如下：		</span><br><span class="line">	调度模式，默认FIFO 先进队列先调度，可以选择FAIR。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.revive.interval	</span><br><span class="line">	work回复重启的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">spark.scheduler.listenerbus.eventqueue.capacity	</span><br><span class="line">	spark事件监听队列容量，默认10000，必须为正值，增加可能会消耗更多内存</span><br><span class="line">	spark.blacklist.enabled***************************************************************	</span><br><span class="line">	是否列入黑名单，默认false。如果设成true，当一个executor失败好几次时，会被列入黑名单，防止后续task		派发到这个executor。可以进一步调节spark.blacklist以下相关的参数：	</span><br><span class="line">	（均为测试参数 Experimental）	</span><br><span class="line">	spark.blacklist.timeout    </span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerExecutor    	</span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerNode    </span><br><span class="line">	spark.blacklist.stage.maxFailedTasksPerExecutor    </span><br><span class="line">	spark.blacklist.application.maxFailedExecutorsPerNode    </span><br><span class="line">	spark.blacklist.killBlacklistedExecutors</span><br><span class="line">	spark.blacklist.application.fetchFailure.enabled</span><br><span class="line"></span><br><span class="line">spark.speculation************************************************************************	推测，如果有task执行的慢了，就会重新执行它。默认false.	</span><br><span class="line"></span><br><span class="line">	详细相关配置如下：	</span><br><span class="line">	spark.speculation.interval		检查task快慢的频率，推测间隔，默认100ms。	</span><br><span class="line">	spark.speculation.multiplier		推测比均值慢几次算是task执行过慢，默认1.5.	</span><br><span class="line">	spark.speculation.quantile		在某个stage，完成度必须达到该参数的比例，才能被推测，默认0.75</span><br><span class="line">	spark.task.cpus	每个task分配的cpu数，默认1</span><br><span class="line">	spark.task.maxFailures	在放弃这个job前允许的最大失败次数，默认4</span><br><span class="line">	spark.task.reaper.enabled</span><br><span class="line">		(原先有 job失败了但一直显示有task在running，总算找到这个参数了)********	</span><br><span class="line">	赋予spark监控有权限去kill那些失效的task，默认false</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">其他进阶的配置如下：	</span><br><span class="line">	spark.task.reaper.pollingInterval		</span><br><span class="line">	轮询被kill掉的task的时间间隔，如果还在running，就会打warn日志，默认10s。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.threadDump		</span><br><span class="line">	线程回收是是否产生日志，默认true。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.killTimeout		</span><br><span class="line">	当一个被kill的task过了多久还在running，就会把那个executor给kill掉，默认-1。	</span><br><span class="line">	</span><br><span class="line">	spark.stage.maxConsecutiveAttempts		</span><br><span class="line">	在终止前，一个stage连续尝试次数，默认4。</span><br></pre></td></tr></table></figure>
-
-<h2 id="10-Dynamic-Allocation动态分配"><a href="#10-Dynamic-Allocation动态分配" class="headerlink" title="10. Dynamic Allocation动态分配"></a>10. Dynamic Allocation动态分配</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.dynamicAllocation.enabled(这个配置只能动态调整executor的数量)	</span><br><span class="line">	是否开启动态资源配置，根据工作负载来衡量是否应该增加或减少executor，默认false</span><br><span class="line">	</span><br><span class="line">	以下相关参数：	</span><br><span class="line">	spark.dynamicAllocation.minExecutors		</span><br><span class="line">	动态分配最小executor个数，在启动时就申请好的，默认0	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.maxExecutors		</span><br><span class="line">	动态分配最大executor个数，默认infinity	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.initialExecutors</span><br><span class="line">	</span><br><span class="line">	动态分配初始executor个数默认值为</span><br><span class="line">	spark.dynamicAllocation.minExecutors</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.executorIdleTimeout	</span><br><span class="line">	当某个executor空闲超过这个设定值，就会被kill，默认60s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.cachedExecutorIdleTimeout	</span><br><span class="line">	当某个缓存数据的executor空闲时间超过这个设定值，就会被kill，默认infinity</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.schedulerBacklogTimeout	</span><br><span class="line">	任务队列非空，资源不够，申请executor的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.sustainedSchedulerBacklogTimeout	</span><br><span class="line">	同schedulerBacklogTimeout，是申请了新executor之后继续申请的间隔，</span><br><span class="line">	默认=schedulerBacklogTimeout</span><br></pre></td></tr></table></figure>
-
-<h2 id="11-Spark-Streaming"><a href="#11-Spark-Streaming" class="headerlink" title="11. Spark Streaming"></a>11. <strong>Spark Streaming</strong></h2><p><a href="https://blog.csdn.net/zyzzxycj/article/details/82428031">https://blog.csdn.net/zyzzxycj/article/details/82428031</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Spark Streaming</span><br></pre></td></tr></table></figure>]]></content>
+    <title>Spring笔记</title>
+    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
+<li><p>Spring 是一个开源框架.</p>
+</li>
+<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
+</li>
+<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
+</li>
+<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
+</li>
+</ul>
+<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
+<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
+<li>依赖注入(DI — dependency injection、IOC)</li>
+<li>–面向切面编程(AOP— aspect oriented programming)</li>
+<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
+<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
+<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
+</ol>
+<p>在项目中引入Spring可以带来以下好处：</p>
+<ol>
+<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
+</li>
+<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
+</li>
+<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
+</li>
+<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
+</li>
+<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
+</li>
+</ol>
+]]></content>
       <categories>
-        <category>大数据</category>
+        <category>Java</category>
       </categories>
       <tags>
-        <tag>Spark</tag>
+        <tag>Java框架</tag>
       </tags>
   </entry>
   <entry>
@@ -3564,48 +3606,6 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </tags>
   </entry>
   <entry>
-    <title>Spring笔记</title>
-    <url>/2018/01/10/Spring%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
-<li><p>Spring 是一个开源框架.</p>
-</li>
-<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
-</li>
-<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
-</li>
-<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
-</li>
-</ul>
-<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
-<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
-<li>依赖注入(DI — dependency injection、IOC)</li>
-<li>–面向切面编程(AOP— aspect oriented programming)</li>
-<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
-<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
-<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
-</ol>
-<p>在项目中引入Spring可以带来以下好处：</p>
-<ol>
-<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
-</li>
-<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
-</li>
-<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
-</li>
-<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
-</li>
-<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java框架</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>template</title>
     <url>/2018/01/01/a.Template/</url>
     <content><![CDATA[]]></content>
@@ -3658,7 +3658,7 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#105;&#116;&#104;&#x75;&#98;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#105;&#116;&#x40;&#x67;&#105;&#116;&#104;&#x75;&#98;&#46;&#x63;&#x6f;&#x6d;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#105;&#116;&#64;&#x67;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#109;">&#x67;&#105;&#116;&#64;&#x67;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>

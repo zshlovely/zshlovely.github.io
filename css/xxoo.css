@@ -682,7 +682,7 @@ body {
     background-color: #F6F6F6;
   }
 }
-@media screen and (max-width: 1260px) {
+@media screen and (max-width: 1560px) {
   .toc-article {
     display: none!important;
   }
