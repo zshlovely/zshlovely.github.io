@@ -670,8 +670,8 @@ body {
     display: block;
     position: fixed;
     max-height: calc(100vh - 150px);
-    width: 200px;
-    max-width: 200px;
+    width: 380px;
+    max-width: 300px;
     top: 80px;
     right: 5px;
     font-size: 12px;
@@ -682,7 +682,7 @@ body {
     background-color: #F6F6F6;
   }
 }
-@media screen and (max-width: 1560px) {
+@media screen and (max-width: 1260px) {
   .toc-article {
     display: none!important;
   }
@@ -702,7 +702,7 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 180px;
+  width: 330px;
 }
 .toc-article .toc .toc-item.toc-level-4 {
   color: #444;
