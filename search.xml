@@ -1,180 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Docker手册</title>
-    <url>/2020/03/12/Docker%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<h1 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1. 安装Docker"></a>1. 安装Docker</h1><h2 id="1-Mac安装Docker"><a href="#1-Mac安装Docker" class="headerlink" title="1. Mac安装Docker"></a>1. Mac安装Docker</h2><p><a href="https://www.runoob.com/docker/macos-docker-install.html">https://www.runoob.com/docker/macos-docker-install.html</a></p>
-<h2 id="2-Window安装Docker"><a href="#2-Window安装Docker" class="headerlink" title="2. Window安装Docker"></a>2. Window安装Docker</h2><p>安装Docker Desktop for Windows 后可以使用docker<br>安装连接<br><a href="https://www.runoob.com/docker/windows-docker-install.html">https://www.runoob.com/docker/windows-docker-install.html</a><br>Docker Desktop for Windows下载连接<br><a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">https://hub.docker.com/editions/community/docker-ce-desktop-windows/</a></p>
-<h2 id="3-CentOS7上安装Docker"><a href="#3-CentOS7上安装Docker" class="headerlink" title="3.CentOS7上安装Docker"></a>3.CentOS7上安装Docker</h2><p>官方安装手册 <a href="https://docs.docker.com/engine/install/centos/">https://docs.docker.com/engine/install/centos/</a></p>
-<p>1、Docker要求CentOS 系统内核版本高于3.10.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用  uname -r 查看当前内核版本</span><br><span class="line"></span><br><span class="line">另外：</span><br><span class="line">查看Linux系统发行版本，该命令适用于所有Linux系统, 命令: </span><br><span class="line">lsb_release -a </span><br></pre></td></tr></table></figure>
-
-
-
-<p>2、使用 root 登录 CentOS, 确保yum 包更新到最新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure>
-
-<p>3、卸载旧版本（如果安装版本过旧）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum remove docker docker-common docker-selinux docker-engine</span><br></pre></td></tr></table></figure>
-
-<p>4、安装需要的软件包， yum util 提供 yum-config-manager 的功能，另外两个是device-mapper驱动依赖的</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
-
-<p>5、设置yum源</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">推荐阿里云</span><br><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line">官方源</span><br><span class="line">sudo yum-config-manager --add-repo http://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
-
-<p>6、查看所有仓库中的Docker版本，并选择特定版本安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
-
-<p>7、 安装Docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce #安装最新stable版</span><br><span class="line">或者</span><br><span class="line">sudo yum install &lt;FQPN&gt; #例如： sudo yum install docker-ce-17.12.1</span><br></pre></td></tr></table></figure>
-
-<p>8 、 查看docker 版本信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker version</span><br><span class="line"></span><br><span class="line"># docker随系统启动</span><br><span class="line">sudo systemctl enable docker</span><br><span class="line">sudo systemctl start docker</span><br><span class="line"></span><br><span class="line"># 查看yum库 jdk相关</span><br><span class="line">yum search jdk</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="2-Docker-常用命令"><a href="#2-Docker-常用命令" class="headerlink" title="2. Docker 常用命令"></a>2. Docker 常用命令</h1><h2 id="1-镜像相关"><a href="#1-镜像相关" class="headerlink" title="1. 镜像相关"></a>1. 镜像相关</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">通过命令 docker command --help 更深入的了解指定的 Docker 命令</span><br><span class="line"></span><br><span class="line">查看 docker stats 指令的具体使用方法</span><br><span class="line">docker stats --help</span><br><span class="line"></span><br><span class="line">查看docker的版本</span><br><span class="line">docker version</span><br><span class="line"></span><br><span class="line">列出镜像</span><br><span class="line">docker images</span><br><span class="line">docker images ls   # 列出最后一次使用镜像</span><br><span class="line"></span><br><span class="line">修改image tag</span><br><span class="line">docker tag imageTagName newName</span><br><span class="line"></span><br><span class="line">获取镜像</span><br><span class="line">docker pull NAME[：TAG]    # 不显式地指定TAG，则默认会选择latest标签</span><br><span class="line"></span><br><span class="line">搜索镜像-[搜索的范围是官方镜像和所有个人公共镜像。NAME列]</span><br><span class="line">docker search name</span><br><span class="line"></span><br><span class="line">#删除镜像</span><br><span class="line">docker rmi &lt;imageId&gt;</span><br><span class="line"></span><br><span class="line">#使用镜像tag删除镜像</span><br><span class="line">docker rmi [REPOSITORY：TAG]</span><br><span class="line"></span><br><span class="line">#导出本地镜像-[该命令支持-o、-output string参数，导出镜像到指定的文件中]</span><br><span class="line">docker [image] save</span><br><span class="line">ex:导出本地的 bona_centos:latest镜像为文件 bona_centos.tar</span><br><span class="line">docker save -o bona_centos.tar bona_centos:latest</span><br><span class="line"></span><br><span class="line">#载入镜像-[导入镜像及其相关的元数据信息（包括标签等）]</span><br><span class="line">docker load -i bona_centos.tar</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-容器相关"><a href="#2-容器相关" class="headerlink" title="2. 容器相关"></a>2. 容器相关</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#docker run：启动容器</span><br><span class="line">    #-i: 交互式操作。</span><br><span class="line">    #-t: 终端。</span><br><span class="line">    #--name 给容器命名 后面跟的是容器名称</span><br><span class="line">    #adsfg1234: 镜像id</span><br><span class="line">    #/bin/bash：放在镜像id后表示希望有个交互式 Shell</span><br><span class="line">    #docker中必须要保持一个进程的运行，不然容器启动后就会马上kill itself</span><br><span class="line">    #这个/bin/bash就表示启动容器后启动bash。</span><br><span class="line"> </span><br><span class="line">	docker run -it --name testcontanier adsfg1234 /bin/bash</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#查看容器的信息container（ps）</span><br><span class="line">    #默认显示当前正在运行中的container</span><br><span class="line">    docker ps</span><br><span class="line"></span><br><span class="line">    #查看所有，包括已经停止的所有容器</span><br><span class="line">    docker ps -a</span><br><span class="line"></span><br><span class="line">    #显示最新启动的一个容器（包括已停止的）</span><br><span class="line">    docker ps -l</span><br><span class="line"></span><br><span class="line">#进入容器进行操作</span><br><span class="line">    docker start testcontanier</span><br><span class="line">    docker attach testcontanier</span><br><span class="line"></span><br><span class="line">#删除容器</span><br><span class="line">	docker rm container_name</span><br><span class="line"></span><br><span class="line">#查看container 日志</span><br><span class="line">    #显示更多的信息</span><br><span class="line">    docker logs --details container_name/container_id</span><br><span class="line"></span><br><span class="line">    #显示自具体某个时间或时间段的日志</span><br><span class="line">    docker logs --since=&lt;date&gt; container_name/container_id</span><br><span class="line"></span><br><span class="line">    #从日志末尾显示多少行日志， 默认是all</span><br><span class="line">    docker logs  --tail &lt;num&gt; container</span><br><span class="line"></span><br><span class="line">    #查看容器zzzcontanier从2020年12月23日后的最新10条日志。</span><br><span class="line">    docker logs --since=&quot;2020-12-23&quot; --tail=10 testcontanier</span><br><span class="line"></span><br><span class="line">    #实时跟踪日志最新输出,从倒数1000行开始</span><br><span class="line">    docker logs -f  --tail 1000 testcontanier</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="3-DockFile"><a href="#3-DockFile" class="headerlink" title="3. DockFile"></a>3. DockFile</h2><p>Dockerfile的基本指令有十三个，下面会用到部分。</p>
-<ul>
-<li><strong>FROM</strong>：所有Dockerfile的第一个指令都必须是FROM ，用于指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，如果需要在一个Dockerfile中构建多个镜像，可以使用多次。</li>
-<li><strong>MAINTAINER</strong>：描述镜像的创建者，名称和邮箱。</li>
-<li><strong>RUN</strong>：RUN命令是一个常用的命令，运行指定命令。通常用于运行安装任务从而向映像中添加额外的内容。在这里，我们需建立工作文件夹 。在第二个RUN命令中使用pip来安装requirements.txt文件中的所有包。</li>
-<li><strong>COPY</strong>：复制本机文件或目录，添加到指定的容器目录，本例中将requirements.txt复制到镜像中。</li>
-<li><strong>WORKDIR</strong>：为RUN、CMD、ENTRYPOINT指令配置工作目录。可以使用多个WORKDIR指令，后续参数如果是相对路径，则会基于之前命令指定的路径。为了避免出错，推荐WORKDIR指令中只使用绝对路径。</li>
-<li><strong>ENTRYPOINT</strong>：在启动容器的时候提供一个默认的命令项。</li>
-<li><strong>CMD</strong>：CMD指令用来指定启动容器时默认执行的命令。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 基础镜像</span><br><span class="line">FROM python:3.7.9-slim-stretch</span><br><span class="line"> </span><br><span class="line"># 维护者信息</span><br><span class="line">MAINTAINER bona</span><br><span class="line"> </span><br><span class="line">#代码添加到code文件夹</span><br><span class="line">RUN mkdir /opt/code</span><br><span class="line">COPY ./requirment.txt /opt/code</span><br><span class="line">COPY ./customer.py /opt/code</span><br><span class="line"> </span><br><span class="line"># 设置code文件夹是工作目录</span><br><span class="line">WORKDIR /opt/code</span><br><span class="line"> </span><br><span class="line"># 安装支持</span><br><span class="line">RUN pip install -r requirment.txt</span><br><span class="line">CMD [&quot;python&quot;, &quot;./exercise.py&quot;]</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="3-深入探讨image"><a href="#3-深入探讨image" class="headerlink" title="3. 深入探讨image"></a>3. 深入探讨image</h1><h2 id="image常见操作"><a href="#image常见操作" class="headerlink" title="image常见操作"></a>image常见操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.查看本地image列表</span><br><span class="line">docker images</span><br><span class="line">docker image ls</span><br><span class="line"></span><br><span class="line">2.获取远端镜像</span><br><span class="line">docker pull 镜像：版本 或者 docker pull 拉去命令（url）</span><br><span class="line"></span><br><span class="line">3.删除镜像（如果此时镜像如果正在使用或者有关联的镜像，则需要先处理）</span><br><span class="line">docker image rm imageId</span><br><span class="line">docker rmi -f imageId</span><br><span class="line">docker rmi -f $(docker image ls) #删除所有镜像</span><br><span class="line"></span><br><span class="line">4.运行镜像</span><br><span class="line">docker run &lt;imageName&gt;</span><br><span class="line"></span><br><span class="line">5.发布镜像</span><br><span class="line">docker push &lt;image&gt;</span><br><span class="line"></span><br><span class="line">6.搜索镜像</span><br><span class="line">docker search &lt;image&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Dockerfile镜像制作"><a href="#Dockerfile镜像制作" class="headerlink" title="Dockerfile镜像制作"></a>Dockerfile镜像制作</h2><ul>
-<li>下载java镜像</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo docker pull java:8</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>基于java镜像  自定义配置文件</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># create file</span><br><span class="line">touch Dockerfile</span><br><span class="line"># edit file</span><br><span class="line">vi Dockerfile</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM java:8</span><br><span class="line">VOLUME /tmp</span><br><span class="line">ENV file=&quot;&quot;</span><br><span class="line">ADD $file /root/$file</span><br><span class="line">ENTRYPOINT [&quot;sh&quot;,&quot;-c&quot;,&quot;java -jar /root/$file&quot;]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>构建镜像</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">当前路径已经有 springboot-docker-0.0.1-SNAPSHOT.jar(spring web jar)</span><br><span class="line"></span><br><span class="line">docker build -t springboot-docker .</span><br><span class="line">#注意 最后的 . 这里是用于复制当前目录下的文件到镜像中，镜像名：springboot-docker</span><br><span class="line">运行后如下：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>查看镜像列表</p>
-<p>docker images</p>
-</li>
-<li><p>运行镜像</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run** -d --name springboot-docker-c -p 10000:8080 springboot-docker</span><br><span class="line"># (-p  把docker 容器中的 8080映射到主机的 10000端口)</span><br><span class="line"></span><br><span class="line">#查看端口被占用：</span><br><span class="line">netstat -tunlp | grep 9081</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>查看 docker 容器</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps -a #查看所有容器</span><br><span class="line"></span><br><span class="line">docker ps -l #查看最后一次创建的容器</span><br><span class="line"></span><br><span class="line"># 查看WEB应用程序容器的进程</span><br><span class="line">docker top container_id / container_name</span><br><span class="line"></span><br><span class="line"># 移除WEB应用容器   删除容器时，容器必须是停止状态</span><br><span class="line">docker rm container_id</span><br><span class="line">docker rmi container_name</span><br><span class="line"></span><br><span class="line"># 停止WEB应用容器  </span><br><span class="line">docker stop container_id / container_name</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li><p>查看日志</p>
-<p>docker logs -f -t –tail 50 containId</p>
-</li>
-</ul>
-<h2 id="镜像仓库"><a href="#镜像仓库" class="headerlink" title="镜像仓库"></a>镜像仓库</h2><h3 id="发布镜像到-Docker-hub"><a href="#发布镜像到-Docker-hub" class="headerlink" title="发布镜像到 Docker hub"></a>发布镜像到 Docker hub</h3><h4 id="1、注册账号"><a href="#1、注册账号" class="headerlink" title="1、注册账号"></a>1、注册账号</h4><p>docker hub 官网：<a href="https://hub.docker.com/">https://hub.docker.com</a></p>
-<h4 id="2、-客户端配置-daemon-json"><a href="#2、-客户端配置-daemon-json" class="headerlink" title="2、 客户端配置 daemon.json"></a>2、 客户端配置 daemon.json</h4><p>检查 registry-mirror 和 insecure-registries 节点为缺省值，也就是 []</p>
-<p>默认没有设置过就是缺省值</p>
-<h4 id="3、-登录"><a href="#3、-登录" class="headerlink" title="3、 登录"></a>3、 登录</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker login</span><br><span class="line"># 输入用户名和密码</span><br></pre></td></tr></table></figure>
-
-<h4 id="4、构建自己的容器"><a href="#4、构建自己的容器" class="headerlink" title="4、构建自己的容器"></a>4、构建自己的容器</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build 。。。</span><br></pre></td></tr></table></figure>
-
-<h4 id="5、-打包镜像"><a href="#5、-打包镜像" class="headerlink" title="5、 打包镜像"></a>5、 打包镜像</h4><p>分两种</p>
-<ul>
-<li>通过tag方式打包</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag springboot-docker:latest bona/springboot-docker:latest</span><br><span class="line"></span><br><span class="line">#docker tag imageName:version userName/imageName:version</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>通过commit方式打包</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">运行容器</span><br><span class="line">docker run -d --name springboot-docker-c -p 10000:8080 springboot-docker</span><br><span class="line"># 此时通过 docker ps -l 得到一个容器id  xxxxxx</span><br><span class="line"></span><br><span class="line">打包镜像</span><br><span class="line">docker commit xxxxxx bona/springboot-docker</span><br><span class="line"># docker commit containerId userName/imageName</span><br></pre></td></tr></table></figure>
-
-<h4 id="6、push镜像到-docker-hub"><a href="#6、push镜像到-docker-hub" class="headerlink" title="6、push镜像到 docker hub"></a>6、push镜像到 docker hub</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker push bona/springboot-docker</span><br><span class="line"># docker push userName/imageName</span><br></pre></td></tr></table></figure>
-
-<h1 id="4-Docker搭建私有镜像仓库"><a href="#4-Docker搭建私有镜像仓库" class="headerlink" title="4. Docker搭建私有镜像仓库"></a>4. Docker搭建私有镜像仓库</h1><h2 id="私服服务器下载registry镜像"><a href="#私服服务器下载registry镜像" class="headerlink" title="私服服务器下载registry镜像"></a>私服服务器下载registry镜像</h2><p>在服务端下载私服镜像</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull registry</span><br></pre></td></tr></table></figure>
-
-<p>运行registry镜像</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd -v /data/registry:/var/lib/registry --net=host --name bona-registry registry:latest</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">run 参数说明：</span><br><span class="line">-d：让容器后台运行</span><br><span class="line">-i: 以交互模式运行容器，通常与-t 同时使用</span><br><span class="line">-P：随机端口映射，容器内部端口随即映射到主机端口</span><br><span class="line">-p：指定端口映射，格式为 主机端口：容器端口</span><br><span class="line">-t: 为容器分配一个伪输入终端，通常与-i同时使用</span><br><span class="line">--name=&quot;bona-container&quot;：指定容器名称为bona-container</span><br><span class="line">-dns 8.8.8.8 指定容器使用的dns服务器，默认与宿主一致</span><br><span class="line">--dns-search example.com: 指定容器DNS搜索域名，默认与宿主一致</span><br><span class="line">-h &quot;hostname&quot;: 指定容器的hostname</span><br><span class="line">-e username=&quot;bona&quot;: 设置环境变量</span><br><span class="line">-envfile=[]:从指定文件读入环境变量</span><br><span class="line">-m: 设置容器使用的最大内存数</span><br><span class="line">--expose=[]:开放一个端口或者一组端口</span><br><span class="line">--volumn, -v: 绑定一个卷，将一个本地地址映射复制到docker内</span><br><span class="line">		例如：-v /data/registry:/var/lib/registry 本地/data/registry映射到容器指定路径</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="访问私有仓库"><a href="#访问私有仓库" class="headerlink" title="访问私有仓库"></a>访问私有仓库</h2><p>如果有防火墙，先关闭或者添加tcp入口规则</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#防火墙命令</span><br><span class="line">#查看防火墙的运行状态</span><br><span class="line">systemctl status firewalld</span><br><span class="line"></span><br><span class="line">#关闭防火墙</span><br><span class="line">service firewalld stop</span><br></pre></td></tr></table></figure>
-
-<p>访问 192.168.2.100:5000&#x2F;v2&#x2F;_catalog</p>
-<p>现在私服还没有镜像，接下来配置好客户端就可以上传镜像了</p>
-<h2 id="客户端配置daemon-json"><a href="#客户端配置daemon-json" class="headerlink" title="客户端配置daemon.json"></a>客户端配置daemon.json</h2><p>官方配置参考：<a href="https://docs.docker.com/engine/reference/commandline/docker/">https://docs.docker.com/engine/reference/commandline/docker/</a></p>
-<p>默认缺省值上传到 docker hub上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;registry-mirror&quot;: [],</span><br><span class="line">&quot;&quot;: [],</span><br><span class="line">... other info</span><br><span class="line">&#125;</span><br><span class="line">#等同于</span><br><span class="line">&#123;</span><br><span class="line">&quot;registry-mirror&quot;: [</span><br><span class="line">	&quot;https://registry.hub.docker.com&quot;</span><br><span class="line">],</span><br><span class="line">&quot;insecure-registries&quot;: [</span><br><span class="line">	&quot;registry.hub.docker.com&quot;</span><br><span class="line">],</span><br><span class="line">... other info</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>需要修改为指定的仓库时，修改此处的insecure-registries值</p>
-<h3 id="centos-客户端"><a href="#centos-客户端" class="headerlink" title="centos 客户端"></a>centos 客户端</h3><p>创建daemon.json配置文件</p>
-<p>创建并写入值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;&#123;&quot;insecure-registries&quot;: [&quot;192.168.2.100:5000&quot;] &#125;&#x27; &gt; /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
-
-<p>重启docker服务</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop docker</span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
-
-<h3 id="windows-客户端"><a href="#windows-客户端" class="headerlink" title="windows 客户端"></a>windows 客户端</h3><p>打开docker desktop</p>
-<p>打开私服仓库</p>
-<p>设置私服地址并重启</p>
-<h3 id="客户端发布镜像"><a href="#客户端发布镜像" class="headerlink" title="客户端发布镜像"></a>客户端发布镜像</h3><p>打tag</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag springboot-docker:latest 192.168.2.100:5000/bona/springboot-docker:latest</span><br><span class="line"></span><br><span class="line">#docker tag imageName:version registry-address/userName/imageName:version</span><br></pre></td></tr></table></figure>
-
-<h3 id="push-到仓库"><a href="#push-到仓库" class="headerlink" title="push 到仓库"></a>push 到仓库</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker push 192.168.2.100:5000/bona/springboot-docker</span><br><span class="line"># docker push registry-address/userName/imageName</span><br><span class="line"></span><br><span class="line"># windows 也可以使用 docker desktop 来push</span><br></pre></td></tr></table></figure>
-
-<h2 id="搭建自己的Docker-Harbor"><a href="#搭建自己的Docker-Harbor" class="headerlink" title="搭建自己的Docker Harbor"></a>搭建自己的Docker Harbor</h2><p>1.访问github上的harbor项目</p>
-<p><a href="https://github.com/goharbor/harbor">https://github.com/goharbor/harbor</a></p>
-<p>2.下载版本，比如1.7.1</p>
-<p><a href="https://github.com/goharbor/harbor/release">https://github.com/goharbor/harbor/release</a></p>
-<p>官方演示地址：<a href="https://demo.goharbor.io/harbor">https://demo.goharbor.io/harbor</a></p>
-<p>账号：admin, 密码：Harbor12345</p>
-<p>3.找一台安装了docker-compose[后面会有笔记]， 上传并解压 tar -zxvf xxx.tar.gz</p>
-<p>4.进入到harbor目录</p>
-<p>修改 harbor.cfg文件，主要是ip地址的修改改成当前机器的ip地址</p>
-<p>同时也可以看到Harbor的密码默认是 Harbor12345</p>
-<p>5.安装Harbor,需要一些时间</p>
-<p>sh install.sh</p>
-<p>6.浏览器访问，比如192.168.2.100:8080, 输入用户名和密码即可</p>
-<h1 id="5-深入探讨Container"><a href="#5-深入探讨Container" class="headerlink" title="5. 深入探讨Container"></a>5. 深入探讨Container</h1><p>container是由image运行起来的。即container是 docker run image 创建出来的</p>
-<p><a href="20220716-1.jpg"><img src="/../../../../images/20220716-1.jpg" alt="img"></a></p>
-<h2 id="Container到Image"><a href="#Container到Image" class="headerlink" title="Container到Image"></a>Container到Image</h2><p>container是 docker run image 创建出来的, 那能否由一个container反推出来一个image?</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 拉去一个centos image</span><br><span class="line">docker pull centos</span><br><span class="line">2. 根据centos镜像创建出一个container</span><br><span class="line">docker run -d -it --name my-centos</span><br><span class="line">3.进入 my-centos 容器</span><br><span class="line">docker exec -it my-centos bash</span><br><span class="line">4.输入vim命令</span><br><span class="line">报错：command not found</span><br><span class="line">5.修改container,安装vim命令</span><br><span class="line">在 容器中： yum install -y vim</span><br><span class="line">6.退出容器，将其生成一个image</span><br><span class="line">#docker commit container-name newImage-name</span><br><span class="line">docker commit my-centos vim-my-centos</span><br><span class="line">7.查看镜像列表，并基于新镜像创建容器</span><br><span class="line">docker run -d -it --name vim-my-centos</span><br><span class="line">8.进入容器，查看vim</span><br><span class="line">docker exec -it vim-my-centos bash</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>总结：通过docker commit命令基于一个container 生成一个新的 image。一般不建议这么做，因为image怎么来的就完全不知道了。</p>
-]]></content>
-      <categories>
-        <category>容器化</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HBase基础</title>
     <url>/2019/10/18/HBase%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h1><p>或者说 HBase是在Hadoop和ZooKeeper之上构建<strong>非关系型</strong>，<strong>面向列存储</strong>的开源分布式结构化数据存储系统。</p>
@@ -725,6 +551,180 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker手册</title>
+    <url>/2020/03/12/Docker%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<h1 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1. 安装Docker"></a>1. 安装Docker</h1><h2 id="1-Mac安装Docker"><a href="#1-Mac安装Docker" class="headerlink" title="1. Mac安装Docker"></a>1. Mac安装Docker</h2><p><a href="https://www.runoob.com/docker/macos-docker-install.html">https://www.runoob.com/docker/macos-docker-install.html</a></p>
+<h2 id="2-Window安装Docker"><a href="#2-Window安装Docker" class="headerlink" title="2. Window安装Docker"></a>2. Window安装Docker</h2><p>安装Docker Desktop for Windows 后可以使用docker<br>安装连接<br><a href="https://www.runoob.com/docker/windows-docker-install.html">https://www.runoob.com/docker/windows-docker-install.html</a><br>Docker Desktop for Windows下载连接<br><a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">https://hub.docker.com/editions/community/docker-ce-desktop-windows/</a></p>
+<h2 id="3-CentOS7上安装Docker"><a href="#3-CentOS7上安装Docker" class="headerlink" title="3.CentOS7上安装Docker"></a>3.CentOS7上安装Docker</h2><p>官方安装手册 <a href="https://docs.docker.com/engine/install/centos/">https://docs.docker.com/engine/install/centos/</a></p>
+<p>1、Docker要求CentOS 系统内核版本高于3.10.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用  uname -r 查看当前内核版本</span><br><span class="line"></span><br><span class="line">另外：</span><br><span class="line">查看Linux系统发行版本，该命令适用于所有Linux系统, 命令: </span><br><span class="line">lsb_release -a </span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、使用 root 登录 CentOS, 确保yum 包更新到最新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure>
+
+<p>3、卸载旧版本（如果安装版本过旧）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum remove docker docker-common docker-selinux docker-engine</span><br></pre></td></tr></table></figure>
+
+<p>4、安装需要的软件包， yum util 提供 yum-config-manager 的功能，另外两个是device-mapper驱动依赖的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+
+<p>5、设置yum源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">推荐阿里云</span><br><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line">官方源</span><br><span class="line">sudo yum-config-manager --add-repo http://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<p>6、查看所有仓库中的Docker版本，并选择特定版本安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+
+<p>7、 安装Docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum install docker-ce #安装最新stable版</span><br><span class="line">或者</span><br><span class="line">sudo yum install &lt;FQPN&gt; #例如： sudo yum install docker-ce-17.12.1</span><br></pre></td></tr></table></figure>
+
+<p>8 、 查看docker 版本信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker version</span><br><span class="line"></span><br><span class="line"># docker随系统启动</span><br><span class="line">sudo systemctl enable docker</span><br><span class="line">sudo systemctl start docker</span><br><span class="line"></span><br><span class="line"># 查看yum库 jdk相关</span><br><span class="line">yum search jdk</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-Docker-常用命令"><a href="#2-Docker-常用命令" class="headerlink" title="2. Docker 常用命令"></a>2. Docker 常用命令</h1><h2 id="1-镜像相关"><a href="#1-镜像相关" class="headerlink" title="1. 镜像相关"></a>1. 镜像相关</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">通过命令 docker command --help 更深入的了解指定的 Docker 命令</span><br><span class="line"></span><br><span class="line">查看 docker stats 指令的具体使用方法</span><br><span class="line">docker stats --help</span><br><span class="line"></span><br><span class="line">查看docker的版本</span><br><span class="line">docker version</span><br><span class="line"></span><br><span class="line">列出镜像</span><br><span class="line">docker images</span><br><span class="line">docker images ls   # 列出最后一次使用镜像</span><br><span class="line"></span><br><span class="line">修改image tag</span><br><span class="line">docker tag imageTagName newName</span><br><span class="line"></span><br><span class="line">获取镜像</span><br><span class="line">docker pull NAME[：TAG]    # 不显式地指定TAG，则默认会选择latest标签</span><br><span class="line"></span><br><span class="line">搜索镜像-[搜索的范围是官方镜像和所有个人公共镜像。NAME列]</span><br><span class="line">docker search name</span><br><span class="line"></span><br><span class="line">#删除镜像</span><br><span class="line">docker rmi &lt;imageId&gt;</span><br><span class="line"></span><br><span class="line">#使用镜像tag删除镜像</span><br><span class="line">docker rmi [REPOSITORY：TAG]</span><br><span class="line"></span><br><span class="line">#导出本地镜像-[该命令支持-o、-output string参数，导出镜像到指定的文件中]</span><br><span class="line">docker [image] save</span><br><span class="line">ex:导出本地的 bona_centos:latest镜像为文件 bona_centos.tar</span><br><span class="line">docker save -o bona_centos.tar bona_centos:latest</span><br><span class="line"></span><br><span class="line">#载入镜像-[导入镜像及其相关的元数据信息（包括标签等）]</span><br><span class="line">docker load -i bona_centos.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-容器相关"><a href="#2-容器相关" class="headerlink" title="2. 容器相关"></a>2. 容器相关</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#docker run：启动容器</span><br><span class="line">    #-i: 交互式操作。</span><br><span class="line">    #-t: 终端。</span><br><span class="line">    #--name 给容器命名 后面跟的是容器名称</span><br><span class="line">    #adsfg1234: 镜像id</span><br><span class="line">    #/bin/bash：放在镜像id后表示希望有个交互式 Shell</span><br><span class="line">    #docker中必须要保持一个进程的运行，不然容器启动后就会马上kill itself</span><br><span class="line">    #这个/bin/bash就表示启动容器后启动bash。</span><br><span class="line"> </span><br><span class="line">	docker run -it --name testcontanier adsfg1234 /bin/bash</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#查看容器的信息container（ps）</span><br><span class="line">    #默认显示当前正在运行中的container</span><br><span class="line">    docker ps</span><br><span class="line"></span><br><span class="line">    #查看所有，包括已经停止的所有容器</span><br><span class="line">    docker ps -a</span><br><span class="line"></span><br><span class="line">    #显示最新启动的一个容器（包括已停止的）</span><br><span class="line">    docker ps -l</span><br><span class="line"></span><br><span class="line">#进入容器进行操作</span><br><span class="line">    docker start testcontanier</span><br><span class="line">    docker attach testcontanier</span><br><span class="line"></span><br><span class="line">#删除容器</span><br><span class="line">	docker rm container_name</span><br><span class="line"></span><br><span class="line">#查看container 日志</span><br><span class="line">    #显示更多的信息</span><br><span class="line">    docker logs --details container_name/container_id</span><br><span class="line"></span><br><span class="line">    #显示自具体某个时间或时间段的日志</span><br><span class="line">    docker logs --since=&lt;date&gt; container_name/container_id</span><br><span class="line"></span><br><span class="line">    #从日志末尾显示多少行日志， 默认是all</span><br><span class="line">    docker logs  --tail &lt;num&gt; container</span><br><span class="line"></span><br><span class="line">    #查看容器zzzcontanier从2020年12月23日后的最新10条日志。</span><br><span class="line">    docker logs --since=&quot;2020-12-23&quot; --tail=10 testcontanier</span><br><span class="line"></span><br><span class="line">    #实时跟踪日志最新输出,从倒数1000行开始</span><br><span class="line">    docker logs -f  --tail 1000 testcontanier</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-DockFile"><a href="#3-DockFile" class="headerlink" title="3. DockFile"></a>3. DockFile</h2><p>Dockerfile的基本指令有十三个，下面会用到部分。</p>
+<ul>
+<li><strong>FROM</strong>：所有Dockerfile的第一个指令都必须是FROM ，用于指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，如果需要在一个Dockerfile中构建多个镜像，可以使用多次。</li>
+<li><strong>MAINTAINER</strong>：描述镜像的创建者，名称和邮箱。</li>
+<li><strong>RUN</strong>：RUN命令是一个常用的命令，运行指定命令。通常用于运行安装任务从而向映像中添加额外的内容。在这里，我们需建立工作文件夹 。在第二个RUN命令中使用pip来安装requirements.txt文件中的所有包。</li>
+<li><strong>COPY</strong>：复制本机文件或目录，添加到指定的容器目录，本例中将requirements.txt复制到镜像中。</li>
+<li><strong>WORKDIR</strong>：为RUN、CMD、ENTRYPOINT指令配置工作目录。可以使用多个WORKDIR指令，后续参数如果是相对路径，则会基于之前命令指定的路径。为了避免出错，推荐WORKDIR指令中只使用绝对路径。</li>
+<li><strong>ENTRYPOINT</strong>：在启动容器的时候提供一个默认的命令项。</li>
+<li><strong>CMD</strong>：CMD指令用来指定启动容器时默认执行的命令。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 基础镜像</span><br><span class="line">FROM python:3.7.9-slim-stretch</span><br><span class="line"> </span><br><span class="line"># 维护者信息</span><br><span class="line">MAINTAINER bona</span><br><span class="line"> </span><br><span class="line">#代码添加到code文件夹</span><br><span class="line">RUN mkdir /opt/code</span><br><span class="line">COPY ./requirment.txt /opt/code</span><br><span class="line">COPY ./customer.py /opt/code</span><br><span class="line"> </span><br><span class="line"># 设置code文件夹是工作目录</span><br><span class="line">WORKDIR /opt/code</span><br><span class="line"> </span><br><span class="line"># 安装支持</span><br><span class="line">RUN pip install -r requirment.txt</span><br><span class="line">CMD [&quot;python&quot;, &quot;./exercise.py&quot;]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-深入探讨image"><a href="#3-深入探讨image" class="headerlink" title="3. 深入探讨image"></a>3. 深入探讨image</h1><h2 id="image常见操作"><a href="#image常见操作" class="headerlink" title="image常见操作"></a>image常见操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.查看本地image列表</span><br><span class="line">docker images</span><br><span class="line">docker image ls</span><br><span class="line"></span><br><span class="line">2.获取远端镜像</span><br><span class="line">docker pull 镜像：版本 或者 docker pull 拉去命令（url）</span><br><span class="line"></span><br><span class="line">3.删除镜像（如果此时镜像如果正在使用或者有关联的镜像，则需要先处理）</span><br><span class="line">docker image rm imageId</span><br><span class="line">docker rmi -f imageId</span><br><span class="line">docker rmi -f $(docker image ls) #删除所有镜像</span><br><span class="line"></span><br><span class="line">4.运行镜像</span><br><span class="line">docker run &lt;imageName&gt;</span><br><span class="line"></span><br><span class="line">5.发布镜像</span><br><span class="line">docker push &lt;image&gt;</span><br><span class="line"></span><br><span class="line">6.搜索镜像</span><br><span class="line">docker search &lt;image&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Dockerfile镜像制作"><a href="#Dockerfile镜像制作" class="headerlink" title="Dockerfile镜像制作"></a>Dockerfile镜像制作</h2><ul>
+<li>下载java镜像</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo docker pull java:8</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>基于java镜像  自定义配置文件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># create file</span><br><span class="line">touch Dockerfile</span><br><span class="line"># edit file</span><br><span class="line">vi Dockerfile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM java:8</span><br><span class="line">VOLUME /tmp</span><br><span class="line">ENV file=&quot;&quot;</span><br><span class="line">ADD $file /root/$file</span><br><span class="line">ENTRYPOINT [&quot;sh&quot;,&quot;-c&quot;,&quot;java -jar /root/$file&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>构建镜像</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">当前路径已经有 springboot-docker-0.0.1-SNAPSHOT.jar(spring web jar)</span><br><span class="line"></span><br><span class="line">docker build -t springboot-docker .</span><br><span class="line">#注意 最后的 . 这里是用于复制当前目录下的文件到镜像中，镜像名：springboot-docker</span><br><span class="line">运行后如下：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>查看镜像列表</p>
+<p>docker images</p>
+</li>
+<li><p>运行镜像</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run** -d --name springboot-docker-c -p 10000:8080 springboot-docker</span><br><span class="line"># (-p  把docker 容器中的 8080映射到主机的 10000端口)</span><br><span class="line"></span><br><span class="line">#查看端口被占用：</span><br><span class="line">netstat -tunlp | grep 9081</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>查看 docker 容器</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps -a #查看所有容器</span><br><span class="line"></span><br><span class="line">docker ps -l #查看最后一次创建的容器</span><br><span class="line"></span><br><span class="line"># 查看WEB应用程序容器的进程</span><br><span class="line">docker top container_id / container_name</span><br><span class="line"></span><br><span class="line"># 移除WEB应用容器   删除容器时，容器必须是停止状态</span><br><span class="line">docker rm container_id</span><br><span class="line">docker rmi container_name</span><br><span class="line"></span><br><span class="line"># 停止WEB应用容器  </span><br><span class="line">docker stop container_id / container_name</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>查看日志</p>
+<p>docker logs -f -t –tail 50 containId</p>
+</li>
+</ul>
+<h2 id="镜像仓库"><a href="#镜像仓库" class="headerlink" title="镜像仓库"></a>镜像仓库</h2><h3 id="发布镜像到-Docker-hub"><a href="#发布镜像到-Docker-hub" class="headerlink" title="发布镜像到 Docker hub"></a>发布镜像到 Docker hub</h3><h4 id="1、注册账号"><a href="#1、注册账号" class="headerlink" title="1、注册账号"></a>1、注册账号</h4><p>docker hub 官网：<a href="https://hub.docker.com/">https://hub.docker.com</a></p>
+<h4 id="2、-客户端配置-daemon-json"><a href="#2、-客户端配置-daemon-json" class="headerlink" title="2、 客户端配置 daemon.json"></a>2、 客户端配置 daemon.json</h4><p>检查 registry-mirror 和 insecure-registries 节点为缺省值，也就是 []</p>
+<p>默认没有设置过就是缺省值</p>
+<h4 id="3、-登录"><a href="#3、-登录" class="headerlink" title="3、 登录"></a>3、 登录</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker login</span><br><span class="line"># 输入用户名和密码</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、构建自己的容器"><a href="#4、构建自己的容器" class="headerlink" title="4、构建自己的容器"></a>4、构建自己的容器</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build 。。。</span><br></pre></td></tr></table></figure>
+
+<h4 id="5、-打包镜像"><a href="#5、-打包镜像" class="headerlink" title="5、 打包镜像"></a>5、 打包镜像</h4><p>分两种</p>
+<ul>
+<li>通过tag方式打包</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag springboot-docker:latest bona/springboot-docker:latest</span><br><span class="line"></span><br><span class="line">#docker tag imageName:version userName/imageName:version</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过commit方式打包</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">运行容器</span><br><span class="line">docker run -d --name springboot-docker-c -p 10000:8080 springboot-docker</span><br><span class="line"># 此时通过 docker ps -l 得到一个容器id  xxxxxx</span><br><span class="line"></span><br><span class="line">打包镜像</span><br><span class="line">docker commit xxxxxx bona/springboot-docker</span><br><span class="line"># docker commit containerId userName/imageName</span><br></pre></td></tr></table></figure>
+
+<h4 id="6、push镜像到-docker-hub"><a href="#6、push镜像到-docker-hub" class="headerlink" title="6、push镜像到 docker hub"></a>6、push镜像到 docker hub</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker push bona/springboot-docker</span><br><span class="line"># docker push userName/imageName</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-Docker搭建私有镜像仓库"><a href="#4-Docker搭建私有镜像仓库" class="headerlink" title="4. Docker搭建私有镜像仓库"></a>4. Docker搭建私有镜像仓库</h1><h2 id="私服服务器下载registry镜像"><a href="#私服服务器下载registry镜像" class="headerlink" title="私服服务器下载registry镜像"></a>私服服务器下载registry镜像</h2><p>在服务端下载私服镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull registry</span><br></pre></td></tr></table></figure>
+
+<p>运行registry镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd -v /data/registry:/var/lib/registry --net=host --name bona-registry registry:latest</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">run 参数说明：</span><br><span class="line">-d：让容器后台运行</span><br><span class="line">-i: 以交互模式运行容器，通常与-t 同时使用</span><br><span class="line">-P：随机端口映射，容器内部端口随即映射到主机端口</span><br><span class="line">-p：指定端口映射，格式为 主机端口：容器端口</span><br><span class="line">-t: 为容器分配一个伪输入终端，通常与-i同时使用</span><br><span class="line">--name=&quot;bona-container&quot;：指定容器名称为bona-container</span><br><span class="line">-dns 8.8.8.8 指定容器使用的dns服务器，默认与宿主一致</span><br><span class="line">--dns-search example.com: 指定容器DNS搜索域名，默认与宿主一致</span><br><span class="line">-h &quot;hostname&quot;: 指定容器的hostname</span><br><span class="line">-e username=&quot;bona&quot;: 设置环境变量</span><br><span class="line">-envfile=[]:从指定文件读入环境变量</span><br><span class="line">-m: 设置容器使用的最大内存数</span><br><span class="line">--expose=[]:开放一个端口或者一组端口</span><br><span class="line">--volumn, -v: 绑定一个卷，将一个本地地址映射复制到docker内</span><br><span class="line">		例如：-v /data/registry:/var/lib/registry 本地/data/registry映射到容器指定路径</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="访问私有仓库"><a href="#访问私有仓库" class="headerlink" title="访问私有仓库"></a>访问私有仓库</h2><p>如果有防火墙，先关闭或者添加tcp入口规则</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#防火墙命令</span><br><span class="line">#查看防火墙的运行状态</span><br><span class="line">systemctl status firewalld</span><br><span class="line"></span><br><span class="line">#关闭防火墙</span><br><span class="line">service firewalld stop</span><br></pre></td></tr></table></figure>
+
+<p>访问 192.168.2.100:5000&#x2F;v2&#x2F;_catalog</p>
+<p>现在私服还没有镜像，接下来配置好客户端就可以上传镜像了</p>
+<h2 id="客户端配置daemon-json"><a href="#客户端配置daemon-json" class="headerlink" title="客户端配置daemon.json"></a>客户端配置daemon.json</h2><p>官方配置参考：<a href="https://docs.docker.com/engine/reference/commandline/docker/">https://docs.docker.com/engine/reference/commandline/docker/</a></p>
+<p>默认缺省值上传到 docker hub上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;registry-mirror&quot;: [],</span><br><span class="line">&quot;&quot;: [],</span><br><span class="line">... other info</span><br><span class="line">&#125;</span><br><span class="line">#等同于</span><br><span class="line">&#123;</span><br><span class="line">&quot;registry-mirror&quot;: [</span><br><span class="line">	&quot;https://registry.hub.docker.com&quot;</span><br><span class="line">],</span><br><span class="line">&quot;insecure-registries&quot;: [</span><br><span class="line">	&quot;registry.hub.docker.com&quot;</span><br><span class="line">],</span><br><span class="line">... other info</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要修改为指定的仓库时，修改此处的insecure-registries值</p>
+<h3 id="centos-客户端"><a href="#centos-客户端" class="headerlink" title="centos 客户端"></a>centos 客户端</h3><p>创建daemon.json配置文件</p>
+<p>创建并写入值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;&#123;&quot;insecure-registries&quot;: [&quot;192.168.2.100:5000&quot;] &#125;&#x27; &gt; /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
+
+<p>重启docker服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop docker</span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="windows-客户端"><a href="#windows-客户端" class="headerlink" title="windows 客户端"></a>windows 客户端</h3><p>打开docker desktop</p>
+<p>打开私服仓库</p>
+<p>设置私服地址并重启</p>
+<h3 id="客户端发布镜像"><a href="#客户端发布镜像" class="headerlink" title="客户端发布镜像"></a>客户端发布镜像</h3><p>打tag</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag springboot-docker:latest 192.168.2.100:5000/bona/springboot-docker:latest</span><br><span class="line"></span><br><span class="line">#docker tag imageName:version registry-address/userName/imageName:version</span><br></pre></td></tr></table></figure>
+
+<h3 id="push-到仓库"><a href="#push-到仓库" class="headerlink" title="push 到仓库"></a>push 到仓库</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker push 192.168.2.100:5000/bona/springboot-docker</span><br><span class="line"># docker push registry-address/userName/imageName</span><br><span class="line"></span><br><span class="line"># windows 也可以使用 docker desktop 来push</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭建自己的Docker-Harbor"><a href="#搭建自己的Docker-Harbor" class="headerlink" title="搭建自己的Docker Harbor"></a>搭建自己的Docker Harbor</h2><p>1.访问github上的harbor项目</p>
+<p><a href="https://github.com/goharbor/harbor">https://github.com/goharbor/harbor</a></p>
+<p>2.下载版本，比如1.7.1</p>
+<p><a href="https://github.com/goharbor/harbor/release">https://github.com/goharbor/harbor/release</a></p>
+<p>官方演示地址：<a href="https://demo.goharbor.io/harbor">https://demo.goharbor.io/harbor</a></p>
+<p>账号：admin, 密码：Harbor12345</p>
+<p>3.找一台安装了docker-compose[后面会有笔记]， 上传并解压 tar -zxvf xxx.tar.gz</p>
+<p>4.进入到harbor目录</p>
+<p>修改 harbor.cfg文件，主要是ip地址的修改改成当前机器的ip地址</p>
+<p>同时也可以看到Harbor的密码默认是 Harbor12345</p>
+<p>5.安装Harbor,需要一些时间</p>
+<p>sh install.sh</p>
+<p>6.浏览器访问，比如192.168.2.100:8080, 输入用户名和密码即可</p>
+<h1 id="5-深入探讨Container"><a href="#5-深入探讨Container" class="headerlink" title="5. 深入探讨Container"></a>5. 深入探讨Container</h1><p>container是由image运行起来的。即container是 docker run image 创建出来的</p>
+<p><a href="20220716-1.jpg"><img src="/../../../../images/20220716-1.jpg" alt="img"></a></p>
+<h2 id="Container到Image"><a href="#Container到Image" class="headerlink" title="Container到Image"></a>Container到Image</h2><p>container是 docker run image 创建出来的, 那能否由一个container反推出来一个image?</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 拉去一个centos image</span><br><span class="line">docker pull centos</span><br><span class="line">2. 根据centos镜像创建出一个container</span><br><span class="line">docker run -d -it --name my-centos</span><br><span class="line">3.进入 my-centos 容器</span><br><span class="line">docker exec -it my-centos bash</span><br><span class="line">4.输入vim命令</span><br><span class="line">报错：command not found</span><br><span class="line">5.修改container,安装vim命令</span><br><span class="line">在 容器中： yum install -y vim</span><br><span class="line">6.退出容器，将其生成一个image</span><br><span class="line">#docker commit container-name newImage-name</span><br><span class="line">docker commit my-centos vim-my-centos</span><br><span class="line">7.查看镜像列表，并基于新镜像创建容器</span><br><span class="line">docker run -d -it --name vim-my-centos</span><br><span class="line">8.进入容器，查看vim</span><br><span class="line">docker exec -it vim-my-centos bash</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>总结：通过docker commit命令基于一个container 生成一个新的 image。一般不建议这么做，因为image怎么来的就完全不知道了。</p>
+]]></content>
+      <categories>
+        <category>容器化</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scala 编码练习</title>
     <url>/2019/05/19/Scala%20%E7%BC%96%E7%A0%81%E7%BB%83%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="快捷键记录"><a href="#快捷键记录" class="headerlink" title="快捷键记录"></a>快捷键记录</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(ctrl+alt+l)    格式化的代码快捷键</span><br></pre></td></tr></table></figure>
@@ -1127,17 +1127,6 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </tags>
   </entry>
   <entry>
-    <title>template</title>
-    <url>/2018/01/01/a.Template/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>doc</category>
-      </categories>
-      <tags>
-        <tag>doc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo start!</title>
     <url>/2018/01/10/hexo-start/</url>
     <content><![CDATA[<h1 id="搭建博客（采用hexo框架-部署到github）"><a href="#搭建博客（采用hexo框架-部署到github）" class="headerlink" title="搭建博客（采用hexo框架+部署到github）"></a>搭建博客（采用hexo框架+部署到github）</h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="1-下载git"><a href="#1-下载git" class="headerlink" title="1. 下载git"></a>1. 下载git</h3><p>官网下载:  <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
@@ -1179,7 +1168,7 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#105;&#116;&#64;&#x67;&#x69;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#x6d;">&#103;&#105;&#116;&#64;&#x67;&#x69;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#x6d;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#116;&#104;&#x75;&#x62;&#46;&#99;&#x6f;&#109;">&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#116;&#104;&#x75;&#x62;&#46;&#99;&#x6f;&#109;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
@@ -1245,6 +1234,17 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
 ]]></content>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>template</title>
+    <url>/2018/01/01/a.Template/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>doc</category>
+      </categories>
+      <tags>
+        <tag>doc</tag>
       </tags>
   </entry>
   <entry>
@@ -4231,6 +4231,33 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </tags>
   </entry>
   <entry>
+    <title>布隆过滤器</title>
+    <url>/2019/12/15/%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="详解布隆过滤器的原理，使用场景"><a href="#详解布隆过滤器的原理，使用场景" class="headerlink" title="详解布隆过滤器的原理，使用场景"></a>详解布隆过滤器的原理，使用场景</h1><h2 id="1-布隆过滤器简介"><a href="#1-布隆过滤器简介" class="headerlink" title="1. 布隆过滤器简介"></a>1. <strong>布隆过滤器简介</strong></h2><p>布隆过滤器的本质是一种数据结构。</p>
+<p>特点：高效插入、查询；</p>
+<p>场景：想知道某些值是否一定不存在或者可能存在。即布隆过滤器来加速查找和判断是否存在</p>
+<p>优点：高效、占用空间更少</p>
+<p>缺点：返回的结果是概率性的，而不是确切的。</p>
+<h2 id="2-布隆过滤器数据结构"><a href="#2-布隆过滤器数据结构" class="headerlink" title="2. 布隆过滤器数据结构"></a>2. <strong>布隆过滤器数据结构</strong></h2><p>布隆过滤器是一个 bit 向量或者说 bit 数组。</p>
+<p>映射一个值到布隆过滤器，需要使用<strong>多个不同的哈希函数</strong>生成<strong>多个哈希值，</strong>并对每个生成的哈希值指向的 bit 位置 1。</p>
+<p>查询：目标值对应多个hash值，判断布隆过滤器对应位置是否都为1，全为1则可能存在，否则一定不存在。</p>
+<h2 id="3-难点"><a href="#3-难点" class="headerlink" title="3. 难点"></a>3. 难点</h2><p>如何设置 <strong>hash函数的个数</strong> k, 以及**布隆过滤器长度 **m</p>
+<h2 id="4-应用"><a href="#4-应用" class="headerlink" title="4. 应用"></a>4. 应用</h2><p>利用布隆过滤器减少磁盘 IO，或者网络请求（因为一旦一个值必定不存在的话，我们可以不用进行后续昂贵的查询请求。）</p>
+<p>布隆过滤器来加速查找和判断是否存在。</p>
+<h2 id="5-Spark-BloomFilter"><a href="#5-Spark-BloomFilter" class="headerlink" title="5. Spark BloomFilter"></a>5. Spark BloomFilter</h2><p>spark官方封装了基于DataFrame的布隆过滤器，使用起来相当方便。</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> spark = <span class="type">SparkSession</span>.builder()</span><br><span class="line">      .appName(<span class="string">&quot;BloomFilterDemo&quot;</span>)</span><br><span class="line">      .master(<span class="string">&quot;local[*]&quot;</span>)</span><br><span class="line">      .getOrCreate()</span><br><span class="line"><span class="keyword">val</span> output = <span class="string">&quot;D:\\testData\\spark\\bloomfilter.txt&quot;</span></span><br><span class="line"><span class="keyword">import</span> spark.implicits._</span><br><span class="line"><span class="keyword">val</span> df = spark.sparkContext.parallelize(<span class="type">Seq</span>(</span><br><span class="line">    <span class="type">General</span>(<span class="string">&quot;Person A&quot;</span>,<span class="number">227</span>), <span class="type">General</span>(<span class="string">&quot;Person B&quot;</span>,<span class="number">188</span>), <span class="type">General</span>(<span class="string">&quot;Person C&quot;</span>,<span class="number">100</span>)</span><br><span class="line">)).toDF</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> rdd = spark.sparkContext.parallelize(<span class="type">Seq</span>(<span class="string">&quot;Person A&quot;</span>,<span class="string">&quot;Person B&quot;</span>,<span class="string">&quot;Person C&quot;</span>,<span class="string">&quot;Person D&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成bloomFilter</span></span><br><span class="line"><span class="keyword">val</span> bf = df.stat.bloomFilter(<span class="string">&quot;name&quot;</span>,<span class="number">20</span>L,<span class="number">0.01</span>)</span><br><span class="line"><span class="comment">// 将bloomFilter写出</span></span><br><span class="line"><span class="keyword">val</span> bos = <span class="keyword">new</span> <span class="type">BufferedOutputStream</span>(<span class="keyword">new</span> <span class="type">FileOutputStream</span>(output))</span><br><span class="line">bf.writeTo(bos)</span><br><span class="line">bos.close()</span><br><span class="line"><span class="comment">// 将bloomFilter读入</span></span><br><span class="line"><span class="keyword">val</span> bis = <span class="keyword">new</span> <span class="type">BufferedInputStream</span>(<span class="keyword">new</span> <span class="type">FileInputStream</span>(output))</span><br><span class="line"><span class="keyword">val</span> filter = <span class="type">BloomFilter</span>.readFrom(bis)</span><br><span class="line">bis.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判定数据是否存在</span></span><br><span class="line"><span class="keyword">val</span> resultRdd = rdd.map(x=&gt;(x,filter.mightContainString(x)))</span><br><span class="line">resRdd.foreach(println)</span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式之美</title>
     <url>/2018/01/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%BE%8E/</url>
     <content><![CDATA[<h1 id="设计模式之美"><a href="#设计模式之美" class="headerlink" title="设计模式之美"></a>设计模式之美</h1><p>设计模式 设计原则 设计思想</p>
@@ -4556,6 +4583,132 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </categories>
       <tags>
         <tag>计算机组成</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git操作手册</title>
+    <url>/2019/12/18/Git/</url>
+    <content><![CDATA[<h1 id="Git基础"><a href="#Git基础" class="headerlink" title="Git基础"></a>Git基础</h1><h2 id="git一些参数解释"><a href="#git一些参数解释" class="headerlink" title="git一些参数解释"></a>git一些参数解释</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//git中一些选项解释:</span><br><span class="line"></span><br><span class="line">-d</span><br><span class="line">--delete：删除</span><br><span class="line"></span><br><span class="line">-D</span><br><span class="line">--delete --force的快捷键</span><br><span class="line"></span><br><span class="line">-f</span><br><span class="line">--force：强制</span><br><span class="line"></span><br><span class="line">-m</span><br><span class="line">--move：移动或重命名</span><br><span class="line"></span><br><span class="line">-M</span><br><span class="line">--move --force的快捷键</span><br><span class="line"></span><br><span class="line">-r</span><br><span class="line">--remote：远程</span><br><span class="line"></span><br><span class="line">-a</span><br><span class="line">--all：所有</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>附：官方中文文档<br><a href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6</a></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin git@git.hypers.com:hadoop/insight.git   //添加远程库</span><br><span class="line"></span><br><span class="line">Unknown SSL protocol error in connection to xxx:443</span><br><span class="line">git config --global http.proxy 127.0.0.1:7890</span><br><span class="line">git config --global http.sslVerify false</span><br><span class="line"></span><br><span class="line">拉取分支到本地</span><br><span class="line">git pull origin dev-1.2.0</span><br><span class="line">git pull origin release-1.2.1</span><br><span class="line"></span><br><span class="line">切换分支操作：</span><br><span class="line">查看所有</span><br><span class="line">git branch -a</span><br><span class="line">查看当前</span><br><span class="line">git branch</span><br><span class="line">切换分支</span><br><span class="line">git checkout dev-1.2.0</span><br><span class="line">拉远程仓库所有分支、指定分支</span><br><span class="line">git fetch origin [branch]</span><br><span class="line"></span><br><span class="line">拉远程仓库指定分支，并合并</span><br><span class="line">git pull origin &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-fetch-amp-git-pull"><a href="#git-fetch-amp-git-pull" class="headerlink" title="git fetch &amp; git pull"></a>git fetch &amp; git pull</h2><p>git fetch 是将远程主机的最新内容拉到本地，并未合并。</p>
+<p>git pull 是 将远程主机的最新内容拉下来后直接合并。即：<code>git pull = git fetch + git merge</code> 但是这样可能会冲突。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git fetch:</span><br><span class="line">git fetch origin(远程主机名)	   全部更新取回本地,</span><br><span class="line">git fetch origin dev(分支名)	取回特定分支</span><br><span class="line">git log -p FETCH_HEAD   	  取回更新后，会返回一个FETCH_HEAD，可以查看取回的更新信息</span><br><span class="line">git merge FETCH_HEAD    	  将拉取下来的最新内容合并到当前所在的分支中</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull:</span><br><span class="line">git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span><br><span class="line">git pull origin dev  如果拉取某个分支并且与当前分支合并，可以：以及后面的</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果当前分支只有一个远程分支，那么主机名都可以省略，形如 git push.</span><br><span class="line"></span><br><span class="line">常用命令：</span><br><span class="line">git push -u origin dev  如果当前分支与多个主机存在追踪关系，则可以使用 -u 参数指定一个默认主机，这样后面就可以不加任何参数使用git push</span><br><span class="line"></span><br><span class="line">git push --all origin   不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机.</span><br><span class="line">git push --force origin git push  如果本地版本库比远程服务器上的低，强制push。不建议使用</span><br><span class="line">git push origin --tags   git push 的时候不会推送标签，如果一定要推送标签的话那么可以使用这个命令</span><br><span class="line"></span><br><span class="line">一般使用</span><br><span class="line">git push origin dev(分支名)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用命令</span><br><span class="line">git remote update origin --prune  //更新远程分支列表</span><br><span class="line"></span><br><span class="line">git branch //查看本地所有分支 </span><br><span class="line"></span><br><span class="line">git branch -r //查看远程所有分支</span><br><span class="line"></span><br><span class="line">git branch -a //查看本地和远程的所有分支</span><br><span class="line"></span><br><span class="line">git branch &lt;branchname&gt; //新建分支</span><br><span class="line"></span><br><span class="line">git branch -d &lt;branchname&gt; //删除本地分支</span><br><span class="line"></span><br><span class="line">git branch -d -r &lt;branchname&gt; //删除远程分支，删除后还需推送到服务器</span><br><span class="line">git push origin:&lt;branchname&gt;  //删除后推送至服务器</span><br><span class="line">git push origin --delete &lt;branchname&gt;  //直接删除远程分支  一步到位</span><br><span class="line"></span><br><span class="line">git branch -m &lt;oldbranch&gt; &lt;newbranch&gt; //重命名本地分支</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h2><p>tag 和 branch的区别：</p>
+<p>tag就像是一个里程碑，branch是新的一条线。稳定版本备份用tag，新功能多人开发用branch（开发完成后merge到master）。tag的本质就是给commit的 hash校验和 取的一个名字，比较直观，方便记忆和使用。</p>
+<p>tag分两类：轻量标签，附注标签</p>
+<ul>
+<li><p>轻量标签很像一个不会改变的分支——它只是某个特定提交的引用。</p>
+</li>
+<li><p>附注标签是存储在 Git 数据库中的一个完整对象。包括打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息等。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git tag [-l]   列出已有的标签</span><br><span class="line">git tag -l &quot;v1.8.5*&quot;    模糊查询</span><br><span class="line">git checkout v2.0   切换到该标签，查看文件。注：这会使你的仓库处于“分离头指针（detached HEAD）”的状态</span><br><span class="line">	在“分离头指针”状态下，你的新提交将不属于任何分支，并且将无法访问（除非给定hash）</span><br><span class="line">	在该标签下，如果要修复bug，通常基于标签新建一个分支：git checkout -b dev1.3 v2.0</span><br><span class="line">	这之后的提交就会在新分支。</span><br><span class="line">	总之：基于标签的check out 不要做任何修改。</span><br><span class="line"></span><br><span class="line">附注标签：</span><br><span class="line">git tag -a v1.4 -m &quot;my version 1.4&quot;   标签版本v1.4</span><br><span class="line">git show v1.4   可以看到标签信息和与之对应的提交信息。</span><br><span class="line"></span><br><span class="line">轻量标签：</span><br><span class="line">git tag v1.4.1   轻量标签v1.4.1</span><br><span class="line">git show v1.4.1  只会显示提交信息</span><br><span class="line"></span><br><span class="line">删除标签：</span><br><span class="line">git tag -d tagname  这个只会删除本地标签</span><br><span class="line">	git push &lt;remote&gt; :refs/tags/&lt;tagname&gt;  使用该命令更新变成仓库</span><br><span class="line">	如git push origin :refs/tags/v1.4.1</span><br><span class="line">git push origin --delete &lt;tagname&gt;   本地和远程都删除。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">后期打标签：对过去的提交打标签</span><br><span class="line">git log --pretty=oneline</span><br><span class="line">git tag -a v1.2 9fceb02（提交的校验和）</span><br><span class="line"></span><br><span class="line">共享标签：</span><br><span class="line">git push并不会推送 tag, 如果想共享标签可以使用： git push origin &lt;tagname&gt;</span><br><span class="line">共享全部标签：git push origin --tags</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-merge"><a href="#git-merge" class="headerlink" title="git merge"></a>git merge</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dev分支 merge到 master：</span><br><span class="line">git checkout master</span><br><span class="line">git pull origin master</span><br><span class="line">#--no-ff：不使用fast-forward方式合并，保留分支的commit历史</span><br><span class="line">git merge --no-ff dev</span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如果合并失败，想要一键回滚到合并前：</span><br><span class="line">git reset --merge</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a>git remote</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote -v	//显示所有远程仓库信息： 远程主机名(如origin) 地址</span><br><span class="line">git remote add [shortname] [url]	//添加远程版本库,shortname即远程主机名（如origin）</span><br><span class="line">git remote prune origin  //刷新本地仓库, 与远程仓库的保持同步. 即删除本地有但在远程库已经不存在的分支</span><br><span class="line">git remote update origin --prune   //更新远程分支列表</span><br><span class="line"></span><br><span class="line">git remote rm name  # 删除远程仓库</span><br><span class="line">git remote rename old_name new_name  # 修改仓库名</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h2><p>使用场景：有时候，进行了错误的提交，但是还没有push到远程分支，想要撤销本次提交，可以使用git reset –-soft&#x2F;hard命令。</p>
+<p>二者区别：</p>
+<ul>
+<li>git reset –-soft：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可；</li>
+<li>git reset -–hard：彻底回退到某个版本，本地的源码也会变为上一个版本的内容，撤销的commit中所包含的更改被冲掉；</li>
+</ul>
+<p>使用过程：</p>
+<ul>
+<li>git status</li>
+<li>git log  &#x2F;    git log –oneline</li>
+<li>git reset –-soft 回退版本号（注意别少回退了，上次版本之前的版本）</li>
+<li>git reset –hard origin&#x2F;dev-1.3.0 放弃本地修改，与远程仓库保持一致</li>
+</ul>
+<h2 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h2><p>使用场景：当切换分支的时候，如果有未提交的变更记录，此时系统会阻止你切换分支，解决方法有两种。</p>
+<ol>
+<li>commit后，git checkout 分支名</li>
+<li>git stash 将数据存到缓存，再切换分支。等修改完毕后，git stash apply切换回来</li>
+</ol>
+<p>git stash 适用场景：</p>
+<ol>
+<li>有一个类，想删掉他，但又怕以后会用到。考虑使用git stash</li>
+<li>在分支1改了代码，但这时分支2有需要修改的地方。常规操作：提交分支1的变更到本地仓库，切换到分支2然后修改，完成后再切回分支1. 这样会留下不必要的提交记录<br>如果不想提交完成一半的代码，却不得不切换分支。使用git stash</li>
+</ol>
+<p>命令集：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git stash list 查看stash缓存;</span><br><span class="line"></span><br><span class="line">git stash save ‘msg’  缓存当前分支;</span><br><span class="line"></span><br><span class="line">git stash pop stash@&#123;id&#125;    将缓存堆栈中的第一个stash删除，并将对应修改应用到当前的工作目录下;</span><br><span class="line"></span><br><span class="line">git stash apply stash@&#123;id&#125;  将缓存堆栈中的stash 应用到工作目录中，但并不删除stash;</span><br><span class="line"></span><br><span class="line">git stash drop [stash@&#123;id&#125;]  删除指定缓存, 如果不加stash编号，默认的就是删除最新的，也就是编号为0的那个;</span><br><span class="line"></span><br><span class="line">git stash clear  清空缓存;</span><br><span class="line"></span><br><span class="line">--查看指定stash的diff</span><br><span class="line"></span><br><span class="line">git stash show 查看第一个;</span><br><span class="line"></span><br><span class="line">git stash show stash@&#123;id&#125; 查看指点stash;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">特别的：</span><br><span class="line">默认情况下，git stash会缓存下列文件：  添加到暂存区的修改（staged changes）即已经add的文件，   Git跟踪的但并未添加到暂存区的修改（unstaged changes）</span><br><span class="line">			不会缓存一下文件：在工作目录中新的文件（untracked files），  被忽略的文件（ignored files）即.gitignore忽略的文件</span><br><span class="line"></span><br><span class="line">git stash save -u name  可以stash untracked文件</span><br><span class="line">git stash save -a name  可以stash当前目录下的所有修改。</span><br></pre></td></tr></table></figure>
+
+<h2 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h2><p>git commit -m ‘desc’<br>使用场景：提交变更</p>
+<p>git commit –amend –no-edit<br>使用场景：上次提交之后，发现漏了点东西。但是你又不想有提交两次记录。即本次修改追加到上次修改，但是不变动commit message<br>git commit –amend -m ‘new desc’<br>本次修改追加到上次修改，并修改commit message</p>
+<h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><p>git add [file1] [file2] …<br>git add [dir]<br>git add .<br>分别将单文件，目录以及当前目录下所有文件 添加到 暂存区</p>
+<p>git commit -m [message]<br>将暂存区所有信息提交到本地仓库</p>
+<p>git commit [file1] [file2] … -m [message]</p>
+<h2 id="关于-refs-x2F-for"><a href="#关于-refs-x2F-for" class="headerlink" title="关于 refs&#x2F;for"></a>关于 refs&#x2F;for</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">refs/for 的意义在于我们提交代码到服务器之后是需要经过code review 之后才能进行merge的，而refs/heads 不需要</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="关于git提交格式"><a href="#关于git提交格式" class="headerlink" title="关于git提交格式"></a>关于git提交格式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Git-Flow"><a href="#Git-Flow" class="headerlink" title="Git Flow"></a>Git Flow</h1><h2 id="1-Git-Flow常用分支"><a href="#1-Git-Flow常用分支" class="headerlink" title="1. Git Flow常用分支"></a>1. Git Flow常用分支</h2><h3 id="1-Master-分支"><a href="#1-Master-分支" class="headerlink" title="1. Master 分支"></a>1. Master 分支</h3><p>这个分支是最近发布到生产环境的代码，即最近发布的Release， 这个分支只能从其他分支合并，不能在这个分支直接修改。</p>
+<h3 id="2-Dev-分支"><a href="#2-Dev-分支" class="headerlink" title="2. Dev 分支"></a>2. Dev 分支</h3><p>这个分支是我们是我们的主开发分支，包含所有要发布到下一个Release的代码，以及合并其他分支，比如Feature分支。</p>
+<h3 id="3-Feature-分支"><a href="#3-Feature-分支" class="headerlink" title="3. Feature 分支"></a>3. Feature 分支</h3><p> 这个分支主要是用来开发一个新的功能，一旦开发完成，我们会 合并回 Develop分支，并进入下一个Release。</p>
+<h3 id="4-Release-分支"><a href="#4-Release-分支" class="headerlink" title="4. Release 分支"></a>4. Release 分支</h3><p>发布一个新Release的时候，我们基于Develop分支创建一个Release分支，完成Release后，我们合并到Master和Develop分支</p>
+<h3 id="5-Hotfix-分支"><a href="#5-Hotfix-分支" class="headerlink" title="5. Hotfix 分支"></a>5. Hotfix 分支</h3><p>已发布的版本发现新的bug的时候，我们需要创建一个Hotfix, 完成Hotfix后，我们合并回Master和Develop分支，所以Hotfix的改动会进入下一个Release</p>
+<p>– 以上是对于 Gitflow 的简单总结，但是如果对于 hac 这种 toB的 产品， 各个客户有不同版本，多个版本需要同时维护的时候，需要考虑下这种场景是否适用。</p>
+<h2 id="2-Git-Flow-如何使用"><a href="#2-Git-Flow-如何使用" class="headerlink" title="2. Git Flow 如何使用"></a>2. Git Flow 如何使用</h2><h3 id="1-Master-和-Dev-分支"><a href="#1-Master-和-Dev-分支" class="headerlink" title="1. Master 和 Dev 分支"></a>1. Master 和 Dev 分支</h3><p>所有在Master分支上的Commit应该打上Tag，一般情况下Master不存在Commit，Devlop分支基于Master分支创建</p>
+<p> <img src="/../../../../images/20220805-12.png" alt="img"></p>
+<h3 id="2-Feature-分支"><a href="#2-Feature-分支" class="headerlink" title="2. Feature 分支"></a>2. Feature 分支</h3><p>Feature分支做完后，必须合并回Develop分支, 合并完分支后一般会删点这个Feature分支。</p>
+<p><img src="/../../../../images/20220805-13.png" alt="img"></p>
+<h3 id="3-Release-分支"><a href="#3-Release-分支" class="headerlink" title="3. Release 分支"></a>3. Release 分支</h3><p>Release分支 基于 Develop分支 创建，打完Release分支之后，我们可以在这个Release分支上测试，修改Bug等。同时，其它开发人员可以基于Develop分支新建Feature  (记住：一旦打了Release分支之后不要从Develop分支上合并新的改动到Release分支) 发布Release分支时，合并Release到Master和Develop， 同时在Master分支上打个Tag记住Release版本号，然后删除Release分支。</p>
+<p><img src="/../../../../images/20220805-14.png" alt="img"></p>
+<h3 id="4-Hotfix分支"><a href="#4-Hotfix分支" class="headerlink" title="4. Hotfix分支"></a>4. Hotfix分支</h3><p>hotfix分支 基于 Master分支 创建，开发完后需要合并回Master和Develop分支，同时在Master上打一个tag。</p>
+<p><img src="/../../../../images/20220805-15.png" alt="img"></p>
+<h2 id="3-Git-Flow-命令示例"><a href="#3-Git-Flow-命令示例" class="headerlink" title="3. Git Flow 命令示例"></a>3. Git Flow 命令示例</h2><h3 id="1-创建-Dev"><a href="#1-创建-Dev" class="headerlink" title="1. 创建 Dev"></a>1. 创建 Dev</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git branch dev </span><br><span class="line">git push -u origin dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-开始-Feature"><a href="#2-开始-Feature" class="headerlink" title="2. 开始 Feature"></a>2. 开始 Feature</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 通过dev新建feaeure分支</span><br><span class="line">git checkout -b feature dev</span><br><span class="line"># 或者, 推送至远程服务器:</span><br><span class="line">git push -u origin feature    </span><br><span class="line"></span><br><span class="line"># 修改md文件   </span><br><span class="line">git status</span><br><span class="line">git add .</span><br><span class="line">git commit    </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-完成-Feature-合并其代码到dev"><a href="#3-完成-Feature-合并其代码到dev" class="headerlink" title="3. 完成 Feature, 合并其代码到dev"></a>3. 完成 Feature, 合并其代码到dev</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull origin dev</span><br><span class="line">git checkout dev</span><br><span class="line"></span><br><span class="line">#--no-ff：不使用fast-forward方式合并，保留分支的commit历史</span><br><span class="line">#--squash：使用squash方式合并，把多次分支commit历史压缩为一次</span><br><span class="line"></span><br><span class="line">git merge --no-ff feature</span><br><span class="line">git push origin develop</span><br><span class="line"></span><br><span class="line">git branch -d feature</span><br><span class="line"></span><br><span class="line"># 如果需要删除远程feature分支:</span><br><span class="line">git push origin --delete feature   </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-开始-Release"><a href="#4-开始-Release" class="headerlink" title="4. 开始 Release"></a>4. 开始 Release</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---基于dev分支，新建release分支 </span><br><span class="line">git checkout -b release-0.1.0 dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-完成-Release"><a href="#5-完成-Release" class="headerlink" title="5. 完成 Release"></a>5. 完成 Release</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">--合并release 到 master</span><br><span class="line">git checkout master</span><br><span class="line">git merge --no-ff release-0.1.0</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">--合并release 到 dev</span><br><span class="line">git checkout dev</span><br><span class="line">git merge --no-ff release-0.1.0</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git branch -d release-0.1.0</span><br><span class="line">git push origin --delete release-0.1.0   </span><br><span class="line"></span><br><span class="line"># 合并master/dev分支之后，打上tag </span><br><span class="line">git tag -a v0.1.0 master</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-开始-Hotfix"><a href="#6-开始-Hotfix" class="headerlink" title="6. 开始 Hotfix"></a>6. 开始 Hotfix</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hotfix-0.1.1 master  </span><br></pre></td></tr></table></figure>
+
+<h3 id="7-完成-Hotfix"><a href="#7-完成-Hotfix" class="headerlink" title="7. 完成 Hotfix"></a>7. 完成 Hotfix</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no-ff hotfix-0.1.1</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no-ff hotfix-0.1.1</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git branch -d hotfix-0.1.1</span><br><span class="line">git push origin --delete  hotfix-0.1.1 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">git tag -a v0.1.1 master</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
 </search>
