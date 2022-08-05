@@ -103,7 +103,7 @@
       <h1 id="1-java-高并发基础篇"><a href="#1-java-高并发基础篇" class="headerlink" title="1. java 高并发基础篇"></a>1. java 高并发基础篇</h1><h2 id="1-基础概念"><a href="#1-基础概念" class="headerlink" title="1. 基础概念"></a>1. 基础概念</h2><h3 id="1-同步（Synchronous）和异步（Asynchronous）"><a href="#1-同步（Synchronous）和异步（Asynchronous）" class="headerlink" title="1. 同步（Synchronous）和异步（Asynchronous）"></a>1. <strong>同步（Synchronous）和异步（Asynchronous）</strong></h3><p>同步和异步通常来形容一次方法调用。</p>
 <p><code>同步方法</code>: <strong>调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为</strong>。</p>
 <p>异步方法&#96;: <strong>调用更像一个消息传递，一旦开始，方法调用就会立即返回，调用者就可以继续后续的操作</strong>。异步方法通常会在另外一个线程中“真实”地执行。整个过程，不会阻碍调用者的工作。</p>
-<p><img src="D:\TecentCloud\myinsightbp\InitialOpera\MarkDown\img\sync-async.png" alt="1654309906578"></p>
+<p><img src="/../../../../images/sync-async.png" alt="1654309906578"></p>
 <h3 id="2-并发（Concurrency）和并行（Parallelism）"><a href="#2-并发（Concurrency）和并行（Parallelism）" class="headerlink" title="2. 并发（Concurrency）和并行（Parallelism）"></a>2. <strong>并发（Concurrency）和并行（Parallelism）</strong></h3><p><code>并发</code>偏重于多个任务<strong>交替</strong>执行，而多个任务之间有可能还是串行的。<strong>并发</strong>说的是在<strong>一个时间段内</strong>，多件事情在这个时间段内<strong>交替执行</strong>。</p>
 <p><code>并行</code>是真正意义上的“同时执行。<strong>并行</strong>说的是多件事情在<strong>同一个时刻</strong>同事发生。</p>
 <h3 id="3-临界区"><a href="#3-临界区" class="headerlink" title="3. 临界区"></a>3. <strong>临界区</strong></h3><p>临界区用来表示一种公共资源或者说共享数据，可以被多个线程使用，但是每一次只能有一个线程使用它，一旦临界区资源被占用，其他线程要想使用这个资源就必须等待。</p>
@@ -167,7 +167,7 @@
 <p>java中实现原子操作的方法大致有2种：<strong>锁机制</strong>、<strong>无锁CAS机制</strong>，后面的章节中会有介绍。</p>
 <h3 id="2-可见性"><a href="#2-可见性" class="headerlink" title="2. 可见性"></a>2. 可见性</h3><p><strong>可见性是值一个线程对共享变量的修改，对于另一个线程来说是否是可以看到的。</strong></p>
 <p>我们先看一下java线程内存模型：</p>
-<p>![java thread jmm](..\img\java thread jmm.jpg)</p>
+<p>![java thread jmm](..&#x2F;..&#x2F;..&#x2F;..&#x2F;images&#x2F;java thread jmm.jpg)</p>
 <ul>
 <li>我们定义的所有变量都储存在 <code>主内存</code>中</li>
 <li>每个线程都有自己 <code>独立的工作内存</code>，里面保存该线程使用到的变量的副本（主内存中该变量的一份拷贝）</li>
@@ -209,7 +209,7 @@
 <li>指令3：在内存M上初始化Singleton对象</li>
 </ol>
 <p>现在有2个线程，刚好执行的代码被编译器优化过，过程如下：</p>
-<p><img src="D:\TecentCloud\myinsightbp\InitialOpera\MarkDown\img\jmm-thread-singleton.png" alt="jmm-thread-singleton"></p>
+<p><img src="/../../../../images/jmm-thread-singleton.png" alt="jmm-thread-singleton"></p>
 <p>最终线程B获取的instance是没有初始化的，此时去使用instance可能会产生一些意想不到的错误。</p>
 <p>现在比较好的做法就是采用静态内部内的方式实现：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class SingletonDemo &#123;</span><br><span class="line">    private SingletonDemo() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static SingletonDemo getInstance() &#123;</span><br><span class="line">        return SingletonDemoHandler.instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static class SingletonDemoHandler &#123;</span><br><span class="line">        private static final SingletonDemo instance = new SingletonDemo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -358,7 +358,7 @@
 <p>那么t1中为什么看不到被主线程修改之后的flag？</p>
 <p>要解释这个，我们需要先了解一下java内存模型（JMM），Java线程之间的通信由Java内存模型（本文简称为JMM）控制，JMM决定一个线程对共享变量的写入何时对另一个线程可见。</p>
 <p>JMM抽象示意图：</p>
-<p>![java thread jmm](..\img\java thread jmm.jpg)</p>
+<p>![java thread jmm](..&#x2F;..&#x2F;..&#x2F;..&#x2F;images&#x2F;java thread jmm.jpg)</p>
 <p>从上图中可以看出，线程1需要和线程2通信，必须要经历下面2个步骤：</p>
 <ol>
 <li>首先，线程1把工作内存1中更新过的共享变量刷新到主内存中去</li>
@@ -386,7 +386,7 @@
 <p>总结：</p>
 <p>volatile解决了共享变量在多线程中可见性的问题，可见性是指一个线程对共享变量的修改，对于另一个线程来说是否是可以看到的。</p>
 <h2 id="8-线程组"><a href="#8-线程组" class="headerlink" title="8. 线程组"></a>8. 线程组</h2><h3 id="1-线程组"><a href="#1-线程组" class="headerlink" title="1. 线程组"></a>1. 线程组</h3><p>我们可以把线程归属到某个线程组中，线程组可以包含多个<strong>线程</strong>以及<strong>线程组</strong>，线程和线程组组成了父子关系，是个树形结构，如下图：</p>
-<p><img src="/..%5Cimg%5C%E7%BA%BF%E7%A8%8B%E7%BB%841.jpg"></p>
+<p><img src="/../../../../images/%E7%BA%BF%E7%A8%8B%E7%BB%841.jpg"></p>
 <p>使用线程组可以方便管理线程，线程组提供了一些方法方便方便我们管理线程。</p>
 <h4 id="1-创建线程关联线程组"><a href="#1-创建线程关联线程组" class="headerlink" title="1. 创建线程关联线程组"></a>1. <strong>创建线程关联线程组</strong></h4><p>创建线程的时候，可以给线程指定一个线程组，代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line">public class Demo1 &#123;</span><br><span class="line">    public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">        ThreadGroup threadGroup = new ThreadGroup(&quot;thread-group-1&quot;);</span><br><span class="line">        Thread t1 = new Thread(threadGroup, new R1(), &quot;t1&quot;);</span><br><span class="line">        Thread t2 = new Thread(threadGroup, new R1(), &quot;t2&quot;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        TimeUnit.SECONDS.sleep(1);</span><br><span class="line">        System.out.println(&quot;活动线程数:&quot; + threadGroup.activeCount());</span><br><span class="line">        System.out.println(&quot;活动线程组:&quot; + threadGroup.activeGroupCount());</span><br><span class="line">        System.out.println(&quot;线程组名称:&quot; + threadGroup.getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static class R1 implements Runnable &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            System.out.println(&quot;threadName:&quot; + Thread.currentThread().getName());</span><br><span class="line">            try &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(3);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -959,7 +959,7 @@
 <li>是否达到最大线程数，若未达到，则创建新的线程处理当前传入的任务，否则交给线程池中的饱和策略进行处理。</li>
 </ol>
 <p>流程如下图：</p>
-<p><img src="/%5Cimg%5Cthreadpool_1.png" alt="threadpool_1.png"></p>
+<p><img src="/../../../../images/threadpool_1.png" alt="threadpool_1.png"></p>
 <p><strong>举个例子，加深理解：</strong></p>
 <p>咱们作为开发者，上面都有开发主管，主管下面带领几个小弟干活，CTO给主管授权说，你可以招聘5个小弟干活，新来任务，如果小弟还不到五个，立即去招聘一个来干这个新来的任务，当5个小弟都招来了，再来任务之后，将任务记录到一个表格中，表格中最多记录100个，小弟们会主动去表格中获取任务执行，如果5个小弟都在干活，并且表格中也记录满了，那你可以将小弟扩充到20个，如果20个小弟都在干活，并且存放任务的表也满了，产品经理再来任务后，是直接拒绝，还是让产品自己干，这个由你自己决定，小弟们都尽心尽力在干活，任务都被处理完了，突然公司业绩下滑，几个员工没事干，打酱油，为了节约成本，CTO主管把小弟控制到5人，其他15个人直接被干掉了。所以作为小弟们，别让自己闲着，多干活。</p>
 <p><strong>原理：</strong>先找几个人干活，大家都忙于干活，任务太多可以排期，排期的任务太多了，再招一些人来干活，最后干活的和排期都达到上层领导要求的上限了，那需要采取一些其他策略进行处理了。对于长时间不干活的人，考虑将其开掉，节约资源和成本。</p>
