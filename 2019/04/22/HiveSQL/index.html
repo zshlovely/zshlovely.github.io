@@ -96,7 +96,7 @@
       <span id="busuanzi_value_page_pv"></span> 点击
     </span>
       <span class="slash">/</span>
-      <span class="read">阅读耗时 8 分钟</span>
+      <span class="read">阅读耗时 10 分钟</span>
     </header>
 
     <div class="post-content">
@@ -110,14 +110,14 @@
 <p>A LIKE B</p>
 <p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合表达式B的正则语法，则为TRUE；否则为FALSE。B中字符”_”表示任意单个字符，而字符”%”表示任意数量的字符。</p>
 </li>
-<li><p>RLIKE &#x2F; REGEXP 二者等价</p>
+<li><p>RLIKE &#x2F; REGEXP  二者等价</p>
 <p>A RLIKE B</p>
 <p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合JAVA正则表达式B的正则语法，则为TRUE；否则为FALSE。</p>
 <p>例：select 1 from dual where ‘footbar’ rlike ‘^f.*r$’</p>
 </li>
 <li><p>+、-、*、&#x2F; 、% 加 减 乘 除 取余 操作</p>
 </li>
-<li><p>&amp;、|、~、^ 与或非，异或操作</p>
+<li><p>&amp;、|、~、^  与或非，异或操作</p>
 </li>
 <li><p>复合类型</p>
 <p>map, struct, array</p>
@@ -132,20 +132,17 @@
 </li>
 <li><p>power &#x2F; pow(double a, double p) 返回a的p次幂</p>
 </li>
-<li><p>from_unixtime(1323308943,’yyyyMMdd’) 时间戳转日期函数</p>
+<li><p>from_unixtime(1323308943,’yyyyMMdd’)  时间戳转日期函数</p>
 </li>
-<li><p>unix_timestamp() 当前UNIX时间戳</p>
+<li><p>unix_timestamp()  当前UNIX时间戳</p>
 </li>
-<li><p>unix_timestamp(’2011-12-07 13:01:03′) 日期转UNIX时间戳</p>
+<li><p>unix_timestamp(’2011-12-07 13:01:03′)  日期转UNIX时间戳</p>
 </li>
-<li><p>unix_timestamp(’20111207 13:01:03′,’yyyyMMdd HH:mm:ss’) 指定格式日期转UNIX时间戳</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">【hive 日期转换】Hive中yyyymmdd和yyyy-mm-dd日期之间的切换</span><br><span class="line">方法1: from_unixtime+ unix_timestamp</span><br><span class="line"></span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;20171205&#x27;,&#x27;yyyymmdd&#x27;),&#x27;yyyy-mm-dd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;2017-12-05&#x27;,&#x27;yyyy-mm-dd&#x27;),&#x27;yyyymmdd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">方法2: substr + concat</span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select concat(substr(&#x27;20171205&#x27;,1,4),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,5,2),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,7,2)) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select concat(substr(&#x27;2017-12-05&#x27;,1,4),substr(&#x27;2017-12-05&#x27;,6,2),substr(&#x27;2017-12-05&#x27;,9,2)) from dual;</span><br></pre></td></tr></table></figure>
-
-
+<li><p>unix_timestamp(’20111207 13:01:03′,’yyyyMMdd HH:mm:ss’)   指定格式日期转UNIX时间戳</p>
 </li>
-<li><p>to_date(’2011-12-08 10:03:01′)日期时间转 日期 out:2011-12-08</p>
+<li><p>to_date(’2011-12-08 10:03:01′)日期时间转 日期  out:2011-12-08</p>
 </li>
-<li><p>year(’2011-12-08 10:03:01′) 日期转年 可以直接做加减</p>
+<li><p>year(’2011-12-08 10:03:01′) 日期转年   可以直接做加减</p>
 </li>
 <li><p>month(’2011-08-08′)</p>
 </li>
@@ -161,13 +158,13 @@
 </li>
 <li><p>datediff(’2012-12-08′,’2012-05-09′) 日期差</p>
 </li>
-<li><p>date_add(’2012-12-08′,10) 日期增加</p>
+<li><p>date_add(’2012-12-08′,10)  日期增加</p>
 </li>
-<li><p>date_sub(’2012-12-08′,10) 日期减少</p>
+<li><p>date_sub(’2012-12-08′,10)  日期减少</p>
 </li>
-<li><p>if(1&#x3D;2,100,200) 条件函数 out:200</p>
+<li><p>if(1&#x3D;2,100,200)   条件函数   out:200</p>
 </li>
-<li><p>COALESCE(null,’100′,’50′) 非空查找 out:100</p>
+<li><p>COALESCE(null,’100′,’50′)  非空查找 out:100</p>
 </li>
 <li><p><strong>条件判断函数1：CASE</strong></p>
 <p>语法: CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END</p>
@@ -179,9 +176,9 @@
 <p>如果a为TRUE,则返回b；如果c为TRUE，则返回d；否则返回e</p>
 <p>例如：select case when 1&#x3D;2 then ‘tom’ when 2&#x3D;2 then ‘mary’ else ‘tim’ end from dual;</p>
 </li>
-<li><p>length(string A) 字符串长度</p>
+<li><p>length(string A)  字符串长度</p>
 </li>
-<li><p>reverse(string A) 字符串反转</p>
+<li><p>reverse(string A)  字符串反转</p>
 </li>
 <li><p><strong>字符串连接函数：concat</strong></p>
 <p>concat(string A, string B…)</p>
@@ -191,8 +188,8 @@
 <p>例如：concat_ws(‘,’,’abc’,’def’,’gh’)</p>
 </li>
 <li><p><strong>字符串截取函数：substr,substring</strong></p>
-<p>substr(‘abcde’,3) out:abc</p>
-<p>substr(‘abcde’,-1) out:e</p>
+<p>substr(‘abcde’,3)	out:abc</p>
+<p>substr(‘abcde’,-1)	out:e</p>
 <p>substr(string A, int start, int len),substring(string A, int start, int len)</p>
 </li>
 <li><p>字符串转小写函数：lower,lcase</p>
@@ -206,19 +203,57 @@
 <li><p>正则表达式替换函数：regexp_replace</p>
 <p>regexp_replace(string A, string B, string C)</p>
 <p>将字符串A中的符合java正则表达式B的部分替换为C。注意，在有些情况下要使用转义字符</p>
-<p>regexp_replace(‘foobar’, ‘oo|ar’, ”) out:fb</p>
+<p>regexp_replace(‘foobar’, ‘oo|ar’, ”)   out:fb</p>
 </li>
 <li><p>保留两位小数</p>
-<p>cast(column_name as decimal(10,2)) cast函数截取（推荐使用）</p>
+<p>cast(column_name as decimal(10,2))        cast函数截取（推荐使用）</p>
 </li>
-<li><p><strong>列转行</strong> （collect_all() &#x2F; collect_list() 不去重）、（collect_set去重） 一般与concat_ws连用，带分隔符</p>
+<li><p><strong>列转行</strong> （collect_all() &#x2F; collect_list() 不去重）、（collect_set去重）  一般与concat_ws连用，带分隔符</p>
 <p>select col1, concat_ws(‘,’, collect_set(col2))<br>from tb_name<br>group by col1;</p>
+</li>
+<li><p>Hive窗口函数</p>
+<ul>
+<li><p>row_number over（）</p>
+<p>row_number over(partition by member_code order by PT_BIZ_DATE,trade_no) num </p>
+</li>
+<li><p>sum() over ()</p>
+<p>sum(amount) over(partition by name order by mons rows between unbounded preceding and current row) as account</p>
+<p>对name这一组按照月份排序</p>
+<p>rows between unbounded preceding and current  限定了行是按照在当前行不限定的往前处理, 通俗就是处理当前以及之前的所有行的sum</p>
+<p>unbounded意思无限的 preceding在之前的，current row当前行。</p>
+</li>
+<li><p>count() over ()</p>
+<p>select count(*) over(partition by col1,col2) from tmp_test;</p>
+</li>
+</ul>
 </li>
 </ul>
 <h2 id="3-hive使用细节记录"><a href="#3-hive使用细节记录" class="headerlink" title="3.hive使用细节记录"></a>3.hive使用细节记录</h2><ul>
-<li>union <strong>Hive在1.2.0之前的版本只支持union all，在1.2.0之后的版本才支持union.</strong></li>
+<li>union  <strong>Hive在1.2.0之前的版本只支持union all，在1.2.0之后的版本才支持union.</strong></li>
 </ul>
-<h1 id="sql记录"><a href="#sql记录" class="headerlink" title="sql记录"></a>sql记录</h1><h2 id="1-mysql分组高阶"><a href="#1-mysql分组高阶" class="headerlink" title="1. mysql分组高阶"></a>1. mysql分组高阶</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">purchase表</span><br><span class="line"></span><br><span class="line">字段有id,pkg,time,item,currency,usd,dt</span><br><span class="line">玩家id,游戏包名，交易完成时间,购买礼包id,交易币种,成交金额,交易日期</span><br><span class="line"></span><br><span class="line">求5月每个玩家最早的三次付费item和金额</span><br><span class="line"></span><br><span class="line">SET @num=1;</span><br><span class="line">SET @last_id=0;</span><br><span class="line">SELECT id, 1_item,1_usd,IFNULL(2_item,null) 2_item,IFNULL(2_usd,0) 2_usd,IFNULL(3_item,null) 3_item,IFNULL(3_usd,0) 3_usd </span><br><span class="line">FROM (	</span><br><span class="line">	select 	</span><br><span class="line">	id,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,item,NULL)) AS 1_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,usd,NULL)) AS 1_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,item,NULL)) AS 2_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,usd,NULL)) AS 2_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,item,NULL)) AS 3_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,usd,NULL)) AS 3_usd	</span><br><span class="line">	from(		</span><br><span class="line">		SELECT t1.*,IF(@last_id=id,@num:=@num+1,@num:=1) AS seq,		</span><br><span class="line">		(@last_id:=id) AS tmp </span><br><span class="line">		FROM (		</span><br><span class="line">		SELECT id,time,item,usd 		</span><br><span class="line">		FROM purchase 		</span><br><span class="line">		where month(time)=5 		</span><br><span class="line">		GROUP BY id ASC,time ASC		</span><br><span class="line">		) t1	</span><br><span class="line">	)t2 </span><br><span class="line">	GROUP BY id </span><br><span class="line">) t3</span><br></pre></td></tr></table></figure>
+<h2 id="4-hive日期整理"><a href="#4-hive日期整理" class="headerlink" title="4.hive日期整理"></a>4.hive日期整理</h2><ol>
+<li><p>日期函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">获取当前时间截:</span><br><span class="line">select unix_timestamp()</span><br><span class="line"></span><br><span class="line">获取当前时间1：select current_timestamp;</span><br><span class="line">2018-03-22 10:04:02.568</span><br><span class="line"></span><br><span class="line">获取当前时间2：SELECT from_unixtime(unix_timestamp());</span><br><span class="line">2018-03-22 10:04:38</span><br><span class="line"></span><br><span class="line">date转 yyyyMMdd</span><br><span class="line">SELECT from_unixtime(unix_timestamp(),&#x27;yyyyMMdd&#x27;);</span><br><span class="line">20180322</span><br><span class="line"></span><br><span class="line">date 转 yyyyMMdd</span><br><span class="line">regexp_replace(substr(max(bind_date),0,10),&#x27;-&#x27;,&#x27;&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+<p>获取当前日期：<br>SELECT CURRENT_DATE<br>2018-03-22</p>
+<p>select datediff(CURRENT_DATE,’2017-01-01’) as datediff;<br>select date_add(current_date,365) as dateadd;</p>
+<p>add_months(CURRENT_DATE,-12)   去年今天<br>last_day(current_date)  本月最后一天</p>
+<p>yyyymmdd和yyyy-mm-dd日期之间的切换————————————<br>方法1: from_unixtime+ unix_timestamp<br>–20171205转成2017-12-05<br>select from_unixtime(unix_timestamp(‘20171205’,’yyyymmdd’),’yyyy-mm-dd’) from dual;</p>
+<p>–2017-12-05转成20171205<br>select from_unixtime(unix_timestamp(‘2017-12-05’,’yyyy-mm-dd’),’yyyymmdd’) from dual;</p>
+<p>方法2: substr + concat<br>–20171205转成2017-12-05<br>select concat(substr(‘20171205’,1,4),’-‘,substr(‘20171205’,5,2),’-‘,substr(‘20171205’,7,2)) from dual;</p>
+<p>–2017-12-05转成20171205<br>select concat(substr(‘2017-12-05’,1,4),substr(‘2017-12-05’,6,2),substr(‘2017-12-05’,9,2)) from dual;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ​</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 5. row_number等</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>rank() 排序相同时会重复，总数不会变</p>
+<p>dense_rank() 排序相同时会重复，总数会减少</p>
+<p>row_number() 会根据顺序计算</p>
+<p>select member_code, trade_time  from<br>(select member_code, trade_time,<br>row_number() over ( partition by member_code order by trade_time,trade_no) num<br>from APP.cms_orders_lrp  where source&#x3D;1 and trade_amount&gt;0 and order_type!&#x3D;’Redemption Order’<br>) temp<br>where temp.num &#x3D; 1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># sql记录</span><br><span class="line"></span><br><span class="line">## 1. mysql分组高阶</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>purchase表<br>字段有id,pkg,time,item,currency,usd,dt<br>玩家id,游戏包名，交易完成时间,购买礼包id,交易币种,成交金额,交易日期</p>
+<p>求5月每个玩家最早的三次付费item和金额</p>
+<p>SET @num&#x3D;1;<br>SET @last_id&#x3D;0;<br>SELECT id, 1_item,1_usd,IFNULL(2_item,null) 2_item,IFNULL(2_usd,0) 2_usd,IFNULL(3_item,null) 3_item,IFNULL(3_usd,0) 3_usd<br>FROM (<br>    select<br>    id,<br>    GROUP_CONCAT(if(seq&#x3D;1,item,NULL)) AS 1_item,<br>    GROUP_CONCAT(if(seq&#x3D;1,usd,NULL)) AS 1_usd,<br>    GROUP_CONCAT(if(seq&#x3D;2,item,NULL)) AS 2_item,<br>    GROUP_CONCAT(if(seq&#x3D;2,usd,NULL)) AS 2_usd,<br>    GROUP_CONCAT(if(seq&#x3D;3,item,NULL)) AS 3_item,<br>    GROUP_CONCAT(if(seq&#x3D;3,usd,NULL)) AS 3_usd<br>    from(<br>        SELECT t1.*,IF(@last_id&#x3D;id,@num:&#x3D;@num+1,@num:&#x3D;1) AS seq,<br>        (@last_id:&#x3D;id) AS tmp FROM (<br>        SELECT id,time,item,usd<br>        FROM purchase<br>        where month(time)&#x3D;5<br>        GROUP BY id ASC,time ASC<br>        ) t1<br>    )t2 GROUP BY id<br>) t3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
     <div></div>
@@ -227,7 +262,7 @@
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive-SQL%E6%80%BB%E7%BB%93"><span class="toc-text">Hive SQL总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%87%AA%E5%B8%A6-function-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">1. 自带 function 的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E7%94%A8func"><span class="toc-text">2. 常用func</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-hive%E4%BD%BF%E7%94%A8%E7%BB%86%E8%8A%82%E8%AE%B0%E5%BD%95"><span class="toc-text">3.hive使用细节记录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E8%AE%B0%E5%BD%95"><span class="toc-text">sql记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-mysql%E5%88%86%E7%BB%84%E9%AB%98%E9%98%B6"><span class="toc-text">1. mysql分组高阶</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive-SQL%E6%80%BB%E7%BB%93"><span class="toc-text">Hive SQL总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%87%AA%E5%B8%A6-function-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">1. 自带 function 的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E7%94%A8func"><span class="toc-text">2. 常用func</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-hive%E4%BD%BF%E7%94%A8%E7%BB%86%E8%8A%82%E8%AE%B0%E5%BD%95"><span class="toc-text">3.hive使用细节记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-hive%E6%97%A5%E6%9C%9F%E6%95%B4%E7%90%86"><span class="toc-text">4.hive日期整理</span></a></li></ol></li></ol>
   </div>
 
 

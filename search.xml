@@ -1,135 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HiveSQL</title>
-    <url>/2019/04/22/Hive-SQL/</url>
-    <content><![CDATA[<h1 id="Hive-SQL总结"><a href="#Hive-SQL总结" class="headerlink" title="Hive SQL总结"></a>Hive SQL总结</h1><h2 id="1-自带-function-的使用"><a href="#1-自带-function-的使用" class="headerlink" title="1. 自带 function 的使用"></a>1. 自带 function 的使用</h2><p>使用<code>show functions;</code> 命令进行查看目前可以使用的function;</p>
-<p>使用如下命令查看使用方法 split为例：</p>
-<ul>
-<li>desc function extended split;</li>
-</ul>
-<h2 id="2-常用func"><a href="#2-常用func" class="headerlink" title="2. 常用func"></a>2. 常用func</h2><ul>
-<li><p>LIKE</p>
-<p>A LIKE B</p>
-<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合表达式B的正则语法，则为TRUE；否则为FALSE。B中字符”_”表示任意单个字符，而字符”%”表示任意数量的字符。</p>
-</li>
-<li><p>RLIKE &#x2F; REGEXP 二者等价</p>
-<p>A RLIKE B</p>
-<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合JAVA正则表达式B的正则语法，则为TRUE；否则为FALSE。</p>
-<p>例：select 1 from dual where ‘footbar’ rlike ‘^f.*r$’</p>
-</li>
-<li><p>+、-、*、&#x2F; 、% 加 减 乘 除 取余 操作</p>
-</li>
-<li><p>&amp;、|、~、^ 与或非，异或操作</p>
-</li>
-<li><p>复合类型</p>
-<p>map, struct, array</p>
-</li>
-<li><p>round(double a) 取整函数 四舍五入</p>
-</li>
-<li><p>round(double a, int d) 返回指定精度d的double类型</p>
-</li>
-<li><p>floor(double a) 向下取整函数</p>
-</li>
-<li><p>ceiling &#x2F; ceil(double a) 向上取整函数</p>
-</li>
-<li><p>power &#x2F; pow(double a, double p) 返回a的p次幂</p>
-</li>
-<li><p>from_unixtime(1323308943,’yyyyMMdd’) 时间戳转日期函数</p>
-</li>
-<li><p>unix_timestamp() 当前UNIX时间戳</p>
-</li>
-<li><p>unix_timestamp(’2011-12-07 13:01:03′) 日期转UNIX时间戳</p>
-</li>
-<li><p>unix_timestamp(’20111207 13:01:03′,’yyyyMMdd HH:mm:ss’) 指定格式日期转UNIX时间戳</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【hive 日期转换】Hive中yyyymmdd和yyyy-mm-dd日期之间的切换</span><br><span class="line">方法1: from_unixtime+ unix_timestamp</span><br><span class="line"></span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;20171205&#x27;,&#x27;yyyymmdd&#x27;),&#x27;yyyy-mm-dd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select from_unixtime(unix_timestamp(&#x27;2017-12-05&#x27;,&#x27;yyyy-mm-dd&#x27;),&#x27;yyyymmdd&#x27;) from dual;</span><br><span class="line"></span><br><span class="line">方法2: substr + concat</span><br><span class="line">--20171205转成2017-12-05 </span><br><span class="line">select concat(substr(&#x27;20171205&#x27;,1,4),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,5,2),&#x27;-&#x27;,substr(&#x27;20171205&#x27;,7,2)) from dual;</span><br><span class="line"></span><br><span class="line">--2017-12-05转成20171205</span><br><span class="line">select concat(substr(&#x27;2017-12-05&#x27;,1,4),substr(&#x27;2017-12-05&#x27;,6,2),substr(&#x27;2017-12-05&#x27;,9,2)) from dual;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>to_date(’2011-12-08 10:03:01′)日期时间转 日期 out:2011-12-08</p>
-</li>
-<li><p>year(’2011-12-08 10:03:01′) 日期转年 可以直接做加减</p>
-</li>
-<li><p>month(’2011-08-08′)</p>
-</li>
-<li><p>day(’2011-12-24′)</p>
-</li>
-<li><p>hour(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>minute(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>second(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>weekofyear(’2011-12-08 10:03:01′)</p>
-</li>
-<li><p>datediff(’2012-12-08′,’2012-05-09′) 日期差</p>
-</li>
-<li><p>date_add(’2012-12-08′,10) 日期增加</p>
-</li>
-<li><p>date_sub(’2012-12-08′,10) 日期减少</p>
-</li>
-<li><p>if(1&#x3D;2,100,200) 条件函数 out:200</p>
-</li>
-<li><p>COALESCE(null,’100′,’50′) 非空查找 out:100</p>
-</li>
-<li><p><strong>条件判断函数1：CASE</strong></p>
-<p>语法: CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END</p>
-<p>如果a等于b，那么返回c；如果a等于d，那么返回e；否则返回f</p>
-<p>例：Select case 100 when 50 then ‘tom’ when 100 then ‘mary’ else ‘tim’ end from dual;</p>
-</li>
-<li><p><strong>条件判断函数2：CASE</strong></p>
-<p>语法: CASE WHEN a THEN b [WHEN c THEN d]* [ELSE e] END</p>
-<p>如果a为TRUE,则返回b；如果c为TRUE，则返回d；否则返回e</p>
-<p>例如：select case when 1&#x3D;2 then ‘tom’ when 2&#x3D;2 then ‘mary’ else ‘tim’ end from dual;</p>
-</li>
-<li><p>length(string A) 字符串长度</p>
-</li>
-<li><p>reverse(string A) 字符串反转</p>
-</li>
-<li><p><strong>字符串连接函数：concat</strong></p>
-<p>concat(string A, string B…)</p>
-</li>
-<li><p><strong>带分隔符字符串连接函数：concat_ws</strong></p>
-<p>concat_ws(string SEP, string A, string B…)</p>
-<p>例如：concat_ws(‘,’,’abc’,’def’,’gh’)</p>
-</li>
-<li><p><strong>字符串截取函数：substr,substring</strong></p>
-<p>substr(‘abcde’,3) out:abc</p>
-<p>substr(‘abcde’,-1) out:e</p>
-<p>substr(string A, int start, int len),substring(string A, int start, int len)</p>
-</li>
-<li><p>字符串转小写函数：lower,lcase</p>
-<p>lower(string A) lcase(string A)</p>
-</li>
-<li><p>去空格函数：trim</p>
-<p>trim(string A)</p>
-<p>左边去空格函数：ltrim</p>
-<p>右边去空格函数：rtrim</p>
-</li>
-<li><p>正则表达式替换函数：regexp_replace</p>
-<p>regexp_replace(string A, string B, string C)</p>
-<p>将字符串A中的符合java正则表达式B的部分替换为C。注意，在有些情况下要使用转义字符</p>
-<p>regexp_replace(‘foobar’, ‘oo|ar’, ”) out:fb</p>
-</li>
-<li><p>保留两位小数</p>
-<p>cast(column_name as decimal(10,2)) cast函数截取（推荐使用）</p>
-</li>
-<li><p><strong>列转行</strong> （collect_all() &#x2F; collect_list() 不去重）、（collect_set去重） 一般与concat_ws连用，带分隔符</p>
-<p>select col1, concat_ws(‘,’, collect_set(col2))<br>from tb_name<br>group by col1;</p>
-</li>
-</ul>
-<h2 id="3-hive使用细节记录"><a href="#3-hive使用细节记录" class="headerlink" title="3.hive使用细节记录"></a>3.hive使用细节记录</h2><ul>
-<li>union <strong>Hive在1.2.0之前的版本只支持union all，在1.2.0之后的版本才支持union.</strong></li>
-</ul>
-<h1 id="sql记录"><a href="#sql记录" class="headerlink" title="sql记录"></a>sql记录</h1><h2 id="1-mysql分组高阶"><a href="#1-mysql分组高阶" class="headerlink" title="1. mysql分组高阶"></a>1. mysql分组高阶</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">purchase表</span><br><span class="line"></span><br><span class="line">字段有id,pkg,time,item,currency,usd,dt</span><br><span class="line">玩家id,游戏包名，交易完成时间,购买礼包id,交易币种,成交金额,交易日期</span><br><span class="line"></span><br><span class="line">求5月每个玩家最早的三次付费item和金额</span><br><span class="line"></span><br><span class="line">SET @num=1;</span><br><span class="line">SET @last_id=0;</span><br><span class="line">SELECT id, 1_item,1_usd,IFNULL(2_item,null) 2_item,IFNULL(2_usd,0) 2_usd,IFNULL(3_item,null) 3_item,IFNULL(3_usd,0) 3_usd </span><br><span class="line">FROM (	</span><br><span class="line">	select 	</span><br><span class="line">	id,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,item,NULL)) AS 1_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=1,usd,NULL)) AS 1_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,item,NULL)) AS 2_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=2,usd,NULL)) AS 2_usd,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,item,NULL)) AS 3_item,	</span><br><span class="line">	GROUP_CONCAT(if(seq=3,usd,NULL)) AS 3_usd	</span><br><span class="line">	from(		</span><br><span class="line">		SELECT t1.*,IF(@last_id=id,@num:=@num+1,@num:=1) AS seq,		</span><br><span class="line">		(@last_id:=id) AS tmp </span><br><span class="line">		FROM (		</span><br><span class="line">		SELECT id,time,item,usd 		</span><br><span class="line">		FROM purchase 		</span><br><span class="line">		where month(time)=5 		</span><br><span class="line">		GROUP BY id ASC,time ASC		</span><br><span class="line">		) t1	</span><br><span class="line">	)t2 </span><br><span class="line">	GROUP BY id </span><br><span class="line">) t3</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>Hive</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker手册</title>
     <url>/2020/03/12/Docker%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h1 id="1-安装Docker"><a href="#1-安装Docker" class="headerlink" title="1. 安装Docker"></a>1. 安装Docker</h1><h2 id="1-Mac安装Docker"><a href="#1-Mac安装Docker" class="headerlink" title="1. Mac安装Docker"></a>1. Mac安装Docker</h2><p><a href="https://www.runoob.com/docker/macos-docker-install.html">https://www.runoob.com/docker/macos-docker-install.html</a></p>
@@ -5276,6 +5147,360 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </categories>
       <tags>
         <tag>HBase</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HiveSQL</title>
+    <url>/2019/04/22/HiveSQL/</url>
+    <content><![CDATA[<h1 id="Hive-SQL总结"><a href="#Hive-SQL总结" class="headerlink" title="Hive SQL总结"></a>Hive SQL总结</h1><h2 id="1-自带-function-的使用"><a href="#1-自带-function-的使用" class="headerlink" title="1. 自带 function 的使用"></a>1. 自带 function 的使用</h2><p>使用<code>show functions;</code> 命令进行查看目前可以使用的function;</p>
+<p>使用如下命令查看使用方法 split为例：</p>
+<ul>
+<li>desc function extended split;</li>
+</ul>
+<h2 id="2-常用func"><a href="#2-常用func" class="headerlink" title="2. 常用func"></a>2. 常用func</h2><ul>
+<li><p>LIKE</p>
+<p>A LIKE B</p>
+<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合表达式B的正则语法，则为TRUE；否则为FALSE。B中字符”_”表示任意单个字符，而字符”%”表示任意数量的字符。</p>
+</li>
+<li><p>RLIKE &#x2F; REGEXP  二者等价</p>
+<p>A RLIKE B</p>
+<p>如果字符串A或者字符串B为NULL，则返回NULL；如果字符串A符合JAVA正则表达式B的正则语法，则为TRUE；否则为FALSE。</p>
+<p>例：select 1 from dual where ‘footbar’ rlike ‘^f.*r$’</p>
+</li>
+<li><p>+、-、*、&#x2F; 、% 加 减 乘 除 取余 操作</p>
+</li>
+<li><p>&amp;、|、~、^  与或非，异或操作</p>
+</li>
+<li><p>复合类型</p>
+<p>map, struct, array</p>
+</li>
+<li><p>round(double a) 取整函数 四舍五入</p>
+</li>
+<li><p>round(double a, int d) 返回指定精度d的double类型</p>
+</li>
+<li><p>floor(double a) 向下取整函数</p>
+</li>
+<li><p>ceiling &#x2F; ceil(double a) 向上取整函数</p>
+</li>
+<li><p>power &#x2F; pow(double a, double p) 返回a的p次幂</p>
+</li>
+<li><p>from_unixtime(1323308943,’yyyyMMdd’)  时间戳转日期函数</p>
+</li>
+<li><p>unix_timestamp()  当前UNIX时间戳</p>
+</li>
+<li><p>unix_timestamp(’2011-12-07 13:01:03′)  日期转UNIX时间戳</p>
+</li>
+<li><p>unix_timestamp(’20111207 13:01:03′,’yyyyMMdd HH:mm:ss’)   指定格式日期转UNIX时间戳</p>
+</li>
+<li><p>to_date(’2011-12-08 10:03:01′)日期时间转 日期  out:2011-12-08</p>
+</li>
+<li><p>year(’2011-12-08 10:03:01′) 日期转年   可以直接做加减</p>
+</li>
+<li><p>month(’2011-08-08′)</p>
+</li>
+<li><p>day(’2011-12-24′)</p>
+</li>
+<li><p>hour(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>minute(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>second(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>weekofyear(’2011-12-08 10:03:01′)</p>
+</li>
+<li><p>datediff(’2012-12-08′,’2012-05-09′) 日期差</p>
+</li>
+<li><p>date_add(’2012-12-08′,10)  日期增加</p>
+</li>
+<li><p>date_sub(’2012-12-08′,10)  日期减少</p>
+</li>
+<li><p>if(1&#x3D;2,100,200)   条件函数   out:200</p>
+</li>
+<li><p>COALESCE(null,’100′,’50′)  非空查找 out:100</p>
+</li>
+<li><p><strong>条件判断函数1：CASE</strong></p>
+<p>语法: CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END</p>
+<p>如果a等于b，那么返回c；如果a等于d，那么返回e；否则返回f</p>
+<p>例：Select case 100 when 50 then ‘tom’ when 100 then ‘mary’ else ‘tim’ end from dual;</p>
+</li>
+<li><p><strong>条件判断函数2：CASE</strong></p>
+<p>语法: CASE WHEN a THEN b [WHEN c THEN d]* [ELSE e] END</p>
+<p>如果a为TRUE,则返回b；如果c为TRUE，则返回d；否则返回e</p>
+<p>例如：select case when 1&#x3D;2 then ‘tom’ when 2&#x3D;2 then ‘mary’ else ‘tim’ end from dual;</p>
+</li>
+<li><p>length(string A)  字符串长度</p>
+</li>
+<li><p>reverse(string A)  字符串反转</p>
+</li>
+<li><p><strong>字符串连接函数：concat</strong></p>
+<p>concat(string A, string B…)</p>
+</li>
+<li><p><strong>带分隔符字符串连接函数：concat_ws</strong></p>
+<p>concat_ws(string SEP, string A, string B…)</p>
+<p>例如：concat_ws(‘,’,’abc’,’def’,’gh’)</p>
+</li>
+<li><p><strong>字符串截取函数：substr,substring</strong></p>
+<p>substr(‘abcde’,3)	out:abc</p>
+<p>substr(‘abcde’,-1)	out:e</p>
+<p>substr(string A, int start, int len),substring(string A, int start, int len)</p>
+</li>
+<li><p>字符串转小写函数：lower,lcase</p>
+<p>lower(string A) lcase(string A)</p>
+</li>
+<li><p>去空格函数：trim</p>
+<p>trim(string A)</p>
+<p>左边去空格函数：ltrim</p>
+<p>右边去空格函数：rtrim</p>
+</li>
+<li><p>正则表达式替换函数：regexp_replace</p>
+<p>regexp_replace(string A, string B, string C)</p>
+<p>将字符串A中的符合java正则表达式B的部分替换为C。注意，在有些情况下要使用转义字符</p>
+<p>regexp_replace(‘foobar’, ‘oo|ar’, ”)   out:fb</p>
+</li>
+<li><p>保留两位小数</p>
+<p>cast(column_name as decimal(10,2))        cast函数截取（推荐使用）</p>
+</li>
+<li><p><strong>列转行</strong> （collect_all() &#x2F; collect_list() 不去重）、（collect_set去重）  一般与concat_ws连用，带分隔符</p>
+<p>select col1, concat_ws(‘,’, collect_set(col2))<br>from tb_name<br>group by col1;</p>
+</li>
+<li><p>Hive窗口函数</p>
+<ul>
+<li><p>row_number over（）</p>
+<p>row_number over(partition by member_code order by PT_BIZ_DATE,trade_no) num </p>
+</li>
+<li><p>sum() over ()</p>
+<p>sum(amount) over(partition by name order by mons rows between unbounded preceding and current row) as account</p>
+<p>对name这一组按照月份排序</p>
+<p>rows between unbounded preceding and current  限定了行是按照在当前行不限定的往前处理, 通俗就是处理当前以及之前的所有行的sum</p>
+<p>unbounded意思无限的 preceding在之前的，current row当前行。</p>
+</li>
+<li><p>count() over ()</p>
+<p>select count(*) over(partition by col1,col2) from tmp_test;</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-hive使用细节记录"><a href="#3-hive使用细节记录" class="headerlink" title="3.hive使用细节记录"></a>3.hive使用细节记录</h2><ul>
+<li>union  <strong>Hive在1.2.0之前的版本只支持union all，在1.2.0之后的版本才支持union.</strong></li>
+</ul>
+<h2 id="4-hive日期整理"><a href="#4-hive日期整理" class="headerlink" title="4.hive日期整理"></a>4.hive日期整理</h2><ol>
+<li><p>日期函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">获取当前时间截:</span><br><span class="line">select unix_timestamp()</span><br><span class="line"></span><br><span class="line">获取当前时间1：select current_timestamp;</span><br><span class="line">2018-03-22 10:04:02.568</span><br><span class="line"></span><br><span class="line">获取当前时间2：SELECT from_unixtime(unix_timestamp());</span><br><span class="line">2018-03-22 10:04:38</span><br><span class="line"></span><br><span class="line">date转 yyyyMMdd</span><br><span class="line">SELECT from_unixtime(unix_timestamp(),&#x27;yyyyMMdd&#x27;);</span><br><span class="line">20180322</span><br><span class="line"></span><br><span class="line">date 转 yyyyMMdd</span><br><span class="line">regexp_replace(substr(max(bind_date),0,10),&#x27;-&#x27;,&#x27;&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+<p>获取当前日期：<br>SELECT CURRENT_DATE<br>2018-03-22</p>
+<p>select datediff(CURRENT_DATE,’2017-01-01’) as datediff;<br>select date_add(current_date,365) as dateadd;</p>
+<p>add_months(CURRENT_DATE,-12)   去年今天<br>last_day(current_date)  本月最后一天</p>
+<p>yyyymmdd和yyyy-mm-dd日期之间的切换————————————<br>方法1: from_unixtime+ unix_timestamp<br>–20171205转成2017-12-05<br>select from_unixtime(unix_timestamp(‘20171205’,’yyyymmdd’),’yyyy-mm-dd’) from dual;</p>
+<p>–2017-12-05转成20171205<br>select from_unixtime(unix_timestamp(‘2017-12-05’,’yyyy-mm-dd’),’yyyymmdd’) from dual;</p>
+<p>方法2: substr + concat<br>–20171205转成2017-12-05<br>select concat(substr(‘20171205’,1,4),’-‘,substr(‘20171205’,5,2),’-‘,substr(‘20171205’,7,2)) from dual;</p>
+<p>–2017-12-05转成20171205<br>select concat(substr(‘2017-12-05’,1,4),substr(‘2017-12-05’,6,2),substr(‘2017-12-05’,9,2)) from dual;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">   ​</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 5. row_number等</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>rank() 排序相同时会重复，总数不会变</p>
+<p>dense_rank() 排序相同时会重复，总数会减少</p>
+<p>row_number() 会根据顺序计算</p>
+<p>select member_code, trade_time  from<br>(select member_code, trade_time,<br>row_number() over ( partition by member_code order by trade_time,trade_no) num<br>from APP.cms_orders_lrp  where source&#x3D;1 and trade_amount&gt;0 and order_type!&#x3D;’Redemption Order’<br>) temp<br>where temp.num &#x3D; 1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># sql记录</span><br><span class="line"></span><br><span class="line">## 1. mysql分组高阶</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>purchase表<br>字段有id,pkg,time,item,currency,usd,dt<br>玩家id,游戏包名，交易完成时间,购买礼包id,交易币种,成交金额,交易日期</p>
+<p>求5月每个玩家最早的三次付费item和金额</p>
+<p>SET @num&#x3D;1;<br>SET @last_id&#x3D;0;<br>SELECT id, 1_item,1_usd,IFNULL(2_item,null) 2_item,IFNULL(2_usd,0) 2_usd,IFNULL(3_item,null) 3_item,IFNULL(3_usd,0) 3_usd<br>FROM (<br>    select<br>    id,<br>    GROUP_CONCAT(if(seq&#x3D;1,item,NULL)) AS 1_item,<br>    GROUP_CONCAT(if(seq&#x3D;1,usd,NULL)) AS 1_usd,<br>    GROUP_CONCAT(if(seq&#x3D;2,item,NULL)) AS 2_item,<br>    GROUP_CONCAT(if(seq&#x3D;2,usd,NULL)) AS 2_usd,<br>    GROUP_CONCAT(if(seq&#x3D;3,item,NULL)) AS 3_item,<br>    GROUP_CONCAT(if(seq&#x3D;3,usd,NULL)) AS 3_usd<br>    from(<br>        SELECT t1.*,IF(@last_id&#x3D;id,@num:&#x3D;@num+1,@num:&#x3D;1) AS seq,<br>        (@last_id:&#x3D;id) AS tmp FROM (<br>        SELECT id,time,item,usd<br>        FROM purchase<br>        where month(time)&#x3D;5<br>        GROUP BY id ASC,time ASC<br>        ) t1<br>    )t2 GROUP BY id<br>) t3</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+      <tags>
+        <tag>Hive</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式笔记</title>
+    <url>/2019/12/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/DesignPattern/</url>
+    <content><![CDATA[<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h3 id="1-软件开发6大原则"><a href="#1-软件开发6大原则" class="headerlink" title="1.软件开发6大原则"></a>1.软件开发6大原则</h3><h4 id="1-开闭原则"><a href="#1-开闭原则" class="headerlink" title="1.开闭原则"></a>1.开闭原则</h4><p>开闭原则（Open Close Principle）：<strong>对扩展开放，对修改关闭</strong>。</p>
+<p>即在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。</p>
+<h4 id="2-里氏代换原则"><a href="#2-里氏代换原则" class="headerlink" title="2.里氏代换原则"></a>2.<strong>里氏代换原则</strong></h4><p>里氏替换原则<strong>（Liskov Substitution Principle）</strong>：<strong>任何父类可以出现的地方，子类一定可以出现 且 子类可以扩展父类的功能但不能改变父类原有的功能</strong>。</p>
+<p>LSP是继承复用的基石，只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。</p>
+<p>里氏代换原则是对“开-闭”原则的补充。实现“开-闭”原则的关键步骤就是抽象化。而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。</p>
+<h4 id="3-单一职责原则"><a href="#3-单一职责原则" class="headerlink" title="3.单一职责原则"></a>3.单一职责原则</h4><p><strong>一个类、接口、方法只做一件事。</strong></p>
+<h4 id="4-依赖倒转原则"><a href="#4-依赖倒转原则" class="headerlink" title="4.依赖倒转原则"></a>4.依赖倒转原则</h4><p>依赖倒转原则<strong>（Dependence Inversion Principle）</strong>：<strong>对接口编程，依赖于抽象而不依赖于具体</strong>。即通过抽象使各个类或者模块不相互影响，实现松耦合。</p>
+<h4 id="5-接口隔离原则"><a href="#5-接口隔离原则" class="headerlink" title="5.接口隔离原则"></a>5.接口隔离原则</h4><p>接口隔离原则<strong>（Interface Segregation Principle）</strong>：使用多个隔离的接口，比使用单个总接口要好（降低类之间的耦合度）。即尽量保证接口的纯洁性，客户端不应该依赖不需要的接口。</p>
+<h4 id="6-迪米特原则"><a href="#6-迪米特原则" class="headerlink" title="6.迪米特原则"></a>6.<strong>迪米特原则</strong></h4><p>迪米特法则又叫<strong>最少知道原则（Demeter Principle）</strong>：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。即<strong>一个类对其所依赖的类知道的越少越好</strong>。</p>
+<h4 id="7-合成复用原则"><a href="#7-合成复用原则" class="headerlink" title="7.合成复用原则"></a>7.<strong>合成复用原则</strong></h4><p>合成复用原则<strong>（Composite Reuse Principle）</strong>：<strong>尽量使用组合的方式，而不是使用继承</strong>。即尽量使用对象组合、聚合，而不使用继承关系达到代码复用的目的。</p>
+<p>概括如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">设计原则</th>
+<th>概述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">开闭原则</td>
+<td>对扩展开放，对修改关闭。</td>
+</tr>
+<tr>
+<td align="left">依赖倒置原则</td>
+<td>通过抽象使各个类或者模块不相互影响，实现松耦合。</td>
+</tr>
+<tr>
+<td align="left">单一职责原则</td>
+<td>一个类、接口、方法只做一件事。</td>
+</tr>
+<tr>
+<td align="left">接口隔离原则</td>
+<td>使用多个隔离的接口，比使用单个总接口要好。</td>
+</tr>
+<tr>
+<td align="left">迪米特法则</td>
+<td>又叫最少知道原则，一个类对其所依赖的类知道得越少越好。</td>
+</tr>
+<tr>
+<td align="left">里氏替换原则</td>
+<td>子类可以扩展父类的功能但不能改变父类原有的功能。</td>
+</tr>
+<tr>
+<td align="left">合成复用原则</td>
+<td>尽量使用对象组合、聚合，而不使用继承关系达到代码复用的目的。</td>
+</tr>
+</tbody></table>
+<h3 id="2-初识设计模式"><a href="#2-初识设计模式" class="headerlink" title="2.初识设计模式"></a>2.初识设计模式</h3><p>经典框架都在用设计模式解决问题。Spring 就是一个把设计模式用得淋漓尽致的经典框架，其实从类的命名就能看出来，举例如下：、</p>
+<h4 id="1-Spring中常见设计模式"><a href="#1-Spring中常见设计模式" class="headerlink" title="1. Spring中常见设计模式"></a>1. Spring中常见设计模式</h4><table>
+<thead>
+<tr>
+<th>设计模式名称</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工厂模式</td>
+<td>BeanFactory</td>
+</tr>
+<tr>
+<td>装饰器模式</td>
+<td>BeanWrapper</td>
+</tr>
+<tr>
+<td>代理模式</td>
+<td>AopProxy</td>
+</tr>
+<tr>
+<td>委派模式</td>
+<td>DispatcherServlet</td>
+</tr>
+<tr>
+<td>策略模式</td>
+<td>HandlerMapping</td>
+</tr>
+<tr>
+<td>适配器模式</td>
+<td>HandlerAdapter</td>
+</tr>
+<tr>
+<td>模板模式</td>
+<td>JdbcTemplate</td>
+</tr>
+<tr>
+<td>观察者模式</td>
+<td>ContextLoaderListener</td>
+</tr>
+</tbody></table>
+<h3 id="3-设计模式分类"><a href="#3-设计模式分类" class="headerlink" title="3.设计模式分类"></a>3.设计模式分类</h3><p>总体来说设计模式分为三大类：（主要学习粗体部分）</p>
+<ul>
+<li>创建型模式，共五种：工厂方法模式、<strong>抽象工厂模式</strong>、<strong>单例模式</strong>、建造者模式、<strong>原型模式</strong>。</li>
+<li>结构型模式，共七种：<strong>适配器模式</strong>、<strong>装饰器模式</strong>、<strong>代理模式</strong>、外观模式、桥接模式、组合模式、享元模式。</li>
+<li>行为型模式，共十一种：<strong>策略模式</strong>、<strong>模板方法模式</strong>、<strong>委派模式</strong>、<strong>观察者模式</strong>、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。</li>
+</ul>
+<h3 id="4-创建模式"><a href="#4-创建模式" class="headerlink" title="4.创建模式"></a>4.创建模式</h3><p><strong>工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。</strong></p>
+<h4 id="1-工厂模式（Pizza产品为例）"><a href="#1-工厂模式（Pizza产品为例）" class="headerlink" title="1.工厂模式（Pizza产品为例）"></a>1.工厂模式（Pizza产品为例）</h4><p>工厂模式的关键点就是如何描述好工厂与产品这两个角色之间的关系。</p>
+<p>一下四种情况：</p>
+<ol>
+<li>单一产品。即工厂只生产一种类型的产品。（小汽车：高中低三档）</li>
+<li>多产品系，特征相同。即（小汽车、SUV：高中低三档）</li>
+<li>多产品系，部分特征相同。（小汽车、SUV：高中二档， 小汽车：低档）</li>
+<li>多产品系，无特征相同。（小汽车：高中二档， SUV：低档）</li>
+</ol>
+<h5 id="1-简单工厂模式（单产品系：抽象产品）"><a href="#1-简单工厂模式（单产品系：抽象产品）" class="headerlink" title="1.简单工厂模式（单产品系：抽象产品）"></a>1.简单工厂模式（单产品系：抽象产品）</h5><p>简单工厂模式是指由一个工厂对象决定创建出哪一种产品类的实例，但它不属于 GOF 23 种设计模式。</p>
+<p><strong>定义：</strong>定义了一个创建对象的类，由这个类来封装实例化对象的行为。</p>
+<p><strong>举例：</strong>（我们举一个pizza工厂的例子）</p>
+<p>pizza工厂一共生产三种类型的pizza：chesse,pepper,greak。通过工厂类（SimplePizzaFactory）实例化这三种类型的对象。</p>
+<p>类图如下：</p>
+<p><img src="/../../../../images/simplefactory.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class SimplePizzaFactory &#123;</span><br><span class="line">       public Pizza CreatePizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">                     pizza = new CheesePizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;greek&quot;)) &#123;</span><br><span class="line">                     pizza = new GreekPizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">                     pizza = new PepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>简单工厂存在的问题与解决方法：</strong> 简单工厂模式有一个问题就是，类的创建依赖工厂类，也就是说，如果想要拓展程序，必须对工厂类进行修改，<strong>这违背了开闭原则</strong>。</p>
+<p>从设计角度考虑，我们可以定义一个创建对象的抽象方法并创建多个不同的工厂类实现该抽象方法，这样一旦需要增加新的功能，直接增加新的工厂类就可以了，不需要修改之前的代码。这也就是<strong>工厂方法模式</strong>。</p>
+<h5 id="2-工厂方法模式（单产品系-抽象产品-抽象工厂）"><a href="#2-工厂方法模式（单产品系-抽象产品-抽象工厂）" class="headerlink" title="2.工厂方法模式（单产品系: 抽象产品+抽象工厂）"></a>2.工厂方法模式（单产品系: 抽象产品+抽象工厂）</h5><p><strong>定义：</strong>定义了一个创建对象的抽象方法，由子类决定要实例化的类。工厂方法模式将对象的实例化推迟到子类。</p>
+<p>举例：（我们依然举pizza工厂的例子，不过这个例子中，pizza产地有两个：伦敦和纽约）。添加了一个新的产地，如果用简单工厂模式的的话，我们要去修改工厂代码，并且会增加一堆的if else语句。而工厂方法模式克服了简单工厂要修改代码的缺点，它会直接创建两个工厂，纽约工厂和伦敦工厂。类图如下：<br><img src="/../../../../images/factoryMethod.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OrderPizza 抽象类 有个抽象的方法：</span><br><span class="line">abstract Pizza createPizza();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">两个工厂子类 继承OrderPizza并实现抽象方法：</span><br><span class="line">public class LDOrderPizza extends OrderPizza &#123;</span><br><span class="line">       Pizza createPizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">                     pizza = new LDCheesePizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">                     pizza = new LDPepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class NYOrderPizza extends OrderPizza &#123;</span><br><span class="line"> </span><br><span class="line">	Pizza createPizza(String ordertype) &#123;</span><br><span class="line">		Pizza pizza = null;</span><br><span class="line"> </span><br><span class="line">		if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">			pizza = new NYCheesePizza();</span><br><span class="line">		&#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">			pizza = new NYPepperPizza();</span><br><span class="line">		&#125;</span><br><span class="line">		return pizza;</span><br><span class="line"> </span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过不同的工厂会得到不同的实例化的对象，PizzaStroe的代码如下：</span><br><span class="line"></span><br><span class="line">public class PizzaStroe &#123;</span><br><span class="line">       public static void main(String[] args) &#123;</span><br><span class="line">              OrderPizza mOrderPizza;</span><br><span class="line">              mOrderPizza = new NYOrderPizza();</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解决了简单工厂模式的问题：增加一个新的pizza产地（北京），只要增加一个BJOrderPizza类：</span><br><span class="line">public class BJOrderPizza extends OrderPizza &#123;</span><br><span class="line">       Pizza createPizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">                     pizza = new LDCheesePizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">                     pizza = new LDPepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个模式的好处就是，如果你现在想增加一个功能，只需做一个实现类就好了，无需去改动现成的代码。这样做，拓展性较好（满足开闭原则）！</p>
+<p><strong>工厂方法存在的问题：</strong> 客户端需要创建类的具体的实例。</p>
+<p>为了解决这一问题，我们可以把工厂类抽象为接口，用户只需要去找默认的工厂提出自己的需求（传入参数），便能得到自己想要产品，而不用根据产品去寻找不同的工厂，方便用户操作。这也就是抽象工厂模式。</p>
+<h5 id="3-抽象工厂模式（多产品系-抽象产品-抽象工厂）"><a href="#3-抽象工厂模式（多产品系-抽象产品-抽象工厂）" class="headerlink" title="3.抽象工厂模式（多产品系: 抽象产品+抽象工厂）"></a>3.抽象工厂模式（多产品系: 抽象产品+抽象工厂）</h5><p><strong>定义：</strong>定义了一个接口用于创建相关或有依赖关系的对象族，而无需明确指定具体类。</p>
+<p><strong>举例：</strong>（我们依然举pizza工厂的例子，pizza工厂有两个：纽约工厂和伦敦工厂）。类图如下：</p>
+<p><img src="/../../../../images/abstractFactory.png"></p>
+<p>工厂的接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public interface AbsFactory &#123;</span><br><span class="line">       Pizza CreatePizza(String ordertype) ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工厂的实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class LDFactory implements AbsFactory &#123;</span><br><span class="line">       @Override</span><br><span class="line">       public Pizza CreatePizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (&quot;cheese&quot;.equals(ordertype)) &#123;</span><br><span class="line">                     pizza = new LDCheesePizza();</span><br><span class="line">              &#125; else if (&quot;pepper&quot;.equals(ordertype)) &#123;</span><br><span class="line">                     pizza = new LDPepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-工厂模式（课程为例）"><a href="#2-工厂模式（课程为例）" class="headerlink" title="2. 工厂模式（课程为例）"></a>2. 工厂模式（课程为例）</h4><h5 id="1-简单工厂模式"><a href="#1-简单工厂模式" class="headerlink" title="1.简单工厂模式"></a>1.简单工厂模式</h5><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类<br>的实例，但它不属于 GOF，23 种设计模式。</p>
+<p><img src="/../../../../images/simFactory.png" alt="1638704940486"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 简单工厂模式代码示例</span><br><span class="line"> */</span><br><span class="line">public class CourseFactory &#123;</span><br><span class="line">    /***</span><br><span class="line">     *</span><br><span class="line">     * @param name 自定义类别名创建实例</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static ICourse create(String name)&#123;</span><br><span class="line">        if(&quot;java&quot;.equals(name))&#123;</span><br><span class="line">            return new JavaCourse();</span><br><span class="line">        &#125;else if(&quot;python&quot;.equals(name))&#123;</span><br><span class="line">            return new PythonCourse();</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 使用反射</span><br><span class="line">     * @param className 类的全类名 创建实例</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static ICourse createByClassName(String className)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            if(!(null == className || &quot;&quot;.equals(className)))&#123;</span><br><span class="line">                return (ICourse) Class.forName(className).newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 使用反射</span><br><span class="line">     * @param clazz 类名 创建实例  *.class</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static ICourse createByClass(Class&lt;? extends  ICourse&gt; clazz)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            if(null != clazz)&#123;</span><br><span class="line">                return clazz.newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">---------------------------------</span><br><span class="line">public class SimpleFactoryCourseClient &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ICourse courseJava = CourseFactory.createByClass(JavaCourse.class);</span><br><span class="line">        courseJava.record();</span><br><span class="line">        ICourse coursePython = CourseFactory.createByClass(PythonCourse.class);</span><br><span class="line">        coursePython.record();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-工程方法模式"><a href="#2-工程方法模式" class="headerlink" title="2.工程方法模式"></a>2.工程方法模式</h5><p>工厂方法模式（Fatory Method Pattern）是指定义一个创建对象的接口，但让实现这个<br>接口的类来决定实例化哪个类，<strong>工厂方法让类的实例化推迟到子类中进行</strong>。</p>
+<p>在工厂方法模式中用户<strong>只需要关心所需产品对应的工厂，无须关心创建细节</strong>，而且<strong>加入新的产品符合开闭原则</strong>。</p>
+<p><img src="/../../../../images/factorypattern.png" alt="1638711783290"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">------------------------------------------</span><br><span class="line">public interface ICourseFactory &#123;</span><br><span class="line">    ICourse create();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">------------------------------------------</span><br><span class="line">public class JavaCourseFactory implements ICourseFactory&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ICourse create() &#123;</span><br><span class="line">        return new JavaCourse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------</span><br><span class="line">public class PythonCourseFactory implements ICourseFactory&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ICourse create() &#123;</span><br><span class="line">        return new PythonCourse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------------------</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	ICourseFactory pythonCourseFactory = new PythonCourseFactory();</span><br><span class="line">	ICourse course = pythonCourseFactory.create();</span><br><span class="line">	course.record();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-抽象工厂模式"><a href="#3-抽象工厂模式" class="headerlink" title="3.抽象工厂模式"></a>3.抽象工厂模式</h5><p>抽象工厂模式（Abastract Factory Pattern）是指提供一个创建一系列相关或相互依赖对象的接口，无须指定他们具体的类。</p>
+<p>客户端（应用层）不依赖于产品类实例如何被创建、实现等细节，强调的是一系列相关的产品对象（属于同一产品族）一起使用创建对象需要大量重复的代码。</p>
+<p><img src="/../../../../images/abstractFacPre.png" alt="1638712060716"></p>
+<p>相同深浅的颜色就代表同一个产品族，相同形状的代表同一个产品等级结构。</p>
+<p>如格力、美的等电器生产多种家用电器（热水器、冰箱、空调）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public interface INote &#123;</span><br><span class="line">    void edit();</span><br><span class="line">&#125;</span><br><span class="line">public interface IVideo &#123;</span><br><span class="line">    void record();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class JavaNote implements INote&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void edit() &#123;</span><br><span class="line">        System.out.println(&quot;Java 课程笔记学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class JavaVideo implements IVideo&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void record() &#123;</span><br><span class="line">        System.out.println(&quot;Java 课程视频学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class PythonNote implements INote&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void edit() &#123;</span><br><span class="line">        System.out.println(&quot;Python 课程笔记学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class PythonVideo implements IVideo&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void record() &#123;</span><br><span class="line">        System.out.println(&quot;Python 课程视频学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface CourseFactory &#123;</span><br><span class="line">    INote createNote();</span><br><span class="line">    IVideo createVideo();</span><br><span class="line">&#125;</span><br><span class="line">public class JavaCourseFactory implements CourseFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public INote createNote() &#123;</span><br><span class="line">        return new JavaNote();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IVideo createVideo() &#123;</span><br><span class="line">        return new JavaVideo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class PythonCourseFactory implements CourseFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public INote createNote() &#123;</span><br><span class="line">        return new PythonNote();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IVideo createVideo() &#123;</span><br><span class="line">        return new PythonVideo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-单例模式"><a href="#3-单例模式" class="headerlink" title="3.单例模式"></a>3.单例模式</h4><p>单例模式（Singleton Pattern）是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点。</p>
+<h5 id="1-饿汉模式"><a href="#1-饿汉模式" class="headerlink" title="1.饿汉模式"></a>1.饿汉模式</h5><p>饿汉式单例是在类加载的时候就立即初始化，并且创建单例对象。绝对线程安全，在线程还没出现以前就是实例化了，不可能存在访问安全问题。</p>
+<p><strong>优点</strong>：没有加任何的锁、执行效率比较高，在用户体验上来说，比懒汉式更好。<br><strong>缺点</strong>：类加载的时候就初始化，不管用与不用都占着空间，浪费了内存，有可能占着茅坑不拉屎。</p>
+<p><strong>Spring 中 IOC 容器 ApplicationContext 本身就是典型的饿汉式单例</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 饿汉式</span><br><span class="line"> */</span><br><span class="line">public class HungrySingleton &#123;</span><br><span class="line"></span><br><span class="line">//    private static final HungrySingleton hungrySingleton =</span><br><span class="line">//            new HungrySingleton();</span><br><span class="line"></span><br><span class="line">    private static final HungrySingleton hungrySingleton;</span><br><span class="line">    static &#123;</span><br><span class="line">        hungrySingleton = new HungrySingleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //private 无参构造方法</span><br><span class="line">    private HungrySingleton()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    public static HungrySingleton getInstance()&#123;</span><br><span class="line">        return hungrySingleton;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-懒汉式-线程不安全"><a href="#2-懒汉式-线程不安全" class="headerlink" title="2.懒汉式- 线程不安全"></a>2.懒汉式- 线程不安全</h5><p>懒汉式单例的特点是：被外部类调用的时候内部类才会加载。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.线程不安全的懒汉式</span><br><span class="line">/***</span><br><span class="line"> * 懒汉式 存在线程安全问题</span><br><span class="line"> */</span><br><span class="line">public class LazySimpleSingleton &#123;</span><br><span class="line">    private LazySimpleSingleton()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    private static LazySimpleSingleton lazy = null;</span><br><span class="line">    public static LazySimpleSingleton getInstance()&#123;</span><br><span class="line">        if(lazy == null)&#123;</span><br><span class="line">            lazy = new LazySimpleSingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        return  lazy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:线程不安全</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-懒汉式-synchronize"><a href="#3-懒汉式-synchronize" class="headerlink" title="3.懒汉式- synchronize"></a>3.懒汉式- synchronize</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 懒汉式 synchronized</span><br><span class="line"> */</span><br><span class="line">public class LazySimpleSingletonPlus &#123;</span><br><span class="line">    private LazySimpleSingletonPlus()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    private static LazySimpleSingletonPlus lazy = null;</span><br><span class="line">    public synchronized static LazySimpleSingletonPlus getInstance()&#123;</span><br><span class="line">        if(lazy == null)&#123;</span><br><span class="line">            lazy = new LazySimpleSingletonPlus();</span><br><span class="line">        &#125;</span><br><span class="line">        return  lazy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:用</span><br><span class="line">synchronized 加锁，解决了线程安全的问题，但是在线程数量比较多情况下，如果 CPU 分配压力上升，会导致大批量线程出现阻塞，从而导致程序运行性能大幅下降。</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="4-懒汉式-双重检查锁"><a href="#4-懒汉式-双重检查锁" class="headerlink" title="4.懒汉式- 双重检查锁"></a>4.懒汉式- 双重检查锁</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 懒汉式 双重检查锁</span><br><span class="line"> */</span><br><span class="line">public class LazySimpleSingletonPlus &#123;</span><br><span class="line">    private LazySimpleSingletonPlus()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    private static LazySimpleSingletonPlus lazy = null;</span><br><span class="line">    public static LazySimpleSingletonPlus getInstance()&#123;</span><br><span class="line">        if(lazy == null)&#123;</span><br><span class="line">            synchronized (LazySimpleSingletonPlus.class)&#123;</span><br><span class="line">                if(lazy == null)&#123;</span><br><span class="line">                    lazy = new LazySimpleSingletonPlus();</span><br><span class="line">                    //1.分配内存给这个对象</span><br><span class="line">                    //2.初始化对象</span><br><span class="line">                    //3/设置 lazy 指向刚分配的内存地址</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return  lazy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:阻塞并不是基于整个 LazySimpleSingleton 类的阻塞，而是在 getInstance()方法内部阻塞，只要逻辑不是太复杂，对于调用者而言感知不到。</span><br><span class="line">但是，用到 synchronized 关键字，总归是要上锁，对程序性能还是存在一定影响的。</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="5-懒汉式-静态内部类"><a href="#5-懒汉式-静态内部类" class="headerlink" title="5.懒汉式- 静态内部类"></a>5.懒汉式- 静态内部类</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题</span><br><span class="line">//完美地屏蔽了这两个缺点</span><br><span class="line">public class LazyInnerClassSingleton &#123;</span><br><span class="line">    //默认使用 LazyInnerClassGeneral 的时候，会先初始化内部类</span><br><span class="line">    //如果没使用的话，内部类是不加载的</span><br><span class="line">    private LazyInnerClassSingleton()&#123;&#125;</span><br><span class="line">    //每一个关键字都不是多余的</span><br><span class="line">    //static 是为了使单例的空间共享</span><br><span class="line">    //保证这个方法不会被重写，重载</span><br><span class="line">    public static final LazyInnerClassSingleton getInstance()&#123;</span><br><span class="line">    //在返回结果以前，一定会先加载内部类</span><br><span class="line">        return LazyHolder.LAZY;</span><br><span class="line">    &#125;</span><br><span class="line">    //默认不加载</span><br><span class="line">    private static class LazyHolder&#123;</span><br><span class="line">        private static final LazyInnerClassSingleton LAZY = new LazyInnerClassSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题。</span><br><span class="line">内部类一定是要在方法调用之前初始化，巧妙地避免了线程安全问题。</span><br></pre></td></tr></table></figure>
+
+<p>以上的单例模式的构造方法除了加上 private 以外，没有做任何处理。如果我们使用反射来调用其构造方法，然后，再调用 getInstance()方法，应该就会两个不同的实例。示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class LazyInnerClassSingletonTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            //很无聊的情况下，进行破坏</span><br><span class="line">            Class&lt;?&gt; clazz = LazyInnerClassSingleton.class;</span><br><span class="line">            //通过反射拿到私有的构造方法</span><br><span class="line">            Constructor c = clazz.getDeclaredConstructor(null);</span><br><span class="line">            //强制访问，强吻，不愿意也要吻</span><br><span class="line">            c.setAccessible(true);</span><br><span class="line">            //暴力初始化</span><br><span class="line">            Object o1 = c.newInstance();</span><br><span class="line">            //调用了两次构造方法，相当于 new 了两次</span><br><span class="line">            //犯了原则性问题，</span><br><span class="line">            Object o2 = c.newInstance();</span><br><span class="line">            System.out.println(o1 == o2);</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-注册式单例"><a href="#6-注册式单例" class="headerlink" title="6.注册式单例"></a>6.注册式单例</h5><p>注册式单例就是将每一个实例都登记到某一个地方，使用唯一的标识获取实例。</p>
+<p>注册式单例有两种写法：一种为容器缓存，一种为枚举登记。先来看枚举式单例的写法</p>
+<h6 id="1-枚举登记"><a href="#1-枚举登记" class="headerlink" title="1.枚举登记"></a>1.枚举登记</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public enum EnumSingleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    private Object data;</span><br><span class="line">    public Object getData() &#123;</span><br><span class="line">        return data;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setData(Object data) &#123;</span><br><span class="line">        this.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">    public static EnumSingleton getInstance()&#123;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//测试</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            EnumSingleton instance1 = null;</span><br><span class="line">            EnumSingleton instance2 = EnumSingleton.getInstance();</span><br><span class="line">            instance2.setData(new Object());</span><br><span class="line">            FileOutputStream fos = new FileOutputStream(&quot;EnumSingleton.obj&quot;);</span><br><span class="line">            ObjectOutputStream oos = new ObjectOutputStream(fos);</span><br><span class="line">            oos.writeObject(instance2);</span><br><span class="line">            oos.flush();</span><br><span class="line">            oos.close();</span><br><span class="line">            FileInputStream fis = new FileInputStream(&quot;EnumSingleton.obj&quot;);</span><br><span class="line">            ObjectInputStream ois = new ObjectInputStream(fis);</span><br><span class="line">            instance1 = (EnumSingleton) ois.readObject();</span><br><span class="line">            ois.close();</span><br><span class="line">            System.out.println(instance1.getData());</span><br><span class="line">            System.out.println(instance2.getData());</span><br><span class="line">            System.out.println(instance1.getData() == instance2.getData());</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">ps:没有做任何处理，我们发现运行结果和我们预期的一样。</span><br><span class="line">原来，枚举式单例在静态代码块中就给 INSTANCE 进行了赋值，是饿汉式单例的实现。</span><br><span class="line"></span><br><span class="line">枚举类型其实通过类名和 Class 对象类找到一个唯一的枚举对象。因此，枚举对象不可能被类加载器加载多次。序列化不会破坏枚举式单例</span><br><span class="line"></span><br><span class="line">另外不能用反射来创建枚举类型。因此反射也不会破坏单例。</span><br></pre></td></tr></table></figure>
+
+<p>总结：枚举式单例也是《Effective Java》书中推荐的一种单例实现写法。</p>
+<p>在 JDK 枚举的语法特殊性，以及反射也为枚举保驾护航，让枚举式单例成为一种比较优雅的实现。</p>
+<h6 id="2-容器缓存"><a href="#2-容器缓存" class="headerlink" title="2.容器缓存"></a>2.容器缓存</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class ContainerSingleton &#123;</span><br><span class="line">    private ContainerSingleton()&#123;&#125;</span><br><span class="line">    private static Map&lt;String,Object&gt; ioc = new ConcurrentHashMap&lt;String,Object&gt;();</span><br><span class="line">    public static Object getBean(String className)&#123;</span><br><span class="line">        synchronized (ioc) &#123;</span><br><span class="line">            if (!ioc.containsKey(className)) &#123;</span><br><span class="line">                Object obj = null;</span><br><span class="line">                try &#123;</span><br><span class="line">                    obj = Class.forName(className).newInstance();</span><br><span class="line">                    ioc.put(className, obj);</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                return obj;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return ioc.get(className);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>容器式写法适用于创建实例非常多的情况，便于管理。但是，是非线程安全的。</p>
+<h5 id="7-单例模式小结"><a href="#7-单例模式小结" class="headerlink" title="7.单例模式小结"></a>7.单例模式小结</h5><p>单例模式可以保证内存里只有一个实例，减少了内存开销；可以避免对资源的多重占用。</p>
+]]></content>
+      <categories>
+        <category>设计模式ß</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
 </search>

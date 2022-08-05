@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="设计模式," />
+  
+
+  
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>设计模式笔记 [ shaohua&#39;s blog ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="/images/logo.png">
+    <span class="title">shaohua&#39;s blog</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        设计模式笔记
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2019-12-11T17:10:20.000Z">
+        2019-12-12
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read">阅读耗时 31 分钟</span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h3 id="1-软件开发6大原则"><a href="#1-软件开发6大原则" class="headerlink" title="1.软件开发6大原则"></a>1.软件开发6大原则</h3><h4 id="1-开闭原则"><a href="#1-开闭原则" class="headerlink" title="1.开闭原则"></a>1.开闭原则</h4><p>开闭原则（Open Close Principle）：<strong>对扩展开放，对修改关闭</strong>。</p>
+<p>即在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。</p>
+<h4 id="2-里氏代换原则"><a href="#2-里氏代换原则" class="headerlink" title="2.里氏代换原则"></a>2.<strong>里氏代换原则</strong></h4><p>里氏替换原则<strong>（Liskov Substitution Principle）</strong>：<strong>任何父类可以出现的地方，子类一定可以出现 且 子类可以扩展父类的功能但不能改变父类原有的功能</strong>。</p>
+<p>LSP是继承复用的基石，只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。</p>
+<p>里氏代换原则是对“开-闭”原则的补充。实现“开-闭”原则的关键步骤就是抽象化。而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。</p>
+<h4 id="3-单一职责原则"><a href="#3-单一职责原则" class="headerlink" title="3.单一职责原则"></a>3.单一职责原则</h4><p><strong>一个类、接口、方法只做一件事。</strong></p>
+<h4 id="4-依赖倒转原则"><a href="#4-依赖倒转原则" class="headerlink" title="4.依赖倒转原则"></a>4.依赖倒转原则</h4><p>依赖倒转原则<strong>（Dependence Inversion Principle）</strong>：<strong>对接口编程，依赖于抽象而不依赖于具体</strong>。即通过抽象使各个类或者模块不相互影响，实现松耦合。</p>
+<h4 id="5-接口隔离原则"><a href="#5-接口隔离原则" class="headerlink" title="5.接口隔离原则"></a>5.接口隔离原则</h4><p>接口隔离原则<strong>（Interface Segregation Principle）</strong>：使用多个隔离的接口，比使用单个总接口要好（降低类之间的耦合度）。即尽量保证接口的纯洁性，客户端不应该依赖不需要的接口。</p>
+<h4 id="6-迪米特原则"><a href="#6-迪米特原则" class="headerlink" title="6.迪米特原则"></a>6.<strong>迪米特原则</strong></h4><p>迪米特法则又叫<strong>最少知道原则（Demeter Principle）</strong>：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。即<strong>一个类对其所依赖的类知道的越少越好</strong>。</p>
+<h4 id="7-合成复用原则"><a href="#7-合成复用原则" class="headerlink" title="7.合成复用原则"></a>7.<strong>合成复用原则</strong></h4><p>合成复用原则<strong>（Composite Reuse Principle）</strong>：<strong>尽量使用组合的方式，而不是使用继承</strong>。即尽量使用对象组合、聚合，而不使用继承关系达到代码复用的目的。</p>
+<p>概括如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">设计原则</th>
+<th>概述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">开闭原则</td>
+<td>对扩展开放，对修改关闭。</td>
+</tr>
+<tr>
+<td align="left">依赖倒置原则</td>
+<td>通过抽象使各个类或者模块不相互影响，实现松耦合。</td>
+</tr>
+<tr>
+<td align="left">单一职责原则</td>
+<td>一个类、接口、方法只做一件事。</td>
+</tr>
+<tr>
+<td align="left">接口隔离原则</td>
+<td>使用多个隔离的接口，比使用单个总接口要好。</td>
+</tr>
+<tr>
+<td align="left">迪米特法则</td>
+<td>又叫最少知道原则，一个类对其所依赖的类知道得越少越好。</td>
+</tr>
+<tr>
+<td align="left">里氏替换原则</td>
+<td>子类可以扩展父类的功能但不能改变父类原有的功能。</td>
+</tr>
+<tr>
+<td align="left">合成复用原则</td>
+<td>尽量使用对象组合、聚合，而不使用继承关系达到代码复用的目的。</td>
+</tr>
+</tbody></table>
+<h3 id="2-初识设计模式"><a href="#2-初识设计模式" class="headerlink" title="2.初识设计模式"></a>2.初识设计模式</h3><p>经典框架都在用设计模式解决问题。Spring 就是一个把设计模式用得淋漓尽致的经典框架，其实从类的命名就能看出来，举例如下：、</p>
+<h4 id="1-Spring中常见设计模式"><a href="#1-Spring中常见设计模式" class="headerlink" title="1. Spring中常见设计模式"></a>1. Spring中常见设计模式</h4><table>
+<thead>
+<tr>
+<th>设计模式名称</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工厂模式</td>
+<td>BeanFactory</td>
+</tr>
+<tr>
+<td>装饰器模式</td>
+<td>BeanWrapper</td>
+</tr>
+<tr>
+<td>代理模式</td>
+<td>AopProxy</td>
+</tr>
+<tr>
+<td>委派模式</td>
+<td>DispatcherServlet</td>
+</tr>
+<tr>
+<td>策略模式</td>
+<td>HandlerMapping</td>
+</tr>
+<tr>
+<td>适配器模式</td>
+<td>HandlerAdapter</td>
+</tr>
+<tr>
+<td>模板模式</td>
+<td>JdbcTemplate</td>
+</tr>
+<tr>
+<td>观察者模式</td>
+<td>ContextLoaderListener</td>
+</tr>
+</tbody></table>
+<h3 id="3-设计模式分类"><a href="#3-设计模式分类" class="headerlink" title="3.设计模式分类"></a>3.设计模式分类</h3><p>总体来说设计模式分为三大类：（主要学习粗体部分）</p>
+<ul>
+<li>创建型模式，共五种：工厂方法模式、<strong>抽象工厂模式</strong>、<strong>单例模式</strong>、建造者模式、<strong>原型模式</strong>。</li>
+<li>结构型模式，共七种：<strong>适配器模式</strong>、<strong>装饰器模式</strong>、<strong>代理模式</strong>、外观模式、桥接模式、组合模式、享元模式。</li>
+<li>行为型模式，共十一种：<strong>策略模式</strong>、<strong>模板方法模式</strong>、<strong>委派模式</strong>、<strong>观察者模式</strong>、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。</li>
+</ul>
+<h3 id="4-创建模式"><a href="#4-创建模式" class="headerlink" title="4.创建模式"></a>4.创建模式</h3><p><strong>工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。</strong></p>
+<h4 id="1-工厂模式（Pizza产品为例）"><a href="#1-工厂模式（Pizza产品为例）" class="headerlink" title="1.工厂模式（Pizza产品为例）"></a>1.工厂模式（Pizza产品为例）</h4><p>工厂模式的关键点就是如何描述好工厂与产品这两个角色之间的关系。</p>
+<p>一下四种情况：</p>
+<ol>
+<li>单一产品。即工厂只生产一种类型的产品。（小汽车：高中低三档）</li>
+<li>多产品系，特征相同。即（小汽车、SUV：高中低三档）</li>
+<li>多产品系，部分特征相同。（小汽车、SUV：高中二档， 小汽车：低档）</li>
+<li>多产品系，无特征相同。（小汽车：高中二档， SUV：低档）</li>
+</ol>
+<h5 id="1-简单工厂模式（单产品系：抽象产品）"><a href="#1-简单工厂模式（单产品系：抽象产品）" class="headerlink" title="1.简单工厂模式（单产品系：抽象产品）"></a>1.简单工厂模式（单产品系：抽象产品）</h5><p>简单工厂模式是指由一个工厂对象决定创建出哪一种产品类的实例，但它不属于 GOF 23 种设计模式。</p>
+<p><strong>定义：</strong>定义了一个创建对象的类，由这个类来封装实例化对象的行为。</p>
+<p><strong>举例：</strong>（我们举一个pizza工厂的例子）</p>
+<p>pizza工厂一共生产三种类型的pizza：chesse,pepper,greak。通过工厂类（SimplePizzaFactory）实例化这三种类型的对象。</p>
+<p>类图如下：</p>
+<p><img src="/../../../../images/simplefactory.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class SimplePizzaFactory &#123;</span><br><span class="line">       public Pizza CreatePizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">                     pizza = new CheesePizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;greek&quot;)) &#123;</span><br><span class="line">                     pizza = new GreekPizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">                     pizza = new PepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>简单工厂存在的问题与解决方法：</strong> 简单工厂模式有一个问题就是，类的创建依赖工厂类，也就是说，如果想要拓展程序，必须对工厂类进行修改，<strong>这违背了开闭原则</strong>。</p>
+<p>从设计角度考虑，我们可以定义一个创建对象的抽象方法并创建多个不同的工厂类实现该抽象方法，这样一旦需要增加新的功能，直接增加新的工厂类就可以了，不需要修改之前的代码。这也就是<strong>工厂方法模式</strong>。</p>
+<h5 id="2-工厂方法模式（单产品系-抽象产品-抽象工厂）"><a href="#2-工厂方法模式（单产品系-抽象产品-抽象工厂）" class="headerlink" title="2.工厂方法模式（单产品系: 抽象产品+抽象工厂）"></a>2.工厂方法模式（单产品系: 抽象产品+抽象工厂）</h5><p><strong>定义：</strong>定义了一个创建对象的抽象方法，由子类决定要实例化的类。工厂方法模式将对象的实例化推迟到子类。</p>
+<p>举例：（我们依然举pizza工厂的例子，不过这个例子中，pizza产地有两个：伦敦和纽约）。添加了一个新的产地，如果用简单工厂模式的的话，我们要去修改工厂代码，并且会增加一堆的if else语句。而工厂方法模式克服了简单工厂要修改代码的缺点，它会直接创建两个工厂，纽约工厂和伦敦工厂。类图如下：<br><img src="/../../../../images/factoryMethod.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">OrderPizza 抽象类 有个抽象的方法：</span><br><span class="line">abstract Pizza createPizza();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">两个工厂子类 继承OrderPizza并实现抽象方法：</span><br><span class="line">public class LDOrderPizza extends OrderPizza &#123;</span><br><span class="line">       Pizza createPizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">                     pizza = new LDCheesePizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">                     pizza = new LDPepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class NYOrderPizza extends OrderPizza &#123;</span><br><span class="line"> </span><br><span class="line">	Pizza createPizza(String ordertype) &#123;</span><br><span class="line">		Pizza pizza = null;</span><br><span class="line"> </span><br><span class="line">		if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">			pizza = new NYCheesePizza();</span><br><span class="line">		&#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">			pizza = new NYPepperPizza();</span><br><span class="line">		&#125;</span><br><span class="line">		return pizza;</span><br><span class="line"> </span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过不同的工厂会得到不同的实例化的对象，PizzaStroe的代码如下：</span><br><span class="line"></span><br><span class="line">public class PizzaStroe &#123;</span><br><span class="line">       public static void main(String[] args) &#123;</span><br><span class="line">              OrderPizza mOrderPizza;</span><br><span class="line">              mOrderPizza = new NYOrderPizza();</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解决了简单工厂模式的问题：增加一个新的pizza产地（北京），只要增加一个BJOrderPizza类：</span><br><span class="line">public class BJOrderPizza extends OrderPizza &#123;</span><br><span class="line">       Pizza createPizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (ordertype.equals(&quot;cheese&quot;)) &#123;</span><br><span class="line">                     pizza = new LDCheesePizza();</span><br><span class="line">              &#125; else if (ordertype.equals(&quot;pepper&quot;)) &#123;</span><br><span class="line">                     pizza = new LDPepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个模式的好处就是，如果你现在想增加一个功能，只需做一个实现类就好了，无需去改动现成的代码。这样做，拓展性较好（满足开闭原则）！</p>
+<p><strong>工厂方法存在的问题：</strong> 客户端需要创建类的具体的实例。</p>
+<p>为了解决这一问题，我们可以把工厂类抽象为接口，用户只需要去找默认的工厂提出自己的需求（传入参数），便能得到自己想要产品，而不用根据产品去寻找不同的工厂，方便用户操作。这也就是抽象工厂模式。</p>
+<h5 id="3-抽象工厂模式（多产品系-抽象产品-抽象工厂）"><a href="#3-抽象工厂模式（多产品系-抽象产品-抽象工厂）" class="headerlink" title="3.抽象工厂模式（多产品系: 抽象产品+抽象工厂）"></a>3.抽象工厂模式（多产品系: 抽象产品+抽象工厂）</h5><p><strong>定义：</strong>定义了一个接口用于创建相关或有依赖关系的对象族，而无需明确指定具体类。</p>
+<p><strong>举例：</strong>（我们依然举pizza工厂的例子，pizza工厂有两个：纽约工厂和伦敦工厂）。类图如下：</p>
+<p><img src="/../../../../images/abstractFactory.png"></p>
+<p>工厂的接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface AbsFactory &#123;</span><br><span class="line">       Pizza CreatePizza(String ordertype) ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工厂的实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class LDFactory implements AbsFactory &#123;</span><br><span class="line">       @Override</span><br><span class="line">       public Pizza CreatePizza(String ordertype) &#123;</span><br><span class="line">              Pizza pizza = null;</span><br><span class="line">              if (&quot;cheese&quot;.equals(ordertype)) &#123;</span><br><span class="line">                     pizza = new LDCheesePizza();</span><br><span class="line">              &#125; else if (&quot;pepper&quot;.equals(ordertype)) &#123;</span><br><span class="line">                     pizza = new LDPepperPizza();</span><br><span class="line">              &#125;</span><br><span class="line">              return pizza;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-工厂模式（课程为例）"><a href="#2-工厂模式（课程为例）" class="headerlink" title="2. 工厂模式（课程为例）"></a>2. 工厂模式（课程为例）</h4><h5 id="1-简单工厂模式"><a href="#1-简单工厂模式" class="headerlink" title="1.简单工厂模式"></a>1.简单工厂模式</h5><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类<br>的实例，但它不属于 GOF，23 种设计模式。</p>
+<p><img src="/../../../../images/simFactory.png" alt="1638704940486"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 简单工厂模式代码示例</span><br><span class="line"> */</span><br><span class="line">public class CourseFactory &#123;</span><br><span class="line">    /***</span><br><span class="line">     *</span><br><span class="line">     * @param name 自定义类别名创建实例</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static ICourse create(String name)&#123;</span><br><span class="line">        if(&quot;java&quot;.equals(name))&#123;</span><br><span class="line">            return new JavaCourse();</span><br><span class="line">        &#125;else if(&quot;python&quot;.equals(name))&#123;</span><br><span class="line">            return new PythonCourse();</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 使用反射</span><br><span class="line">     * @param className 类的全类名 创建实例</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static ICourse createByClassName(String className)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            if(!(null == className || &quot;&quot;.equals(className)))&#123;</span><br><span class="line">                return (ICourse) Class.forName(className).newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 使用反射</span><br><span class="line">     * @param clazz 类名 创建实例  *.class</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static ICourse createByClass(Class&lt;? extends  ICourse&gt; clazz)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            if(null != clazz)&#123;</span><br><span class="line">                return clazz.newInstance();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">---------------------------------</span><br><span class="line">public class SimpleFactoryCourseClient &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ICourse courseJava = CourseFactory.createByClass(JavaCourse.class);</span><br><span class="line">        courseJava.record();</span><br><span class="line">        ICourse coursePython = CourseFactory.createByClass(PythonCourse.class);</span><br><span class="line">        coursePython.record();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-工程方法模式"><a href="#2-工程方法模式" class="headerlink" title="2.工程方法模式"></a>2.工程方法模式</h5><p>工厂方法模式（Fatory Method Pattern）是指定义一个创建对象的接口，但让实现这个<br>接口的类来决定实例化哪个类，<strong>工厂方法让类的实例化推迟到子类中进行</strong>。</p>
+<p>在工厂方法模式中用户<strong>只需要关心所需产品对应的工厂，无须关心创建细节</strong>，而且<strong>加入新的产品符合开闭原则</strong>。</p>
+<p><img src="/../../../../images/factorypattern.png" alt="1638711783290"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">------------------------------------------</span><br><span class="line">public interface ICourseFactory &#123;</span><br><span class="line">    ICourse create();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">------------------------------------------</span><br><span class="line">public class JavaCourseFactory implements ICourseFactory&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ICourse create() &#123;</span><br><span class="line">        return new JavaCourse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------</span><br><span class="line">public class PythonCourseFactory implements ICourseFactory&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ICourse create() &#123;</span><br><span class="line">        return new PythonCourse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">--------------------------------------------</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	ICourseFactory pythonCourseFactory = new PythonCourseFactory();</span><br><span class="line">	ICourse course = pythonCourseFactory.create();</span><br><span class="line">	course.record();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-抽象工厂模式"><a href="#3-抽象工厂模式" class="headerlink" title="3.抽象工厂模式"></a>3.抽象工厂模式</h5><p>抽象工厂模式（Abastract Factory Pattern）是指提供一个创建一系列相关或相互依赖对象的接口，无须指定他们具体的类。</p>
+<p>客户端（应用层）不依赖于产品类实例如何被创建、实现等细节，强调的是一系列相关的产品对象（属于同一产品族）一起使用创建对象需要大量重复的代码。</p>
+<p><img src="/../../../../images/abstractFacPre.png" alt="1638712060716"></p>
+<p>相同深浅的颜色就代表同一个产品族，相同形状的代表同一个产品等级结构。</p>
+<p>如格力、美的等电器生产多种家用电器（热水器、冰箱、空调）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">public interface INote &#123;</span><br><span class="line">    void edit();</span><br><span class="line">&#125;</span><br><span class="line">public interface IVideo &#123;</span><br><span class="line">    void record();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class JavaNote implements INote&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void edit() &#123;</span><br><span class="line">        System.out.println(&quot;Java 课程笔记学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class JavaVideo implements IVideo&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void record() &#123;</span><br><span class="line">        System.out.println(&quot;Java 课程视频学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class PythonNote implements INote&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void edit() &#123;</span><br><span class="line">        System.out.println(&quot;Python 课程笔记学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class PythonVideo implements IVideo&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void record() &#123;</span><br><span class="line">        System.out.println(&quot;Python 课程视频学习&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public interface CourseFactory &#123;</span><br><span class="line">    INote createNote();</span><br><span class="line">    IVideo createVideo();</span><br><span class="line">&#125;</span><br><span class="line">public class JavaCourseFactory implements CourseFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public INote createNote() &#123;</span><br><span class="line">        return new JavaNote();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IVideo createVideo() &#123;</span><br><span class="line">        return new JavaVideo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public class PythonCourseFactory implements CourseFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public INote createNote() &#123;</span><br><span class="line">        return new PythonNote();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IVideo createVideo() &#123;</span><br><span class="line">        return new PythonVideo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-单例模式"><a href="#3-单例模式" class="headerlink" title="3.单例模式"></a>3.单例模式</h4><p>单例模式（Singleton Pattern）是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点。</p>
+<h5 id="1-饿汉模式"><a href="#1-饿汉模式" class="headerlink" title="1.饿汉模式"></a>1.饿汉模式</h5><p>饿汉式单例是在类加载的时候就立即初始化，并且创建单例对象。绝对线程安全，在线程还没出现以前就是实例化了，不可能存在访问安全问题。</p>
+<p><strong>优点</strong>：没有加任何的锁、执行效率比较高，在用户体验上来说，比懒汉式更好。<br><strong>缺点</strong>：类加载的时候就初始化，不管用与不用都占着空间，浪费了内存，有可能占着茅坑不拉屎。</p>
+<p><strong>Spring 中 IOC 容器 ApplicationContext 本身就是典型的饿汉式单例</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 饿汉式</span><br><span class="line"> */</span><br><span class="line">public class HungrySingleton &#123;</span><br><span class="line"></span><br><span class="line">//    private static final HungrySingleton hungrySingleton =</span><br><span class="line">//            new HungrySingleton();</span><br><span class="line"></span><br><span class="line">    private static final HungrySingleton hungrySingleton;</span><br><span class="line">    static &#123;</span><br><span class="line">        hungrySingleton = new HungrySingleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //private 无参构造方法</span><br><span class="line">    private HungrySingleton()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    public static HungrySingleton getInstance()&#123;</span><br><span class="line">        return hungrySingleton;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-懒汉式-线程不安全"><a href="#2-懒汉式-线程不安全" class="headerlink" title="2.懒汉式- 线程不安全"></a>2.懒汉式- 线程不安全</h5><p>懒汉式单例的特点是：被外部类调用的时候内部类才会加载。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1.线程不安全的懒汉式</span><br><span class="line">/***</span><br><span class="line"> * 懒汉式 存在线程安全问题</span><br><span class="line"> */</span><br><span class="line">public class LazySimpleSingleton &#123;</span><br><span class="line">    private LazySimpleSingleton()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    private static LazySimpleSingleton lazy = null;</span><br><span class="line">    public static LazySimpleSingleton getInstance()&#123;</span><br><span class="line">        if(lazy == null)&#123;</span><br><span class="line">            lazy = new LazySimpleSingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        return  lazy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:线程不安全</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-懒汉式-synchronize"><a href="#3-懒汉式-synchronize" class="headerlink" title="3.懒汉式- synchronize"></a>3.懒汉式- synchronize</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 懒汉式 synchronized</span><br><span class="line"> */</span><br><span class="line">public class LazySimpleSingletonPlus &#123;</span><br><span class="line">    private LazySimpleSingletonPlus()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    private static LazySimpleSingletonPlus lazy = null;</span><br><span class="line">    public synchronized static LazySimpleSingletonPlus getInstance()&#123;</span><br><span class="line">        if(lazy == null)&#123;</span><br><span class="line">            lazy = new LazySimpleSingletonPlus();</span><br><span class="line">        &#125;</span><br><span class="line">        return  lazy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:用</span><br><span class="line">synchronized 加锁，解决了线程安全的问题，但是在线程数量比较多情况下，如果 CPU 分配压力上升，会导致大批量线程出现阻塞，从而导致程序运行性能大幅下降。</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="4-懒汉式-双重检查锁"><a href="#4-懒汉式-双重检查锁" class="headerlink" title="4.懒汉式- 双重检查锁"></a>4.懒汉式- 双重检查锁</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/***</span><br><span class="line"> * 懒汉式 双重检查锁</span><br><span class="line"> */</span><br><span class="line">public class LazySimpleSingletonPlus &#123;</span><br><span class="line">    private LazySimpleSingletonPlus()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    private static LazySimpleSingletonPlus lazy = null;</span><br><span class="line">    public static LazySimpleSingletonPlus getInstance()&#123;</span><br><span class="line">        if(lazy == null)&#123;</span><br><span class="line">            synchronized (LazySimpleSingletonPlus.class)&#123;</span><br><span class="line">                if(lazy == null)&#123;</span><br><span class="line">                    lazy = new LazySimpleSingletonPlus();</span><br><span class="line">                    //1.分配内存给这个对象</span><br><span class="line">                    //2.初始化对象</span><br><span class="line">                    //3/设置 lazy 指向刚分配的内存地址</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return  lazy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:阻塞并不是基于整个 LazySimpleSingleton 类的阻塞，而是在 getInstance()方法内部阻塞，只要逻辑不是太复杂，对于调用者而言感知不到。</span><br><span class="line">但是，用到 synchronized 关键字，总归是要上锁，对程序性能还是存在一定影响的。</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="5-懒汉式-静态内部类"><a href="#5-懒汉式-静态内部类" class="headerlink" title="5.懒汉式- 静态内部类"></a>5.懒汉式- 静态内部类</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题</span><br><span class="line">//完美地屏蔽了这两个缺点</span><br><span class="line">public class LazyInnerClassSingleton &#123;</span><br><span class="line">    //默认使用 LazyInnerClassGeneral 的时候，会先初始化内部类</span><br><span class="line">    //如果没使用的话，内部类是不加载的</span><br><span class="line">    private LazyInnerClassSingleton()&#123;&#125;</span><br><span class="line">    //每一个关键字都不是多余的</span><br><span class="line">    //static 是为了使单例的空间共享</span><br><span class="line">    //保证这个方法不会被重写，重载</span><br><span class="line">    public static final LazyInnerClassSingleton getInstance()&#123;</span><br><span class="line">    //在返回结果以前，一定会先加载内部类</span><br><span class="line">        return LazyHolder.LAZY;</span><br><span class="line">    &#125;</span><br><span class="line">    //默认不加载</span><br><span class="line">    private static class LazyHolder&#123;</span><br><span class="line">        private static final LazyInnerClassSingleton LAZY = new LazyInnerClassSingleton();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ps:这种形式兼顾饿汉式的内存浪费，也兼顾 synchronized 性能问题。</span><br><span class="line">内部类一定是要在方法调用之前初始化，巧妙地避免了线程安全问题。</span><br></pre></td></tr></table></figure>
+
+<p>以上的单例模式的构造方法除了加上 private 以外，没有做任何处理。如果我们使用反射来调用其构造方法，然后，再调用 getInstance()方法，应该就会两个不同的实例。示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class LazyInnerClassSingletonTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            //很无聊的情况下，进行破坏</span><br><span class="line">            Class&lt;?&gt; clazz = LazyInnerClassSingleton.class;</span><br><span class="line">            //通过反射拿到私有的构造方法</span><br><span class="line">            Constructor c = clazz.getDeclaredConstructor(null);</span><br><span class="line">            //强制访问，强吻，不愿意也要吻</span><br><span class="line">            c.setAccessible(true);</span><br><span class="line">            //暴力初始化</span><br><span class="line">            Object o1 = c.newInstance();</span><br><span class="line">            //调用了两次构造方法，相当于 new 了两次</span><br><span class="line">            //犯了原则性问题，</span><br><span class="line">            Object o2 = c.newInstance();</span><br><span class="line">            System.out.println(o1 == o2);</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-注册式单例"><a href="#6-注册式单例" class="headerlink" title="6.注册式单例"></a>6.注册式单例</h5><p>注册式单例就是将每一个实例都登记到某一个地方，使用唯一的标识获取实例。</p>
+<p>注册式单例有两种写法：一种为容器缓存，一种为枚举登记。先来看枚举式单例的写法</p>
+<h6 id="1-枚举登记"><a href="#1-枚举登记" class="headerlink" title="1.枚举登记"></a>1.枚举登记</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public enum EnumSingleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    private Object data;</span><br><span class="line">    public Object getData() &#123;</span><br><span class="line">        return data;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setData(Object data) &#123;</span><br><span class="line">        this.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">    public static EnumSingleton getInstance()&#123;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//测试</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            EnumSingleton instance1 = null;</span><br><span class="line">            EnumSingleton instance2 = EnumSingleton.getInstance();</span><br><span class="line">            instance2.setData(new Object());</span><br><span class="line">            FileOutputStream fos = new FileOutputStream(&quot;EnumSingleton.obj&quot;);</span><br><span class="line">            ObjectOutputStream oos = new ObjectOutputStream(fos);</span><br><span class="line">            oos.writeObject(instance2);</span><br><span class="line">            oos.flush();</span><br><span class="line">            oos.close();</span><br><span class="line">            FileInputStream fis = new FileInputStream(&quot;EnumSingleton.obj&quot;);</span><br><span class="line">            ObjectInputStream ois = new ObjectInputStream(fis);</span><br><span class="line">            instance1 = (EnumSingleton) ois.readObject();</span><br><span class="line">            ois.close();</span><br><span class="line">            System.out.println(instance1.getData());</span><br><span class="line">            System.out.println(instance2.getData());</span><br><span class="line">            System.out.println(instance1.getData() == instance2.getData());</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">ps:没有做任何处理，我们发现运行结果和我们预期的一样。</span><br><span class="line">原来，枚举式单例在静态代码块中就给 INSTANCE 进行了赋值，是饿汉式单例的实现。</span><br><span class="line"></span><br><span class="line">枚举类型其实通过类名和 Class 对象类找到一个唯一的枚举对象。因此，枚举对象不可能被类加载器加载多次。序列化不会破坏枚举式单例</span><br><span class="line"></span><br><span class="line">另外不能用反射来创建枚举类型。因此反射也不会破坏单例。</span><br></pre></td></tr></table></figure>
+
+<p>总结：枚举式单例也是《Effective Java》书中推荐的一种单例实现写法。</p>
+<p>在 JDK 枚举的语法特殊性，以及反射也为枚举保驾护航，让枚举式单例成为一种比较优雅的实现。</p>
+<h6 id="2-容器缓存"><a href="#2-容器缓存" class="headerlink" title="2.容器缓存"></a>2.容器缓存</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class ContainerSingleton &#123;</span><br><span class="line">    private ContainerSingleton()&#123;&#125;</span><br><span class="line">    private static Map&lt;String,Object&gt; ioc = new ConcurrentHashMap&lt;String,Object&gt;();</span><br><span class="line">    public static Object getBean(String className)&#123;</span><br><span class="line">        synchronized (ioc) &#123;</span><br><span class="line">            if (!ioc.containsKey(className)) &#123;</span><br><span class="line">                Object obj = null;</span><br><span class="line">                try &#123;</span><br><span class="line">                    obj = Class.forName(className).newInstance();</span><br><span class="line">                    ioc.put(className, obj);</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                return obj;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return ioc.get(className);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>容器式写法适用于创建实例非常多的情况，便于管理。但是，是非线程安全的。</p>
+<h5 id="7-单例模式小结"><a href="#7-单例模式小结" class="headerlink" title="7.单例模式小结"></a>7.单例模式小结</h5><p>单例模式可以保证内存里只有一个实例，减少了内存开销；可以避免对资源的多重占用。</p>
+
+    </div>
+
+    <div></div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%916%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-text">1.软件开发6大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99"><span class="toc-text">1.开闭原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%87%8C%E6%B0%8F%E4%BB%A3%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="toc-text">2.里氏代换原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="toc-text">3.单一职责原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BE%9D%E8%B5%96%E5%80%92%E8%BD%AC%E5%8E%9F%E5%88%99"><span class="toc-text">4.依赖倒转原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99"><span class="toc-text">5.接口隔离原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E8%BF%AA%E7%B1%B3%E7%89%B9%E5%8E%9F%E5%88%99"><span class="toc-text">6.迪米特原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E5%90%88%E6%88%90%E5%A4%8D%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-text">7.合成复用原则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9D%E8%AF%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.初识设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Spring%E4%B8%AD%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">1. Spring中常见设计模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%86%E7%B1%BB"><span class="toc-text">3.设计模式分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%BC%8F"><span class="toc-text">4.创建模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%EF%BC%88Pizza%E4%BA%A7%E5%93%81%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">1.工厂模式（Pizza产品为例）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%95%E4%BA%A7%E5%93%81%E7%B3%BB%EF%BC%9A%E6%8A%BD%E8%B1%A1%E4%BA%A7%E5%93%81%EF%BC%89"><span class="toc-text">1.简单工厂模式（单产品系：抽象产品）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%95%E4%BA%A7%E5%93%81%E7%B3%BB-%E6%8A%BD%E8%B1%A1%E4%BA%A7%E5%93%81-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%EF%BC%89"><span class="toc-text">2.工厂方法模式（单产品系: 抽象产品+抽象工厂）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%A4%9A%E4%BA%A7%E5%93%81%E7%B3%BB-%E6%8A%BD%E8%B1%A1%E4%BA%A7%E5%93%81-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%EF%BC%89"><span class="toc-text">3.抽象工厂模式（多产品系: 抽象产品+抽象工厂）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BE%E7%A8%8B%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">2. 工厂模式（课程为例）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.简单工厂模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%B7%A5%E7%A8%8B%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.工程方法模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.抽象工厂模式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%A5%BF%E6%B1%89%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.饿汉模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%87%92%E6%B1%89%E5%BC%8F-%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8"><span class="toc-text">2.懒汉式- 线程不安全</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E6%87%92%E6%B1%89%E5%BC%8F-synchronize"><span class="toc-text">3.懒汉式- synchronize</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E6%87%92%E6%B1%89%E5%BC%8F-%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81"><span class="toc-text">4.懒汉式- 双重检查锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-%E6%87%92%E6%B1%89%E5%BC%8F-%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-text">5.懒汉式- 静态内部类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-%E6%B3%A8%E5%86%8C%E5%BC%8F%E5%8D%95%E4%BE%8B"><span class="toc-text">6.注册式单例</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-%E6%9E%9A%E4%B8%BE%E7%99%BB%E8%AE%B0"><span class="toc-text">1.枚举登记</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-%E5%AE%B9%E5%99%A8%E7%BC%93%E5%AD%98"><span class="toc-text">2.容器缓存</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%B0%8F%E7%BB%93"><span class="toc-text">7.单例模式小结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="/../../../../images/wechat.png" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">微信扫一扫向我投食</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2019/12/10/Spring/SpringBoot%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" rel="next" title="SpringBoot从入门到精通">
+          SpringBoot从入门到精通
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2019/12/12/%E4%B8%AD%E9%97%B4%E4%BB%B6/RabbitMQ/" rel="prev" title="RabbitMQ">
+            RabbitMQ
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" target="_blank" rel="noopener" href="https://zshlovely.github.io/">首页</a> |
+        <a class="bottom-item" href="https://zshlovely.github.io/" target="_blank">主站</a> |
+        <a class="bottom-item" href="https://github.com/fenghuayangyi" target="_blank">GitHub</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>
