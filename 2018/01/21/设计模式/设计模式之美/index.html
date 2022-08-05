@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="设计模式," />
+  
+
+  
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>设计模式之美 [ shaohua&#39;s blog ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="/images/logo.png">
+    <span class="title">shaohua&#39;s blog</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        设计模式之美
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2018-01-20T17:10:20.000Z">
+        2018-01-21
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read">阅读耗时 5 分钟</span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="设计模式之美"><a href="#设计模式之美" class="headerlink" title="设计模式之美"></a>设计模式之美</h1><p>设计模式 设计原则 设计思想</p>
+<ul>
+<li>如何分层、分模块？</li>
+<li>应该怎么划分类？</li>
+<li>每个类应该具有哪些属性、方法？</li>
+<li>怎么设计类之间的交互？</li>
+<li>该用继承还是组合？</li>
+<li>该使用接口还是抽象类？</li>
+<li>怎样做到解耦、高内聚低耦合？</li>
+<li>该用单例模式还是静态方法？</li>
+<li>用工厂模式创建对象还是直接 new 出来？</li>
+<li>如何避免引入设计模式提高扩展性的同时带来的降低可读性问题？</li>
+</ul>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><ul>
+<li>应对面试中的设计模式相关的问题</li>
+<li>告别被人吐槽的烂代码</li>
+<li>提高复杂代码的设计能力</li>
+<li>为了 读源码，框架学习事半功倍</li>
+<li>为职业发展铺垫</li>
+</ul>
+<h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><ul>
+<li>Talk is cheap, show me the code.</li>
+</ul>
+<h4 id="代码评价标准（常用）"><a href="#代码评价标准（常用）" class="headerlink" title="代码评价标准（常用）"></a>代码评价标准（常用）</h4><ul>
+<li><p>可维护性</p>
+</li>
+<li><p>可读性</p>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>灵活性</p>
+</li>
+<li><p>简洁性（简单、复杂）</p>
+</li>
+<li><p>可复用性</p>
+</li>
+<li><p>可测试性</p>
+</li>
+</ul>
+<h4 id="KISS原则"><a href="#KISS原则" class="headerlink" title="KISS原则"></a>KISS原则</h4><p><em>在设计当中应当注重简约的原则。</em>Keep it Simple and Stupid</p>
+<h4 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h4><ul>
+<li>面向对象的四大特性：封装、抽象、继承、多态</li>
+<li>面向对象编程与面向过程编程的区别和联系</li>
+<li>面向对象分析、面向对象设计、面向对象编程</li>
+<li>接口和抽象类的区别以及各自的应用场景</li>
+<li>基于接口而非实现编程的设计思想</li>
+<li>多用组合少用继承的设计思想</li>
+<li>面向过程的贫血模型和面向对象的充血模型</li>
+</ul>
+<h4 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h4><ul>
+<li>SOLID 原则 -SRP 单一职责原则</li>
+<li>SOLID 原则 -OCP 开闭原则</li>
+<li>SOLID 原则 -LSP 里式替换原则</li>
+<li>SOLID 原则 -ISP 接口隔离原则</li>
+<li>SOLID 原则 -DIP 依赖倒置原则</li>
+<li>DRY 原则、KISS 原则、YAGNI 原则、LOD 法则</li>
+</ul>
+<h4 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h4><h5 id="1-创建型"><a href="#1-创建型" class="headerlink" title="1. 创建型"></a>1. 创建型</h5><p>常用的有：<strong>单例模式</strong>、<strong>工厂模式</strong>（工厂方法和抽象工厂）、<strong>建造者模式</strong>。不常用的有：原型模式。</p>
+<h5 id="2-结构型"><a href="#2-结构型" class="headerlink" title="2. 结构型"></a>2. 结构型</h5><p>常用的有：<strong>代理模式</strong>、桥接模式、<strong>装饰者模式</strong>、<strong>适配器模式</strong>。</p>
+<p>不常用的有：门面模式、组合模式、享元模式。</p>
+<h5 id="3-结构型"><a href="#3-结构型" class="headerlink" title="3. 结构型"></a>3. 结构型</h5><p>常用的有：<strong>观察者模式</strong>、模板模式、<strong>策略模式</strong>、职责链模式、迭代器模式、状态模式。</p>
+<p>不常用的有：访问者模式、备忘录模式、命令模式、解释器模式、中介模式。</p>
+<p>总结： </p>
+<p>面向对象是编程基础，</p>
+<p>设计原则是指导原则，</p>
+<p>设计模式是针对软件开发中经常遇到的一些设计问题，总结出来的一套解决方案或者设计思路。</p>
+<p><img src="/../../../../images/1652696269355.png" alt="1652696269355"></p>
+<h2 id="面向对象-1"><a href="#面向对象-1" class="headerlink" title="面向对象"></a>面向对象</h2><p>接口和抽象类如何选择</p>
+<p>1.优先使用接口。<br>2.使用抽象类：既要约束子类的行为又要为子类提供公共的功能。</p>
+<h2 id="设计原则-1"><a href="#设计原则-1" class="headerlink" title="设计原则"></a>设计原则</h2><h2 id="规范与重构"><a href="#规范与重构" class="headerlink" title="规范与重构"></a>规范与重构</h2><h2 id="设计模式-1"><a href="#设计模式-1" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1-创建型-1"><a href="#1-创建型-1" class="headerlink" title="1. 创建型"></a>1. 创建型</h3><h3 id="2-结构性"><a href="#2-结构性" class="headerlink" title="2. 结构性"></a>2. 结构性</h3><h3 id="3-行为型"><a href="#3-行为型" class="headerlink" title="3. 行为型"></a>3. 行为型</h3>
+    </div>
+
+    <div></div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%BE%8E"><span class="toc-text">设计模式之美</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84"><span class="toc-text">目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E8%AF%BB"><span class="toc-text">导读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%84%E4%BB%B7%E6%A0%87%E5%87%86%EF%BC%88%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="toc-text">代码评价标准（常用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KISS%E5%8E%9F%E5%88%99"><span class="toc-text">KISS原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">面向对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-text">设计原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E5%9E%8B"><span class="toc-text">1. 创建型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E7%BB%93%E6%9E%84%E5%9E%8B"><span class="toc-text">2. 结构型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E7%BB%93%E6%9E%84%E5%9E%8B"><span class="toc-text">3. 结构型</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1"><span class="toc-text">面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99-1"><span class="toc-text">设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83%E4%B8%8E%E9%87%8D%E6%9E%84"><span class="toc-text">规范与重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-1"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E5%9E%8B-1"><span class="toc-text">1. 创建型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BB%93%E6%9E%84%E6%80%A7"><span class="toc-text">2. 结构性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%8C%E4%B8%BA%E5%9E%8B"><span class="toc-text">3. 行为型</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="/../../../../images/wechat.png" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">微信扫一扫向我投食</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2018/01/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="next" title="计算机组成原理">
+          计算机组成原理
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2018/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%90%86%E8%A7%A3/" rel="prev" title="设计模式理解">
+            设计模式理解
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" target="_blank" rel="noopener" href="https://zshlovely.github.io/">首页</a> |
+        <a class="bottom-item" href="https://zshlovely.github.io/" target="_blank">主站</a> |
+        <a class="bottom-item" href="https://github.com/fenghuayangyi" target="_blank">GitHub</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

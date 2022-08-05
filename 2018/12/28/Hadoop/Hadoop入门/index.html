@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Hadoop," />
+  
+
+  
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Hadoop入门 [ shaohua&#39;s blog ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="/images/logo.png">
+    <span class="title">shaohua&#39;s blog</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Hadoop入门
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2018-12-27T17:10:20.000Z">
+        2018-12-28
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read">阅读耗时 11 分钟</span>
+    </header>
+
+    <div class="post-content">
+      <h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
+<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
+<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
+<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
+</ul>
+<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
+<ul>
+<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
+<li>Cloudera在大型互联网企业中用的较多。</li>
+<li>Hortonworks文档较好。</li>
+</ul>
+<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
+<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
+<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
+<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
+<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
+<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
+<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
+<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
+<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
+<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
+<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
+<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
+<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
+<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
+<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
+<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
+<p>1）Map阶段并行处理输入数据。</p>
+<p>2）Reduce阶段对Map结果进行汇总。</p>
+<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
+<p>名词解释如下：</p>
+<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
+<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
+<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
+<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
+<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
+<p> 可以基于Hadoop上存储的大数据进行计算。</p>
+<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
+<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
+<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
+<ul>
+<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
+<li>可以将sql语句转换为MapReduce任务进行运行。</li>
+</ul>
+<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
+<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
+<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
+<ul>
+<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
+<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
+<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
+</ul>
+<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
+<ul>
+<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
+<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
+</ul>
+<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
+<li><p>官方网址：<a target="_blank" rel="noopener" href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
+</li>
+<li><p>各个版本归档库地址：<a target="_blank" rel="noopener" href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
+</li>
+<li><p>hadoop2.7.2版本详情介绍：<a target="_blank" rel="noopener" href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
+<p>Hadoop运行模式：</p>
+<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
+<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
+<p>（3）完全分布式模式：多个节点一起运行。</p>
+</li>
+</ul>
+
+    </div>
+
+    <div></div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop%E6%A1%86%E6%9E%B6"><span class="toc-text">Hadoop框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">Hadoop是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop%E4%B8%89%E5%A4%A7%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%AC"><span class="toc-text">Hadoop三大发行版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">Hadoop的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop%E7%BB%84%E6%88%90"><span class="toc-text">Hadoop组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HDFS%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-text">HDFS架构概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#YARN%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-text">YARN架构概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MapReduce%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-text">MapReduce架构概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8A%80%E6%9C%AF%E7%94%9F%E6%80%81%E4%BD%93%E7%B3%BB"><span class="toc-text">大数据技术生态体系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-text">Hadoop运行模式</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="/../../../../images/wechat.png" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">微信扫一扫向我投食</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2018/12/10/Linux/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="Linux 常用命令">
+          Linux 常用命令
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2018/12/31/Linux/Linux%20%E5%88%9D%E5%AD%A6%E4%B9%A0/" rel="prev" title="Linux 初学习">
+            Linux 初学习
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" target="_blank" rel="noopener" href="https://zshlovely.github.io/">首页</a> |
+        <a class="bottom-item" href="https://zshlovely.github.io/" target="_blank">主站</a> |
+        <a class="bottom-item" href="https://github.com/fenghuayangyi" target="_blank">GitHub</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

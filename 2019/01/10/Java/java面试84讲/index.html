@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Java基础,面试," />
+  
+
+  
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>java面试84讲 [ shaohua&#39;s blog ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="/images/logo.png">
+    <span class="title">shaohua&#39;s blog</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        java面试84讲
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2019-01-09T17:10:20.000Z">
+        2019-01-10
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag">Java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read">阅读耗时 23 分钟</span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="1-Java基础部分"><a href="#1-Java基础部分" class="headerlink" title="1. Java基础部分"></a>1. Java基础部分</h1><h2 id="1-1-跨平台原理"><a href="#1-1-跨平台原理" class="headerlink" title="1.1 跨平台原理"></a>1.1 跨平台原理</h2><p>由于操作系统的指令集不完全一致，同一程序在不同的操作系统中需要执行不同的程序代码。</p>
+<p>java通过java虚拟机屏蔽各个系统之间的差异。java虚拟机将.java文件编译成.class文件，然后不同的操作系统对应的java虚拟机略有不同，有java虚拟机将.class文件翻译成机器码交由操作系统运行。</p>
+<p>java通过不同系统，不同位数的java虚拟机屏蔽操作系统之间的差异。因此对于外界来说，java是跨平台的。</p>
+<h2 id="1-2-java中int-数据占几个字节"><a href="#1-2-java中int-数据占几个字节" class="headerlink" title="1.2 java中int 数据占几个字节"></a>1.2 java中int 数据占几个字节</h2><p>Java中有8种基本数据类型</p>
+<p>数据类型 二进制位数(字节数) 范围</p>
+<p>byte 8（1） -128 - 127</p>
+<p>short 16（2） -32768 - 32768</p>
+<p>int 32（4）</p>
+<p>long 64（8）</p>
+<p>float 32（4）</p>
+<p>double 64（8）</p>
+<p>char 16（2）</p>
+<p>boolean 1</p>
+<h2 id="1-3-面向对象的特征有哪些方面"><a href="#1-3-面向对象的特征有哪些方面" class="headerlink" title="1.3 面向对象的特征有哪些方面"></a>1.3 面向对象的特征有哪些方面</h2><p>有三大基本特征：封装，继承，多态</p>
+<ul>
+<li><p>封装：将描述一个对象的属性和行为封装成一个类，把具体的业务逻辑功能实现封装成一个方法。封装的意义：把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。</p>
+<p>—-&gt;减少了大量的冗余代码<br>—-&gt;封装将复杂的功能封装起来，对外开放一个接口，简单调用即可。</p>
+</li>
+<li><p>继承：所有的子类所共有的行为和属性抽取为一个父类，实现代码的复用。所有的子类继承该类可具备父类的属性和行为，继承具有单一性和传递性。</p>
+<p>—-&gt;减少了类的冗余代码<br>—-&gt;让类与类之间产生关系，为多态打下基础</p>
+</li>
+<li><p>多态：多态性体现在父类中定义的属性和方法被子类继承后，子类可以具有不同的属性或表现方式。</p>
+<p>—–&gt;虚方法 virtual override<br>—–&gt;抽象类 abstract override<br>—–&gt;接口 interface</p>
+<p>多态可分为行为多态和对象多态。</p>
+<ul>
+<li>行为多态：同一个run( ){ }方法，不同的对象调用时会有不同的实现。</li>
+<li>对象多态：同一个对象，可以被造型为不同的类型。定义一个引用变量，他所指向的具体类型和通过该引用变量调用的方法在编程时并不确定，只有<strong>在程序运行期间才确定</strong>，即一个引用变量具体指向哪个类的实例对象。</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-4-为什么需要包装类"><a href="#1-4-为什么需要包装类" class="headerlink" title="1.4 为什么需要包装类"></a>1.4 为什么需要包装类</h2><p>包装类是使得基本数据类型具有类的性质。jdk1.5以后自动装箱和拆箱。</p>
+<p>原因：java是面向对象的语言，而基本数据类型不具有对象的特征，为了让基本类型也具有对象的特征，就出现了包装类型。</p>
+<p>为什么存在这两种类型呢？</p>
+<p>在Java语言中，new一个对象存储在堆里，我们通过栈中的引用来使用这些对象；但是对于经常用到的一系列类型如int，如果我们用new将其存储在堆里就不是很有效——特别是简单的小的变量。所以就出现了基本类型，对于这些类型不是用new关键字来创建，而是直接将<strong>变量的值存储在栈中</strong>，因此更加高效。</p>
+<h2 id="1-5-x3D-x3D-和equals的区别？"><a href="#1-5-x3D-x3D-和equals的区别？" class="headerlink" title="1.5 &#x3D;&#x3D; 和equals的区别？"></a>1.5 &#x3D;&#x3D; 和equals的区别？</h2><p>基本数据类型的话，&#x3D;&#x3D; 比较的是两个变量的值是否相等。</p>
+<p>引用数据类型的话，&#x3D;&#x3D; 比较的是两个变量的内存地址是否相等。</p>
+<p>equals的话 用来比较两个对象是否长得一样，本质就是调用对象的equals方法。（需要重写object的equals方法，如果不重写的话，比较的也是内存地址）</p>
+<p>ps:基本数据类型没有equals方法，他是object的一个方法。</p>
+<h2 id="1-6-String-StringBuilder-StringBuffer的区别？"><a href="#1-6-String-StringBuilder-StringBuffer的区别？" class="headerlink" title="1.6 String,StringBuilder,StringBuffer的区别？"></a>1.6 String,StringBuilder,StringBuffer的区别？</h2><p>String类提供了数值不可改变的字符串。final类</p>
+<p>StringBuilder,StringBuffer是内容可以改变的字符串。底层使用的是可变字符数组。</p>
+<p>StringBuilder线程不安全，高效，StringBuffer线程安全，效率不高（synchronized修饰）</p>
+<h2 id="1-7-讲一下java中的集合"><a href="#1-7-讲一下java中的集合" class="headerlink" title="1.7 讲一下java中的集合"></a>1.7 讲一下java中的集合</h2><p>Java中集合分两种：value和key-value两种。</p>
+<p>存储值的又分为：<strong>List和Set</strong></p>
+<ul>
+<li>List是有序的，可以重复的</li>
+<li>Set是无序的，不可重复的，根据equals和hashcode判断。ps:如果一个对象要存在set中，必须重写equals和hashcode方法。</li>
+</ul>
+<p>存储key-value的有：<strong>map</strong></p>
+<h2 id="1-8-ArrayList-和-LinkList的区别？"><a href="#1-8-ArrayList-和-LinkList的区别？" class="headerlink" title="1.8 ArrayList 和 LinkList的区别？"></a>1.8 ArrayList 和 LinkList的区别？</h2><p>ArrayList 底层数组实现。LinkList底层链表实现。</p>
+<p>数组查询快，插入和删除比较慢。（数组在内存中是一块连续的内存，插入和删除需要移动数据）</p>
+<p>链表不要求内存连续，因此插入和删除快（只需要改变引用即可），查找慢。</p>
+<p>ArrayList 使用场景：查询多，修改和删除较少，反之LinkList。</p>
+<h2 id="1-9-HashMap和HashTable的区别？"><a href="#1-9-HashMap和HashTable的区别？" class="headerlink" title="1.9 HashMap和HashTable的区别？"></a>1.9 HashMap和HashTable的区别？</h2><p>相同点：HashMap和Hashtable都用来存储key-value数据。</p>
+<p>区别：</p>
+<p>HashMap最多只允许一条记录的键为Null;允许多条记录的值为 Null;而Hashtable不允许为空。</p>
+<p>HashMap不支持线程的同步（线程不安全），效率较高，Hashtable支持线程的同步（线程安全），效率较低。</p>
+<p>如果既想要线程安全有想要高效，使用ConcurrentHashMap（jdk1.5以后）。</p>
+<p>原理：将一个hashmap分为几块,每一小块都是线程安全的，一定程度上将锁的区域减小，在线程安全的基础上，提高效率。</p>
+<h2 id="1-10-实现一个文件拷贝的工具类，使用字节流还是字符流？"><a href="#1-10-实现一个文件拷贝的工具类，使用字节流还是字符流？" class="headerlink" title="1.10 实现一个文件拷贝的工具类，使用字节流还是字符流？"></a>1.10 实现一个文件拷贝的工具类，使用字节流还是字符流？</h2><p>因为文件拷贝不只包含字符流，比如图像，声音等，因此使用字节流。</p>
+<h2 id="1-11-线程的几种实现方式？怎么启动？怎么区分？线程池的作用？"><a href="#1-11-线程的几种实现方式？怎么启动？怎么区分？线程池的作用？" class="headerlink" title="1.11 线程的几种实现方式？怎么启动？怎么区分？线程池的作用？"></a>1.11 线程的几种实现方式？怎么启动？怎么区分？线程池的作用？</h2><p>线程的2种常用实现方式：</p>
+<ul>
+<li><p>继承Thread类，重写run方法，实现一个线程</p>
+</li>
+<li><p>实现Runnable接口，重写run方法，实现一个线程。</p>
+<p>使用new Thread(new Runnable实现类) 这种方式来生成线程对象，这个时候线程对象中的run方法才会去执行我们自己实现的Runnable接口中的run方法。</p>
+</li>
+</ul>
+<p>怎么启动？</p>
+<ul>
+<li><p>继承Thread类。</p>
+<p>MyThread thread &#x3D; new MyThread();</p>
+<p>thread .start();</p>
+</li>
+<li><p>实现Runnable接口(MyThread)</p>
+<p>Thread thread &#x3D; new Thread(new MyThread);</p>
+<p>thread .start();</p>
+<p>启动线程使用start方法， 启动以后执行的是run方法。</p>
+</li>
+</ul>
+<p>怎么区分线程？thread .setName(“MyThread”);</p>
+<p>线程池的作用？</p>
+<p> 在程序启动的时候就创建若干线程来响应处理，它们被称为线程池，里面的线程叫工作线程。</p>
+<p> 线程的创建是耗时的，因此在应用启用后，预先启动一定数量的线程，当需要的时候，取一个分配给他，执行结束再还给线程池。</p>
+<p>作用：</p>
+<ul>
+<li><strong>限定线程的个数</strong>，不由由于线程过多导致系统运行缓慢或者崩溃。</li>
+<li><strong>降低资源消耗</strong>。不需要频繁的创建和销毁，节约资源。</li>
+<li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要等到线程创建就能立即执行。</li>
+<li><strong>提高线程的可管理性</strong>。</li>
+</ul>
+<h2 id="1-12-有没有使用过线程并发库？"><a href="#1-12-有没有使用过线程并发库？" class="headerlink" title="1.12 有没有使用过线程并发库？"></a>1.12 有没有使用过线程并发库？</h2><p>简单使用过。jdk1.5以后增加的。对Java线程的管理和使用提供了很大的便利性。</p>
+<p>java.util.current包，包含了对线程优化，管理的各项操作。</p>
+<p><strong>java中如何创建线程池</strong>？</p>
+<ul>
+<li>newCachedThreadPool创建一个<strong>可缓存线程池</strong>，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
+<li>newFixedThreadPool 创建一个<strong>定长线程池</strong>，可控制线程最大并发数，超出的线程会在队列中等待。</li>
+<li>newScheduledThreadPool 创建一个<strong>定长线程池</strong>，支持定时及周期性任务执行。</li>
+<li>newSingleThreadExecutor 创建一个<strong>单线程化的线程池</strong>，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</li>
+</ul>
+<h1 id="2-java容器"><a href="#2-java容器" class="headerlink" title="2. java容器"></a>2. java容器</h1><p>Java容器可分为两大类：</p>
+<ul>
+<li><p>Collection</p>
+</li>
+<li><ul>
+<li>List</li>
+<li><ul>
+<li><strong>ArrayList</strong></li>
+<li>LinkedList</li>
+<li>Vector(了解，已过时)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li></li>
+<li><p>Set</p>
+</li>
+<li><ul>
+<li>TreeSet</li>
+<li><strong>HashSet</strong></li>
+<li><ul>
+<li>LinkedHashSet</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Map</p>
+</li>
+<li><ul>
+<li><strong>HashMap</strong></li>
+<li><ul>
+<li>LinkedHashMap</li>
+</ul>
+</li>
+<li>TreeMap</li>
+<li>ConcurrentHashMap</li>
+<li>Hashtable(了解，，已过时)</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-1-Collection"><a href="#2-1-Collection" class="headerlink" title="2.1 Collection"></a>2.1 Collection</h2><h3 id="2-1-1-数组和集合的区别"><a href="#2-1-1-数组和集合的区别" class="headerlink" title="2.1.1 数组和集合的区别"></a>2.1.1 数组和集合的区别</h3><ul>
+<li>1.长度的区别</li>
+<li><ul>
+<li><strong>数组的长度固定</strong></li>
+<li><strong>集合的长度可变</strong></li>
+</ul>
+</li>
+<li>2.元素的数据类型</li>
+<li><ul>
+<li>数组可以存储基本数据类型,也可以存储引用类型</li>
+<li><strong>集合只能存储引用类型(你存储的是简单的int，它会自动装箱成Integer)</strong></li>
+</ul>
+</li>
+</ul>
+<p>###2.1.2 Collection</p>
+<p>Collection接口 继承 Iterator接口， 因此<strong>遍历集合(Collection)的元素都可以使用Iterator</strong>。</p>
+<p><strong>List（有序，可重复）:</strong></p>
+<ul>
+<li><strong>ArrayList</strong>：底层数据结构是数组。线程不安全</li>
+<li><strong>Vector</strong>：底层数据结构是数组。线程安全</li>
+<li><strong>LinkedList</strong>：底层数据结构是链表。线程不安全</li>
+</ul>
+<p><strong>Set（元素不可重复）: Set集合实际上就是HashMap来构建的!</strong></p>
+<ul>
+<li><strong>HashSet</strong>：底层数据结构是哈希表(是一个元素为链表的数组)，链地址法解决冲突。</li>
+<li><strong>TreeSet</strong>：底层数据结构是红黑树(是一个自平衡的二叉树)，保证元素的排序方式。</li>
+<li><strong>LinkedHashSet</strong>：底层数据结构由哈希表和链表组成。</li>
+</ul>
+<p>###</p>
+<ul>
+<li><p>Vector与ArrayList区别(<strong>底层都是数组实现</strong>)：</p>
+</li>
+<li><p>add(E e), add(int index, E element), get(int index),set(int index, E e),remove(int index)</p>
+<ul>
+<li><p>Vector底层也是数组，与ArrayList最大的区别就是：<strong>同步(线程安全)</strong></p>
+<p>Vector的方法使用synchronized的修饰。</p>
+</li>
+<li><p><strong>ArrayList在底层数组不够用时在原来的基础上扩展0.5倍，Vector是扩展1倍。</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果<strong>想要ArrayList实现同步</strong>，可以使用Collections（集合的工具类）的方法：</p>
+<p><code>List list =Collections.synchronizedList(new ArrayList(...));</code>，就可以实现同步了~</p>
+<ul>
+<li><p>LinkedList（底层是</p>
+<p>双向链表</p>
+<p>）</p>
+<ul>
+<li><strong>LinkedList实现了Deque接口</strong>，可以<strong>操作LinkedList像操作队列和栈一样</strong>。</li>
+<li>add(E e), remove(Object o), get(nt index),set(int index, E e)</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-2-Map"><a href="#2-2-Map" class="headerlink" title="2.2 Map"></a>2.2 Map</h2><p><strong>HashMap, HashTable, ConcurrentHashMap, LinkedHashMap, TreeMap</strong></p>
+<p>Map特点：</p>
+<p>将键映射到值的对象，一个映射不能包含重复的键，每个键至多只能一个值。</p>
+<p>Map与Collection的区别：</p>
+<ol>
+<li>Map存储元素是成对出现的，键是唯一的，值可以重复。</li>
+<li>Collection存储元素是单独出现的，Set的元素是唯一的，List是可重复的。</li>
+</ol>
+<p>HashMap: put(key,value), get(key), remove(key)</p>
+<ul>
+<li><p><strong>散列表介绍</strong></p>
+<p>无论是Set还是Map，我们会发现都会有对应的–&gt;<strong>Hash</strong>Set,<strong>Hash</strong>Map</p>
+<p>原理：散列表<strong>为每个对象计算出一个整数，称为散列码</strong>。<strong>根据</strong>这些计算出来的<strong>整数(散列码)保存在对应的位置上</strong>！</p>
+<p><strong>在Java中，散列表用的是链表数组实现的，每个列表称之为桶。</strong></p>
+<ul>
+<li>如果散列表太满，<strong>是需要对散列表再散列，创建一个桶数更多的散列表，并将原有的元素插入到新表中，丢弃原来的表</strong>~</li>
+<li>装填因子(load factor)<strong>决定了何时</strong>对散列表再散列~，装填因子默认为0.75，如果表中<strong>超过了75%的位置</strong>已经填入了元素，那么这个表就会用<strong>双倍的桶数</strong>自动进行再散列</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-3-1-HashMap和Hashtable的区别"><a href="#2-1-3-1-HashMap和Hashtable的区别" class="headerlink" title="2.1.3.1 HashMap和Hashtable的区别"></a>2.1.3.1 HashMap和Hashtable的区别</h4><p><strong>共同点：</strong></p>
+<ul>
+<li>从存储结构和实现来讲基本上都是相同的，都是实现Map接口~</li>
+</ul>
+<p><strong>区别：</strong></p>
+<ul>
+<li><p><strong>同步性：</strong></p>
+</li>
+<li><ul>
+<li>HashMap是非同步的</li>
+<li>Hashtable是同步的</li>
+</ul>
+</li>
+<li><p><strong>是否允许为null：</strong></p>
+</li>
+<li><ul>
+<li>HashMap允许为null</li>
+<li>Hashtable不允许为null</li>
+</ul>
+</li>
+<li><p><strong>继承不同：</strong></p>
+</li>
+<li><ul>
+<li><p>HashMap</p>
+<p>extends AbstractMap</p>
+</li>
+<li><p>public class Hashtable</p>
+<p>extends Dictionary</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3-Set集合"><a href="#2-3-Set集合" class="headerlink" title="2.3 Set集合"></a>2.3 Set集合</h2><p>Set集合实际上就是HashMap来构建的!</p>
+<p>Set里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用&#x3D;&#x3D;还是equals()?</p>
+<p> <strong>&#x3D;&#x3D; 和 equals()方法都有使用</strong>！</p>
+<ul>
+<li><p>Set集合实际<strong>大都使用的是Map集合的put方法来添加元素</strong>。</p>
+<p>以HashSet为例，添加元素的时候，如果key(也对应的Set集合的元素)相等，那么则修改value值。而在Set集合中，value值仅仅是一个Object对象罢了(<strong>该对象对Set本身而言是无用的</strong>)。</p>
+<p>因此，Set集合如果添加的元素相同时，**是根本没有插入的(仅修改了一个无用的value值)**！</p>
+</li>
+</ul>
+<h1 id="3-数据库部分"><a href="#3-数据库部分" class="headerlink" title="3. 数据库部分"></a>3. 数据库部分</h1><h2 id="3-1-介绍数据库的三范式？"><a href="#3-1-介绍数据库的三范式？" class="headerlink" title="3.1 介绍数据库的三范式？"></a>3.1 介绍数据库的三范式？</h2><p>一范式：列不可再分。</p>
+<p>二范式：满足一范式的条件下，非主属性完全依赖于码。（码：唯一确定一个元组的某个属性（或者属性组））</p>
+<p>三范式：满足二范式的条件下，不存在传递函数依赖。</p>
+<p>总结：</p>
+<ul>
+<li>第一范式：简单说 列不能再分</li>
+<li>第二范式：简单说 建立在第一范式基础上，消除部分依赖</li>
+<li>第三范式：简单说 建立在第二范式基础上，消除传递依赖。</li>
+</ul>
+<h2 id="3-2-事务的四个基本特征"><a href="#3-2-事务的四个基本特征" class="headerlink" title="3.2 事务的四个基本特征"></a>3.2 事务的四个基本特征</h2><p>事务是并发控制的单位，是一个操作序列，要么都做，要么都不做。</p>
+<p>原子性，一致性，隔离性，持久性。</p>
+<ul>
+<li>原子性：事务内操作不可分割。</li>
+<li>一致性：要么都做，要么都不做。</li>
+<li>隔离性：事务开始后，不受其他事务的影响。</li>
+<li>持久性：事务一旦提交，其更改是永久性的，即使数据库系统崩溃也能恢复。</li>
+</ul>
+<h2 id="3-3-mysql数据库的默认最大连接数"><a href="#3-3-mysql数据库的默认最大连接数" class="headerlink" title="3.3 mysql数据库的默认最大连接数"></a>3.3 mysql数据库的默认最大连接数</h2><p>默认：100</p>
+<p>为什么需要最大连接数？</p>
+<p> 连接过多导致性能下降，严重影响数据库的服务。</p>
+<h2 id="3-4-数据库分页"><a href="#3-4-数据库分页" class="headerlink" title="3.4 数据库分页"></a>3.4 数据库分页</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql:  -- limit offset,size</span><br><span class="line">select * from student order by id limit pagesize*(pagenum-1),pagesize;</span><br><span class="line"></span><br><span class="line">oracle:</span><br><span class="line">select * from	</span><br><span class="line">		(select *,rownum rid from</span><br><span class="line">					(select * from student order by id)     </span><br><span class="line">		where rid&lt;= pagesize*pagenum as t )</span><br><span class="line">where t &gt; pagesize*(pagenum-1)</span><br></pre></td></tr></table></figure>
+    </div>
+
+    <div></div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Java%E5%9F%BA%E7%A1%80%E9%83%A8%E5%88%86"><span class="toc-text">1. Java基础部分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E8%B7%A8%E5%B9%B3%E5%8F%B0%E5%8E%9F%E7%90%86"><span class="toc-text">1.1 跨平台原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-java%E4%B8%ADint-%E6%95%B0%E6%8D%AE%E5%8D%A0%E5%87%A0%E4%B8%AA%E5%AD%97%E8%8A%82"><span class="toc-text">1.2 java中int 数据占几个字节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%89%B9%E5%BE%81%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E9%9D%A2"><span class="toc-text">1.3 面向对象的特征有哪些方面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8C%85%E8%A3%85%E7%B1%BB"><span class="toc-text">1.4 为什么需要包装类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-x3D-x3D-%E5%92%8Cequals%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">1.5 &#x3D;&#x3D; 和equals的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-String-StringBuilder-StringBuffer%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">1.6 String,StringBuilder,StringBuffer的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7-%E8%AE%B2%E4%B8%80%E4%B8%8Bjava%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88"><span class="toc-text">1.7 讲一下java中的集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-8-ArrayList-%E5%92%8C-LinkList%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">1.8 ArrayList 和 LinkList的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-9-HashMap%E5%92%8CHashTable%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">1.9 HashMap和HashTable的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-10-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%B7%A5%E5%85%B7%E7%B1%BB%EF%BC%8C%E4%BD%BF%E7%94%A8%E5%AD%97%E8%8A%82%E6%B5%81%E8%BF%98%E6%98%AF%E5%AD%97%E7%AC%A6%E6%B5%81%EF%BC%9F"><span class="toc-text">1.10 实现一个文件拷贝的工具类，使用字节流还是字符流？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-11-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%9F%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%EF%BC%9F%E6%80%8E%E4%B9%88%E5%8C%BA%E5%88%86%EF%BC%9F%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-text">1.11 线程的几种实现方式？怎么启动？怎么区分？线程池的作用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-12-%E6%9C%89%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8%E8%BF%87%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E5%BA%93%EF%BC%9F"><span class="toc-text">1.12 有没有使用过线程并发库？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-java%E5%AE%B9%E5%99%A8"><span class="toc-text">2. java容器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-Collection"><span class="toc-text">2.1 Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E6%95%B0%E7%BB%84%E5%92%8C%E9%9B%86%E5%90%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">2.1.1 数组和集合的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Map"><span class="toc-text">2.2 Map</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-1-HashMap%E5%92%8CHashtable%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">2.1.3.1 HashMap和Hashtable的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-Set%E9%9B%86%E5%90%88"><span class="toc-text">2.3 Set集合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%83%A8%E5%88%86"><span class="toc-text">3. 数据库部分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E4%BB%8B%E7%BB%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%89%E8%8C%83%E5%BC%8F%EF%BC%9F"><span class="toc-text">3.1 介绍数据库的三范式？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="toc-text">3.2 事务的四个基本特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%BB%98%E8%AE%A4%E6%9C%80%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%95%B0"><span class="toc-text">3.3 mysql数据库的默认最大连接数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E9%A1%B5"><span class="toc-text">3.4 数据库分页</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="/../../../../images/wechat.png" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">微信扫一扫向我投食</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2019/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E7%9F%A5%E8%AF%86/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="next" title="数据结构基础">
+          数据结构基础
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2019/01/10/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E5%85%A5%E9%97%A8/" rel="prev" title="Redis入门">
+            Redis入门
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" target="_blank" rel="noopener" href="https://zshlovely.github.io/">首页</a> |
+        <a class="bottom-item" href="https://zshlovely.github.io/" target="_blank">主站</a> |
+        <a class="bottom-item" href="https://github.com/fenghuayangyi" target="_blank">GitHub</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>

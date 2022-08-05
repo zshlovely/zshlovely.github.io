@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="算法与数据结构," />
+  
+
+  
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>数据结构基础 [ shaohua&#39;s blog ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="/images/logo.png">
+    <span class="title">shaohua&#39;s blog</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        数据结构基础
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2019-01-09T17:10:20.000Z">
+        2019-01-10
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">算法与数据结构</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read">阅读耗时 12 分钟</span>
+    </header>
+
+    <div class="post-content">
+      <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="1-栈"><a href="#1-栈" class="headerlink" title="1. 栈"></a>1. 栈</h3><ul>
+<li>栈是元素的集合，其包含了两个基本操作：push 操作可以用于将元素压入栈，pop 操作可以将栈顶元素移除。</li>
+<li>遵循后入先出原则 (LIFO)。</li>
+<li>时间复杂度:<ul>
+<li>搜索: <code>O(n)</code></li>
+<li>插入: <code>O(1)</code></li>
+<li>移除: <code>O(1)</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="栈的实现"><a href="#栈的实现" class="headerlink" title="栈的实现"></a>栈的实现</h4><table>
+<thead>
+<tr>
+<th align="center">接口</th>
+<th align="center">说明</th>
+<th align="center">复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void push(E e)</td>
+<td align="center">向栈中加入元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">E pop()</td>
+<td align="center">弹出栈顶元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">E peek()</td>
+<td align="center">查看栈顶元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">int getSize()</td>
+<td align="center">获取栈中元素个数</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">boolean isEmpty()</td>
+<td align="center">判断栈是否为空</td>
+<td align="center">o(1)</td>
+</tr>
+</tbody></table>
+<p>栈的实现可以通过 <strong>数组</strong> 或者 <strong>链表</strong> 实现，在这里我们使用 数组来实现上述接口。</p>
+<p>在栈的设计中，用户只关注栈顶元素存取和栈长度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">//栈的实现</span><br><span class="line">public class ArrayStack&lt;E&gt; implements Stack&lt;E&gt;&#123;</span><br><span class="line">	Array&lt;E&gt; array;    </span><br><span class="line">	public ArrayStack(int capacity)&#123;        </span><br><span class="line">		array = new Array&lt;&gt;(capacity);    </span><br><span class="line">	&#125; </span><br><span class="line">    </span><br><span class="line">	public ArrayStack()&#123;        </span><br><span class="line">		array = new Array&lt;&gt;();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int getSize()&#123;        </span><br><span class="line">		return array.getSize();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int isEmpty()&#123;        </span><br><span class="line">		return array.isEmpty();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public void push(E e)&#123;        </span><br><span class="line">		array.addLast(e);    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E pop()&#123;        </span><br><span class="line">		return array.removeLast();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E peek()&#123;        </span><br><span class="line">		return array.getLast();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>\</p>
+<h3 id="2-链表"><a href="#2-链表" class="headerlink" title="2. 链表"></a>2. 链表</h3><ul>
+<li><p>链表即是由节点组成的线性集合，每个节点可以利用指针指向其他节点。它是一种包含了多个节点的、能够用于表示序列的数据结构。</p>
+</li>
+<li><p><strong>单向链表</strong>: 链表中的节点仅指向下一个节点，并且最后一个节点指向空。</p>
+</li>
+<li><p><strong>双向链表</strong>: 其中每个节点具有两个指针 p、n，使得 p 指向先前节点并且 n 指向下一个节点，最后一个节点的 n 指针指向 null。</p>
+</li>
+<li><p><strong>循环链表</strong>：每个节点指向下一个节点并且最后一个节点指向第一个节点的链表。</p>
+</li>
+<li><p>时间复杂度:</p>
+<ul>
+<li>搜索: <code>O(n)</code></li>
+<li>插入: <code>O(1)</code></li>
+<li>移除: <code>O(1)</code></li>
+</ul>
+</li>
+<li><p>定义数据结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class Node&#123;     </span><br><span class="line">	int value;//数据域，以int为例     </span><br><span class="line">	Node next;//指针域，指向下一个节点 </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链表插入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//p节点后插入值为i的节点</span><br><span class="line">void insert_Node(Node p, int i)&#123;    </span><br><span class="line">	Node node = new Node();    </span><br><span class="line">	node.value = i;    </span><br><span class="line">	node.next = p.next;    </span><br><span class="line">	p.next = node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链表删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void delete_Node(Node pHead, int data)&#123;    </span><br><span class="line">	...            </span><br><span class="line">	</span><br><span class="line">	Node pCur;//指向当前节点    </span><br><span class="line">	Node pPre;//指向当前节点的上一个节点    </span><br><span class="line">	if(pCur-&gt;data==data)&#123;//元素比较        </span><br><span class="line">		//将当前节点的前驱节点的next指向当前节点的后继节点        </span><br><span class="line">		...        </span><br><span class="line">		pPre-&gt;next = pCur-&gt;next;        </span><br><span class="line">		...    </span><br><span class="line">	&#125;    </span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>### 3. 队列</p>
+<ul>
+<li>队列是元素的集合，其包含了两个基本操作：enqueue 操作可以用于将元素插入到队列中，而 dequeue 操作则是将元素从队列中移除。</li>
+<li>遵循先入先出原则 (FIFO)。</li>
+<li>时间复杂度:<ul>
+<li>搜索: <code>O(n)</code></li>
+<li>插入: <code>O(1)</code></li>
+<li>移除: <code>O(1)</code></li>
+</ul>
+</li>
+<li>队列的应用可以在播放器上的播放列表，数据流对象，异步的数据传输结构(文件IO，管道通讯，套接字等)上体现，当然最直观的的就是排队了。</li>
+</ul>
+<h3 id="3-队列的实现"><a href="#3-队列的实现" class="headerlink" title="3. 队列的实现"></a>3. 队列的实现</h3><table>
+<thead>
+<tr>
+<th align="center">接口</th>
+<th align="center">说明</th>
+<th align="center">复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void enqueue(E e)</td>
+<td align="center">入队</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">E dequeue()</td>
+<td align="center">出队</td>
+<td align="center">o(n)</td>
+</tr>
+<tr>
+<td align="center">E getFront()</td>
+<td align="center">获取队首元素</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">int getSize()</td>
+<td align="center">获取队列元素个数</td>
+<td align="center">o(1)</td>
+</tr>
+<tr>
+<td align="center">boolean isEmpty()</td>
+<td align="center">判断队列是否为空</td>
+<td align="center">o(1)</td>
+</tr>
+</tbody></table>
+<ul>
+<li>入队是从队尾开始，有可能触发resize，因此均摊下来是O(1)。出队是在队首，数组实现每次都要挪动所有元素,O(n)。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//队列的实现</span><br><span class="line">public class ArrayQueue&lt;E&gt; implements Queue&lt;E&gt;&#123;    </span><br><span class="line">	Array&lt;E&gt; array;    </span><br><span class="line">	</span><br><span class="line">	public ArrayQueue(int capacity)&#123;        </span><br><span class="line">		array = new Array&lt;&gt;(capacity);    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	public ArrayQueue()&#123;        </span><br><span class="line">		array = new Array&lt;&gt;();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int getSize()&#123;        </span><br><span class="line">		return array.getSize();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public int isEmpty()&#123;        </span><br><span class="line">		return array.isEmpty();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public void enqueue(E e)&#123;        </span><br><span class="line">		array.addLast(e);    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E dequeue()&#123;        </span><br><span class="line">		return array.removeLast();    </span><br><span class="line">	&#125;    </span><br><span class="line">	</span><br><span class="line">	@override    </span><br><span class="line">	public E getFront()&#123;        </span><br><span class="line">		return array.getFirst();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-二叉查找树"><a href="#4-二叉查找树" class="headerlink" title="4. 二叉查找树"></a>4. 二叉查找树</h3><ul>
+<li>二叉搜索树（BST）是一种特殊的二叉树，其任何节点中的值都会大于或者等于其左子树中存储的值并且小于或者等于其右子树中存储的值。</li>
+<li>时间复杂度:<ul>
+<li>索引: <code>O(log(n))</code></li>
+<li>搜索: <code>O(log(n))</code></li>
+<li>插入: <code>O(log(n))</code></li>
+<li>删除: <code>O(log(n))</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>二分查找法定义</strong>:是一种在有序数组中查找某一特定元素的搜索算法。这种搜索算法每一次比较都使搜索范围缩小一半。</p>
+<p>注意：二分查找的前提是数列必须是有序的。</p>
+<ul>
+<li>二叉查找树也可叫做二分查找树。它不仅可以查找数据，还可以高效地插入、删除数据。</li>
+<li>特点：每个节点的key值大于左子节点，小于右子节点。<strong>它不一定是完全的二叉树</strong>。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Node &#123;  E e;  Node left;  // 左孩子  Node right; // 右孩子&#125;</span><br></pre></td></tr></table></figure>
+
+<p>二叉查找树有两个属性：</p>
+<ul>
+<li><strong>所有节点都比左子树中的节点大</strong></li>
+<li><strong>所有节点都小于右子树中的节点</strong></li>
+</ul>
+<p>通过这两个属性，可以推断出以下结论：</p>
+<ul>
+<li>二叉查找树最小的节点位于最顶端节点的最左边子树行的末尾</li>
+<li>二叉查找树的最大节点位于最顶端节点的最右边的子树行的末尾</li>
+</ul>
+<h4 id="添加元素操作"><a href="#添加元素操作" class="headerlink" title="添加元素操作"></a>添加元素操作</h4><p>核心思想:从根节点开始找插入的位置，满足二叉搜索树的特性，比左子节点大，比右子节点小.</p>
+<h4 id="删除元素操作"><a href="#删除元素操作" class="headerlink" title="删除元素操作"></a>删除元素操作</h4><p>步骤：</p>
+<ul>
+<li>找到左子树中所有节点的最大的节点(左子树的最右节点)</li>
+<li>将这个节点赋值到删除节点的位置</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>使用二叉查找树可以实现高效搜索。但是如果树接近形成直线，那么搜索效率将极其差，变成了线性搜索。</li>
+<li>因此二叉查找树就需要进行改进为平衡二叉树，比较常见的 Balanced Binary Tree有：<ul>
+<li>AVL tree</li>
+<li>红黑树</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-哈希"><a href="#7-哈希" class="headerlink" title="7. 哈希"></a>7. 哈希</h3><ul>
+<li>哈希能够将任意长度的数据映射到固定长度的数据。哈希函数返回的即是哈希值，如果两个不同的键得到相同的哈希值，即将这种现象称为碰撞。</li>
+<li><strong>Hash Map</strong>: Hash Map 是一种能够建立起键与值之间关系的数据结构，Hash Map 能够使用哈希函数将键转化为桶或者槽中的下标，从而优化对于目标值的搜索速度。</li>
+<li>碰撞解决<ul>
+<li><strong>链地址法（Separate Chaining）</strong>: 链地址法中，每个桶是相互独立的，包含了一系列索引的列表。搜索操作的时间复杂度即是搜索桶的时间（固定时间）与遍历列表的时间之和。</li>
+<li><strong>开地址法（Open Addressing）</strong>: 在开地址法中，当插入新值时，会判断该值对应的哈希桶是否存在，如果存在则根据某种算法依次选择下一个可能的位置，直到找到一个尚未被占用的地址。所谓开地址法也是指某个元素的位置并不永远由其哈希值决定。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div></div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%88"><span class="toc-text">1. 栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">栈的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%93%BE%E8%A1%A8"><span class="toc-text">2. 链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">3. 队列的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="toc-text">4. 二叉查找树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%E6%93%8D%E4%BD%9C"><span class="toc-text">添加元素操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E6%93%8D%E4%BD%9C"><span class="toc-text">删除元素操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%93%88%E5%B8%8C"><span class="toc-text">7. 哈希</span></a></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="/../../../../images/wechat.png" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">微信扫一扫向我投食</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2018/12/31/Linux/Linux%20%E5%88%9D%E5%AD%A6%E4%B9%A0/" rel="next" title="Linux 初学习">
+          Linux 初学习
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2019/01/10/Java/java%E9%9D%A2%E8%AF%9584%E8%AE%B2/" rel="prev" title="java面试84讲">
+            java面试84讲
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" target="_blank" rel="noopener" href="https://zshlovely.github.io/">首页</a> |
+        <a class="bottom-item" href="https://zshlovely.github.io/" target="_blank">主站</a> |
+        <a class="bottom-item" href="https://github.com/fenghuayangyi" target="_blank">GitHub</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>
