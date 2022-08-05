@@ -1,0 +1,767 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Spark," />
+  
+
+  
+    <meta name="description" content="既然选择远方，便只顾风雨兼程" />
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>Spark 基础 [ shaohua&#39;s blog ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="/images/logo.png">
+    <span class="title">shaohua&#39;s blog</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        Spark 基础
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2019-10-11T17:10:20.000Z">
+        2019-10-12
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      <span class="read">阅读耗时 55 分钟</span>
+    </header>
+
+    <div class="post-content">
+      <h1 id="0-Spark-基础"><a href="#0-Spark-基础" class="headerlink" title="0. Spark 基础"></a>0. Spark 基础</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiangxiaoxian/category/1049800.html">https://www.cnblogs.com/jiangxiaoxian/category/1049800.html</a>  </p>
+<h2 id="0-1-Spark-内存模型"><a href="#0-1-Spark-内存模型" class="headerlink" title="0.1 Spark 内存模型"></a>0.1 Spark 内存模型</h2><p>Spark在一个Executor中的内存分为三块，一块是execution内存，一块是storage内存，一块是other内存。</p>
+<ul>
+<li>Execution内存: 执行内存。shuffle算子join，aggregate等都在这部分内存中执行，shuffle的数据也会先缓存在这个内存中，满了再写入磁盘，能够减少IO。其实map过程也是在这个内存中执行的。（spark算子用于计算的内存）</li>
+<li>storage内存。存储broadcast，cache，persist数据的地方。（集群中缓冲和传播内部数据的内存（cache、广播变量））</li>
+<li>other内存 。是程序执行时预留给自己的内存。（spark.yarn.executor.memoryOverhead参数设置）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">execution和storage是Spark Executor中内存的大户，other占用内存相对少很多，这里省略。</span><br><span class="line"></span><br><span class="line">在spark-1.6.0以前的版本，execution和storage的内存分配是固定的，使用的参数配置分别是spark.shuffle.memoryFraction（execution内存占Executor总内存大小，default 0.2）和spark.storage.memoryFraction（storage内存占Executor内存大小，default 0.6），因为是1.6.0以前这两块内存是互相隔离的，这就导致了Executor的内存利用率不高，而且需要根据Application的具体情况，使用者自己来调节这两个参数才能优化Spark的内存使用。</span><br><span class="line"></span><br><span class="line">在spark-1.6.0以上的版本，execution内存和storage内存可以相互借用，提高了内存的Spark中内存的使用率，同时也减少了OOM的情况。</span><br><span class="line"></span><br><span class="line">在Spark-1.6.0后加入了堆外内存，进一步优化了Spark的内存使用，堆外内存使用JVM堆以外的内存，不会被gc回收，可以减少频繁的full gc，所以在Spark程序中，会长时间逗留再Spark程序中的大内存对象可以使用堆外内存存储。使用堆外内存有两种方式，一种是在rdd调用persist的时候传入参数StorageLevel.OFF_HEAP，这种使用方式需要配合Tachyon一起使用。另外一种是使用Spark自带的spark.memory.offHeap.enabled 配置为true进行使用，但是这种方式在1.6.0的版本还不支持使用，只是多了这个参数，在以后的版本中会开放。</span><br></pre></td></tr></table></figure>
+
+<p><strong>OOM的问题通常出现在execution内存中</strong>，因为storage这块内存在存放数据满了之后，会直接丢弃内存中旧的数据，对性能有影响但是不会有OOM的问题。</p>
+<h2 id="0-2-Spark-任务提交"><a href="#0-2-Spark-任务提交" class="headerlink" title="0.2 Spark 任务提交"></a>0.2 Spark 任务提交</h2><p><strong>Client模式</strong></p>
+<p>提交任务 —&gt; Client生成 Spark Driver —&gt; Spark Driver在YARN的NodeManager中生成一个ApplicationMaster —&gt; AM 向 yarn Resourcemanager申请资源 —&gt; Spark Driver调度并运行任务。</p>
+<p><strong>Cluster模式</strong></p>
+<p>Driver进程将会在集群中的一个worker中启动，而且客户端进程在完成自己提交任务的职责后，就可以退出，而不用等到应用程序执行完毕</p>
+<h1 id="1-RDD知识"><a href="#1-RDD知识" class="headerlink" title="1. RDD知识"></a>1. RDD知识</h1><h2 id="1-1-RDD基础"><a href="#1-1-RDD基础" class="headerlink" title="1.1 RDD基础"></a>1.1 RDD基础</h2><p>RDD 可以理解为一个分布式对象集合，本质上是一个只读的分区记录集合。</p>
+<p><strong>RDD 具有容错机制，并且只读不能修改，可以执行确定的转换操作创建新的 RDD。</strong></p>
+<p>特点：</p>
+<ul>
+<li>只读，弹性（计算过程中内存不够时它会和磁盘进行数据交换）</li>
+<li>分布式（RDD分区的概念），基于内存（可以全部或部分缓存在内存中，在多次计算间重用）</li>
+</ul>
+<h2 id="1-2-RDD基本操作"><a href="#1-2-RDD基本操作" class="headerlink" title="1.2 RDD基本操作"></a>1.2 RDD基本操作</h2><p>转化（Transformation）操作和行动（Action）操作。</p>
+<ul>
+<li>Transformation：从一个 RDD 产生一个新的 RDD。</li>
+<li>Action：进行实际的计算。</li>
+</ul>
+<p><strong>RDD和普通HDFS的对比：</strong></p>
+<p>RDD 实质上是一种更为通用的迭代并行计算框架，用户可以显示控制计算的中间结果，然后将其自由运用于之后的计算。</p>
+<p>​	在大数据实际应用开发中存在许多迭代算法，如机器学习、图算法等，和交互式数据挖掘工具。<br>​	这些应用场景的共同之处是在不同计算阶段之间会重用中间结果，即一个阶段的输出结果会作为下一个阶段的输入。</p>
+<p>​	RDD 正是为了满足这种需求而设计的。</p>
+<p>​	<strong>虽然 MapReduce 具有自动容错、负载平衡和可拓展性的优点，但是其最大的缺点是采用非循环式的数据流模型，使得在迭代计算时要进行大量的磁盘 I&#x2F;O 操作。</strong></p>
+<h3 id="1-2-1-RDD的构建"><a href="#1-2-1-RDD的构建" class="headerlink" title="1.2.1 RDD的构建"></a>1.2.1 RDD的构建</h3><ul>
+<li><p>内存构建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val rdd01 = sc.makeRDD(List(1,2,3,4,5,6))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.parallelize(Array(1,2,2,1),4) </span><br><span class="line">//参数1：待并行化处理的集合；参数2：分区个数</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件系统构建&#x2F;加载外部数据集</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.textFile(“file:///D:/sparkdata.txt”,1)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//用textFile方法加载</span><br><span class="line">//该方法返回一个RDD，该RDD代表的数据集每个元素都是一个字符串，每个字符串代表输入文件中的一行</span><br><span class="line">val rddText = sc.textFile(&quot;helloSpark.txt&quot;)</span><br><span class="line"></span><br><span class="line">//用wholeTextfiles方法加载</span><br><span class="line">//这个方法读取目录下的所有文本文件，然后返回一个KeyValue对RDD（每一个键值对对应一个文件，key为文件路径，value为文件内容）</span><br><span class="line">val rddW = sc.wholeTextFile(&quot;path/to/my-data/*.txt&quot;)</span><br><span class="line"></span><br><span class="line">//用sequenceFile方法加载</span><br><span class="line">//此方法要求从SequenceFile文件中获取键值对数据，返回一个KeyValue对RDD（使用此方法时，还需要提供类型）</span><br><span class="line">val rdd = sc.sequenceFile[String,String](&quot;some-file&quot;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-2-2-Transformation（转换操作）"><a href="#1-2-2-Transformation（转换操作）" class="headerlink" title="1.2.2 Transformation（转换操作）"></a>1.2.2 Transformation（转换操作）</h3><p>RDD 的转换操作是返回新的 RDD 的操作。<strong>转换出来的 RDD 是惰性求值的，只有在Action操作中用到这些 RDD 时才会被计算</strong>。</p>
+<p><em>许多转换操作都是针对各个元素的，也就是说，这些<strong>转换操作每次只会操作 RDD 中的一个元素</strong>，不过并不是所有的转换操作都是这样的。</em></p>
+<p>​					<strong>表 1 RDD转换操作（rdd1&#x3D;{1, 2, 3, 3}，rdd2&#x3D;{3,4,5})</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>作用</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>map()</td>
+<td>将函数应用于 RDD 的每个元素，返回值是新的 RDD</td>
+<td>rdd1.map(x&#x3D;&gt;x+l)</td>
+<td>{2,3,4,4}</td>
+</tr>
+<tr>
+<td>flatMap()</td>
+<td>将函数应用于 RDD 的每个元素，将元素数据进行拆分，变成迭代器，返回值是新的 RDD</td>
+<td>rdd1.flatMap(x&#x3D;&gt;x.to(3)) x.to(3) 从x打印到3</td>
+<td>{1,2,3,2,3,3,3}</td>
+</tr>
+<tr>
+<td>filter()</td>
+<td>函数会过滤掉不符合条件的元素，返回值是新的 RDD</td>
+<td>rdd1.filter(x&#x3D;&gt;x!&#x3D;1)</td>
+<td>{2,3,3}</td>
+</tr>
+<tr>
+<td>distinct()</td>
+<td>将 RDD 里的元素进行去重操作     内部实现相当于分区内，以及全量分别做了去重</td>
+<td>rdd1.distinct()</td>
+<td>(1,2,3)</td>
+</tr>
+<tr>
+<td>union()</td>
+<td>生成包含两个 RDD 所有元素的新的 RDD</td>
+<td>rdd1.union(rdd2)</td>
+<td>{1,2,3,3,3,4,5}</td>
+</tr>
+<tr>
+<td>intersection()</td>
+<td>求出两个 RDD 的共同元素</td>
+<td>rdd1.intersection(rdd2)</td>
+<td>{3}</td>
+</tr>
+<tr>
+<td>subtract()</td>
+<td>将原 RDD 里和参数 RDD 里相同的元素去掉   （差集）</td>
+<td>rdd1.subtract(rdd2)</td>
+<td>{1,2}</td>
+</tr>
+<tr>
+<td>cartesian()</td>
+<td>求两个 RDD 的笛卡儿积</td>
+<td>rdd1.cartesian(rdd2)</td>
+<td>{(1,3),(1,4)……(3,5)}</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-3-Action（行动操作）"><a href="#1-2-3-Action（行动操作）" class="headerlink" title="1.2.3 Action（行动操作）"></a>1.2.3 Action（行动操作）</h3><p>行动操作用于执行计算并按指定的方式输出结果。</p>
+<p><strong>行动操作接受 RDD，但是返回非 RDD，即输出一个值或者结果。在 RDD 执行过程中，真正的计算发生在行动操作</strong></p>
+<p>​				<strong>表 2 RDD 行动操作（rdd&#x3D;{1,2,3,3}）</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>作用</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>collect()</td>
+<td>返回 RDD 的所有元素</td>
+<td>rdd.collect()</td>
+<td>{1,2,3,3}</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>RDD 里元素的个数</td>
+<td>rdd.count()</td>
+<td>4</td>
+</tr>
+<tr>
+<td>countByValue()</td>
+<td>各元素在 RDD 中的出现次数</td>
+<td>rdd.countByValue()</td>
+<td>{(1,1),(2,1),(3,2})}</td>
+</tr>
+<tr>
+<td>take(num)</td>
+<td>从 RDD 中返回 num 个元素</td>
+<td>rdd.take(2)</td>
+<td>{1,2}</td>
+</tr>
+<tr>
+<td>top(num)</td>
+<td>从 RDD 中，按照默认（降序）或者指定的排序返回最前面的 num 个元素</td>
+<td>rdd.top(2)</td>
+<td>{3,3}</td>
+</tr>
+<tr>
+<td>reduce()</td>
+<td>并行整合所有 RDD 数据，如求和操作</td>
+<td>rdd.reduce((x,y)&#x3D;&gt;x+y)</td>
+<td>9</td>
+</tr>
+<tr>
+<td>fold(zero)(func)</td>
+<td>和 reduce() 功能一样，但需要提供初始值</td>
+<td>rdd.fold(0)((x,y)&#x3D;&gt;x+y)</td>
+<td>9</td>
+</tr>
+<tr>
+<td>foreach(func)</td>
+<td>对 RDD 的每个元素都使用特定函数</td>
+<td>rdd1.foreach(x&#x3D;&gt;printIn(x))</td>
+<td>打印每一个元素</td>
+</tr>
+<tr>
+<td>saveAsTextFile(path)</td>
+<td>将数据集的元素，以文本的形式保存到文件系统中</td>
+<td>rdd1.saveAsTextFile(file:&#x2F;&#x2F;home&#x2F;test)</td>
+<td></td>
+</tr>
+<tr>
+<td>saveAsSequenceFile(path)</td>
+<td>将数据集的元素，以顺序文件格式保存到指 定的目录下</td>
+<td>saveAsSequenceFile(hdfs:&#x2F;&#x2F;home&#x2F;test)</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>aggregateByKey</strong></p>
+<p>aggregateByKey(1)(2,3)</p>
+<p>参数1：为初始值</p>
+<p>参数2：操作1</p>
+<p>参数3：操作2</p>
+<p>对RDD中相同的Key值进行聚合操作，在聚合过程中使用了一个中立的初始值。返回值的类型不需要和RDD中value的类型一致。</p>
+<p>首先根据分区，相同key的值，基于参数1，操作1，进行合并。</p>
+<p>然后各分区结果，相同的key，基于操作2进行合并。</p>
+<p>最后结果是key，key对应的结果。</p>
+<p>**aggregate() 函数 : agregate(zero)(seqOp,combOp)  **</p>
+<p>aggregate() 函数的返回类型不需要和 RDD 中的元素类型一致，所以<strong>在使用时，需要提供所期待的返回类型的初始值</strong>，然后通过一个函数把 RDD 中的元素累加起来放入累加器。</p>
+<hr>
+<ul>
+<li>首先使用 <strong>seqOp</strong> 操作聚合各分区中的元素</li>
+<li>然后再使用 <strong>combOp</strong> 操作把所有分区的聚合结果再次聚合</li>
+<li>两个操作的初始值都是 zero。</li>
+</ul>
+<p><strong>seqOp 的操作是遍历分区中的所有元素 T，第一个 T 跟 zero 做操作，结果再作为与第二个 T 做操作的 zero，直到遍历完整个分区。</strong></p>
+<p><strong>combOp 操作是把各分区聚合的结果再聚合。aggregate() 函数会返回一个跟 RDD 不同类型的值。</strong></p>
+<p>因此，需要 seqOp 操作来把分区中的元素 T 合并成一个 U，以及 combOp 操作把所有 U 聚合。</p>
+<p>举个例子：（一进二出，进的值是value, acc._1和acc._2指的是初始元组（0，0）中的第一，二个元素）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> val rdd = List (1,2,3,4)</span><br><span class="line"> val input = sc.parallelize(rdd)</span><br><span class="line"></span><br><span class="line"> val result=input.aggregate((0,0))((acc,value)=&gt;(acc._1+value,acc._2+1),(acc1,acc2)=&gt;(acc1._1+acc2._1,acc1._2+acc2._2))</span><br><span class="line"> </span><br><span class="line">--(resultInt,Int) = (10,4)</span><br><span class="line">val avg = result._1 / result._2</span><br><span class="line">avg:Int = 2.5</span><br></pre></td></tr></table></figure>
+
+<p>程序的详细过程大概如下。</p>
+<p>定义一个初始值 (0,0)，即所期待的返回类型的初始值。代码 (acc,value) &#x3D;&gt; (acc._1 + value,acc._2 + 1) 中的 value 是函数定义里面的 T，这里是 List 里面的元素。acc._1 + value，acc._2 + 1 的过程如下。</p>
+<p>(0+1,0+1)→(1+2,1+1)→(3+3,2+1)→(6+4,3+1)，结果为(10,4)。</p>
+<p>实际的 Spark 执行过程是分布式计算，可能会把 List 分成多个分区，假如是两个：p1(1,2) 和 p2(3,4)。</p>
+<p>经过计算，各分区的结果分别为 (3,2) 和 (7,2)。这样，执行 (acc1,acc2) &#x3D;&gt; (acc1._1 + acc2._2,acc1._2 + acc2._2) 的结果就是 (3+7,2+2)，即 (10,4)，然后可计算平均值。<br><strong>acc._1 : 第一个参数   acc._2 ：第二个参数</strong></p>
+<h2 id="1-3-Spark-Stage的划分"><a href="#1-3-Spark-Stage的划分" class="headerlink" title="1.3 Spark Stage的划分"></a>1.3 Spark Stage的划分</h2><p>RDD之间有一系列的依赖关系，依赖关系又分为窄依赖和宽依赖。</p>
+<p>Spark中的Stage其实就是一组并行的任务，任务是一个个的task 。</p>
+<ul>
+<li><p><strong>窄依赖</strong></p>
+<p>父RDD和子RDD partition之间的关系是一对一的。</p>
+<p><strong>不会有shuffle的产生。父RDD</strong>的<strong>一个分区</strong>去到<strong>子RDD的一个分区</strong>。</p>
+</li>
+<li><p><strong>宽依赖</strong></p>
+<p>父RDD与子RDD partition之间的关系是一对多。<strong>会有shuffle的产生。</strong></p>
+<p><strong>父RDD的一个分区的数据去到子RDD的不同分区里面。</strong></p>
+</li>
+<li><p>总结：</p>
+<p>窄依赖：可以理解为独生子女</p>
+<p>宽依赖：可以理解为超生</p>
+</li>
+</ul>
+<h3 id="1-3-1-Stage的概念"><a href="#1-3-1-Stage的概念" class="headerlink" title="1.3.1 Stage的概念"></a>1.3.1 Stage的概念</h3><p>Spark任务会根据<strong>RDD之间的依赖关系，形成一个DAG有向无环图</strong>。</p>
+<p>DAG会提交给DAGScheduler，DAGScheduler会把DAG划分相互依赖的多个stage，<strong>划分stage的依据就是RDD之间的宽窄依赖</strong>。</p>
+<p><strong>遇到宽依赖就划分stage</strong>,每个stage包含一个或多个task任务。</p>
+<p>将一个stage中的tasks以taskSet的形式提交给<strong>TaskScheduler运行</strong>。 即<strong>stage是由一组并行的task组成。</strong></p>
+<h3 id="1-3-2-shuffle-和-stage"><a href="#1-3-2-shuffle-和-stage" class="headerlink" title="1.3.2 shuffle 和 stage"></a>1.3.2 shuffle 和 stage</h3><p><strong>shuffle 是划分 DAG 中 stage 的标识,同时影响 Spark 执行速度的关键步骤</strong>. </p>
+<p>窄依赖跟宽依赖的区别是<strong>是否发生 shuffle(洗牌) 操作</strong>.</p>
+<p><strong>宽依赖会发生 shuffle 操作.</strong></p>
+<p><strong>shuffle 操作是 spark 中最耗时的操作,应尽量避免不必要的 shuffle</strong>. </p>
+<ul>
+<li>宽依赖主要有两个过程: shuffle write 和 shuffle fetch. 类似 Hadoop 的 Map 和 Reduce 阶段.shuffle write 将 ShuffleMapTask 任务产生的中间结果缓存到内存中, shuffle fetch 获得 ShuffleMapTask 缓存的中间结果进行 ShuffleReduceTask 计算,<strong>这个过程容易造成OutOfMemory</strong>.</li>
+</ul>
+<p><strong>shuffle 操作的时候可以用 combiner 压缩数据,减少 IO 的消耗</strong></p>
+<h2 id="1-4-SparkContext、SparkConf和SparkSession"><a href="#1-4-SparkContext、SparkConf和SparkSession" class="headerlink" title="1.4 SparkContext、SparkConf和SparkSession"></a>1.4 SparkContext、SparkConf和SparkSession</h2><p>Application：用户编写的Spark应用程序，Driver 即运行上述 Application 的 main() 函数并且创建 SparkContext。<br><strong>SparkContext</strong>：整个应用的上下文，控制应用的生命周期。</p>
+<p>RDD：不可变的数据集合，可由 SparkContext 创建，是 Spark 的基本计算单元。</p>
+<p><strong>SparkSession</strong>是Spark2.0新引入的。</p>
+<p>SparkSession内部封装了SparkConf、SparkContext、SQLContext、HiveContext。</p>
+<p>因此SparkSession可以用他们所有的api</p>
+<h1 id="2-Spark-算子"><a href="#2-Spark-算子" class="headerlink" title="2.Spark 算子"></a>2.Spark 算子</h1><p>主要将算子分为两大类：Transformations算子 和 Action算子</p>
+<p>Transformations算子：map, flatmap, filter, reduceByKey和sortBy, sortByKey, sample抽样, join, leftOuterJoin,  rightOutJoin, union, intersection, subtract, mapPartitions, distinct(map+reduceByKey+map), cogroup, mapPartitionsWithIndex, repartition, zip&amp;zipwithindex   大致16个</p>
+<p>Action算子：count, collect, first, take, foreachPartition, reduce&amp;countByKey&amp;countByValue 大致6个</p>
+<h3 id="2-1-Transformations算子"><a href="#2-1-Transformations算子" class="headerlink" title="2.1 Transformations算子"></a>2.1 Transformations算子</h3><p>Transformation 操作是延迟计算的，也就是说从一个RDD 转换生成另一个 RDD 的转换操作不是马上执行，需要等到有 Action 操作的时候才会真正触发运算。</p>
+<h4 id="2-1-1-map-一对一"><a href="#2-1-1-map-一对一" class="headerlink" title="2.1.1 map 一对一"></a>2.1.1 map 一对一</h4><ul>
+<li><p>特点：一进一出</p>
+</li>
+<li><pre><code>lines.map(_+&quot;#&quot;).foreach(println)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  mapValues</span><br><span class="line"></span><br><span class="line">- 该操作只改动value, 不改变key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 2.1.2 flatMap 一对多</span><br><span class="line"></span><br><span class="line">- 特点：一进多出， 比如按空格split</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  lines.flatMap(_.split(&quot; &quot;)).foreach(println)</span><br><span class="line">  </span><br><span class="line">  val names = List(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Nick&quot;)</span><br><span class="line">  val nums = List(1, 123, 4)</span><br><span class="line">  def upper( s : String ) : String = &#123;</span><br><span class="line">  	s. toUpperCase</span><br><span class="line">  &#125;</span><br><span class="line">  //注意：每个字符串也是char集合</span><br><span class="line">  println(names.flatMap(upper))</span><br><span class="line">  println(nums.flatMap(_.toString))</span><br><span class="line">  -------List(A, L, I, C, E, B, O, B, N, I, C, K)</span><br><span class="line">  -------List(1, 1, 2, 3, 4)</span><br></pre></td></tr></table></figure>
+
+flatMapValues
+</code></pre>
+</li>
+<li><p>只操作value, 不改变key</p>
+</li>
+</ul>
+<h4 id="2-1-3-filter过滤"><a href="#2-1-3-filter过滤" class="headerlink" title="2.1.3 filter过滤"></a>2.1.3 filter过滤</h4><ul>
+<li><p>特点：一进，符合定义规则的出去</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val rdd1 &#x3D; lines.flatMap(<em>.split(“ “))<br>rdd1.filter(“hello”.equals(</em>)).foreach(println)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.1.4 reduceByKey和sortBy</span><br><span class="line"></span><br><span class="line">- reduceByKey相当于MR的reduce过程，将相同的key聚合，并执行逻辑。聚合的时候是要对RDD排序的，默认是升序的，如果要想实现降序排列就要用到sortBy了。</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val words = lines.flatMap(_.split(&quot; &quot;))</span><br><span class="line">  val pairWords = words.map((_,1))</span><br><span class="line">  val result = pairWords.reduceByKey(_+_)</span><br><span class="line">  result.sortBy(_._2,false).foreach(println) //降序</span><br><span class="line">  result.sortBy(_._2).foreach(println) //升序</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-5-sortByKey"><a href="#2-1-5-sortByKey" class="headerlink" title="2.1.5 sortByKey"></a>2.1.5 sortByKey</h4><ul>
+<li><p>使用sortByKey实现sortBy的功能：“hello world”—&gt;“hello” “world”—&gt;（hello，1） （world，1）</p>
+<p>关键的时候来了，利用tuple的swap反转，（hello 1）—&gt;（1，hello）</p>
+<p>使用sortByKey来进行排序，然后再利用一次反转</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val words &#x3D; lines.flatMap(<em>.split(“ “))<br>val pairWords &#x3D; words.map((</em>,1))<br>val result &#x3D; pairWords.reduceByKey(<em>+</em>)<br>val transRDD &#x3D; result.map(<em>.swap) &#x2F;&#x2F;反转key value，string，int  变  int，string<br>val r &#x3D; transRDD.sortByKey(false) &#x2F;&#x2F;降序<br>r.map(</em>.swap).foreach(println)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.1.6 sample 抽样</span><br><span class="line"></span><br><span class="line">- 抽样算子</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  /**</span><br><span class="line">  * sample算子抽样</span><br><span class="line">  * true:抽出来一个，完事再放回去，再继续抽。即又放回抽样</span><br><span class="line">  * 0.1:抽样的比例 10%</span><br><span class="line">  * 100L:指定种子，抽到的数据不管运行多少次都一样</span><br><span class="line">  */</span><br><span class="line">  val result = lines.sample(true,0.1,100L)</span><br><span class="line">  result.foreach(println)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-6-join"><a href="#2-1-6-join" class="headerlink" title="2.1.6 join"></a>2.1.6 join</h4><ul>
+<li><p>等值连接 (k,v) (k,w)—&gt;(k,(v,w))，k相同的join在一起</p>
+</li>
+<li><pre><code>val result = rdd1.join(rdd2)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 左外连接 leftOuterJoin  以左为主，没有的用None占位</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val result = rdd1.leftOuterJoin(rdd2)</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>右外连接rightOuterJoin  以右为主，没有的用None占位</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val result &#x3D; rdd1.rightOuterJoin(rdd2)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.1.7 union</span><br><span class="line"></span><br><span class="line">- 合并两个数据集，类型要一致</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val result = rdd1.union(rdd2)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-8-intersection"><a href="#2-1-8-intersection" class="headerlink" title="2.1.8 intersection"></a>2.1.8 intersection</h4><ul>
+<li><p>取两个RDD的交集</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val result &#x3D; rdd1.intersection(rdd2)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.1.9 subtract</span><br><span class="line"></span><br><span class="line">- 取差集</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val result = rdd1.subtract(rdd2)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-10-mapPartitions"><a href="#2-1-10-mapPartitions" class="headerlink" title="2.1.10 mapPartitions"></a>2.1.10 mapPartitions</h4><ul>
+<li><p>和map类似，遍历的单位是每个partition上的数据</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val result &#x3D; rdd1.mapPartitions(iter&#x3D;&gt;{<br>val listBuffer &#x3D; new ListBuffer<a href="">String</a><br>println(“打开”)<br>while (iter.hasNext){<br>    val s &#x3D; iter.next()<br>    println(“插入 “+s)<br>    listBuffer.append(s+” #”)<br>}<br>println(“关闭”)<br>listBuffer.iterator<br>})</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.1.11 distinct</span><br><span class="line"></span><br><span class="line">- 去重算子（先按照partition去重，总体去重） 流程大致相当于 ，map+reduceByKey+map</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val rdd1 = sc.makeRDD(Array[String](&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;a&quot;, &quot;d&quot;, &quot;e&quot;, &quot;a&quot;, &quot;b&quot;))</span><br><span class="line">  val result = rdd1.distinct()</span><br><span class="line">  val result = rdd1.map((_,1)).reduceByKey(_+_).map(_._1)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-12-cogroup"><a href="#2-1-12-cogroup" class="headerlink" title="2.1.12 cogroup"></a>2.1.12 cogroup</h4><ul>
+<li><p>对多个RDD中的KV元素，每个RDD中相同key中的元素分别聚合成一个集合CompactBuffer。</p>
+<p>然后将不同RDD的相同key的CompactBuffer（类似链表）组成新的values(类似于集合数组)</p>
+<p>与reduceByKey不同的是针对两个RDD中相同的key的元素进行合并。(可以运行下示例就能清楚的理解)</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val result &#x3D; rdd1.cogroup(rdd2,rdd3) &#x2F;&#x2F;三个rdd都是 key value形式数据</p>
+<p>例如：<br>val DBName&#x3D;Array(<br>  Tuple2(1,”Spark”),<br>  Tuple2(2,”Hadoop”),<br>  Tuple2(3,”Kylin”),<br>  Tuple2(4,”Flink”)<br>)<br>val numType&#x3D;Array(<br>  Tuple2(1,”String”),<br>  Tuple2(2,”int”),<br>  Tuple2(3,”byte”),<br>  Tuple2(4,”bollean”),<br>  Tuple2(5,”float”),<br>  Tuple2(1,”34”),<br>  Tuple2(1,”45”),<br>  Tuple2(2,”47”),<br>  Tuple2(3,”75”),<br>  Tuple2(4,”95”),<br>  Tuple2(5,”16”),<br>  Tuple2(1,”85”)<br>)<br>val names&#x3D;sc.parallelize(DBName)<br>val types&#x3D;sc.parallelize(numType)<br>val nameAndType&#x3D;names.cogroup(types)<br>nameAndType.collect.foreach(println)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 2.1.13 mapPartitionsWithIndex</span><br><span class="line"></span><br><span class="line">- index 分区号，iter 分区号下的数据</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val rdd2 = rdd1.mapPartitionsWithIndex((index,iter)=&gt;&#123;</span><br><span class="line">      val list = new ListBuffer[String]()</span><br><span class="line">      while(iter.hasNext)&#123;</span><br><span class="line">          val elem = iter.next()</span><br><span class="line">          list += (s&quot;rdd1 partition = $index, value = $elem&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">      list.iterator</span><br><span class="line">  &#125;)</span><br><span class="line">  rdd2.foreach(println)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-14-repartition-和-coalesce"><a href="#2-1-14-repartition-和-coalesce" class="headerlink" title="2.1.14 repartition 和 coalesce"></a>2.1.14 repartition 和 coalesce</h4><p>coalesce()：对RDD的分区进行再在分区，（用于分区数据分布不均匀的情况，利用HashPartitioner函数将数据重新分区）</p>
+<p>reparation：与coalesce功能一样，它只是coalesce中shuffle设置为true的简易实现。（数据不经过shuffle是无法将RDD的分区变多的）</p>
+<ul>
+<li><p>可以增多或者减少分区。宽依赖算子，会产生shuffle;</p>
+</li>
+<li><p>区别于coalesce，coalesce同样可能增加、减少分区。</p>
+</li>
+<li><p>但是coalesce是窄依赖算子，默认无shuffle，可通过设置true来开启。</p>
+</li>
+<li><p>可以变相的理解为：repartition常用于增多分区，coalesce常用于减少分区。</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val rdd3 &#x3D; rdd2.repartition(3)<br>rdd3.mapPartitionsWithIndex((index, iter) &#x3D;&gt; {<br>val list &#x3D; new ListBuffer<a href="">String</a><br>while (iter.hasNext) {<br>    val one &#x3D; iter.next()<br>    list +&#x3D; (s”rdd1 partition &#x3D; $index ,value &#x3D; $one”)<br>}<br>list.iterator<br>}).foreach(println)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.1.15 zip&amp;zipwithindex</span><br><span class="line"></span><br><span class="line">- zip:两个RDD可以通过zip压缩在一起，一一对应</span><br><span class="line"></span><br><span class="line">- zipwithindex：RDD的值和各自的下标压缩在一起，形成K-V格式RDD。如：(a,0)</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  rdd1.zip(rdd2).foreach(println)</span><br><span class="line">  val rdd = rdd1.zipWithIndex()</span><br><span class="line">  rdd.foreach(println)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-1-16-其他"><a href="#2-1-16-其他" class="headerlink" title="2.1.16 其他"></a>2.1.16 其他</h4><ul>
+<li><p>lookup()</p>
+<p>查询指定的key, 返回其对应的value</p>
+</li>
+<li><p>top</p>
+<p>返回最大的k个元素</p>
+</li>
+<li><p>saveAsTextFile</p>
+<p>将数据输出，存储到 HDFS 的指定目录</p>
+</li>
+<li><p>cache </p>
+<p>将 RDD 元素从磁盘缓存到内存</p>
+<p>内部默认会调用persist(StorageLevel.MEMORY_ONLY)，也就是说它无法自定义缓存级别的。</p>
+</li>
+<li><p>persist()</p>
+<p>与cache一样都是将一个RDD进行缓存，在之后的使用过程汇总不需要重新的计算了。它比cache灵活，可以通过自定义StorageLevel类型参数，来定义缓存的级别。</p>
+</li>
+</ul>
+<h2 id="2-2-Action算子"><a href="#2-2-Action算子" class="headerlink" title="2.2 Action算子"></a>2.2 Action算子</h2><h4 id="2-2-1-count"><a href="#2-2-1-count" class="headerlink" title="2.2.1 count"></a>2.2.1 count</h4><ul>
+<li><p>计算数据的个数</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val linecount &#x3D; lines.count()<br>println(linecount)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.2.2 collect</span><br><span class="line"></span><br><span class="line">- 回收计算结果到Driver端的内存</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  val result = lines.collect().foreach(println)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-2-3-first"><a href="#2-2-3-first" class="headerlink" title="2.2.3 first"></a>2.2.3 first</h4><ul>
+<li><p>取第一条数据。由take(1)实现</p>
+</li>
+<li><p>&#96;&#96;&#96;<br>val result &#x3D; lines.first()<br>println(result)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.2.4 take</span><br><span class="line"></span><br><span class="line">- 取指定行的数据</span><br><span class="line">- val result = lines.take(5)</span><br><span class="line">- result.foreach(println)</span><br><span class="line"></span><br><span class="line">#### 2.2.5 foreachPartition</span><br><span class="line"></span><br><span class="line">- 遍历每个partition上的数据</span><br><span class="line"></span><br><span class="line">- ```scala</span><br><span class="line">  rdd1.foreachPartition(iter=&gt;&#123;</span><br><span class="line">  	println(&quot;开始&quot;)</span><br><span class="line">  	while (iter.hasNext)&#123;</span><br><span class="line">  		val s = iter.next()</span><br><span class="line">  		println(&quot;插入：&quot;+s)</span><br><span class="line">  	&#125;</span><br><span class="line">  	println(&quot;结束&quot;)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-2-6-reduce-amp-countByKey-amp-countByValue"><a href="#2-2-6-reduce-amp-countByKey-amp-countByValue" class="headerlink" title="2.2.6 reduce&amp;countByKey&amp;countByValue"></a>2.2.6 reduce&amp;countByKey&amp;countByValue</h4><ul>
+<li><p>reduce 聚合执行对应的逻辑</p>
+</li>
+<li><pre><code class="scala">val result = sc.parallelize(List[Int](1,2,3,4,5)).reduce(_+_)
+println(result)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- countByKey 按照key分组，count每个key 对应value的个数</span><br><span class="line"></span><br><span class="line">- ```scala</span><br><span class="line">  sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot;a&quot;,300),(&quot;d&quot;,400))).countByKey().foreach(println)</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>countByValue: (key,value)整体 进行分组，计算出现次数。输出：((a,100),2)</p>
+</li>
+<li><p>&#96;&#96;&#96;scala<br>sc.parallelize(List<a href="(%22a%22,100),(%22b%22,200),(%22a%22,300),(%22a%22,100),(%22d%22,400)">(String,Int)</a>).countByValue().foreach(println)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 2.3. 个人积累</span><br><span class="line"></span><br><span class="line">### 2.3.1 map+case结构</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>input.txt<br>user1,19<br>user2,20<br>user3,21<br>user4,22<br>user5,23<br>user6,24<br>user7,25,哈哈<br>error</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<p>val sparkConf &#x3D; new SparkConf()<br>    sparkConf.setAppName(“map_case_test”)<br>    sparkConf.setMaster(“local[*]”)<br>val sparkContext &#x3D; new SparkContext(sparkConf)<br>val rdd &#x3D; sparkContext.textFile(“input.txt”)<br>rdd.map(line&#x3D;&gt;line.split(“,”))<br>   .map(<br>      line&#x3D;&gt;if(line.length &#x3D;&#x3D; 1) (line(0))<br>            else if(line.length &#x3D;&#x3D; 2) (line(0),line(1))<br>            else (line(0),line(1),line(2))<br>   )<br>   .map{<br>        case (one) &#x3D;&gt; (“one:”+one)<br>        case (name,age) &#x3D;&gt;(“name:”+name,”age:”+age)<br>        case _ &#x3D;&gt; (“_name”,”<em>age”,”</em>“)<br>     }<br>      .foreach(println)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2.3.2 map和mapPartition</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>主要区别：<br>map是对rdd中的每一个元素进行操作；<br>mapPartitions则是对rdd中的每个分区的迭代器进行操作</p>
+</li>
+</ul>
+<p>如果是普通的map，比如一个partition中有1万条数据。ok，那么你的function要执行和计算1万次。<br>使用MapPartitions操作之后，一个task仅仅会执行一次function，function一次接收所有的partition数据。</p>
+<p>MapPartitions的优点：<br>如果在map过程中需要频繁创建额外的对象(例如将rdd中的数据通过jdbc写入数据库,map需要为每个元素创建一个链接而mapPartition为每个partition创建一个链接),则mapPartitions效率比map高的多。</p>
+<p>MapPartitions的缺点：<br>每次处理一个分区的数据，这个分区的数据处理完后，原RDD中分区的数据才能释放，可能导致OOM。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<p>def main(args: Array[String]): Unit &#x3D; {</p>
+<p>  var conf &#x3D; new SparkConf().setMaster(“local[*]”).setAppName(“mapAndmapPartitions”)<br>  var sc   &#x3D; new SparkContext(conf)</p>
+<p>  println(“1.map——————————–”)<br>  var aa   &#x3D; sc.parallelize(1 to 9, 3)<br>  def doubleMap(a:Int) : (Int, Int) &#x3D; { (a, a*2) }<br>  val aa_res &#x3D; aa.map(doubleMap)<br>  println(aa_res.collect().mkString)</p>
+<p>  println(“2.mapPartitions——————-“)<br>  val bb &#x3D; sc.parallelize(1 to 9, 3)<br>  def doubleMapPartition( iter : Iterator[Int]) : Iterator[ (Int, Int) ] &#x3D; {<br>    var res &#x3D; List<a href="">(Int,Int)</a><br>    while (iter.hasNext){<br>      val cur &#x3D; iter.next()<br>      res .::&#x3D; (cur, cur*2)<br>    }<br>    res.iterator<br>  }<br>  val bb_res &#x3D; bb.mapPartitions(doubleMapPartition)<br>  println(bb_res.collect().mkString)</p>
+<p>  println(“3.mapPartitions——————-“)<br>  var cc &#x3D; sc.makeRDD(1 to 5, 2)<br>  var cc_ref &#x3D; cc.mapPartitions( x &#x3D;&gt; {<br>    var result &#x3D; List<a href="">Int</a><br>    var i &#x3D; 0<br>    while(x.hasNext){<br>      val cur &#x3D; x.next()<br>      result.::&#x3D; (cur*2)<br>    }<br>    result.iterator<br>  })<br>  cc_ref.foreach(println)<br>}</p>
+<hr>
+<p>运行结果：<br>1.map——————————–<br>(1,2)(2,4)(3,6)(4,8)(5,10)(6,12)(7,14)(8,16)(9,18)</p>
+<p>2.mapPartitions——————-<br>(3,6)(2,4)(1,2)(6,12)(5,10)(4,8)(9,18)(8,16)(7,14)</p>
+<p>3.mapPartitions——————-<br>4<br>2<br>10<br>8<br>6</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 2. Spark SQL</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 2.1 概述</span><br><span class="line"></span><br><span class="line">Spark SQL是Spark用来**处理结构化数据**的一个模块，</span><br><span class="line"></span><br><span class="line">它提供了2个编程抽象：**DataFrame**和**DataSet**，并且作为**分布式SQL查询引擎**的作用。</span><br><span class="line"></span><br><span class="line">### 2.1.1 特点</span><br><span class="line"></span><br><span class="line">* 易整合</span><br><span class="line">* 统一的数据访问方式</span><br><span class="line">* 兼容Hive</span><br><span class="line">* 标准的数据连接</span><br><span class="line"></span><br><span class="line">### 2.1.2 DataFrame</span><br><span class="line"></span><br><span class="line">DataFrame也是一个分布式数据容器。</span><br><span class="line"></span><br><span class="line">但DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。</span><br><span class="line"></span><br><span class="line">同时，与Hive类似，**DataFrame也支持嵌套数据类型**（struct、array和map）。</span><br><span class="line"></span><br><span class="line">DataFrame是为数据提供了Schema的视图。可以把它当做数据库中的一张表来对待，DataFrame也是懒执行的。</span><br><span class="line"></span><br><span class="line">​	性能上比RDD要高，主要原因：</span><br><span class="line"></span><br><span class="line">​		优化的执行计划：查询计划通过Spark catalyst optimiser进行优化。</span><br><span class="line"></span><br><span class="line">### 2.1.3 DataSet</span><br><span class="line"></span><br><span class="line">DataSet是</span><br><span class="line"></span><br><span class="line">​	1)Dataframe API的一个扩展，是Spark最新的数据抽象。</span><br><span class="line"></span><br><span class="line">​	2)用户友好的API风格，既具有类型安全检查也具有Dataframe的查询优化特性。</span><br><span class="line"></span><br><span class="line">​	3)Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。</span><br><span class="line"></span><br><span class="line">​	4)样例类被用来在Dataset中定义数据的结构信息，**样例类中每个属性的名称直接映射到DataSet中的字段名称**。</span><br><span class="line"></span><br><span class="line">​	5)Dataframe是Dataset的特列，DataFrame=Dataset[Row] ，所以可以通过as方法将Dataframe转换为Dataset。Row是一个类型，跟Car、Person这些的类型一样，所有的表结构信息我都用Row来表示。</span><br><span class="line"></span><br><span class="line">​	6)DataSet是强类型的。比如可以有Dataset[Car]，Dataset[Person].</span><br><span class="line"></span><br><span class="line">​	7)DataFrame只是知道字段，但是不知道字段的类型，所以在执行这些操作的时候是没办法在编译的时候检查是否类型失败的，比如你可以对一个String进行减法操作，在执行的时候才报错，而DataSet不仅仅知道字段，而且知道字段类型，所以有更严格的错误检查。就跟JSON对象和类对象之间的类比。</span><br><span class="line"></span><br><span class="line">## 2.2. SparkSQL编程</span><br><span class="line"></span><br><span class="line">### 2.2.1 SparkSession</span><br><span class="line"></span><br><span class="line">在**老spark的版本**中，SparkSQL提供两种SQL查询起始点：一个叫**SQLContext**，用于Spark自己提供的SQL查询；一个叫**HiveContext**，用于连接Hive的查询。</span><br><span class="line"></span><br><span class="line">**SparkSession**是Spark最新的SQL查询起始点，实质上**是SQLContext和HiveContext的组合**，所以在SQLContext和HiveContext上可用的API在SparkSession上同样是可以使用的。**SparkSession内部封装了sparkContext**，所以计算实际上是由sparkContext完成的。</span><br><span class="line"></span><br><span class="line">### 2.2.2 DataFrame（DataSet基本一致）</span><br><span class="line"></span><br><span class="line">#### 2.2.2.1 创建</span><br><span class="line"></span><br><span class="line">在Spark SQL中SparkSession是创建DataFrame和执行SQL的入口，</span><br><span class="line"></span><br><span class="line">创建DataFrame有三种方式：</span><br><span class="line"></span><br><span class="line">* 通过Spark的数据源进行创建</span><br><span class="line">* 从一个存在的RDD进行转换</span><br><span class="line">* 从Hive Table进行查询返回</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol>
+<li>从Spark数据源进行创建<br>1)查看Spark数据源进行创建的文件格式<br> spark.read.<br> csv   format   jdbc   json   load   option   options   orc   		parquet   schema   table   text   textFile<br>2)读取json文件创建DataFrame<br> val df&#x3D;spark.read.json(“&#x2F;opt&#x2F;module&#x2F;spark&#x2F;…&#x2F;people.json”)<br>3）展示结果<br> df.show<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>从RDD进行转换<br>注意：如果需要RDD与DF或者DS之间操作，那么都需要引入 import spark.implicits._  【spark不是包名，而是sparkSession对象的名称】</li>
+</ol>
+<p>import spark.implicits._<br>val peopleRDD &#x3D; sc.textFile(“examples&#x2F;src&#x2F;main&#x2F;resources&#x2F;people.txt”)<br>1)手动转换<br>peopleRDD.map{x&#x3D;&gt;<br>    val para &#x3D; x.split(“,”);					  				 		(para(0),para(1).trim.toInt)<br>    }.toDF(“name”,”age”)<br>2）通过反射确定（需要用到样例类）<br>    （1）创建一个样例类<br>    case class People(name:String, age:Int)<br>    （2）根据样例类将RDD转换为DataFrame<br>    peopleRDD.map{ x &#x3D;&gt;<br>    val para &#x3D; x.split(“,”);<br>    People(para(0),para(1).trim.toInt)<br>    }.toDF<br>3）通过编程的方式（–了解–）<br>    （1）导入所需的类型<br>    import org.apache.spark.sql.types._<br>    （2）创建Schema<br>    val structType: StructType &#x3D; StructType(StructField(“name”, StringType) :: StructField(“age”, IntegerType) :: Nil)<br>    （3）导入所需的类型<br>    import org.apache.spark.sql.Row<br>    （4）根据给定的类型创建二元组RDD<br>    val data &#x3D; peopleRDD.map{ x &#x3D;&gt;<br>    val para &#x3D; x.split(“,”);<br>    Row(para(0),para(1).trim.toInt)}<br>    （5）根据数据及给定的schema创建DataFrame<br>    val dataFrame &#x3D; spark.createDataFrame(data, structType)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>从Hive Table进行查询返回<br>3.5节<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2.2.2.2 SQL风格语法</span><br><span class="line"></span><br><span class="line">1. 创建DF</span><br><span class="line"></span><br><span class="line">   spark.read.json(&quot;&quot;)</span><br><span class="line"></span><br><span class="line">2. 对DataFrame创建一个临时表</span><br><span class="line"></span><br><span class="line">   df.createOrReplaceTempView(&quot;people&quot;)</span><br><span class="line"></span><br><span class="line">3. 通过SQL语句实现查询全表</span><br><span class="line"></span><br><span class="line">   val sqlDF = spark.sql(&quot;SELECT * FROM people&quot;)</span><br><span class="line"></span><br><span class="line">4. 结果展示</span><br><span class="line"></span><br><span class="line">   sqlDF.show</span><br><span class="line"></span><br><span class="line">注意：临时表是Session范围内的，Session退出后，表就失效了。</span><br><span class="line"></span><br><span class="line">如果想应用范围内有效，可以使用全局表。注意使用全局表时需要全路径访问，</span><br><span class="line"></span><br><span class="line">如：global_temp.people</span><br><span class="line"></span><br><span class="line">5. 对于DataFrame创建一个全局表</span><br><span class="line"></span><br><span class="line">   df.createGlobalTempView(&quot;people&quot;)</span><br><span class="line"></span><br><span class="line">6. 通过SQL语句实现查询全表</span><br><span class="line"></span><br><span class="line">   spark.sql(&quot;SELECT * FROM global_temp.people&quot;).show()</span><br><span class="line"></span><br><span class="line">   spark.newSession().sql(&quot;SELECT * FROM global_temp.people&quot;).show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 2.2.3 DataFrame与DataSet的互操作 </span><br><span class="line"></span><br><span class="line">在使用一些特殊的操作时，一定要加上 import spark.implicits._ </span><br><span class="line"></span><br><span class="line">不然toDF、toDS无法使用。</span><br><span class="line"></span><br><span class="line">1. DataFrame转换为DataSe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+1）创建一个DateFrame<br>val df &#x3D; spark.read.json(“examples&#x2F;src&#x2F;main&#x2F;resources&#x2F;people.json”)<br>2）创建一个样例类<br>case class Person(name: String, age: Long)<br>3）将DateFrame转化为DataSet<br>df.as[Person]<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. DataSet转换为DataFrame</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+1）创建一个样例类<br>case class Person(name: String, age: Long)<br>2）创建DataSet<br>val ds &#x3D; Seq(Person(“Andy”, 32)).toDS()<br>3）将DataSet转化为DataFrame<br>val df &#x3D; ds.toDF<br>4)展示<br>df.show<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">### 2.2.4 RDD、DataFrame、DataSet</span><br><span class="line"></span><br><span class="line">在SparkSQL中Spark为我们提供了两个新的抽象，分别是DataFrame和DataSet。</span><br><span class="line"></span><br><span class="line">他们和RDD有什么区别呢？首先从版本的产生上来看：</span><br><span class="line"></span><br><span class="line">​	RDD (Spark1.0) —&gt; Dataframe(Spark1.3) —&gt;Dataset(Spark1.6)</span><br><span class="line"></span><br><span class="line">如果同样的数据都给到这三个数据结构，他们分别计算之后，都会给出相同的结果。不同是的他们的执行效率和执行方式。</span><br><span class="line"></span><br><span class="line">在后期的Spark版本中，DataSet会逐步取代RDD和DataFrame成为唯一的API接口。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 3. Spark常用知识点</span><br><span class="line"></span><br><span class="line">## 3.1 repartition和coalesce</span><br><span class="line"></span><br><span class="line">https://www.cnblogs.com/jiangxiaoxian/p/9539760.html</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>区别<br>共同点：都是RDD的分区进行重新划分。<br>本质：repartition只是coalesce接口中shuffle为true的简易实现。</li>
+</ol>
+<p>（假设RDD有N个分区，需要重新划分成M个分区）<br>2. 使用<br>    分区增多的情况下，如果N &lt; M。coalesce为无效的，使用repartition实现。<br>    分区略有减少，如果N &gt; M 且 N和M相差不多，(假如N是1000，M是100)。其实就是将其中的若干分区合并成一个新的分区。建议coalesce实现。<br>    分区大大减少，如果N &gt; M。需看executor数与要生成的partition关系。<br>        如果executor数 &lt;&#x3D; 要生成partition数，coalesce效率高<br>        反之，使用coalesce会导致(executor数-要生成partiton数)个excutor空跑从而降低效率。<br>        极端情况，M&#x3D;1时，repartition更好，因为coalesce会导致executor空跑。<br>3. 总结<br>    如果想分区数增多，不进行shuffle无法实现。建议使用repartition。<br>    分区数量减少，且分区数大于executor数（vcore总数），建议使用coalesce。</p>
+<pre><code>通常可简记为，分区增多用repartition，分区减少用coalesce.
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 3.2 spark动态分配executor</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xjping0794/article/details/78278838?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase">https://blog.csdn.net/xjping0794/article/details/78278838?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 3.3 cache，persist 和 unpersist</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>则可清除掉所有df，rdd的缓存<br>def unpersistUnuse( sc: SparkContext) &#x3D; {<br>val persistRdds &#x3D; sc.getPersistentRDDs<br>persistRdds.foreach(x &#x3D;&gt; x._2.unpersist() )<br>}</p>
+<p>关于persist的用法：<br>如果数据量不是特别大，可以使用 rdd.persist(StorageLevel.MEMORY_ONLY_SER)</p>
+<p>如果集群资源比较不足，则舍弃部分效率，使用 rdd.persist(StorageLevel.MEMORY_AND_DISK_SER)</p>
+<pre><code>
+
+
+
+
+
+# 4. Spark 编程建议
+
+- 避免创建重复的RDD，尽量复用同一份数据。
+- 如果有RDD复用，尤其是该RDD需要花费比较长的时间，建议对该RDD做cache，若该RDD每个partition需要消耗很多内存，建议开启Kryo序列化机制(据说可节省2到5倍空间),若还是有比较大的内存开销，可将storage_level设置为MEMORY_AND_DISK_SER
+  - https://www.cnblogs.com/jinniezheng/p/8548251.html    Kryo序列化机制
+- 尽量避免使用shuffle类算子，因为shuffle操作是spark中最消耗性能的地方，reduceByKey、join、distinct、repartition等算子都会触发shuffle操作，尽量使用map类的非shuffle算子
+- 用aggregateByKey和reduceByKey替代groupByKey,因为前两个是**预聚合操作**，会在每个节点本地对相同的key做聚合，等其他节点拉取所有节点上相同的key时，会大大减少磁盘IO以及网络开销。
+- repartition适用于RDD[V], partitionBy适用于RDD[K, V]
+- mapPartitions操作替代普通map，foreachPartitions替代foreach
+- filter操作之后进行coalesce操作，可以减少RDD的partition数量
+- 尽量避免在一个Transformation中处理所有的逻辑，尽量分解成map、filter之类的操作
+- 多个RDD进行union操作时，避免使用rdd.union(rdd).union(rdd).union(rdd)这种多重union，rdd.union只适合2个RDD合并，合并多个时采用SparkContext.union(Array(RDD))，避免union嵌套层数太多，导致的调用链路太长，耗时太久，且容易引发StackOverFlow
+- spark中的Group/join/XXXByKey等操作，都可以指定partition的个数，不需要额外使用repartition和partitionBy函数
+- 尽量保证每轮Stage里每个task处理的数据量&gt;128M
+- 如果2个RDD做join，其中一个数据量很小，可以采用Broadcast Join，将小的RDD数据collect到driver内存中，将其BroadCast到另外以RDD中，其他场景想优化后面会讲
+- 2个RDD做笛卡尔积时，把小的RDD作为参数传入，如BigRDD.certesian(smallRDD)
+- 若需要Broadcast一个大的对象到远端作为字典查询，可使用多executor-cores，大executor-memory。若将该占用内存较大的对象存储到外部系统，executor-cores=1， executor-memory=m(默认值2g),可以正常运行，那么当大字典占用空间为size(g)时，executor-memory为2*size，executor-cores=size/m(向上取整)
+- 如果对象太大无法BroadCast到远端，且需求是根据大的RDD中的key去索引小RDD中的key，可使用zipPartitions以hash join的方式实现，具体原理参考下一节的shuffle过程
+- 如果需要在repartition重分区之后还要进行排序，可直接使用repartitionAndSortWithinPartitions，比分解操作效率高，因为它可以一边shuffle一边排序
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+    </div>
+
+    <div></div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Spark-%E5%9F%BA%E7%A1%80"><span class="toc-text">0. Spark 基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-1-Spark-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="toc-text">0.1 Spark 内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-2-Spark-%E4%BB%BB%E5%8A%A1%E6%8F%90%E4%BA%A4"><span class="toc-text">0.2 Spark 任务提交</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-RDD%E7%9F%A5%E8%AF%86"><span class="toc-text">1. RDD知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-RDD%E5%9F%BA%E7%A1%80"><span class="toc-text">1.1 RDD基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-RDD%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-text">1.2 RDD基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-RDD%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="toc-text">1.2.1 RDD的构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-Transformation%EF%BC%88%E8%BD%AC%E6%8D%A2%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="toc-text">1.2.2 Transformation（转换操作）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-Action%EF%BC%88%E8%A1%8C%E5%8A%A8%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="toc-text">1.2.3 Action（行动操作）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Spark-Stage%E7%9A%84%E5%88%92%E5%88%86"><span class="toc-text">1.3 Spark Stage的划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-Stage%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">1.3.1 Stage的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-shuffle-%E5%92%8C-stage"><span class="toc-text">1.3.2 shuffle 和 stage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-SparkContext%E3%80%81SparkConf%E5%92%8CSparkSession"><span class="toc-text">1.4 SparkContext、SparkConf和SparkSession</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Spark-%E7%AE%97%E5%AD%90"><span class="toc-text">2.Spark 算子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Transformations%E7%AE%97%E5%AD%90"><span class="toc-text">2.1 Transformations算子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-map-%E4%B8%80%E5%AF%B9%E4%B8%80"><span class="toc-text">2.1.1 map 一对一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-filter%E8%BF%87%E6%BB%A4"><span class="toc-text">2.1.3 filter过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-5-sortByKey"><span class="toc-text">2.1.5 sortByKey</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-6-join"><span class="toc-text">2.1.6 join</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-8-intersection"><span class="toc-text">2.1.8 intersection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-10-mapPartitions"><span class="toc-text">2.1.10 mapPartitions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-12-cogroup"><span class="toc-text">2.1.12 cogroup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-14-repartition-%E5%92%8C-coalesce"><span class="toc-text">2.1.14 repartition 和 coalesce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-16-%E5%85%B6%E4%BB%96"><span class="toc-text">2.1.16 其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Action%E7%AE%97%E5%AD%90"><span class="toc-text">2.2 Action算子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-count"><span class="toc-text">2.2.1 count</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-first"><span class="toc-text">2.2.3 first</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-6-reduce-amp-countByKey-amp-countByValue"><span class="toc-text">2.2.6 reduce&amp;countByKey&amp;countByValue</span></a></li></ol></li></ol></li></ol></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="/../../../../images/wechat.png" alt="Running Geek" style="margin: auto; display: block;"/>
+
+  <div style="margin: auto; text-align: center; font-size: 0.8em; color: grey;">微信扫一扫向我投食</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2019/10/01/Hadoop/MapReduce%E7%AC%94%E8%AE%B0/" rel="next" title="MapReduce笔记">
+          MapReduce笔记
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2019/10/15/Spark/Spark%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" rel="prev" title="Spark参数调优">
+            Spark参数调优
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" target="_blank" rel="noopener" href="https://zshlovely.github.io/">首页</a> |
+        <a class="bottom-item" href="https://zshlovely.github.io/" target="_blank">主站</a> |
+        <a class="bottom-item" href="https://github.com/fenghuayangyi" target="_blank">GitHub</a>
+    </div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+
+
+
+</body>
+</html>
