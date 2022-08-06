@@ -919,7 +919,7 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
 <p>必须安装后，才能使用 : hexo d</p>
 </li>
 <li><p>编辑 hexocode目录下的 _config.yml 文件, 在文件末尾添加如下内容</p>
-<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#46;&#99;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#46;&#99;&#x6f;&#x6d;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
+<p>deploy:<br>  type: ‘git’<br>  repository: <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#116;&#x68;&#x75;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#116;&#x68;&#x75;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>:zshlovely&#x2F;zshlovely.github.io.git<br>  branch: master</p>
 </li>
 <li><p>报错和 time有关时，需要安装该组件</p>
 </li>
@@ -2020,86 +2020,6 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </tags>
   </entry>
   <entry>
-    <title>Hadoop入门</title>
-    <url>/2018/12/28/Hadoop/Hadoop%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
-<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
-<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
-<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
-</ul>
-<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
-<ul>
-<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
-<li>Cloudera在大型互联网企业中用的较多。</li>
-<li>Hortonworks文档较好。</li>
-</ul>
-<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
-<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
-<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
-<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
-<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
-<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
-<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
-<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
-<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
-<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
-<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
-<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
-<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
-<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
-<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
-<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
-<p>1）Map阶段并行处理输入数据。</p>
-<p>2）Reduce阶段对Map结果进行汇总。</p>
-<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
-<p>名词解释如下：</p>
-<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
-<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
-<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
-<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
-<p> 可以基于Hadoop上存储的大数据进行计算。</p>
-<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
-<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
-<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
-<ul>
-<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
-<li>可以将sql语句转换为MapReduce任务进行运行。</li>
-</ul>
-<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
-<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
-<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
-<ul>
-<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
-<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
-<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
-</ul>
-<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
-<ul>
-<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
-<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
-</ul>
-<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
-<li><p>官方网址：<a href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
-</li>
-<li><p>各个版本归档库地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
-</li>
-<li><p>hadoop2.7.2版本详情介绍：<a href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
-<p>Hadoop运行模式：</p>
-<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
-<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
-<p>（3）完全分布式模式：多个节点一起运行。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hadoop之MapReduce</title>
     <url>/2019/04/12/Hadoop/Hadoop%E4%B9%8BMapReduce/</url>
     <content><![CDATA[<h1 id="MapReduce概述"><a href="#MapReduce概述" class="headerlink" title="MapReduce概述"></a>MapReduce概述</h1><h2 id="1-MapReduce分布式方案考虑的问题"><a href="#1-MapReduce分布式方案考虑的问题" class="headerlink" title="1. MapReduce分布式方案考虑的问题"></a>1. MapReduce分布式方案考虑的问题</h2><p> （1）运算逻辑要不要先分后合？</p>
@@ -2286,6 +2206,86 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
 <p>（2）改写RecordReader，实现一次读取一个完整文件封装为KV</p>
 <p>（3）在输出时使用SequenceFileOutPutFormat输出合并文件</p>
 <h2 id="4-MapTask工作机制"><a href="#4-MapTask工作机制" class="headerlink" title="4. MapTask工作机制"></a>4. MapTask工作机制</h2><h2 id="5-Shuffle机制"><a href="#5-Shuffle机制" class="headerlink" title="5. Shuffle机制"></a>5. Shuffle机制</h2><h2 id="6-ReduceTask工作机制"><a href="#6-ReduceTask工作机制" class="headerlink" title="6. ReduceTask工作机制"></a>6. ReduceTask工作机制</h2><h2 id="7-自定义OutputFormat"><a href="#7-自定义OutputFormat" class="headerlink" title="7. 自定义OutputFormat"></a>7. 自定义OutputFormat</h2><h2 id="8-计数器应用"><a href="#8-计数器应用" class="headerlink" title="8. 计数器应用"></a>8. 计数器应用</h2><h2 id="9-数据清洗"><a href="#9-数据清洗" class="headerlink" title="9. 数据清洗"></a>9. 数据清洗</h2><h1 id="MapReduce与Yarn"><a href="#MapReduce与Yarn" class="headerlink" title="MapReduce与Yarn"></a>MapReduce与Yarn</h1>]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hadoop入门</title>
+    <url>/2018/12/28/Hadoop/Hadoop%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h2 id="Hadoop框架"><a href="#Hadoop框架" class="headerlink" title="Hadoop框架"></a>Hadoop框架</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ul>
+<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构。</li>
+<li>主要解决，<strong>海量数据的存储</strong>和<strong>海量数据的分析计算</strong>问题。</li>
+<li>HADOOP通常是指一个更广泛的概念——HADOOP生态圈。</li>
+</ul>
+<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3><p>Hadoop 三大发行版本: Apache、Cloudera、Hortonworks。</p>
+<ul>
+<li>Apache版本最原始（最基础）的版本，对于入门学习最好。</li>
+<li>Cloudera在大型互联网企业中用的较多。</li>
+<li>Hortonworks文档较好。</li>
+</ul>
+<h3 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h3><p>1）<strong>高可靠性</strong>：因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
+<p>2）<strong>高扩展性</strong>：在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
+<p>3） <strong>高效性</strong>：在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
+<p>4）<strong>高容错性</strong>：自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
+<h3 id="Hadoop组成"><a href="#Hadoop组成" class="headerlink" title="Hadoop组成"></a>Hadoop组成</h3><p>1）Hadoop HDFS：一个高可靠、高吞吐量的<strong>分布式文件系统</strong>。</p>
+<p>2）Hadoop MapReduce：一个<strong>分布式的离线并行计算框架</strong>。</p>
+<p>3）Hadoop YARN：<strong>作业调度与集群资源管理的框架</strong>。</p>
+<p>4）Hadoop Common：<strong>支持其他模块的工具模块</strong>。</p>
+<h4 id="HDFS架构概述"><a href="#HDFS架构概述" class="headerlink" title="HDFS架构概述"></a>HDFS架构概述</h4><p>1）NameNode（nn）：<strong>存储文件的元数据，如文件名，文件目录结构，文件属性</strong>（生成时间、副本数、文件权限），<strong>以及每个文件的块列表和块所在的DataNode等</strong>。</p>
+<p>2）DataNode(dn)：在本地文件系统<strong>存储文件块数据</strong>，以及块数据的校验和。</p>
+<p>3）Secondary NameNode(2nn)：用来监控HDFS状态的辅助后台程序，<strong>每隔一段时间获取HDFS元数据的快照</strong>。</p>
+<h4 id="YARN架构概述"><a href="#YARN架构概述" class="headerlink" title="YARN架构概述"></a>YARN架构概述</h4><p>1）ResourceManager(rm)：处理客户端请求、启动&#x2F;监控ApplicationMaster、<strong>监控NodeManager</strong>、<strong>资源分配与调度</strong>；</p>
+<p>2）NodeManager(nm)：单个节点上的资源管理、<strong>处理来自ResourceManager的命令</strong>、处理来自ApplicationMaster的命令；</p>
+<p>3）ApplicationMaster：<strong>数据切分、为应用程序申请资源</strong>，并分配给内部任务、任务监控与容错。</p>
+<p>4）Container：对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息。</p>
+<h4 id="MapReduce架构概述"><a href="#MapReduce架构概述" class="headerlink" title="MapReduce架构概述"></a>MapReduce架构概述</h4><p>MapReduce将计算过程分为两个阶段：Map和Reduce。</p>
+<p>1）Map阶段并行处理输入数据。</p>
+<p>2）Reduce阶段对Map结果进行汇总。</p>
+<h3 id="大数据技术生态体系"><a href="#大数据技术生态体系" class="headerlink" title="大数据技术生态体系"></a>大数据技术生态体系</h3><p><a href="20220707-3"><img src="/../../../../images/20220707-3.jpg" alt="img"></a></p>
+<p>名词解释如下：</p>
+<p>1）**Sqoop(数据传递)**：sqoop是一款开源的工具，主要用于在Hadoop(Hive)与传统的数据库(mysql)间进行数据的传递，可以将一个关系型数据库（例如 ： MySQL ,Oracle 等）中的数据导进到Hadoop的HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
+<p>2）<strong>Flume(日志收集)<strong>：Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量</strong>日志采集、聚合和传输的系统</strong>，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。</p>
+<p>3）Kafka：Kafka是一种高吞吐量的分布式发布订阅消息系统，如下特性：</p>
+<p>4）**Storm(实时计算)**：Storm为分布式实时计算提供了一组通用原语，可被用于“流处理”之中，实时处理消息并更新数据库。</p>
+<p>5）Spark：Spark是当前最流行的开源大数据内存计算框架。</p>
+<p> 可以基于Hadoop上存储的大数据进行计算。</p>
+<p>6）Oozie：Oozie是一个管理Hdoop作业（job）的工作流程调度管理系统。Oozie协调作业就是通过时间（频率）和有效数据触发当前的Oozie工作流程。</p>
+<p>7）Hbase：HBase是一个分布式的、面向列的开源数据库。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。</p>
+<p>8）Hive：hive是基于Hadoop的一个数据仓库工具</p>
+<ul>
+<li>可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能</li>
+<li>可以将sql语句转换为MapReduce任务进行运行。</li>
+</ul>
+<p>其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用，十分适合数据仓库的统计分析。</p>
+<p>9）R语言：R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
+<p>10）Mahout: Apache Mahout是个可扩展的机器学习和数据挖掘库，当前Mahout支持主要的4个用例：</p>
+<ul>
+<li>推荐挖掘：搜集用户动作并以此给用户推荐可能喜欢的事物。</li>
+<li>聚集：收集文件并进行相关文件分组。<br>分类：从现有的分类文档中学习，寻找文档中的相似特征，并为无标 签的文档进行正确的归类。</li>
+<li>频繁项集挖掘：将一组项分组，并识别哪些个别项会经常一起出现。</li>
+</ul>
+<p>11）ZooKeeper：Zookeeper是Google的Chubby一个开源的实现。</p>
+<ul>
+<li>它是一个针对大型<strong>分布式系统的可靠协调系统</strong>，提供的功能包括：配置维护、名字服务、 分布式同步、组服务等。</li>
+<li>ZooKeeper的目标就是封装好复杂易出错的关键服务，将简单易用的接口和性能高效、功能稳定的系统提供给用户。</li>
+</ul>
+<h2 id="Hadoop运行模式"><a href="#Hadoop运行模式" class="headerlink" title="Hadoop运行模式"></a>Hadoop运行模式</h2><ul>
+<li><p>官方网址：<a href="http://hadoop.apache.org/">http://hadoop.apache.org/</a></p>
+</li>
+<li><p>各个版本归档库地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/</a></p>
+</li>
+<li><p>hadoop2.7.2版本详情介绍：<a href="http://hadoop.apache.org/docs/r2.7.2/">http://hadoop.apache.org/docs/r2.7.2/</a></p>
+<p>Hadoop运行模式：</p>
+<p>（1）本地模式（默认模式）：不需要启用单独进程，直接可以运行，测试和开发时使用。</p>
+<p>（2）伪分布式模式：等同于完全分布式，只有一个节点。</p>
+<p>（3）完全分布式模式：多个节点一起运行。</p>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>大数据</category>
       </categories>
@@ -3412,6 +3412,23 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </categories>
   </entry>
   <entry>
+    <title>Spark Graph</title>
+    <url>/2018/01/01/Spark/SparkGraph/</url>
+    <content><![CDATA[<h1 id="Spark-Graph"><a href="#Spark-Graph" class="headerlink" title="Spark Graph"></a>Spark Graph</h1><h3 id="图存储模式"><a href="#图存储模式" class="headerlink" title="图存储模式"></a>图存储模式</h3><p>Graphx采用Vertex-Cut( 点分割 ) 方式存储图，用三个RDD存储图数据信息：</p>
+<ol>
+<li>VertexTable(id, data)：id为顶点id， data为顶点属性</li>
+<li>EdgeTable(pid, src, dst, data)：pid 为分区id ，src为源顶点id ，dst为目的顶点id，data为边属性 </li>
+<li>RoutingTable(id, pid)：id 为顶点id ，pid 为分区id (记录点 分区的映射)</li>
+</ol>
+]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+      <tags>
+        <tag>Spark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux 常用命令</title>
     <url>/2018/12/10/Linux/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="文件和目录常用命令"><a href="#文件和目录常用命令" class="headerlink" title="文件和目录常用命令"></a>文件和目录常用命令</h2><h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><ul>
@@ -4030,23 +4047,6 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </tags>
   </entry>
   <entry>
-    <title>Spark Graph</title>
-    <url>/2018/01/01/Spark/SparkGraph/</url>
-    <content><![CDATA[<h1 id="Spark-Graph"><a href="#Spark-Graph" class="headerlink" title="Spark Graph"></a>Spark Graph</h1><h3 id="图存储模式"><a href="#图存储模式" class="headerlink" title="图存储模式"></a>图存储模式</h3><p>Graphx采用Vertex-Cut( 点分割 ) 方式存储图，用三个RDD存储图数据信息：</p>
-<ol>
-<li>VertexTable(id, data)：id为顶点id， data为顶点属性</li>
-<li>EdgeTable(pid, src, dst, data)：pid 为分区id ，src为源顶点id ，dst为目的顶点id，data为边属性 </li>
-<li>RoutingTable(id, pid)：id 为顶点id ，pid 为分区id (记录点 分区的映射)</li>
-</ol>
-]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>Spark</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SparkSQL</title>
     <url>/2018/01/01/Spark/SparkSQL/</url>
     <content><![CDATA[<h1 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>Spark SQL是Spark用来<strong>处理结构化数据</strong>的一个模块，</p>
@@ -4123,42 +4123,6 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
 <p>如果同样的数据都给到这三个数据结构，他们分别计算之后，都会给出相同的结果。不同是的他们的执行效率和执行方式。</p>
 <p>在后期的Spark版本中，DataSet会逐步取代RDD和DataFrame成为唯一的API接口。</p>
 ]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>Spark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spark参数调优</title>
-    <url>/2019/10/15/Spark/Spark%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/</url>
-    <content><![CDATA[<h1 id="Spark参数调优"><a href="#Spark参数调优" class="headerlink" title="Spark参数调优"></a>Spark参数调优</h1><p>参考文献：<a href="https://blog.csdn.net/zyzzxycj/article/details/81011540">https://blog.csdn.net/zyzzxycj/article/details/81011540</a></p>
-<p>因为每个集群规模都不一样，只有理解了参数的用途，调试出符合自己业务场景集群环境，并且能在扩大集群、业务的情况下，能够跟着修改参数才算是正确的参数调优。我的目标就是能够熟练的进行参数调优。</p>
-<h2 id="1-Application-Properties-应用基本属性"><a href="#1-Application-Properties-应用基本属性" class="headerlink" title="1*. Application Properties 应用基本属性"></a>1*. Application Properties 应用基本属性</h2><p>这些参数比较重要，执行spark的shell 一般都需要配置一下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.driver.cores  	</span><br><span class="line">	driver端分配的核数，默认为1,资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.driver.memory	</span><br><span class="line">	driver端分配的内存数，默认为1g，资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.executor.memory	</span><br><span class="line">	每个executor分配的内存数，默认1g，会受到yarn CDH的限制，</span><br><span class="line">	和memoryOverhead相加 不能超过总内存限制。</span><br><span class="line"></span><br><span class="line">spark.driver.maxResultSize	</span><br><span class="line">	driver端接收的最大结果大小，默认1GB，最小1MB，设置0为无限。	</span><br><span class="line">	这个参数不建议设置的太大,如果要做数据可视化,更应该控制在20-30MB以内,</span><br><span class="line">	过大会导致OOM(out of memory)。</span><br><span class="line">	</span><br><span class="line">spark.extraListeners.(不常用)	</span><br><span class="line">	默认none，随着SparkContext被创建而创建，用于监听单参数、无参数构造函数的创建，并抛出异常。</span><br><span class="line">	可用于自定义监听，实现监控spark的任务进度。</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-Runtime-Environment-运行环境"><a href="#2-Runtime-Environment-运行环境" class="headerlink" title="2. Runtime Environment 运行环境"></a>2. <strong>Runtime Environment 运行环境</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">主要是一些日志，jvm参数的额外配置，jars等一些自定义的配置(待补充)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-Shuffle-Behavior"><a href="#3-Shuffle-Behavior" class="headerlink" title="3. Shuffle Behavior"></a>3. Shuffle Behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.reducer.maxSizeInFlight	</span><br><span class="line">	默认48m。从每个reduce任务同时拉取的最大map数，</span><br><span class="line">	每个reduce都会在完成任务后，需要一个堆外内存的缓冲区来存放结果，</span><br><span class="line">	如果没有充裕的内存就尽可能把这个调小一点。</span><br><span class="line">	相反，堆外内存充裕，调大些就能节省gc时间。</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">spark.reducer.maxBlocksInFlightPerAddress(一般不会改)	</span><br><span class="line">	限制了每个主机每次reduce可以被多少台远程主机拉取文件块，</span><br><span class="line">	调低这个参数可以有效减轻node manager的负载。（默认值Int.MaxValue）</span><br><span class="line"></span><br><span class="line">spark.reducer.maxReqsInFlight	</span><br><span class="line">	限制远程机器拉取本机器文件块的请求数，随着集群增大，需要对此做出限制。</span><br><span class="line">	否则可能会使本机负载过大而挂掉。（默认值为Int.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.reducer.maxReqSizeShuffleToMem	</span><br><span class="line">	shuffle请求的文件块大小 超过这个参数值，就会被强行落盘，</span><br><span class="line">	防止一大堆并发请求把内存占满。（默认Long.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.shuffle.compress	</span><br><span class="line">	是否压缩map输出文件，默认压缩 true</span><br><span class="line">	</span><br><span class="line">spark.shuffle.spill.compress	</span><br><span class="line">	shuffle过程中溢出的文件是否压缩，默认true，使用spark.io.compression.codec压缩。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.file.buffer	</span><br><span class="line">	在内存输出流中 每个shuffle文件占用内存大小，适当提高 可以减少磁盘读写 io次数，初始值为32k。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.memoryFraction	</span><br><span class="line">	该参数代表了Executor内存中，分配给shuffle read task进行聚合操作的内存比例，默认是20%。	</span><br><span class="line">	cache少且内存充足时，可以调大该参数，给shuffle read的聚合操作更多内存，</span><br><span class="line">	以避免由于内存不足导致聚合过程中频繁读写磁盘。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.manager	</span><br><span class="line">	当ShuffleManager为SortShuffleManager时，</span><br><span class="line">	如果shuffle read task的数量小于这个阈值（默认是200），	 </span><br><span class="line">	则shuffle write过程中不会进行排序操作，</span><br><span class="line">	而是直接按照未经优化的HashShuffleManager的方式去写数据，</span><br><span class="line">	但是最后会将每个task产生的所有临时磁盘文件都合并成一个文件，并会创建单独的索引文件。	</span><br><span class="line">	当使用SortShuffleManager时，如果的确不需要排序操作，那么建议将这个参数调大一些，</span><br><span class="line">	大于shuffle read 	task的数量。那么此时就会自动启用bypass机制，</span><br><span class="line">	map-side就不会进行排序了，减少了排序的性能开销。</span><br><span class="line">	但是这种方式下，依然会产生大量的磁盘文件，因此shuffle write性能有待提高。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.consolidateFiles	</span><br><span class="line">	如果使用HashShuffleManager，该参数有效。</span><br><span class="line">	如果设置为true，那么就会开启consolidate机制，会大幅度合并	 </span><br><span class="line">	shuffle write的输出文件，对于shuffle read task数量特别多的情况下，</span><br><span class="line">	这种方法可以极大地减少磁盘IO开销，提升性能。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.maxRetries（重试次数）	</span><br><span class="line">	shuffle read task从shuffle write task所在节点拉取属于自己的数据时，</span><br><span class="line">	如果因为网络异常导致拉取失败，是会自动进行重试的。</span><br><span class="line">	该参数就代表了可以重试的最大次数。如果在指定次数之内拉取还是没有成功，</span><br><span class="line">	就可能会导致作业执行失败。	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.retryWait	</span><br><span class="line">	同上，默认5s，建议加大间隔时长（比如60s），以增加shuffle操作的稳定性。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spark.io.encryption.enabled</span><br><span class="line">spark.io.encryption.keySizeBits</span><br><span class="line"></span><br><span class="line">spark.io.encryption.keygen.algorithm	</span><br><span class="line">	io加密，默认关闭</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-Spark-UI"><a href="#4-Spark-UI" class="headerlink" title="4. Spark UI"></a>4. Spark UI</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这一块配置，是有关于spark日志的。日志开关，日志输出路径，是否压缩。(待补充)</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-Compression-and-Serialization压缩与序列化"><a href="#5-Compression-and-Serialization压缩与序列化" class="headerlink" title="5. Compression and Serialization压缩与序列化"></a>5. Compression and Serialization压缩与序列化</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.compress	</span><br><span class="line">	广播变量前是否会先进行压缩。默认true （spark.io.compression.codec）</span><br><span class="line">	</span><br><span class="line">spark.io.compression.codec	</span><br><span class="line">	压缩RDD数据、日志、shuffle输出等的压缩格式 默认lz4</span><br><span class="line">	</span><br><span class="line">spark.io.compression.lz4.blockSize	</span><br><span class="line">	使用lz4压缩时，每个数据块大小 默认32k</span><br><span class="line">	</span><br><span class="line">spark.rdd.compress	</span><br><span class="line">	rdd是否压缩 默认false，节省memory_cache大量内存 消耗更多的cpu资源（时间）。</span><br><span class="line">	</span><br><span class="line">spark.serializer.objectStreamReset	</span><br><span class="line">	当使用JavaSerializer序列化时，会缓存对象防止写多余的数据，但这些对象就不会被gc，</span><br><span class="line">	可以输入reset 清空缓存。默认缓存100个对象，修改成-1则不缓存任何对象。</span><br></pre></td></tr></table></figure>
-
-<p>压缩以后节省内存资源，消耗cpu资源。</p>
-<h2 id="6-Memory-Management-内存管理"><a href="#6-Memory-Management-内存管理" class="headerlink" title="6. Memory Management 内存管理"></a>6. <strong>Memory Management 内存管理</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.memory.fraction	</span><br><span class="line">	执行内存和缓存内存（堆）占jvm总内存的比例，</span><br><span class="line">	剩余的部分是spark留给用户存储内部源数据、数据结构、异常大的结果数据。</span><br><span class="line">	默认值0.6，调小会导致频繁gc，调大容易造成oom。</span><br><span class="line">	</span><br><span class="line">spark.memory.storageFraction	</span><br><span class="line">	用于存储的内存在堆中的占比，默认0.5。</span><br><span class="line">	调大会导致执行内存过小，执行数据落盘，影响效率；调小会导致缓存内存不够，缓存到磁盘上去，影响效率。</span><br><span class="line">	另外，执行内存和缓存内存公用java堆，当执行内存没有使用时，会动态分配给缓存内存使用，</span><br><span class="line">	反之也是这样。</span><br><span class="line">	如果执行内存不够用，可以将存储内存释放移动到磁盘上（最多释放不能超过本参数划分的比例），</span><br><span class="line">	但存储内存不能把执行内存抢走。</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.enabled	</span><br><span class="line">	是否允许使用堆外内存来进行某些操作。默认false</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.size	</span><br><span class="line">	允许使用进行操作的堆外内存的大小，单位bytes 默认0</span><br><span class="line">	</span><br><span class="line">spark.storage.replication.proactive	</span><br><span class="line">	针对失败的executor，主动去cache 有关的RDD中的数据。默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.periodicGC.interval	</span><br><span class="line">	控制触发gc的频率，默认30min</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking	</span><br><span class="line">	是否进行context cleaning，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking	</span><br><span class="line">	清理线程是否应该阻止清理任务，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking.shuffle	</span><br><span class="line">	清理线程是否应该阻止shuffle的清理任务，默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.cleanCheckpoints	</span><br><span class="line">	清理线程是否应该清理依赖超出范围的检查点文件，默认false</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-Executor-behavior"><a href="#7-Executor-behavior" class="headerlink" title="7. Executor behavior"></a>7. Executor behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.blockSize	</span><br><span class="line">	TorrentBroadcastFactory中的每一个block大小，默认4m	</span><br><span class="line">	过大会减少广播时的并行度，过小会导致BlockManager 产生 performance hit.</span><br><span class="line">	（暂时没懂这是干啥用的）</span><br><span class="line">	</span><br><span class="line">spark.executor.cores	</span><br><span class="line">	每个executor的核数，默认yarn下1核，standalone下为所有可用的核。</span><br><span class="line">	</span><br><span class="line">spark.default.parallelism	</span><br><span class="line">	默认RDD的分区数、并行数。	</span><br><span class="line">	像reduceByKey和join等这种需要分布式shuffle的操作中，最大父RDD的分区数；	</span><br><span class="line">	像parallelize之类没有父RDD的操作，则取决于运行环境下得cluster manager：		</span><br><span class="line">	如果为单机模式，本机核数；		</span><br><span class="line">	集群模式为所有executor总核数与2 中最大的一个。</span><br><span class="line">	</span><br><span class="line">spark.executor.heartbeatInterval	</span><br><span class="line">	executor和driver心跳发送间隔，默认10s，</span><br><span class="line">	必须远远小于spark.network.timeoutspark.files.fetchTimeout	</span><br><span class="line">	从driver端执行SparkContext.addFile() 抓取添加的文件的超时时间，</span><br><span class="line">	默认60s</span><br><span class="line">	</span><br><span class="line">spark.files.useFetchCache	</span><br><span class="line">	默认true，如果设为true，拉取文件时会在同一个application中本地持久化，</span><br><span class="line">	被若干个executors共享。这使得当同一个主机下有多个executors时，执行任务效率提高。</span><br><span class="line">	</span><br><span class="line">spark.files.overwrite	</span><br><span class="line">	默认false，是否在执行SparkContext.addFile() 添加文件时，覆盖已有的内容有差异的文件。</span><br><span class="line">	</span><br><span class="line">spark.files.maxPartitionBytes	</span><br><span class="line">	单partition中最多能容纳的文件大小，单位Bytes </span><br><span class="line">	默认134217728 (128 MB)</span><br><span class="line">	</span><br><span class="line">spark.files.openCostInBytes	</span><br><span class="line">	小文件合并阈值，小于该参数就会被合并到一个partition内。	</span><br><span class="line">	默认4194304 (4 MB) 。</span><br><span class="line">	这个参数在将多个文件放入一个partition时被用到，宁可设置的小一些，</span><br><span class="line">	因为在partition操作中，小文件肯定会比大文件快。</span><br><span class="line">	</span><br><span class="line">spark.storage.memoryMapThreshold	</span><br><span class="line">	从磁盘上读文件时，最小单位不能少于该设定值，默认2m，小于或者接近操作系统的每个page的大小。</span><br></pre></td></tr></table></figure>
-
-<h2 id="8-Networking网络"><a href="#8-Networking网络" class="headerlink" title="8. Networking网络"></a>8. Networking网络</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">网络超时或者ip端口的一些配置</span><br></pre></td></tr></table></figure>
-
-<h2 id="9-Scheduling调度"><a href="#9-Scheduling调度" class="headerlink" title="9. Scheduling调度"></a>9. Scheduling调度</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.scheduler.maxRegisteredResourcesWaitingTime	</span><br><span class="line">	在执行前最大等待申请资源的时间，默认30s。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.minRegisteredResourcesRatio	</span><br><span class="line">	实际注册的资源数占预期需要的资源数的比例，默认0.8</span><br><span class="line">	</span><br><span class="line">spark.scheduler.mode</span><br><span class="line">	其他进阶的配置如下：		</span><br><span class="line">	调度模式，默认FIFO 先进队列先调度，可以选择FAIR。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.revive.interval	</span><br><span class="line">	work回复重启的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">spark.scheduler.listenerbus.eventqueue.capacity	</span><br><span class="line">	spark事件监听队列容量，默认10000，必须为正值，增加可能会消耗更多内存</span><br><span class="line">	spark.blacklist.enabled***************************************************************	</span><br><span class="line">	是否列入黑名单，默认false。如果设成true，当一个executor失败好几次时，会被列入黑名单，防止后续task		派发到这个executor。可以进一步调节spark.blacklist以下相关的参数：	</span><br><span class="line">	（均为测试参数 Experimental）	</span><br><span class="line">	spark.blacklist.timeout    </span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerExecutor    	</span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerNode    </span><br><span class="line">	spark.blacklist.stage.maxFailedTasksPerExecutor    </span><br><span class="line">	spark.blacklist.application.maxFailedExecutorsPerNode    </span><br><span class="line">	spark.blacklist.killBlacklistedExecutors</span><br><span class="line">	spark.blacklist.application.fetchFailure.enabled</span><br><span class="line"></span><br><span class="line">spark.speculation************************************************************************	推测，如果有task执行的慢了，就会重新执行它。默认false.	</span><br><span class="line"></span><br><span class="line">	详细相关配置如下：	</span><br><span class="line">	spark.speculation.interval		检查task快慢的频率，推测间隔，默认100ms。	</span><br><span class="line">	spark.speculation.multiplier		推测比均值慢几次算是task执行过慢，默认1.5.	</span><br><span class="line">	spark.speculation.quantile		在某个stage，完成度必须达到该参数的比例，才能被推测，默认0.75</span><br><span class="line">	spark.task.cpus	每个task分配的cpu数，默认1</span><br><span class="line">	spark.task.maxFailures	在放弃这个job前允许的最大失败次数，默认4</span><br><span class="line">	spark.task.reaper.enabled</span><br><span class="line">		(原先有 job失败了但一直显示有task在running，总算找到这个参数了)********	</span><br><span class="line">	赋予spark监控有权限去kill那些失效的task，默认false</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">其他进阶的配置如下：	</span><br><span class="line">	spark.task.reaper.pollingInterval		</span><br><span class="line">	轮询被kill掉的task的时间间隔，如果还在running，就会打warn日志，默认10s。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.threadDump		</span><br><span class="line">	线程回收是是否产生日志，默认true。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.killTimeout		</span><br><span class="line">	当一个被kill的task过了多久还在running，就会把那个executor给kill掉，默认-1。	</span><br><span class="line">	</span><br><span class="line">	spark.stage.maxConsecutiveAttempts		</span><br><span class="line">	在终止前，一个stage连续尝试次数，默认4。</span><br></pre></td></tr></table></figure>
-
-<h2 id="10-Dynamic-Allocation动态分配"><a href="#10-Dynamic-Allocation动态分配" class="headerlink" title="10. Dynamic Allocation动态分配"></a>10. Dynamic Allocation动态分配</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.dynamicAllocation.enabled(这个配置只能动态调整executor的数量)	</span><br><span class="line">	是否开启动态资源配置，根据工作负载来衡量是否应该增加或减少executor，默认false</span><br><span class="line">	</span><br><span class="line">	以下相关参数：	</span><br><span class="line">	spark.dynamicAllocation.minExecutors		</span><br><span class="line">	动态分配最小executor个数，在启动时就申请好的，默认0	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.maxExecutors		</span><br><span class="line">	动态分配最大executor个数，默认infinity	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.initialExecutors</span><br><span class="line">	</span><br><span class="line">	动态分配初始executor个数默认值为</span><br><span class="line">	spark.dynamicAllocation.minExecutors</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.executorIdleTimeout	</span><br><span class="line">	当某个executor空闲超过这个设定值，就会被kill，默认60s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.cachedExecutorIdleTimeout	</span><br><span class="line">	当某个缓存数据的executor空闲时间超过这个设定值，就会被kill，默认infinity</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.schedulerBacklogTimeout	</span><br><span class="line">	任务队列非空，资源不够，申请executor的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.sustainedSchedulerBacklogTimeout	</span><br><span class="line">	同schedulerBacklogTimeout，是申请了新executor之后继续申请的间隔，</span><br><span class="line">	默认=schedulerBacklogTimeout</span><br></pre></td></tr></table></figure>
-
-<h2 id="11-Spark-Streaming"><a href="#11-Spark-Streaming" class="headerlink" title="11. Spark Streaming"></a>11. <strong>Spark Streaming</strong></h2><p><a href="https://blog.csdn.net/zyzzxycj/article/details/82428031">https://blog.csdn.net/zyzzxycj/article/details/82428031</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Spark Streaming</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>大数据</category>
       </categories>
@@ -4427,7 +4391,7 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
 <p>那么t1中为什么看不到被主线程修改之后的flag？</p>
 <p>要解释这个，我们需要先了解一下java内存模型（JMM），Java线程之间的通信由Java内存模型（本文简称为JMM）控制，JMM决定一个线程对共享变量的写入何时对另一个线程可见。</p>
 <p>JMM抽象示意图：</p>
-<p>![java thread jmm](..&#x2F;..&#x2F;..&#x2F;..&#x2F;images&#x2F;java thread jmm.jpg)</p>
+<p><img src="/../../../../images/java-thread-jmm.jpg" alt="java thread jmm"></p>
 <p>从上图中可以看出，线程1需要和线程2通信，必须要经历下面2个步骤：</p>
 <ol>
 <li>首先，线程1把工作内存1中更新过的共享变量刷新到主内存中去</li>
@@ -5543,27 +5507,39 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot 概述</title>
-    <url>/2018/01/10/Spring/SpringBoot%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h2 id="1-初识SpringBoot"><a href="#1-初识SpringBoot" class="headerlink" title="1. 初识SpringBoot"></a>1. 初识SpringBoot</h2><h3 id="1-1-SpringBoot简介"><a href="#1-1-SpringBoot简介" class="headerlink" title="1.1 SpringBoot简介"></a>1.1 SpringBoot简介</h3><h4 id="1-什么是-springboot"><a href="#1-什么是-springboot" class="headerlink" title="1. 什么是 springboot"></a>1. 什么是 springboot</h4><p>springboot 框架是为了能够帮助使用 spring 框架的开发<br>者快速高效的构建一个基于 spirng 框架以及 spring 生态<br>体系的应用解决方案。</p>
-<p>因此它是一个服务于框架的框架，服务的范围是简化配置文件。</p>
-<h4 id="2-约定优于配置（常见场景）"><a href="#2-约定优于配置（常见场景）" class="headerlink" title="2. 约定优于配置（常见场景）"></a>2. 约定优于配置（常见场景）</h4><ol>
-<li>maven的目录结构<ul>
-<li>默认有 resources 文件夹存放配置文件</li>
-<li>默认打包方式为 jar</li>
-</ul>
-</li>
-<li>spring-boot-starter-web 中默认包含 spring mvc 相关<br>依赖以及内置的 tomcat 容器，使得构建一个 web 应用<br>更加简单</li>
-<li>默认提供 application.properties &#x2F; yml 文件</li>
-<li>默认通过 spring.profiles.active 属性来决定运行环境时<br>读取的配置文件</li>
-<li>EnableAutoConfiguration 默认对于依赖的 starter 进行<br>自动装载</li>
-</ol>
-]]></content>
+    <title>Spark参数调优</title>
+    <url>/2019/10/15/Spark/Spark%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/</url>
+    <content><![CDATA[<h1 id="Spark参数调优"><a href="#Spark参数调优" class="headerlink" title="Spark参数调优"></a>Spark参数调优</h1><p>参考文献：<a href="https://blog.csdn.net/zyzzxycj/article/details/81011540">https://blog.csdn.net/zyzzxycj/article/details/81011540</a></p>
+<p>因为每个集群规模都不一样，只有理解了参数的用途，调试出符合自己业务场景集群环境，并且能在扩大集群、业务的情况下，能够跟着修改参数才算是正确的参数调优。我的目标就是能够熟练的进行参数调优。</p>
+<h2 id="1-Application-Properties-应用基本属性"><a href="#1-Application-Properties-应用基本属性" class="headerlink" title="1*. Application Properties 应用基本属性"></a>1*. Application Properties 应用基本属性</h2><p>这些参数比较重要，执行spark的shell 一般都需要配置一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.driver.cores  	</span><br><span class="line">	driver端分配的核数，默认为1,资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.driver.memory	</span><br><span class="line">	driver端分配的内存数，默认为1g，资源充足的话可以尽量给多。</span><br><span class="line">	</span><br><span class="line">spark.executor.memory	</span><br><span class="line">	每个executor分配的内存数，默认1g，会受到yarn CDH的限制，</span><br><span class="line">	和memoryOverhead相加 不能超过总内存限制。</span><br><span class="line"></span><br><span class="line">spark.driver.maxResultSize	</span><br><span class="line">	driver端接收的最大结果大小，默认1GB，最小1MB，设置0为无限。	</span><br><span class="line">	这个参数不建议设置的太大,如果要做数据可视化,更应该控制在20-30MB以内,</span><br><span class="line">	过大会导致OOM(out of memory)。</span><br><span class="line">	</span><br><span class="line">spark.extraListeners.(不常用)	</span><br><span class="line">	默认none，随着SparkContext被创建而创建，用于监听单参数、无参数构造函数的创建，并抛出异常。</span><br><span class="line">	可用于自定义监听，实现监控spark的任务进度。</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Runtime-Environment-运行环境"><a href="#2-Runtime-Environment-运行环境" class="headerlink" title="2. Runtime Environment 运行环境"></a>2. <strong>Runtime Environment 运行环境</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">主要是一些日志，jvm参数的额外配置，jars等一些自定义的配置(待补充)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Shuffle-Behavior"><a href="#3-Shuffle-Behavior" class="headerlink" title="3. Shuffle Behavior"></a>3. Shuffle Behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.reducer.maxSizeInFlight	</span><br><span class="line">	默认48m。从每个reduce任务同时拉取的最大map数，</span><br><span class="line">	每个reduce都会在完成任务后，需要一个堆外内存的缓冲区来存放结果，</span><br><span class="line">	如果没有充裕的内存就尽可能把这个调小一点。</span><br><span class="line">	相反，堆外内存充裕，调大些就能节省gc时间。</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">spark.reducer.maxBlocksInFlightPerAddress(一般不会改)	</span><br><span class="line">	限制了每个主机每次reduce可以被多少台远程主机拉取文件块，</span><br><span class="line">	调低这个参数可以有效减轻node manager的负载。（默认值Int.MaxValue）</span><br><span class="line"></span><br><span class="line">spark.reducer.maxReqsInFlight	</span><br><span class="line">	限制远程机器拉取本机器文件块的请求数，随着集群增大，需要对此做出限制。</span><br><span class="line">	否则可能会使本机负载过大而挂掉。（默认值为Int.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.reducer.maxReqSizeShuffleToMem	</span><br><span class="line">	shuffle请求的文件块大小 超过这个参数值，就会被强行落盘，</span><br><span class="line">	防止一大堆并发请求把内存占满。（默认Long.MaxValue）</span><br><span class="line">	</span><br><span class="line">spark.shuffle.compress	</span><br><span class="line">	是否压缩map输出文件，默认压缩 true</span><br><span class="line">	</span><br><span class="line">spark.shuffle.spill.compress	</span><br><span class="line">	shuffle过程中溢出的文件是否压缩，默认true，使用spark.io.compression.codec压缩。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.file.buffer	</span><br><span class="line">	在内存输出流中 每个shuffle文件占用内存大小，适当提高 可以减少磁盘读写 io次数，初始值为32k。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.memoryFraction	</span><br><span class="line">	该参数代表了Executor内存中，分配给shuffle read task进行聚合操作的内存比例，默认是20%。	</span><br><span class="line">	cache少且内存充足时，可以调大该参数，给shuffle read的聚合操作更多内存，</span><br><span class="line">	以避免由于内存不足导致聚合过程中频繁读写磁盘。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.manager	</span><br><span class="line">	当ShuffleManager为SortShuffleManager时，</span><br><span class="line">	如果shuffle read task的数量小于这个阈值（默认是200），	 </span><br><span class="line">	则shuffle write过程中不会进行排序操作，</span><br><span class="line">	而是直接按照未经优化的HashShuffleManager的方式去写数据，</span><br><span class="line">	但是最后会将每个task产生的所有临时磁盘文件都合并成一个文件，并会创建单独的索引文件。	</span><br><span class="line">	当使用SortShuffleManager时，如果的确不需要排序操作，那么建议将这个参数调大一些，</span><br><span class="line">	大于shuffle read 	task的数量。那么此时就会自动启用bypass机制，</span><br><span class="line">	map-side就不会进行排序了，减少了排序的性能开销。</span><br><span class="line">	但是这种方式下，依然会产生大量的磁盘文件，因此shuffle write性能有待提高。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.consolidateFiles	</span><br><span class="line">	如果使用HashShuffleManager，该参数有效。</span><br><span class="line">	如果设置为true，那么就会开启consolidate机制，会大幅度合并	 </span><br><span class="line">	shuffle write的输出文件，对于shuffle read task数量特别多的情况下，</span><br><span class="line">	这种方法可以极大地减少磁盘IO开销，提升性能。</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.maxRetries（重试次数）	</span><br><span class="line">	shuffle read task从shuffle write task所在节点拉取属于自己的数据时，</span><br><span class="line">	如果因为网络异常导致拉取失败，是会自动进行重试的。</span><br><span class="line">	该参数就代表了可以重试的最大次数。如果在指定次数之内拉取还是没有成功，</span><br><span class="line">	就可能会导致作业执行失败。	</span><br><span class="line">	</span><br><span class="line">spark.shuffle.io.retryWait	</span><br><span class="line">	同上，默认5s，建议加大间隔时长（比如60s），以增加shuffle操作的稳定性。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spark.io.encryption.enabled</span><br><span class="line">spark.io.encryption.keySizeBits</span><br><span class="line"></span><br><span class="line">spark.io.encryption.keygen.algorithm	</span><br><span class="line">	io加密，默认关闭</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Spark-UI"><a href="#4-Spark-UI" class="headerlink" title="4. Spark UI"></a>4. Spark UI</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这一块配置，是有关于spark日志的。日志开关，日志输出路径，是否压缩。(待补充)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Compression-and-Serialization压缩与序列化"><a href="#5-Compression-and-Serialization压缩与序列化" class="headerlink" title="5. Compression and Serialization压缩与序列化"></a>5. Compression and Serialization压缩与序列化</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.compress	</span><br><span class="line">	广播变量前是否会先进行压缩。默认true （spark.io.compression.codec）</span><br><span class="line">	</span><br><span class="line">spark.io.compression.codec	</span><br><span class="line">	压缩RDD数据、日志、shuffle输出等的压缩格式 默认lz4</span><br><span class="line">	</span><br><span class="line">spark.io.compression.lz4.blockSize	</span><br><span class="line">	使用lz4压缩时，每个数据块大小 默认32k</span><br><span class="line">	</span><br><span class="line">spark.rdd.compress	</span><br><span class="line">	rdd是否压缩 默认false，节省memory_cache大量内存 消耗更多的cpu资源（时间）。</span><br><span class="line">	</span><br><span class="line">spark.serializer.objectStreamReset	</span><br><span class="line">	当使用JavaSerializer序列化时，会缓存对象防止写多余的数据，但这些对象就不会被gc，</span><br><span class="line">	可以输入reset 清空缓存。默认缓存100个对象，修改成-1则不缓存任何对象。</span><br></pre></td></tr></table></figure>
+
+<p>压缩以后节省内存资源，消耗cpu资源。</p>
+<h2 id="6-Memory-Management-内存管理"><a href="#6-Memory-Management-内存管理" class="headerlink" title="6. Memory Management 内存管理"></a>6. <strong>Memory Management 内存管理</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.memory.fraction	</span><br><span class="line">	执行内存和缓存内存（堆）占jvm总内存的比例，</span><br><span class="line">	剩余的部分是spark留给用户存储内部源数据、数据结构、异常大的结果数据。</span><br><span class="line">	默认值0.6，调小会导致频繁gc，调大容易造成oom。</span><br><span class="line">	</span><br><span class="line">spark.memory.storageFraction	</span><br><span class="line">	用于存储的内存在堆中的占比，默认0.5。</span><br><span class="line">	调大会导致执行内存过小，执行数据落盘，影响效率；调小会导致缓存内存不够，缓存到磁盘上去，影响效率。</span><br><span class="line">	另外，执行内存和缓存内存公用java堆，当执行内存没有使用时，会动态分配给缓存内存使用，</span><br><span class="line">	反之也是这样。</span><br><span class="line">	如果执行内存不够用，可以将存储内存释放移动到磁盘上（最多释放不能超过本参数划分的比例），</span><br><span class="line">	但存储内存不能把执行内存抢走。</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.enabled	</span><br><span class="line">	是否允许使用堆外内存来进行某些操作。默认false</span><br><span class="line">	</span><br><span class="line">spark.memory.offHeap.size	</span><br><span class="line">	允许使用进行操作的堆外内存的大小，单位bytes 默认0</span><br><span class="line">	</span><br><span class="line">spark.storage.replication.proactive	</span><br><span class="line">	针对失败的executor，主动去cache 有关的RDD中的数据。默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.periodicGC.interval	</span><br><span class="line">	控制触发gc的频率，默认30min</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking	</span><br><span class="line">	是否进行context cleaning，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking	</span><br><span class="line">	清理线程是否应该阻止清理任务，默认true</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.blocking.shuffle	</span><br><span class="line">	清理线程是否应该阻止shuffle的清理任务，默false</span><br><span class="line">	</span><br><span class="line">spark.cleaner.referenceTracking.cleanCheckpoints	</span><br><span class="line">	清理线程是否应该清理依赖超出范围的检查点文件，默认false</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Executor-behavior"><a href="#7-Executor-behavior" class="headerlink" title="7. Executor behavior"></a>7. Executor behavior</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.broadcast.blockSize	</span><br><span class="line">	TorrentBroadcastFactory中的每一个block大小，默认4m	</span><br><span class="line">	过大会减少广播时的并行度，过小会导致BlockManager 产生 performance hit.</span><br><span class="line">	（暂时没懂这是干啥用的）</span><br><span class="line">	</span><br><span class="line">spark.executor.cores	</span><br><span class="line">	每个executor的核数，默认yarn下1核，standalone下为所有可用的核。</span><br><span class="line">	</span><br><span class="line">spark.default.parallelism	</span><br><span class="line">	默认RDD的分区数、并行数。	</span><br><span class="line">	像reduceByKey和join等这种需要分布式shuffle的操作中，最大父RDD的分区数；	</span><br><span class="line">	像parallelize之类没有父RDD的操作，则取决于运行环境下得cluster manager：		</span><br><span class="line">	如果为单机模式，本机核数；		</span><br><span class="line">	集群模式为所有executor总核数与2 中最大的一个。</span><br><span class="line">	</span><br><span class="line">spark.executor.heartbeatInterval	</span><br><span class="line">	executor和driver心跳发送间隔，默认10s，</span><br><span class="line">	必须远远小于spark.network.timeoutspark.files.fetchTimeout	</span><br><span class="line">	从driver端执行SparkContext.addFile() 抓取添加的文件的超时时间，</span><br><span class="line">	默认60s</span><br><span class="line">	</span><br><span class="line">spark.files.useFetchCache	</span><br><span class="line">	默认true，如果设为true，拉取文件时会在同一个application中本地持久化，</span><br><span class="line">	被若干个executors共享。这使得当同一个主机下有多个executors时，执行任务效率提高。</span><br><span class="line">	</span><br><span class="line">spark.files.overwrite	</span><br><span class="line">	默认false，是否在执行SparkContext.addFile() 添加文件时，覆盖已有的内容有差异的文件。</span><br><span class="line">	</span><br><span class="line">spark.files.maxPartitionBytes	</span><br><span class="line">	单partition中最多能容纳的文件大小，单位Bytes </span><br><span class="line">	默认134217728 (128 MB)</span><br><span class="line">	</span><br><span class="line">spark.files.openCostInBytes	</span><br><span class="line">	小文件合并阈值，小于该参数就会被合并到一个partition内。	</span><br><span class="line">	默认4194304 (4 MB) 。</span><br><span class="line">	这个参数在将多个文件放入一个partition时被用到，宁可设置的小一些，</span><br><span class="line">	因为在partition操作中，小文件肯定会比大文件快。</span><br><span class="line">	</span><br><span class="line">spark.storage.memoryMapThreshold	</span><br><span class="line">	从磁盘上读文件时，最小单位不能少于该设定值，默认2m，小于或者接近操作系统的每个page的大小。</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-Networking网络"><a href="#8-Networking网络" class="headerlink" title="8. Networking网络"></a>8. Networking网络</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">网络超时或者ip端口的一些配置</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-Scheduling调度"><a href="#9-Scheduling调度" class="headerlink" title="9. Scheduling调度"></a>9. Scheduling调度</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.scheduler.maxRegisteredResourcesWaitingTime	</span><br><span class="line">	在执行前最大等待申请资源的时间，默认30s。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.minRegisteredResourcesRatio	</span><br><span class="line">	实际注册的资源数占预期需要的资源数的比例，默认0.8</span><br><span class="line">	</span><br><span class="line">spark.scheduler.mode</span><br><span class="line">	其他进阶的配置如下：		</span><br><span class="line">	调度模式，默认FIFO 先进队列先调度，可以选择FAIR。</span><br><span class="line">	</span><br><span class="line">spark.scheduler.revive.interval	</span><br><span class="line">	work回复重启的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">spark.scheduler.listenerbus.eventqueue.capacity	</span><br><span class="line">	spark事件监听队列容量，默认10000，必须为正值，增加可能会消耗更多内存</span><br><span class="line">	spark.blacklist.enabled***************************************************************	</span><br><span class="line">	是否列入黑名单，默认false。如果设成true，当一个executor失败好几次时，会被列入黑名单，防止后续task		派发到这个executor。可以进一步调节spark.blacklist以下相关的参数：	</span><br><span class="line">	（均为测试参数 Experimental）	</span><br><span class="line">	spark.blacklist.timeout    </span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerExecutor    	</span><br><span class="line">	spark.blacklist.task.maxTaskAttemptsPerNode    </span><br><span class="line">	spark.blacklist.stage.maxFailedTasksPerExecutor    </span><br><span class="line">	spark.blacklist.application.maxFailedExecutorsPerNode    </span><br><span class="line">	spark.blacklist.killBlacklistedExecutors</span><br><span class="line">	spark.blacklist.application.fetchFailure.enabled</span><br><span class="line"></span><br><span class="line">spark.speculation************************************************************************	推测，如果有task执行的慢了，就会重新执行它。默认false.	</span><br><span class="line"></span><br><span class="line">	详细相关配置如下：	</span><br><span class="line">	spark.speculation.interval		检查task快慢的频率，推测间隔，默认100ms。	</span><br><span class="line">	spark.speculation.multiplier		推测比均值慢几次算是task执行过慢，默认1.5.	</span><br><span class="line">	spark.speculation.quantile		在某个stage，完成度必须达到该参数的比例，才能被推测，默认0.75</span><br><span class="line">	spark.task.cpus	每个task分配的cpu数，默认1</span><br><span class="line">	spark.task.maxFailures	在放弃这个job前允许的最大失败次数，默认4</span><br><span class="line">	spark.task.reaper.enabled</span><br><span class="line">		(原先有 job失败了但一直显示有task在running，总算找到这个参数了)********	</span><br><span class="line">	赋予spark监控有权限去kill那些失效的task，默认false</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">其他进阶的配置如下：	</span><br><span class="line">	spark.task.reaper.pollingInterval		</span><br><span class="line">	轮询被kill掉的task的时间间隔，如果还在running，就会打warn日志，默认10s。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.threadDump		</span><br><span class="line">	线程回收是是否产生日志，默认true。	</span><br><span class="line">	</span><br><span class="line">	spark.task.reaper.killTimeout		</span><br><span class="line">	当一个被kill的task过了多久还在running，就会把那个executor给kill掉，默认-1。	</span><br><span class="line">	</span><br><span class="line">	spark.stage.maxConsecutiveAttempts		</span><br><span class="line">	在终止前，一个stage连续尝试次数，默认4。</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-Dynamic-Allocation动态分配"><a href="#10-Dynamic-Allocation动态分配" class="headerlink" title="10. Dynamic Allocation动态分配"></a>10. Dynamic Allocation动态分配</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spark.dynamicAllocation.enabled(这个配置只能动态调整executor的数量)	</span><br><span class="line">	是否开启动态资源配置，根据工作负载来衡量是否应该增加或减少executor，默认false</span><br><span class="line">	</span><br><span class="line">	以下相关参数：	</span><br><span class="line">	spark.dynamicAllocation.minExecutors		</span><br><span class="line">	动态分配最小executor个数，在启动时就申请好的，默认0	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.maxExecutors		</span><br><span class="line">	动态分配最大executor个数，默认infinity	</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.initialExecutors</span><br><span class="line">	</span><br><span class="line">	动态分配初始executor个数默认值为</span><br><span class="line">	spark.dynamicAllocation.minExecutors</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.executorIdleTimeout	</span><br><span class="line">	当某个executor空闲超过这个设定值，就会被kill，默认60s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.cachedExecutorIdleTimeout	</span><br><span class="line">	当某个缓存数据的executor空闲时间超过这个设定值，就会被kill，默认infinity</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.schedulerBacklogTimeout	</span><br><span class="line">	任务队列非空，资源不够，申请executor的时间间隔，默认1s</span><br><span class="line">	</span><br><span class="line">	spark.dynamicAllocation.sustainedSchedulerBacklogTimeout	</span><br><span class="line">	同schedulerBacklogTimeout，是申请了新executor之后继续申请的间隔，</span><br><span class="line">	默认=schedulerBacklogTimeout</span><br></pre></td></tr></table></figure>
+
+<h2 id="11-Spark-Streaming"><a href="#11-Spark-Streaming" class="headerlink" title="11. Spark Streaming"></a>11. <strong>Spark Streaming</strong></h2><p><a href="https://blog.csdn.net/zyzzxycj/article/details/82428031">https://blog.csdn.net/zyzzxycj/article/details/82428031</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Spark Streaming</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Java</category>
+        <category>大数据</category>
       </categories>
       <tags>
-        <tag>Java框架</tag>
+        <tag>Spark</tag>
       </tags>
   </entry>
   <entry>
@@ -5754,48 +5730,6 @@ sc.parallelize(List[(String,Int)]((&quot;a&quot;,100),(&quot;b&quot;,200),(&quot
       </categories>
       <tags>
         <tag>Spark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring概述</title>
-    <url>/2018/01/10/Spring/Spring%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
-<li><p>Spring 是一个开源框架.</p>
-</li>
-<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
-</li>
-<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
-</li>
-<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
-</li>
-</ul>
-<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
-<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
-<li>依赖注入(DI — dependency injection、IOC)</li>
-<li>–面向切面编程(AOP— aspect oriented programming)</li>
-<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
-<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
-<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
-</ol>
-<p>在项目中引入Spring可以带来以下好处：</p>
-<ol>
-<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
-</li>
-<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
-</li>
-<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
-</li>
-<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
-</li>
-<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java框架</tag>
       </tags>
   </entry>
   <entry>
@@ -6478,6 +6412,72 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot 概述</title>
+    <url>/2018/01/10/Spring/SpringBoot%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h2 id="1-初识SpringBoot"><a href="#1-初识SpringBoot" class="headerlink" title="1. 初识SpringBoot"></a>1. 初识SpringBoot</h2><h3 id="1-1-SpringBoot简介"><a href="#1-1-SpringBoot简介" class="headerlink" title="1.1 SpringBoot简介"></a>1.1 SpringBoot简介</h3><h4 id="1-什么是-springboot"><a href="#1-什么是-springboot" class="headerlink" title="1. 什么是 springboot"></a>1. 什么是 springboot</h4><p>springboot 框架是为了能够帮助使用 spring 框架的开发<br>者快速高效的构建一个基于 spirng 框架以及 spring 生态<br>体系的应用解决方案。</p>
+<p>因此它是一个服务于框架的框架，服务的范围是简化配置文件。</p>
+<h4 id="2-约定优于配置（常见场景）"><a href="#2-约定优于配置（常见场景）" class="headerlink" title="2. 约定优于配置（常见场景）"></a>2. 约定优于配置（常见场景）</h4><ol>
+<li>maven的目录结构<ul>
+<li>默认有 resources 文件夹存放配置文件</li>
+<li>默认打包方式为 jar</li>
+</ul>
+</li>
+<li>spring-boot-starter-web 中默认包含 spring mvc 相关<br>依赖以及内置的 tomcat 容器，使得构建一个 web 应用<br>更加简单</li>
+<li>默认提供 application.properties &#x2F; yml 文件</li>
+<li>默认通过 spring.profiles.active 属性来决定运行环境时<br>读取的配置文件</li>
+<li>EnableAutoConfiguration 默认对于依赖的 starter 进行<br>自动装载</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java框架</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring概述</title>
+    <url>/2018/01/10/Spring/Spring%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h1 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h1><ul>
+<li><p>Spring 是一个开源框架.</p>
+</li>
+<li><p>使用Spring可以简单的实现 JavaBean.Spring IOC 容器可以管理 Bean 的生命周期.</p>
+</li>
+<li><p>Spring 是一个 IOC(DI)和AOP容器框架.</p>
+</li>
+<li><p>在开发过程中的轻松解耦，提高项目的开发效率。</p>
+</li>
+</ul>
+<h2 id="spring-特点"><a href="#spring-特点" class="headerlink" title="spring 特点"></a>spring 特点</h2><ol>
+<li>轻量级：Spring 是非侵入性的，基于 Spring开发的应用的对象可以不依赖于 Spring<br>的API。</li>
+<li>依赖注入(DI — dependency injection、IOC)</li>
+<li>–面向切面编程(AOP— aspect oriented programming)</li>
+<li>–容器: Spring 是一个容器, 因为它<strong>包含并且管理应用对象的生命周期</strong></li>
+<li>框架:Spring 实现了使用简单的组件配置组合成一个复杂的应用。可以使用 XML 和<br>Java注解组合这些对象</li>
+<li>一站式：在IOC和AOP的基础上可以整合各种企业应用的开源框架和优秀的第三方类库<br>（实际上Spring自身也提供了展现层的SpringMVC和持久层的 Spring JDBC）</li>
+</ol>
+<p>在项目中引入Spring可以带来以下好处：</p>
+<ol>
+<li><p><strong>降低组件之间的耦合</strong>度,实现软件各层之间的解耦。</p>
+</li>
+<li><p>可以<strong>使用容器提供的众多服务</strong>，如：事务管理服务、消息服务等等。</p>
+</li>
+<li><p>当我们使用容器管理事务时，开发人员就<strong>不再需要手工控制事务</strong>.也不需处理复杂的事务传播。</p>
+</li>
+<li><p>容器<strong>提供单例模式支持</strong>，开发人员<strong>不再需要自己编写实现代码</strong>。</p>
+</li>
+<li><p>容器提供了 <strong>AOP 技术</strong>，利用它很容易实现如<strong>权限拦截、运行期监控</strong>等功能。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java框架</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring注解</title>
     <url>/2018/01/10/Spring/Spring%E6%B3%A8%E8%A7%A3/</url>
     <content><![CDATA[<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><h3 id="1-自定义注解"><a href="#1-自定义注解" class="headerlink" title="1.自定义注解"></a>1.自定义注解</h3><p>Java 注解</p>
@@ -6626,6 +6626,33 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </categories>
       <tags>
         <tag>消息队列</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>布隆过滤器</title>
+    <url>/2019/12/15/%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="详解布隆过滤器的原理，使用场景"><a href="#详解布隆过滤器的原理，使用场景" class="headerlink" title="详解布隆过滤器的原理，使用场景"></a>详解布隆过滤器的原理，使用场景</h1><h2 id="1-布隆过滤器简介"><a href="#1-布隆过滤器简介" class="headerlink" title="1. 布隆过滤器简介"></a>1. <strong>布隆过滤器简介</strong></h2><p>布隆过滤器的本质是一种数据结构。</p>
+<p>特点：高效插入、查询；</p>
+<p>场景：想知道某些值是否一定不存在或者可能存在。即布隆过滤器来加速查找和判断是否存在</p>
+<p>优点：高效、占用空间更少</p>
+<p>缺点：返回的结果是概率性的，而不是确切的。</p>
+<h2 id="2-布隆过滤器数据结构"><a href="#2-布隆过滤器数据结构" class="headerlink" title="2. 布隆过滤器数据结构"></a>2. <strong>布隆过滤器数据结构</strong></h2><p>布隆过滤器是一个 bit 向量或者说 bit 数组。</p>
+<p>映射一个值到布隆过滤器，需要使用<strong>多个不同的哈希函数</strong>生成<strong>多个哈希值，</strong>并对每个生成的哈希值指向的 bit 位置 1。</p>
+<p>查询：目标值对应多个hash值，判断布隆过滤器对应位置是否都为1，全为1则可能存在，否则一定不存在。</p>
+<h2 id="3-难点"><a href="#3-难点" class="headerlink" title="3. 难点"></a>3. 难点</h2><p>如何设置 <strong>hash函数的个数</strong> k, 以及**布隆过滤器长度 **m</p>
+<h2 id="4-应用"><a href="#4-应用" class="headerlink" title="4. 应用"></a>4. 应用</h2><p>利用布隆过滤器减少磁盘 IO，或者网络请求（因为一旦一个值必定不存在的话，我们可以不用进行后续昂贵的查询请求。）</p>
+<p>布隆过滤器来加速查找和判断是否存在。</p>
+<h2 id="5-Spark-BloomFilter"><a href="#5-Spark-BloomFilter" class="headerlink" title="5. Spark BloomFilter"></a>5. Spark BloomFilter</h2><p>spark官方封装了基于DataFrame的布隆过滤器，使用起来相当方便。</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> spark = <span class="type">SparkSession</span>.builder()</span><br><span class="line">      .appName(<span class="string">&quot;BloomFilterDemo&quot;</span>)</span><br><span class="line">      .master(<span class="string">&quot;local[*]&quot;</span>)</span><br><span class="line">      .getOrCreate()</span><br><span class="line"><span class="keyword">val</span> output = <span class="string">&quot;D:\\testData\\spark\\bloomfilter.txt&quot;</span></span><br><span class="line"><span class="keyword">import</span> spark.implicits._</span><br><span class="line"><span class="keyword">val</span> df = spark.sparkContext.parallelize(<span class="type">Seq</span>(</span><br><span class="line">    <span class="type">General</span>(<span class="string">&quot;Person A&quot;</span>,<span class="number">227</span>), <span class="type">General</span>(<span class="string">&quot;Person B&quot;</span>,<span class="number">188</span>), <span class="type">General</span>(<span class="string">&quot;Person C&quot;</span>,<span class="number">100</span>)</span><br><span class="line">)).toDF</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> rdd = spark.sparkContext.parallelize(<span class="type">Seq</span>(<span class="string">&quot;Person A&quot;</span>,<span class="string">&quot;Person B&quot;</span>,<span class="string">&quot;Person C&quot;</span>,<span class="string">&quot;Person D&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成bloomFilter</span></span><br><span class="line"><span class="keyword">val</span> bf = df.stat.bloomFilter(<span class="string">&quot;name&quot;</span>,<span class="number">20</span>L,<span class="number">0.01</span>)</span><br><span class="line"><span class="comment">// 将bloomFilter写出</span></span><br><span class="line"><span class="keyword">val</span> bos = <span class="keyword">new</span> <span class="type">BufferedOutputStream</span>(<span class="keyword">new</span> <span class="type">FileOutputStream</span>(output))</span><br><span class="line">bf.writeTo(bos)</span><br><span class="line">bos.close()</span><br><span class="line"><span class="comment">// 将bloomFilter读入</span></span><br><span class="line"><span class="keyword">val</span> bis = <span class="keyword">new</span> <span class="type">BufferedInputStream</span>(<span class="keyword">new</span> <span class="type">FileInputStream</span>(output))</span><br><span class="line"><span class="keyword">val</span> filter = <span class="type">BloomFilter</span>.readFrom(bis)</span><br><span class="line">bis.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判定数据是否存在</span></span><br><span class="line"><span class="keyword">val</span> resultRdd = rdd.map(x=&gt;(x,filter.mightContainString(x)))</span><br><span class="line">resRdd.foreach(println)</span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -7446,33 +7473,6 @@ getUser(@PathVariable(&quot;depid&quot;) String departmentID,@PathVariable(&quot
       </categories>
       <tags>
         <tag>计算机组成</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>布隆过滤器</title>
-    <url>/2019/12/15/%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="详解布隆过滤器的原理，使用场景"><a href="#详解布隆过滤器的原理，使用场景" class="headerlink" title="详解布隆过滤器的原理，使用场景"></a>详解布隆过滤器的原理，使用场景</h1><h2 id="1-布隆过滤器简介"><a href="#1-布隆过滤器简介" class="headerlink" title="1. 布隆过滤器简介"></a>1. <strong>布隆过滤器简介</strong></h2><p>布隆过滤器的本质是一种数据结构。</p>
-<p>特点：高效插入、查询；</p>
-<p>场景：想知道某些值是否一定不存在或者可能存在。即布隆过滤器来加速查找和判断是否存在</p>
-<p>优点：高效、占用空间更少</p>
-<p>缺点：返回的结果是概率性的，而不是确切的。</p>
-<h2 id="2-布隆过滤器数据结构"><a href="#2-布隆过滤器数据结构" class="headerlink" title="2. 布隆过滤器数据结构"></a>2. <strong>布隆过滤器数据结构</strong></h2><p>布隆过滤器是一个 bit 向量或者说 bit 数组。</p>
-<p>映射一个值到布隆过滤器，需要使用<strong>多个不同的哈希函数</strong>生成<strong>多个哈希值，</strong>并对每个生成的哈希值指向的 bit 位置 1。</p>
-<p>查询：目标值对应多个hash值，判断布隆过滤器对应位置是否都为1，全为1则可能存在，否则一定不存在。</p>
-<h2 id="3-难点"><a href="#3-难点" class="headerlink" title="3. 难点"></a>3. 难点</h2><p>如何设置 <strong>hash函数的个数</strong> k, 以及**布隆过滤器长度 **m</p>
-<h2 id="4-应用"><a href="#4-应用" class="headerlink" title="4. 应用"></a>4. 应用</h2><p>利用布隆过滤器减少磁盘 IO，或者网络请求（因为一旦一个值必定不存在的话，我们可以不用进行后续昂贵的查询请求。）</p>
-<p>布隆过滤器来加速查找和判断是否存在。</p>
-<h2 id="5-Spark-BloomFilter"><a href="#5-Spark-BloomFilter" class="headerlink" title="5. Spark BloomFilter"></a>5. Spark BloomFilter</h2><p>spark官方封装了基于DataFrame的布隆过滤器，使用起来相当方便。</p>
-<figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> spark = <span class="type">SparkSession</span>.builder()</span><br><span class="line">      .appName(<span class="string">&quot;BloomFilterDemo&quot;</span>)</span><br><span class="line">      .master(<span class="string">&quot;local[*]&quot;</span>)</span><br><span class="line">      .getOrCreate()</span><br><span class="line"><span class="keyword">val</span> output = <span class="string">&quot;D:\\testData\\spark\\bloomfilter.txt&quot;</span></span><br><span class="line"><span class="keyword">import</span> spark.implicits._</span><br><span class="line"><span class="keyword">val</span> df = spark.sparkContext.parallelize(<span class="type">Seq</span>(</span><br><span class="line">    <span class="type">General</span>(<span class="string">&quot;Person A&quot;</span>,<span class="number">227</span>), <span class="type">General</span>(<span class="string">&quot;Person B&quot;</span>,<span class="number">188</span>), <span class="type">General</span>(<span class="string">&quot;Person C&quot;</span>,<span class="number">100</span>)</span><br><span class="line">)).toDF</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> rdd = spark.sparkContext.parallelize(<span class="type">Seq</span>(<span class="string">&quot;Person A&quot;</span>,<span class="string">&quot;Person B&quot;</span>,<span class="string">&quot;Person C&quot;</span>,<span class="string">&quot;Person D&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成bloomFilter</span></span><br><span class="line"><span class="keyword">val</span> bf = df.stat.bloomFilter(<span class="string">&quot;name&quot;</span>,<span class="number">20</span>L,<span class="number">0.01</span>)</span><br><span class="line"><span class="comment">// 将bloomFilter写出</span></span><br><span class="line"><span class="keyword">val</span> bos = <span class="keyword">new</span> <span class="type">BufferedOutputStream</span>(<span class="keyword">new</span> <span class="type">FileOutputStream</span>(output))</span><br><span class="line">bf.writeTo(bos)</span><br><span class="line">bos.close()</span><br><span class="line"><span class="comment">// 将bloomFilter读入</span></span><br><span class="line"><span class="keyword">val</span> bis = <span class="keyword">new</span> <span class="type">BufferedInputStream</span>(<span class="keyword">new</span> <span class="type">FileInputStream</span>(output))</span><br><span class="line"><span class="keyword">val</span> filter = <span class="type">BloomFilter</span>.readFrom(bis)</span><br><span class="line">bis.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判定数据是否存在</span></span><br><span class="line"><span class="keyword">val</span> resultRdd = rdd.map(x=&gt;(x,filter.mightContainString(x)))</span><br><span class="line">resRdd.foreach(println)</span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>

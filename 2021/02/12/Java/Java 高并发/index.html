@@ -358,7 +358,7 @@
 <p>那么t1中为什么看不到被主线程修改之后的flag？</p>
 <p>要解释这个，我们需要先了解一下java内存模型（JMM），Java线程之间的通信由Java内存模型（本文简称为JMM）控制，JMM决定一个线程对共享变量的写入何时对另一个线程可见。</p>
 <p>JMM抽象示意图：</p>
-<p>![java thread jmm](..&#x2F;..&#x2F;..&#x2F;..&#x2F;images&#x2F;java thread jmm.jpg)</p>
+<p><img src="/../../../../images/java-thread-jmm.jpg" alt="java thread jmm"></p>
 <p>从上图中可以看出，线程1需要和线程2通信，必须要经历下面2个步骤：</p>
 <ol>
 <li>首先，线程1把工作内存1中更新过的共享变量刷新到主内存中去</li>
